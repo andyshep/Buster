@@ -7,12 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
+
 #import "SynthesizeSingleton.h"
+#import "RouteListOperation.h"
 
 
-@interface BusterRouteList : NSObject {
-
+@interface BusterRouteList : NSObject <RouteListOperationDelegate> {
+	NSDictionary *routeList;
 }
+
+@property (copy) NSDictionary *routeList;
 
 + (BusterRouteList *)sharedBusterRouteList;
 

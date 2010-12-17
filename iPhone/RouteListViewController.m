@@ -7,11 +7,23 @@
 //
 
 #import "RouteListViewController.h"
+#import "BusterRouteList.h"
 
 
 @implementation RouteListViewController
 
 @synthesize delegate;
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+	
+	self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self != nil) {
+			
+		BusterRouteList *model = [BusterRouteList sharedBusterRouteList];
+		[model addObserver:self forKeyPath:@"routeList" options:NSKeyValueObservingOptionNew context:nil];
+    }
+    return self;
+}
 
 
 #pragma mark -
@@ -29,6 +41,8 @@
 	
 	[[self navigationItem] setRightBarButtonItem:doneButton];
 	[[self navigationItem] setTitle:@"Routes"];
+	
+	NSLog(@"viewDidLoad:");
 }
 
 /*
@@ -142,6 +156,13 @@
 	 [self.navigationController pushViewController:detailViewController animated:YES];
 	 [detailViewController release];
 	 */
+}
+
+#pragma mark -
+#pragma mark Model Observing
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    NSLog(@"observeValueForKeyPath: %@", keyPath);
 }
 
 

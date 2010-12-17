@@ -12,6 +12,8 @@
 
 @interface RouteListViewController : UITableViewController {
 	id <MapViewControllerDelegate> delegate;
+	
+	
 }
 
 @property (nonatomic, assign) id <MapViewControllerDelegate> delegate;
