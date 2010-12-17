@@ -155,15 +155,16 @@
 #pragma mark -
 #pragma mark Table view delegate
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Navigation logic may go here. Create and push another view controller.
-	/*
-	 <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-	 [self.navigationController pushViewController:detailViewController animated:YES];
-	 [detailViewController release];
-	 */
+- (void) tableView:(UITableView *)tView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+	NSUInteger row = [indexPath row];
+	NSMutableDictionary *dict = (NSMutableDictionary *)[routeList objectAtIndex:row];
+	
+	RouteStopViewController *nextController = [[RouteStopViewController alloc] initWithStyle:UITableViewStylePlain];
+	nextController.title = [dict objectForKey:@"routeTitle"];
+	
+	[self.navigationController pushViewController:nextController animated:YES];
+	
+	[nextController release];
 }
 
 #pragma mark -
