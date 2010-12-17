@@ -13,10 +13,11 @@
 @interface RouteListViewController : UITableViewController {
 	id <MapViewControllerDelegate> delegate;
 	
-	
+	NSArray *routeList;
 }
 
 @property (nonatomic, assign) id <MapViewControllerDelegate> delegate;
+@property (copy) NSArray *routeList;
 
 - (IBAction)done;
 

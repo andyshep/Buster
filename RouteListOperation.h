@@ -30,12 +30,12 @@
 
 @protocol RouteListOperationDelegate
 
-- (void)didConsumeXMLData:(NSDictionary *)data;
+- (void)didConsumeXMLData:(NSArray *)data;
 
 @end
 
 @interface RouteListOperation : NSOperation {
-	id	delegate;
+	id delegate;
 }
 
 @property (assign) id<RouteListOperationDelegate> delegate;

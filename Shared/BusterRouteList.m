@@ -52,7 +52,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BusterRouteList);
 #pragma mark -
 #pragma mark RouteListOperationDelegate methods
 
-- (void)didConsumeXMLData:(NSDictionary *)data {
+- (void)didConsumeXMLData:(NSArray *)data {
 	NSLog(@"didConsumeXMLData: %d", [data count]);
 	
 	self.routeList = data;

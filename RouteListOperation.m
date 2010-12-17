@@ -51,7 +51,7 @@
 
 - (NSData *)fetchData {
 	// create a url and request
-	NSURL *url = [NSURL URLWithString:@"http://localhost:8081/full-list.xml"];
+	NSURL *url = [NSURL URLWithString:@"http://localhost:8081/routeList.xml"];
 	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
 	
 	// make a sync request
@@ -69,50 +69,63 @@
 #pragma mark -
 #pragma mark consume data
 
-- (NSDictionary *)consumeData {
-	// data to return
-	// the diction entry for each letter
-	// will be an array of names
-	NSMutableDictionary *indices = [[[NSMutableDictionary alloc] init] autorelease];
+- (NSArray *)consumeData {
 	
-	// first fetch the xml
-	NSData *rawData = [self fetchData];
+	// a list of routes will be passed back and stored into the model
+	NSMutableArray *routeTitles = [[[NSMutableArray alloc] init] autorelease];
 	
+	// first get the route xml from the intertubes
+	NSData *routeListData = [self fetchData];
 	
-	if (rawData != nil) {
-		CXMLDocument *doc = [[[CXMLDocument alloc] initWithData:rawData 
-													   encoding:NSISOLatin1StringEncoding 
-														options:0 
-														  error:nil] autorelease];
+	// read in our direction meta data so
+	// we can set where each bus is going
+	NSString *path = [[NSBundle mainBundle] pathForResource:@"DirectionTitles" ofType:@"plist"];
+	
+	// build the directions from the plist  
+	NSMutableDictionary *directions = [[[NSMutableDictionary alloc] initWithContentsOfFile:path] autorelease];
+	
+	if (routeListData != nil) {
+		// then begin parsing the route xml
+		CXMLDocument *doc = [[[CXMLDocument alloc] initWithData:routeListData options:0 error:nil] autorelease];
 		NSArray *nodes = NULL;
 		
-		// searching for name element within ListEntry
-		nodes = [doc nodesForXPath:@"//ListEntry/name" error:nil];
+		// searching for route nodes
+		nodes = [doc nodesForXPath:@"//route" error:nil];
 		
+		// grab the title of each route and add into the model
 		for (CXMLElement *node in nodes) {
+			NSMutableDictionary *dict = [[[NSMutableDictionary alloc] init] autorelease];
+			NSString *routeTitle = [[[NSString alloc] initWithString:[[node attributeForName:@"title"] stringValue]] autorelease];
 			
-			// name element might look like: <name>andyshep</name>
-			// pull off the name value, such as andyshep
-			NSString *nameValue = [[node childAtIndex:0] stringValue];
+			// determine the inbound and outbound key
+			NSString *inboundKey = [routeTitle stringByAppendingString:@".inbound.title"];
+			NSString *outboundKey = [routeTitle stringByAppendingString:@".outbound.title"];
 			
-			NSString *firstLetter = [nameValue substringToIndex:1];
+			NSString *inboundTitle = (NSString *)[directions objectForKey:inboundKey];
+			NSString *outboundTitle = (NSString *)[directions objectForKey:outboundKey];
 			
-			if ([indices objectForKey:firstLetter] != nil) {
-				// we have found names beginning with the current firstLetter already
-				NSMutableArray *values = [indices objectForKey:firstLetter];
-				[values addObject:nameValue];
-				[indices setValue:values forKey:firstLetter];
+			if (inboundTitle == nil) {
+				inboundTitle = @"Default Inbound Destination";
 			}
-			else {
-				// we have not found this firstLetter yet
-				NSMutableArray *values = [[[NSMutableArray alloc] init] autorelease];
-				[values addObject:nameValue];
-				[indices setValue:values forKey:firstLetter];
+			
+			if (outboundTitle == nil) {
+				outboundTitle = @"Default Outbound Destination";
 			}
+			
+			[dict setObject:routeTitle forKey:@"routeTitle"];
+			[dict setObject:inboundTitle forKey:@"inboundTitle"];
+			[dict setObject:outboundTitle forKey:@"outboundTitle"];
+			
+			[routeTitles addObject:dict];
+			dict = nil;
 		}
+		
+		// write the list to cache for future use
+		// [routeTitles writeToFile:[self dataFilePath] atomically:YES];
 	}
 	
-	return indices;
+	// return to the model
+	return routeTitles;
 }
 
 - (void)main {
@@ -120,7 +133,7 @@
 	@try {
 		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 		
-		NSDictionary *consumedData = [self consumeData];
+		NSArray *consumedData = [self consumeData];
 		
 		if (!self.isCancelled) {
 			

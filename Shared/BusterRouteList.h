@@ -13,10 +13,10 @@
 
 
 @interface BusterRouteList : NSObject <RouteListOperationDelegate> {
-	NSDictionary *routeList;
+	NSArray *routeList;
 }
 
-@property (copy) NSDictionary *routeList;
+@property (copy) NSArray *routeList;
 
 + (BusterRouteList *)sharedBusterRouteList;
 
