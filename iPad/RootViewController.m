@@ -12,16 +12,28 @@
 
 @implementation RootViewController
 
-@synthesize detailViewController;
+@synthesize detailViewController, routeList;
 
 
 #pragma mark -
 #pragma mark View lifecycle
 
+- (void) awakeFromNib {
+	
+	NSLog(@"awakeFromNib");
+	
+	BusterRouteList *model = [BusterRouteList sharedBusterRouteList];
+	[model addObserver:self forKeyPath:@"routeList" options:NSKeyValueObservingOptionNew context:nil];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.clearsSelectionOnViewWillAppear = NO;
     self.contentSizeForViewInPopover = CGSizeMake(320.0, 600.0);
+	
+	[[self navigationItem] setTitle:@"Routes"];
+	
+	NSLog(@"viewDidLoad:");
 }
 
 /*
@@ -55,14 +67,14 @@
 #pragma mark Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)aTableView {
-    // Return the number of sections.
+	
     return 1;
 }
 
 
 - (NSInteger)tableView:(UITableView *)aTableView numberOfRowsInSection:(NSInteger)section {
-    // Return the number of rows in the section.
-    return 10;
+
+	return [self.routeList count];
 }
 
 
@@ -77,8 +89,14 @@
         cell.accessoryType = UITableViewCellAccessoryNone;
     }
     
-    // Configure the cell.
-    cell.textLabel.text = [NSString stringWithFormat:@"Row %d", indexPath.row];
+    // Configure the cell...
+	NSUInteger row = [indexPath row];
+	NSMutableDictionary *dict = (NSMutableDictionary *)[routeList objectAtIndex:row];
+	
+	cell.textLabel.text = [dict objectForKey:@"routeTitle"];
+	//cell.inboundDestination.text = [dict objectForKey:@"inboundTitle"];
+	//cell.outboundDestination.text = [dict objectForKey:@"outboundTitle"];
+    
     return cell;
 }
 
@@ -134,6 +152,16 @@
     detailViewController.detailItem = [NSString stringWithFormat:@"Row %d", indexPath.row];
 }
 
+#pragma mark -
+#pragma mark Model Observing
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    NSLog(@"observeValueForKeyPath: %@", keyPath);
+	
+	self.routeList = [change valueForKey:@"new"];
+	[self.tableView reloadData];
+}
+
 
 #pragma mark -
 #pragma mark Memory management
@@ -152,6 +180,7 @@
 
 
 - (void)dealloc {
+	[routeList release];
     [detailViewController release];
     [super dealloc];
 }

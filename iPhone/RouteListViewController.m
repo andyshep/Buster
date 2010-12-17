@@ -195,6 +195,7 @@
 
 
 - (void)dealloc {
+	[routeList release];
     [super dealloc];
 }
 
