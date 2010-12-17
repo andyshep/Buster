@@ -10,24 +10,21 @@
 
 @implementation AppDelegate_iPad
 
-@synthesize window, mapViewController;
+@synthesize window, splitViewController, rootViewController, detailViewController;
 
 
 #pragma mark -
 #pragma mark Application lifecycle
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
-	
-	// TODO: implement a custom ipad ui here
-	MapViewController *aController = [[MapViewController alloc] initWithNibName:@"MapView" bundle:nil];
-	self.mapViewController = aController;
-	[aController release];
-	
-    mapViewController.view.frame = [UIScreen mainScreen].applicationFrame;
-	[window addSubview:[mapViewController view]];
+    
+    // Override point for customization after app launch.
+    
+    // Add the split view controller's view to the window and display.
+    [window addSubview:splitViewController.view];
     [window makeKeyAndVisible];
-	
-	return YES;
+    
+    return YES;
 }
 
 
@@ -64,6 +61,7 @@
 
 
 - (void)dealloc {
+    [splitViewController release];
     [window release];
     [super dealloc];
 }

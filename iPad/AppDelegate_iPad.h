@@ -6,15 +6,24 @@
 //  Copyright __MyCompanyName__ 2010. All rights reserved.
 //
 
-#import "MapViewController.h"
+
+@class RootViewController;
+@class DetailViewController;
 
 @interface AppDelegate_iPad : NSObject <UIApplicationDelegate> {
     UIWindow *window;
-	MapViewController *mapViewController;
+    
+    UISplitViewController *splitViewController;
+    
+    RootViewController *rootViewController;
+    DetailViewController *detailViewController;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
-@property (nonatomic, retain) MapViewController *mapViewController;
+
+@property (nonatomic, retain) IBOutlet UISplitViewController *splitViewController;
+@property (nonatomic, retain) IBOutlet RootViewController *rootViewController;
+@property (nonatomic, retain) IBOutlet DetailViewController *detailViewController;
 
 @end
 
