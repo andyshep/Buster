@@ -8,6 +8,7 @@
 
 #import "MapViewController.h"
 #import "RouteStopViewController.h"
+#import "RoutesModel.h"
 
 @protocol MapViewControllerDelegate;
 

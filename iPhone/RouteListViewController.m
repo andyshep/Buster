@@ -7,7 +7,6 @@
 //
 
 #import "RouteListViewController.h"
-#import "BusterRouteList.h"
 
 
 @implementation RouteListViewController
@@ -20,17 +19,17 @@
     if (self != nil) {
 		
 		self.routeList = nil;
-			
-		BusterRouteList *model = [BusterRouteList sharedBusterRouteList];
-		[model addObserver:self forKeyPath:@"routeList" options:NSKeyValueObservingOptionNew context:nil];
     }
     return self;
 }
 
-
 #pragma mark -
 #pragma mark View lifecycle
 
+//- (void)awakeFromNib {
+//	BusterRouteList *model = [BusterRouteList sharedBusterRouteList];
+//	[model addObserver:self forKeyPath:@"routeList" options:NSKeyValueObservingOptionNew context:nil];
+//}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -47,26 +46,30 @@
 	NSLog(@"viewDidLoad:");
 }
 
-/*
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+
+	RoutesModel *model = [RoutesModel sharedRoutesModel];
+	
+	// FIXME: which order?
+	[model requestRouteList];
+	[model addObserver:self forKeyPath:@"routeList" options:NSKeyValueObservingOptionNew context:nil];
 }
-*/
+
+
 /*
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
 }
 */
-/*
+
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+	
+	RoutesModel *model = [RoutesModel sharedRoutesModel];
+	[model removeObserver:self forKeyPath:@"routeList"];
 }
-*/
-/*
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-}
-*/
 
 // Override to allow orientations other than the default portrait orientation.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -191,6 +194,8 @@
 - (void)viewDidUnload {
     // Relinquish ownership of anything that can be recreated in viewDidLoad or on demand.
     // For example: self.myOutlet = nil;
+	
+	self.routeList = nil;
 }
 
 
