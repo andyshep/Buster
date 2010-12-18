@@ -65,10 +65,11 @@
 */
 
 - (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
 	
 	RoutesModel *model = [RoutesModel sharedRoutesModel];
 	[model removeObserver:self forKeyPath:@"routeList"];
+	
+	[super viewWillDisappear:animated];
 }
 
 // Override to allow orientations other than the default portrait orientation.
@@ -107,7 +108,7 @@
 	NSUInteger row = [indexPath row];
 	NSMutableDictionary *dict = (NSMutableDictionary *)[routeList objectAtIndex:row];
 	
-	cell.textLabel.text = [dict objectForKey:@"routeTitle"];
+	cell.textLabel.text = [dict objectForKey:@"title"];
 	//cell.inboundDestination.text = [dict objectForKey:@"inboundTitle"];
 	//cell.outboundDestination.text = [dict objectForKey:@"outboundTitle"];
     

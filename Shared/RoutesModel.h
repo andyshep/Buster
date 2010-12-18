@@ -14,10 +14,14 @@
 	NSOperationQueue *opQueue;
 	
 	NSArray *routeList;
+	
+	NSMutableDictionary *routesModel;
 }
 
 @property (copy) NSArray *routeList;
 
 + (RoutesModel *)sharedRoutesModel;
+
+- (void) requestRouteList;
 
 @end

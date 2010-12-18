@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "BusterRouteList.h"
+#import "RoutesModel.h"
 
 @class DetailViewController;
 

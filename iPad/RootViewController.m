@@ -18,14 +18,6 @@
 #pragma mark -
 #pragma mark View lifecycle
 
-- (void) awakeFromNib {
-	
-	NSLog(@"awakeFromNib");
-	
-	BusterRouteList *model = [BusterRouteList sharedBusterRouteList];
-	[model addObserver:self forKeyPath:@"routeList" options:NSKeyValueObservingOptionNew context:nil];
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.clearsSelectionOnViewWillAppear = NO;
@@ -36,11 +28,16 @@
 	NSLog(@"viewDidLoad:");
 }
 
-/*
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+
+	RoutesModel *model = [RoutesModel sharedRoutesModel];
+	[model requestRouteList];
+	[model addObserver:self forKeyPath:@"routeList" options:NSKeyValueObservingOptionNew context:nil];
 }
-*/
+
+
 /*
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
@@ -51,11 +48,14 @@
     [super viewWillDisappear:animated];
 }
 */
-/*
+
 - (void)viewDidDisappear:(BOOL)animated {
+	
+	RoutesModel *model = [RoutesModel sharedRoutesModel];
+	[model removeObserver:self forKeyPath:@"routeList"];
+	
     [super viewDidDisappear:animated];
 }
-*/
 
 // Ensure that the view controller supports rotation and that the split view can therefore show in both portrait and landscape.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -93,7 +93,7 @@
 	NSUInteger row = [indexPath row];
 	NSMutableDictionary *dict = (NSMutableDictionary *)[routeList objectAtIndex:row];
 	
-	cell.textLabel.text = [dict objectForKey:@"routeTitle"];
+	cell.textLabel.text = [dict objectForKey:@"title"];
 	//cell.inboundDestination.text = [dict objectForKey:@"inboundTitle"];
 	//cell.outboundDestination.text = [dict objectForKey:@"outboundTitle"];
     

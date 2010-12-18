@@ -56,6 +56,16 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(RoutesModel);
 	[loadingOp release];
 }
 
+- (void) requestStopList:(NSString *)stop {
+	// a controller has requested a route stop list
+	
+	// TODO: should be checking a cache here
+	
+	RouteListOperation *loadingOp = [[RouteListOperation alloc] initWithDelegate:self];
+	[opQueue addOperation:loadingOp];
+	[loadingOp release];
+}
+
 #pragma mark -
 #pragma mark RouteListOperationDelegate methods
 

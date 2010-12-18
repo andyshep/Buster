@@ -72,17 +72,10 @@
 - (NSArray *)consumeData {
 	
 	// a list of routes will be passed back and stored into the model
-	NSMutableArray *routeTitles = [[[NSMutableArray alloc] init] autorelease];
+	NSMutableArray *routeList = [[[NSMutableArray alloc] init] autorelease];
 	
 	// first get the route xml from the intertubes
 	NSData *routeListData = [self fetchData];
-	
-	// read in our direction meta data so
-	// we can set where each bus is going
-	NSString *path = [[NSBundle mainBundle] pathForResource:@"DirectionTitles" ofType:@"plist"];
-	
-	// build the directions from the plist  
-	NSMutableDictionary *directions = [[[NSMutableDictionary alloc] initWithContentsOfFile:path] autorelease];
 	
 	if (routeListData != nil) {
 		// then begin parsing the route xml
@@ -95,37 +88,24 @@
 		// grab the title of each route and add into the model
 		for (CXMLElement *node in nodes) {
 			NSMutableDictionary *dict = [[[NSMutableDictionary alloc] init] autorelease];
-			NSString *routeTitle = [[[NSString alloc] initWithString:[[node attributeForName:@"title"] stringValue]] autorelease];
+			// TODO: determine the inbound and outbound titles
 			
-			// determine the inbound and outbound key
-			NSString *inboundKey = [routeTitle stringByAppendingString:@".inbound.title"];
-			NSString *outboundKey = [routeTitle stringByAppendingString:@".outbound.title"];
+			[dict setObject:[[node attributeForName:@"title"] stringValue] forKey:@"title"];
+			[dict setObject:[[node attributeForName:@"tag"] stringValue] forKey:@"tag"];
 			
-			NSString *inboundTitle = (NSString *)[directions objectForKey:inboundKey];
-			NSString *outboundTitle = (NSString *)[directions objectForKey:outboundKey];
-			
-			if (inboundTitle == nil) {
-				inboundTitle = @"Default Inbound Destination";
-			}
-			
-			if (outboundTitle == nil) {
-				outboundTitle = @"Default Outbound Destination";
-			}
-			
-			[dict setObject:routeTitle forKey:@"routeTitle"];
-			[dict setObject:inboundTitle forKey:@"inboundTitle"];
-			[dict setObject:outboundTitle forKey:@"outboundTitle"];
-			
-			[routeTitles addObject:dict];
+			[routeList addObject:dict];
 			dict = nil;
 		}
 		
 		// write the list to cache for future use
-		// [routeTitles writeToFile:[self dataFilePath] atomically:YES];
+		// [routeList writeToFile:[self dataFilePath] atomically:YES];
 	}
 	
 	// return to the model
-	return routeTitles;
+	// should represent initial empty model?
+	// an array of dictionaries, where each dict is a route entity.
+	
+	return routeList;
 }
 
 - (void)main {
