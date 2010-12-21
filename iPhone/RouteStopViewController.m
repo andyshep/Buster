@@ -30,7 +30,7 @@
 
 @implementation RouteStopViewController
 
-@synthesize routeStops;
+@synthesize routeStops, stopTag;
 
 #pragma mark -
 #pragma mark View Management
@@ -45,6 +45,34 @@
 	self.routeStops = nil;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
+	
+	RoutesModel *model = [RoutesModel sharedRoutesModel];
+	
+	// TODO: implement with tag
+	[model requestStopList:self.stopTag];
+	[model addObserver:self forKeyPath:@"stopList" options:NSKeyValueObservingOptionNew context:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+	
+	RoutesModel *model = [RoutesModel sharedRoutesModel];
+	[model removeObserver:self forKeyPath:@"stopList"];
+	
+	[super viewWillDisappear:animated];
+}
+
+#pragma mark -
+#pragma mark Model Observing
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    NSLog(@"observeValueForKeyPath: %@", keyPath);
+	
+	self.routeStops = [change valueForKey:@"new"];
+	[self.tableView reloadData];
+}
+
 #pragma mark -
 #pragma mark Memory Management
 
@@ -56,8 +84,8 @@
 }
 
 - (void)viewDidUnload {
-	// Release any retained subviews of the main view.
-	// e.g. self.myOutlet = nil;
+	
+	self.routeStops = nil;
 }
 
 

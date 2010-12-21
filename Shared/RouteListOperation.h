@@ -30,7 +30,7 @@
 
 @protocol RouteListOperationDelegate
 
-- (void)didConsumeXMLData:(NSArray *)data;
+- (void)updateRouteList:(NSArray *)data;
 
 @end
 

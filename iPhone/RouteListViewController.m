@@ -43,6 +43,8 @@
 	[[self navigationItem] setRightBarButtonItem:doneButton];
 	[[self navigationItem] setTitle:@"Routes"];
 	
+	[doneButton release];
+	
 	NSLog(@"viewDidLoad:");
 }
 
@@ -164,7 +166,8 @@
 	NSMutableDictionary *dict = (NSMutableDictionary *)[routeList objectAtIndex:row];
 	
 	RouteStopViewController *nextController = [[RouteStopViewController alloc] initWithStyle:UITableViewStylePlain];
-	nextController.title = [dict objectForKey:@"routeTitle"];
+	nextController.title = [dict objectForKey:@"title"];
+	nextController.stopTag = [dict objectForKey:@"tag"];
 	
 	[self.navigationController pushViewController:nextController animated:YES];
 	

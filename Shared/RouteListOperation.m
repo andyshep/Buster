@@ -118,7 +118,7 @@
 		if (!self.isCancelled) {
 			
 			// return the data back to the main thread
-			[delegate performSelectorOnMainThread:@selector(didConsumeXMLData:) 
+			[delegate performSelectorOnMainThread:@selector(updateRouteList:) 
 									   withObject:consumedData
 									waitUntilDone:YES];
 		}

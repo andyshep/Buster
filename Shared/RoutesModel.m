@@ -11,7 +11,7 @@
 
 @implementation RoutesModel
 
-@synthesize routeList;
+@synthesize routeList, stopList;
 
 SYNTHESIZE_SINGLETON_FOR_CLASS(RoutesModel);
 
@@ -27,6 +27,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(RoutesModel);
 		
 		// init an empty set of routeTitles for the model
 		self.routeList = nil;
+		self.stopList = nil;
 		
 		// create our operation queue
 		opQueue = [[NSOperationQueue alloc] init];
@@ -61,7 +62,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(RoutesModel);
 	
 	// TODO: should be checking a cache here
 	
-	RouteListOperation *loadingOp = [[RouteListOperation alloc] initWithDelegate:self];
+	StopListOperation *loadingOp = [[StopListOperation alloc] initWithDelegate:self andTitle:stop];
 	[opQueue addOperation:loadingOp];
 	[loadingOp release];
 }
@@ -69,10 +70,16 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(RoutesModel);
 #pragma mark -
 #pragma mark RouteListOperationDelegate methods
 
-- (void)didConsumeXMLData:(NSArray *)data {
-	NSLog(@"didConsumeXMLData: %d", [data count]);
+- (void)updateRouteList:(NSArray *)data {
+	NSLog(@"updateRouteList: %d", [data count]);
 	
 	self.routeList = data;
+}
+
+- (void)updateStopList:(NSArray *)data {
+	NSLog(@"updateStopList: %d", [data count]);
+	
+	self.stopList = data;
 }
 
 @end
