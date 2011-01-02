@@ -30,11 +30,9 @@
 
 @interface RouteStopViewController : UITableViewController <UITableViewDelegate, UITableViewDataSource> {
 	
-//	NSArray *routeStops;
 	NSString *stopTag;
 }
 
-// @property (copy) NSArray *routeStops;
 @property (nonatomic, retain) NSString *stopTag;
 
 @end

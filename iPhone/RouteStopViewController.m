@@ -33,7 +33,7 @@
 @synthesize stopTag;
 
 #pragma mark -
-#pragma mark View Management
+#pragma mark View Lifecycle
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
@@ -47,25 +47,23 @@
 	
 	StopListModel *model = [StopListModel sharedStopListModel];
 	
-	// TODO: implement with tag
 	[model requestStopList:self.stopTag];
 	[model addObserver:self 
 			forKeyPath:@"stops" 
 			   options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
 			   context:NULL];
-	
-	
-//	[model addObserver:self forKeyPath:@"stopList" options:NSKeyValueObservingOptionInitial context:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
 	
 	StopListModel *model = [StopListModel sharedStopListModel];
-	
 	[model removeObserver:self forKeyPath:@"stops"];
-	//model.stops = nil;
 	
 	[super viewWillDisappear:animated];
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+	return YES;
 }
 
 #pragma mark -
@@ -73,8 +71,6 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     NSLog(@"observeValueForKeyPath: %@", keyPath);
-	
-	// NSArray *list = [change objectForKey:NSKeyValueChangeNewKey];
 	
 	[self.tableView reloadData];
 }

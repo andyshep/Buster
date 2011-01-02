@@ -30,7 +30,7 @@
 
 @implementation RouteListModel
 
-@synthesize routeList;
+@synthesize routes;
 
 SYNTHESIZE_SINGLETON_FOR_CLASS(RouteListModel);
 
@@ -45,7 +45,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(RouteListModel);
 		NSLog(@"RouteListModel init'd!");
 		
 		// init an empty set of routeTitles for the model
-		self.routeList = nil;
+		self.routes = nil;
 		
 		// create our operation queue
 		opQueue = [[NSOperationQueue alloc] init];
@@ -64,6 +64,31 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(RouteListModel);
 }
 
 #pragma mark -
+#pragma mark Model KVC
+
+- (NSUInteger)countOfRoutes {
+	NSLog(@"countOfRoutes:");
+	
+	return [routes count];
+}
+
+- (id)objectInRoutesAtIndex:(NSUInteger)index {
+	NSLog(@"objectInRoutesAtIndex:");
+	
+	return [routes objectAtIndex:index];
+}
+
+- (void)getRoutes:(id *)objects range:(NSRange)range {
+	NSLog(@"getRoutes:range:");
+	
+	[routes getObjects:objects range:range];
+}
+
+- (id)routes {
+	return routes;
+}
+
+#pragma mark -
 #pragma mark Route List building
 
 - (void) requestRouteList {
@@ -74,7 +99,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(RouteListModel);
 	// TODO: should be checking a cache here
 	
 	if ([routeListCache count] > 0) {
-		self.routeList = [routeListCache objectAtIndex:0];
+		self.routes = [routeListCache objectAtIndex:0];
 	}
 	else {
 		RouteListOperation *loadingOp = [[RouteListOperation alloc] initWithDelegate:self];
@@ -89,7 +114,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(RouteListModel);
 - (void)updateRouteList:(NSArray *)data {
 	NSLog(@"updateRouteList: %d", [data count]);
 	
-	self.routeList = data;
+	self.routes = data;
 	
 	[routeListCache addObject:data];
 }

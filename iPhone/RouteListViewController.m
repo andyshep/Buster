@@ -30,14 +30,13 @@
 
 @implementation RouteListViewController
 
-@synthesize delegate, routeList;
+@synthesize delegate;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
 	
 	self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self != nil) {
 		
-		self.routeList = nil;
     }
     return self;
 }
@@ -73,29 +72,22 @@
 
 	RouteListModel *model = [RouteListModel sharedRouteListModel];
 	
-	// FIXME: which order?
 	[model requestRouteList];
-	[model addObserver:self forKeyPath:@"routeList" options:NSKeyValueObservingOptionNew context:nil];
+	[model addObserver:self 
+			forKeyPath:@"routes" 
+			   options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
+			   context:NULL];
 }
-
-
-/*
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-}
-*/
 
 - (void)viewWillDisappear:(BOOL)animated {
 	
 	RouteListModel *model = [RouteListModel sharedRouteListModel];
-	[model removeObserver:self forKeyPath:@"routeList"];
+	[model removeObserver:self forKeyPath:@"routes"];
 	
 	[super viewWillDisappear:animated];
 }
 
-// Override to allow orientations other than the default portrait orientation.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    // Return YES for supported orientations
 	return YES;
 }
 
@@ -111,7 +103,8 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 	
-	return [self.routeList count];
+	RouteListModel *model = [RouteListModel sharedRouteListModel];
+	return [model countOfRoutes];
 }
 
 
@@ -126,8 +119,9 @@
     }
     
     // Configure the cell...
+	RouteListModel *model = [RouteListModel sharedRouteListModel];
 	NSUInteger row = [indexPath row];
-	NSMutableDictionary *dict = (NSMutableDictionary *)[routeList objectAtIndex:row];
+	NSMutableDictionary *dict = (NSMutableDictionary *)[model objectInRoutesAtIndex:row];
 	
 	cell.textLabel.text = [dict objectForKey:@"title"];
 	//cell.inboundDestination.text = [dict objectForKey:@"inboundTitle"];
@@ -136,53 +130,14 @@
     return cell;
 }
 
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:YES];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-
 #pragma mark -
 #pragma mark Table view delegate
 
 - (void) tableView:(UITableView *)tView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+	
+	RouteListModel *model = [RouteListModel sharedRouteListModel];
 	NSUInteger row = [indexPath row];
-	NSMutableDictionary *dict = (NSMutableDictionary *)[routeList objectAtIndex:row];
+	NSMutableDictionary *dict = (NSMutableDictionary *)[model objectInRoutesAtIndex:row];
 	
 	RouteStopViewController *nextController = [[RouteStopViewController alloc] initWithStyle:UITableViewStylePlain];
 	nextController.title = [dict objectForKey:@"title"];
@@ -199,7 +154,6 @@
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     NSLog(@"observeValueForKeyPath: %@", keyPath);
 	
-	self.routeList = [change valueForKey:@"new"];
 	[self.tableView reloadData];
 }
 
@@ -217,13 +171,10 @@
 - (void)viewDidUnload {
     // Relinquish ownership of anything that can be recreated in viewDidLoad or on demand.
     // For example: self.myOutlet = nil;
-	
-	self.routeList = nil;
 }
 
 
 - (void)dealloc {
-	[routeList release];
     [super dealloc];
 }
 

@@ -33,15 +33,19 @@
 	NSOperationQueue *opQueue;
 	
 	// these are used by table views
-	NSArray *routeList;
+	NSArray *routes;
 	
 	NSMutableArray *routeListCache;
 }
 
-@property (copy) NSArray *routeList;
+@property (copy) NSArray *routes;
 
 + (RouteListModel *)sharedRouteListModel;
 
 - (void) requestRouteList;
+
+- (NSUInteger)countOfRoutes;
+- (id)objectInRoutesAtIndex:(NSUInteger)index;
+- (void)getRoutes:(id *)objects range:(NSRange)range;
 
 @end
