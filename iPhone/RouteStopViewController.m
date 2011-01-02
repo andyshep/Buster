@@ -30,7 +30,7 @@
 
 @implementation RouteStopViewController
 
-@synthesize routeStops, stopTag;
+@synthesize stopTag;
 
 #pragma mark -
 #pragma mark View Management
@@ -40,25 +40,30 @@
 	[super viewDidLoad];
 	
 	[[self navigationItem] setTitle:self.title];
-	
-	// init an empty model
-	self.routeStops = nil;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
 	
-	RoutesModel *model = [RoutesModel sharedRoutesModel];
+	StopListModel *model = [StopListModel sharedStopListModel];
 	
 	// TODO: implement with tag
 	[model requestStopList:self.stopTag];
-	[model addObserver:self forKeyPath:@"stopList" options:NSKeyValueObservingOptionNew context:nil];
+	[model addObserver:self 
+			forKeyPath:@"stops" 
+			   options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
+			   context:NULL];
+	
+	
+//	[model addObserver:self forKeyPath:@"stopList" options:NSKeyValueObservingOptionInitial context:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
 	
-	RoutesModel *model = [RoutesModel sharedRoutesModel];
-	[model removeObserver:self forKeyPath:@"stopList"];
+	StopListModel *model = [StopListModel sharedStopListModel];
+	
+	[model removeObserver:self forKeyPath:@"stops"];
+	//model.stops = nil;
 	
 	[super viewWillDisappear:animated];
 }
@@ -69,7 +74,8 @@
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     NSLog(@"observeValueForKeyPath: %@", keyPath);
 	
-	self.routeStops = [change valueForKey:@"new"];
+	// NSArray *list = [change objectForKey:NSKeyValueChangeNewKey];
+	
 	[self.tableView reloadData];
 }
 
@@ -85,7 +91,6 @@
 
 - (void)viewDidUnload {
 	
-	self.routeStops = nil;
 }
 
 
@@ -97,7 +102,9 @@
 #pragma mark UITableViewDataSource methods
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	return [self.routeStops count];
+	
+	StopListModel *model = [StopListModel sharedStopListModel];
+	return [model countOfStops];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -109,8 +116,10 @@
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
 	
+	StopListModel *model = [StopListModel sharedStopListModel];
+	
 	NSUInteger row = [indexPath row];
-	NSMutableDictionary *dict = (NSMutableDictionary *)[routeStops objectAtIndex:row];
+	NSMutableDictionary *dict = (NSMutableDictionary *)[model objectInStopsAtIndex:row];
 	
 	cell.textLabel.text = [dict objectForKey:@"title"];
 	

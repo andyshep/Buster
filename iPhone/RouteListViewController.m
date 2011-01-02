@@ -71,7 +71,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 
-	RoutesModel *model = [RoutesModel sharedRoutesModel];
+	RouteListModel *model = [RouteListModel sharedRouteListModel];
 	
 	// FIXME: which order?
 	[model requestRouteList];
@@ -87,7 +87,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
 	
-	RoutesModel *model = [RoutesModel sharedRoutesModel];
+	RouteListModel *model = [RouteListModel sharedRouteListModel];
 	[model removeObserver:self forKeyPath:@"routeList"];
 	
 	[super viewWillDisappear:animated];

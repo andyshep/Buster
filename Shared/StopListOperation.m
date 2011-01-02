@@ -30,15 +30,15 @@
 
 @implementation StopListOperation
 
-@synthesize delegate, routeTitle;
+@synthesize delegate, stopId;
 
 #pragma mark -
 #pragma mark Memory Management
 
-- (id)initWithDelegate:(id<StopListOperationDelegate>)operationDelegate andTitle:(NSString *)title {
+- (id)initWithDelegate:(id<StopListOperationDelegate>)operationDelegate andStopId:(NSString *)stop {
 	if (self = [super init]) {
 		delegate = operationDelegate;
-		self.routeTitle = title;
+		self.stopId = stop;
 	}
 	
 	return self;
@@ -51,6 +51,21 @@
 #pragma mark -
 #pragma mark Route Stop Processing
 
+- (NSString *)buildURL {
+	//	MBTAQueryStringBuilder *_builder = [[[MBTAQueryStringBuilder alloc] 
+	//										 initWithBaseURL:@"http://webservices.nextbus.com/service/publicXMLFeed"] autorelease];
+	
+	// build the url
+	// NSString *url = [_builder buildRouteConfigQuery:self.routeTitle];
+	
+	NSString *url = @"http://localhost:8081/routeConfig_r";
+	
+	url = [url stringByAppendingString:self.stopId];
+	url = [url stringByAppendingString:@".xml"];
+	
+	return url;
+}
+
 - (NSData *)fetchData {
 	
 //	MBTAQueryStringBuilder *_builder = [[[MBTAQueryStringBuilder alloc] 
@@ -62,7 +77,7 @@
 	
 	NSString *addy = @"http://localhost:8081/routeConfig_r";
 	
-	addy = [addy stringByAppendingString:self.routeTitle];
+	addy = [addy stringByAppendingString:self.stopId];
 	addy = [addy stringByAppendingString:@".xml"];
 	
 	NSURL *url = [NSURL URLWithString:addy];
@@ -107,7 +122,7 @@
 			[dict setObject:[[node attributeForName:@"tag"] stringValue] forKey:@"tag"];
 			[dict setObject:[[node attributeForName:@"lon"] stringValue] forKey:@"longitude"];
 			[dict setObject:[[node attributeForName:@"lat"] stringValue] forKey:@"latitude"];
-			[dict setObject:(NSString *)self.routeTitle forKey:@"routeNumber"];
+			[dict setObject:(NSString *)self.stopId forKey:@"routeNumber"];
 			
 			// FIXME: not tracking this yet
 			[dict setObject:@"1_010003v0_1" forKey:@"dirTag"];
@@ -123,7 +138,9 @@
 		// TODO: pull off direction metadata
 	}
 	
-	return stopList;
+	NSArray *consumedData = [NSArray arrayWithObjects:self.stopId, [NSArray arrayWithArray:stopList], nil];
+	
+	return consumedData;
 }
 
 - (void)main {

@@ -1,8 +1,8 @@
 //
-//  RoutesModel.m
+//  RouteListModel.m
 //  Buster
 //
-//  Created by andyshep on 12/18/10.
+//  Created by andyshep on 12/30/10.
 //
 //  Copyright (c) 2010 Andrew Shepard
 // 
@@ -25,14 +25,14 @@
 //  THE SOFTWARE.
 //
 
-#import "RoutesModel.h"
+#import "RouteListModel.h"
 
 
-@implementation RoutesModel
+@implementation RouteListModel
 
-@synthesize routeList, stopList;
+@synthesize routeList;
 
-SYNTHESIZE_SINGLETON_FOR_CLASS(RoutesModel);
+SYNTHESIZE_SINGLETON_FOR_CLASS(RouteListModel);
 
 #pragma mark -
 #pragma mark Lifecycle
@@ -42,14 +42,15 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(RoutesModel);
     
 	if (self != nil) {
 		
-		NSLog(@"RoutesModel init'd!");
+		NSLog(@"RouteListModel init'd!");
 		
 		// init an empty set of routeTitles for the model
 		self.routeList = nil;
-		self.stopList = nil;
 		
 		// create our operation queue
 		opQueue = [[NSOperationQueue alloc] init];
+		
+		routeListCache = [[NSMutableArray alloc] initWithCapacity:5];
     }
 	
     return self;
@@ -58,6 +59,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(RoutesModel);
 - (void) dealloc
 {
     [opQueue release];
+	[routeListCache release];
     [super dealloc];
 }
 
@@ -71,19 +73,14 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(RoutesModel);
 	
 	// TODO: should be checking a cache here
 	
-	RouteListOperation *loadingOp = [[RouteListOperation alloc] initWithDelegate:self];
-	[opQueue addOperation:loadingOp];
-	[loadingOp release];
-}
-
-- (void) requestStopList:(NSString *)stop {
-	// a controller has requested a route stop list
-	
-	// TODO: should be checking a cache here
-	
-	StopListOperation *loadingOp = [[StopListOperation alloc] initWithDelegate:self andStopId:stop];
-	[opQueue addOperation:loadingOp];
-	[loadingOp release];
+	if ([routeListCache count] > 0) {
+		self.routeList = [routeListCache objectAtIndex:0];
+	}
+	else {
+		RouteListOperation *loadingOp = [[RouteListOperation alloc] initWithDelegate:self];
+		[opQueue addOperation:loadingOp];
+		[loadingOp release];
+	}
 }
 
 #pragma mark -
@@ -93,12 +90,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(RoutesModel);
 	NSLog(@"updateRouteList: %d", [data count]);
 	
 	self.routeList = data;
-}
-
-- (void)updateStopList:(NSArray *)data {
-	NSLog(@"updateStopList: %d", [data count]);
 	
-	self.stopList = data;
+	[routeListCache addObject:data];
 }
 
 @end

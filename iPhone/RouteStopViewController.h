@@ -25,16 +25,16 @@
 //  THE SOFTWARE.
 //
 
-#import "RoutesModel.h"
+#import "StopListModel.h"
 
 
 @interface RouteStopViewController : UITableViewController <UITableViewDelegate, UITableViewDataSource> {
 	
-	NSArray *routeStops;
+//	NSArray *routeStops;
 	NSString *stopTag;
 }
 
-@property (copy) NSArray *routeStops;
+// @property (copy) NSArray *routeStops;
 @property (nonatomic, retain) NSString *stopTag;
 
 @end

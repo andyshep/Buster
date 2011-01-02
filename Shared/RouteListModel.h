@@ -1,8 +1,8 @@
 //
-//  RouteListViewController.h
+//  RouteListModel.h
 //  Buster
 //
-//  Created by andyshep on 12/15/10.
+//  Created by andyshep on 12/30/10.
 //
 //  Copyright (c) 2010 Andrew Shepard
 // 
@@ -25,21 +25,23 @@
 //  THE SOFTWARE.
 //
 
-#import "MapViewController.h"
-#import "RouteStopViewController.h"
-#import "RouteListModel.h"
+#import "SynthesizeSingleton.h"
+#import "RouteListOperation.h"
 
-@protocol MapViewControllerDelegate;
 
-@interface RouteListViewController : UITableViewController {
-	id <MapViewControllerDelegate> delegate;
+@interface RouteListModel : NSObject <RouteListOperationDelegate> {
+	NSOperationQueue *opQueue;
 	
+	// these are used by table views
 	NSArray *routeList;
+	
+	NSMutableArray *routeListCache;
 }
 
-@property (nonatomic, assign) id <MapViewControllerDelegate> delegate;
 @property (copy) NSArray *routeList;
 
-- (IBAction)done;
++ (RouteListModel *)sharedRouteListModel;
+
+- (void) requestRouteList;
 
 @end

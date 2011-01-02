@@ -1,8 +1,8 @@
 //
-//  RouteListViewController.h
+//  StopListModel.h
 //  Buster
 //
-//  Created by andyshep on 12/15/10.
+//  Created by andyshep on 12/30/10.
 //
 //  Copyright (c) 2010 Andrew Shepard
 // 
@@ -25,21 +25,27 @@
 //  THE SOFTWARE.
 //
 
-#import "MapViewController.h"
-#import "RouteStopViewController.h"
-#import "RouteListModel.h"
+#import "SynthesizeSingleton.h"
+#import "StopListOperation.h"
 
-@protocol MapViewControllerDelegate;
 
-@interface RouteListViewController : UITableViewController {
-	id <MapViewControllerDelegate> delegate;
+@interface StopListModel : NSObject <StopListOperationDelegate> {
+	NSOperationQueue *opQueue;
 	
-	NSArray *routeList;
+	// these are used by table views
+	NSArray *stops;
+	
+	NSMutableDictionary *stopListCache;
 }
 
-@property (nonatomic, assign) id <MapViewControllerDelegate> delegate;
-@property (copy) NSArray *routeList;
+@property (copy) NSArray *stops;
 
-- (IBAction)done;
++ (StopListModel *)sharedStopListModel;
+
+- (void)requestStopList:(NSString *)stop;
+
+- (NSUInteger)countOfStops;
+- (id)objectInStopsAtIndex:(NSUInteger)index;
+- (void)getStops:(id *)objects range:(NSRange)range;
 
 @end

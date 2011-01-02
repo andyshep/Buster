@@ -35,12 +35,12 @@
 
 @interface StopListOperation : NSOperation {
 	id	delegate;
-	NSString *routeTitle;
+	NSString *stopId;
 }
 
 @property (assign) id<StopListOperationDelegate> delegate;
-@property (nonatomic, retain) NSString *routeTitle;
+@property (nonatomic, retain) NSString *stopId;
 
-- (id)initWithDelegate:(id<StopListOperationDelegate>)operationDelegate andTitle:(NSString *)title;
+- (id)initWithDelegate:(id<StopListOperationDelegate>)operationDelegate andStopId:(NSString *)stop;
 
 @end
