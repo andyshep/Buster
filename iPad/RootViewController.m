@@ -31,7 +31,7 @@
 
 @implementation RootViewController
 
-@synthesize detailViewController, routeList;
+@synthesize detailViewController;
 
 
 #pragma mark -
@@ -50,28 +50,19 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-
-	RoutesModel *model = [RoutesModel sharedRoutesModel];
-	[model requestRouteList];
-	[model addObserver:self forKeyPath:@"routeList" options:NSKeyValueObservingOptionNew context:nil];
-}
-
-
-/*
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-}
-*/
-/*
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-}
-*/
-
-- (void)viewDidDisappear:(BOOL)animated {
 	
-	RoutesModel *model = [RoutesModel sharedRoutesModel];
-	[model removeObserver:self forKeyPath:@"routeList"];
+	RouteListModel *model = [RouteListModel sharedRouteListModel];
+	
+	[model requestRouteList];
+	[model addObserver:self 
+			forKeyPath:@"routes" 
+			   options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
+			   context:NULL];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+	RouteListModel *model = [RouteListModel sharedRouteListModel];
+	[model removeObserver:self forKeyPath:@"routes"];
 	
     [super viewDidDisappear:animated];
 }
@@ -92,8 +83,9 @@
 
 
 - (NSInteger)tableView:(UITableView *)aTableView numberOfRowsInSection:(NSInteger)section {
-
-	return [self.routeList count];
+	
+	RouteListModel *model = [RouteListModel sharedRouteListModel];
+	return [model countOfRoutes];
 }
 
 
@@ -109,8 +101,9 @@
     }
     
     // Configure the cell...
+	RouteListModel *model = [RouteListModel sharedRouteListModel];
 	NSUInteger row = [indexPath row];
-	NSMutableDictionary *dict = (NSMutableDictionary *)[routeList objectAtIndex:row];
+	NSMutableDictionary *dict = (NSMutableDictionary *)[model objectInRoutesAtIndex:row];
 	
 	cell.textLabel.text = [dict objectForKey:@"title"];
 	//cell.inboundDestination.text = [dict objectForKey:@"inboundTitle"];
@@ -118,46 +111,6 @@
     
     return cell;
 }
-
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:YES];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 
 #pragma mark -
@@ -177,7 +130,6 @@
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     NSLog(@"observeValueForKeyPath: %@", keyPath);
 	
-	self.routeList = [change valueForKey:@"new"];
 	[self.tableView reloadData];
 }
 
@@ -199,7 +151,6 @@
 
 
 - (void)dealloc {
-	[routeList release];
     [detailViewController release];
     [super dealloc];
 }

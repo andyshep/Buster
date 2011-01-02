@@ -93,12 +93,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(StopListModel);
 - (void)requestStopList:(NSString *)stop {
 	// a controller has requested a route stop list
 	
-	// TODO: should be checking a cache here
-	
-//	NSArray *cachedList = [[stopListCache objectForKey:stop] retain];
-//	
-//	NSLog(@"cachedList: %@", [cachedList count]);
-	
 	if ([stopListCache objectForKey:stop] != nil) {
 		NSArray *cachedList = [stopListCache objectForKey:stop];
 		NSLog(@"cachedList: %@", cachedList);
@@ -109,10 +103,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(StopListModel);
 		[opQueue addOperation:loadingOp];
 		[loadingOp release];
 	}
-	
-//	StopListOperation *loadingOp = [[StopListOperation alloc] initWithDelegate:self andStopId:stop];
-//	[opQueue addOperation:loadingOp];
-//	[loadingOp release];
 }
 
 #pragma mark -

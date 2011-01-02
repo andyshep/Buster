@@ -26,17 +26,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "RoutesModel.h"
+#import "RouteListModel.h"
 
 @class DetailViewController;
 
 @interface RootViewController : UITableViewController {
     DetailViewController *detailViewController;
-	
-	NSArray *routeList;
 }
 
 @property (nonatomic, retain) IBOutlet DetailViewController *detailViewController;
-@property (copy) NSArray *routeList;
 
 @end
