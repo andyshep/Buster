@@ -117,24 +117,49 @@
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    // Return the number of rows in the section.
-    return 1;
+	if (section == 0) {
+		return 1;
+	}
+	
+    PredictionsModel *model = [PredictionsModel sharedPredictionsModel];
+	
+	return [model countOfPredictions];
 }
 
 
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    static NSString *CellIdentifier = @"Cell";
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
-    }
-    
-    // Configure the cell...
-    
-    return cell;
+	
+	// return the first placeholder title cell
+	if ([indexPath section] == 0) {
+		static NSString *CellIdentifier = @"Cell";
+		
+		UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+		if (cell == nil) {
+			cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+		}
+		
+		// Configure the cell...
+		
+		return cell;
+	}
+	
+	// return a prediction cell
+	static NSString *CellIdentifier = @"Cell";
+	
+	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+	if (cell == nil) {
+		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+	}
+	
+	PredictionsModel *model = [PredictionsModel sharedPredictionsModel];
+	NSMutableDictionary *dict = (NSMutableDictionary *)[model objectInPredictionsAtIndex:[indexPath row]];
+	NSString *title = [dict objectForKey:@"minutes"];
+	title = [title stringByAppendingFormat:@" minutes"];
+	
+	cell.textLabel.text = title;
+	
+	return cell;
 }
 
 
@@ -157,6 +182,8 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     NSLog(@"observeValueForKeyPath: %@", keyPath);
+	
+	[self.tableView reloadData];
 }
 
 
