@@ -42,8 +42,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(RouteListModel);
     
 	if (self != nil) {
 		
-		NSLog(@"RouteListModel init'd!");
-		
 		// init an empty set of routeTitles for the model
 		self.routes = nil;
 		
@@ -67,20 +65,14 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(RouteListModel);
 #pragma mark Model KVC
 
 - (NSUInteger)countOfRoutes {
-	NSLog(@"countOfRoutes:");
-	
 	return [routes count];
 }
 
 - (id)objectInRoutesAtIndex:(NSUInteger)index {
-	NSLog(@"objectInRoutesAtIndex:");
-	
 	return [routes objectAtIndex:index];
 }
 
 - (void)getRoutes:(id *)objects range:(NSRange)range {
-	NSLog(@"getRoutes:range:");
-	
 	[routes getObjects:objects range:range];
 }
 
@@ -112,7 +104,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(RouteListModel);
 #pragma mark RouteListOperationDelegate methods
 
 - (void)updateRouteList:(NSArray *)data {
-	NSLog(@"updateRouteList: %d", [data count]);
 	
 	self.routes = data;
 	

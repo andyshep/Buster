@@ -42,8 +42,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(StopListModel);
     
 	if (self != nil) {
 		
-		NSLog(@"StopListModel init'd!");
-		
 		// init an empty set of routeTitles for the model
 		self.stops = nil;
 		
@@ -67,20 +65,14 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(StopListModel);
 #pragma mark Model KVC
 
 - (NSUInteger)countOfStops {
-	NSLog(@"countOfStops:");
-	
 	return [stops count];
 }
 
 - (id)objectInStopsAtIndex:(NSUInteger)index {
-	NSLog(@"objectInStopsAtIndex:");
-	
 	return [stops objectAtIndex:index];
 }
 
 - (void)getStops:(id *)objects range:(NSRange)range {
-	NSLog(@"getStops:range:");
-	
 	[stops getObjects:objects range:range];
 }
 
@@ -96,7 +88,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(StopListModel);
 	
 	if ([stopListCache objectForKey:stop] != nil) {
 		NSArray *cachedList = [stopListCache objectForKey:stop];
-		NSLog(@"cachedList: %@", cachedList);
 		self.stops = cachedList;
 	}
 	else {
@@ -110,7 +101,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(StopListModel);
 #pragma mark StopListOperationDelegate methods
 
 - (void)updateStopList:(NSArray *)data {
-	NSLog(@"updateStopList: %@", [data objectAtIndex:0]);
 	
 	NSString *stop = [data objectAtIndex:0];
 	NSArray *list = [data objectAtIndex:1];

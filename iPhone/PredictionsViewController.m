@@ -181,8 +181,6 @@
 #pragma mark Model Observing
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    NSLog(@"observeValueForKeyPath: %@", keyPath);
-	
 	[self.tableView reloadData];
 }
 

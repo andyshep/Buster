@@ -42,8 +42,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(PredictionsModel);
     
 	if (self != nil) {
 		
-		NSLog(@"PredictionsModel init'd!");
-		
 		// init an empty set of predictions for the model
 		self.predictions = nil;
 		
@@ -94,8 +92,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(PredictionsModel);
 
 - (void)updatePredictions:(NSArray *)data {
 	// TODO: implement
-	
-	NSLog(@"updatePredictions: %@", data);
 	
 	self.predictions = data;
 }

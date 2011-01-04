@@ -37,8 +37,6 @@
 - (id)initWithDelegate:(id<RouteListOperationDelegate>)operationDelegate {
 	if (self = [super init]) {
 		delegate = operationDelegate;
-		
-		NSLog(@"RouteListOperationDelegate init'd!");
 	}
 	
 	return self;
