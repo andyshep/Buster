@@ -28,7 +28,7 @@
 #import "StopListModel.h"
 
 
-@interface RouteStopViewController : UITableViewController <UITableViewDelegate, UITableViewDataSource> {
+@interface StopListViewController : UITableViewController <UITableViewDelegate, UITableViewDataSource> {
 	
 	NSString *stopTag;
 }

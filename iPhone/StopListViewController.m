@@ -25,10 +25,10 @@
 //  THE SOFTWARE.
 //
 
-#import "RouteStopViewController.h"
+#import "StopListViewController.h"
 
 
-@implementation RouteStopViewController
+@implementation StopListViewController
 
 @synthesize stopTag;
 

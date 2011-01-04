@@ -26,7 +26,7 @@
 //
 
 #import "MapViewController.h"
-#import "RouteStopViewController.h"
+#import "StopListViewController.h"
 #import "RouteListModel.h"
 
 @protocol MapViewControllerDelegate;
