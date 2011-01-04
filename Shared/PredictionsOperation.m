@@ -36,7 +36,7 @@
 #pragma mark -
 #pragma mark Memory Management
 
-- (id)initWithDelegate:(id<StopOperationDelegate>)operationDelegate 
+- (id)initWithDelegate:(id<PredictionsOperationDelegate>)operationDelegate 
 				 route:(NSString *)routeId 
 				  stop:(NSString *)stopTag {
 	
@@ -59,40 +59,34 @@
 
 - (NSData *)fetchData {
 	
-	NSData *predictionsData = nil;
-	NSURL *url;
+//	NSURL *url;
+//	
+////	MBTAQueryStringBuilder *_builder = [[[MBTAQueryStringBuilder alloc] 
+////										 initWithBaseURL:@"http://webservices.nextbus.com/service/publicXMLFeed"] autorelease];
+////	
+////	NSLog(@"%@", [_builder buildPredictionsQueryForRoute:self.route 
+////										   withDirection:self.direction 
+////												  atStop:self.stop]);
+////	
+////	url = [[[NSURL alloc] initWithString:[_builder buildPredictionsQueryForRoute:self.route 
+////																   withDirection:self.direction 
+////																		  atStop:self.stop]] autorelease];
 	
-	MBTAQueryStringBuilder *_builder = [[[MBTAQueryStringBuilder alloc] 
-										 initWithBaseURL:@"http://webservices.nextbus.com/service/publicXMLFeed"] autorelease];
+	NSString *addy = @"http://127.0.0.1:8081/predictions_route57_stop918.xml";
+
+	NSURL *url = [NSURL URLWithString:addy];
+	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
 	
-	NSLog(@"%@", [_builder buildPredictionsQueryForRoute:self.route 
-										   withDirection:self.direction 
-												  atStop:self.stop]);
+	// make a sync request
+	[request startSynchronous];
+	NSError *error = [request error];
 	
-	url = [[[NSURL alloc] initWithString:[_builder buildPredictionsQueryForRoute:self.route 
-																   withDirection:self.direction 
-																		  atStop:self.stop]] autorelease];
+	if (!error) {
+		return [request responseData];
+	}
 	
-	//	NSString *predictionsURL = @"http://127.0.0.1:8081/predictions_route57_stop918.xml";
-	//
-	//	NSString *urlString = [[NSString alloc] initWithFormat:@"%@", predictionsURL];
-	//	url = [[[NSURL alloc] initWithString:urlString] autorelease];
-	
-	NSMutableURLRequest *req = [[NSMutableURLRequest alloc] initWithURL:url];
-	[req setHTTPMethod:@"GET"];
-	
-	NSHTTPURLResponse* response = nil;  
-	NSError* error = [[NSError alloc] init];  
-	predictionsData = [NSURLConnection sendSynchronousRequest:req   
-											returningResponse:&response  
-														error:&error];
-	
-	// release and cleanup
-	[req release];
-	[error release];
-	//	[urlString release];
-	
-	return predictionsData;
+	// TODO: handle error
+	return nil;
 }
 
 - (NSArray *)consumeData {
@@ -138,7 +132,7 @@
 		NSArray *consumedData = [self consumeData];
 		
 		if (!self.isCancelled) {
-			[delegate performSelectorOnMainThread:@selector(didParsePredictions:) 
+			[delegate performSelectorOnMainThread:@selector(updatePredictions:) 
 									   withObject:consumedData
 									waitUntilDone:YES];
 		}

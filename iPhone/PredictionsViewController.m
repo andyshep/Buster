@@ -60,26 +60,30 @@
 }
 */
 
-/*
+
 - (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
+	[super viewWillAppear:animated];
+	
+	PredictionsModel *model = [PredictionsModel sharedPredictionsModel];
+	
+	[model requestPredictionsForRoute:self.routeNumber andStop:self.stopTag];
+	[model addObserver:self 
+			forKeyPath:@"predictions" 
+			   options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
+			   context:NULL];
 }
-*/
 /*
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
 }
 */
-/*
+
 - (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
+	PredictionsModel *model = [PredictionsModel sharedPredictionsModel];
+	[model removeObserver:self forKeyPath:@"predictions"];
+	
+	[super viewWillDisappear:animated];
 }
-*/
-/*
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-}
-*/
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 	
@@ -146,6 +150,13 @@
 	 [self.navigationController pushViewController:detailViewController animated:YES];
 	 [detailViewController release];
 	 */
+}
+
+#pragma mark -
+#pragma mark Model Observing
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    NSLog(@"observeValueForKeyPath: %@", keyPath);
 }
 
 

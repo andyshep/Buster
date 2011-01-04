@@ -26,9 +26,10 @@
 //
 
 #import "SynthesizeSingleton.h"
+#import "PredictionsOperation.h"
 
 
-@interface PredictionsModel : NSObject {
+@interface PredictionsModel : NSObject <PredictionsOperationDelegate> {
 	NSOperationQueue *opQueue;
 	
 	// these are used by table views
@@ -38,5 +39,8 @@
 @property (copy) NSArray *predictions;
 
 + (PredictionsModel *)sharedPredictionsModel;
+
+- (void)requestPredictionsForRoute:(NSString *)route andStop:(NSString *)stop;
+- (void)updatePredictions:(NSArray *)data;
 
 @end

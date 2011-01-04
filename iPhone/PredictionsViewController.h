@@ -26,6 +26,7 @@
 //
 
 #import "MapViewController.h"
+#import "PredictionsModel.h"
 
 @protocol MapViewControllerDelegate;
 

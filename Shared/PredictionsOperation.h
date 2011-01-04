@@ -27,7 +27,7 @@
 
 #import "MBTAQueryStringBuilder.h"
 
-@protocol StopOperationDelegate
+@protocol PredictionsOperationDelegate
 
 - (void)updatePredictions:(NSArray *)data;
 
@@ -41,7 +41,7 @@
 	NSString *direction;
 }
 
-- (id)initWithDelegate:(id<StopOperationDelegate>)operationDelegate 
+- (id)initWithDelegate:(id<PredictionsOperationDelegate>)operationDelegate 
 				 route:(NSString *)routeId
 				  stop:(NSString *)stopTag;
 
@@ -49,7 +49,7 @@
 - (NSData *)fetchData;
 - (NSArray *)consumeData;
 
-@property (assign) id<StopOperationDelegate> delegate;
+@property (assign) id<PredictionsOperationDelegate> delegate;
 @property (nonatomic, retain) NSString *route;
 @property (nonatomic, retain) NSString *stop;
 @property (nonatomic, retain) NSString *direction;

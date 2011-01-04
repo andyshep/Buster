@@ -34,4 +34,70 @@
 
 SYNTHESIZE_SINGLETON_FOR_CLASS(PredictionsModel);
 
+#pragma mark -
+#pragma mark Lifecycle
+
+- (id) init {
+    self = [super init];
+    
+	if (self != nil) {
+		
+		NSLog(@"PredictionsModel init'd!");
+		
+		// init an empty set of predictions for the model
+		self.predictions = nil;
+		
+		// create our operation queue
+		opQueue = [[NSOperationQueue alloc] init];
+    }
+	
+    return self;
+}
+
+- (void) dealloc {
+    [opQueue release];
+    [super dealloc];
+}
+
+#pragma mark -
+#pragma mark Model KVC
+
+- (NSUInteger)countOfPredictions {
+	return [predictions count];
+}
+
+- (id)objectInPredictionsAtIndex:(NSUInteger)index {
+	return [predictions objectAtIndex:index];
+}
+
+- (void)getPredictions:(id *)objects range:(NSRange)range {
+	[predictions getObjects:objects range:range];
+}
+
+- (id)predictions {
+	return predictions;
+}
+
+#pragma mark -
+#pragma mark Predictions building
+
+- (void)requestPredictionsForRoute:(NSString *)route andStop:(NSString *)stop {
+	// a controller has requested a prediction
+	
+	PredictionsOperation *loadingOp = [[PredictionsOperation alloc] initWithDelegate:self route:route stop:stop];
+	[opQueue addOperation:loadingOp];
+	[loadingOp release];
+}
+
+#pragma mark -
+#pragma mark PredictionsOperationDelegate methods
+
+- (void)updatePredictions:(NSArray *)data {
+	// TODO: implement
+	
+	NSLog(@"updatePredictions: %@", data);
+	
+	self.predictions = data;
+}
+
 @end
