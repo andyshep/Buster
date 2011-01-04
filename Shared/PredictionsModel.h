@@ -1,8 +1,8 @@
 //
-//  RouteStopViewController.h
+//  StopModel.h
 //  Buster
 //
-//  Created by andyshep on 8/9/10.
+//  Created by andyshep on 1/3/11.
 //
 //  Copyright (c) 2010 Andrew Shepard
 // 
@@ -25,15 +25,18 @@
 //  THE SOFTWARE.
 //
 
-#import "StopListModel.h"
-#import "PredictionsViewController.h"
+#import "SynthesizeSingleton.h"
 
 
-@interface StopListViewController : UITableViewController {
+@interface PredictionsModel : NSObject {
+	NSOperationQueue *opQueue;
 	
-	NSString *stopTag;
+	// these are used by table views
+	NSArray *predictions;
 }
 
-@property (nonatomic, retain) NSString *stopTag;
+@property (copy) NSArray *predictions;
+
++ (PredictionsModel *)sharedPredictionsModel;
 
 @end

@@ -1,8 +1,8 @@
 //
-//  RouteStopViewController.h
+//  StopViewController.h
 //  Buster
 //
-//  Created by andyshep on 8/9/10.
+//  Created by andyshep on 1/3/11.
 //
 //  Copyright (c) 2010 Andrew Shepard
 // 
@@ -25,15 +25,28 @@
 //  THE SOFTWARE.
 //
 
-#import "StopListModel.h"
-#import "PredictionsViewController.h"
+#import "MapViewController.h"
 
+@protocol MapViewControllerDelegate;
 
-@interface StopListViewController : UITableViewController {
+@interface PredictionsViewController : UITableViewController {
+	id <MapViewControllerDelegate> delegate;
 	
 	NSString *stopTag;
+	NSString *latitude;
+	NSString *longitude;
+	NSString *routeNumber;
+	NSString *routeTitle;
+	NSString *directionTag;
 }
 
+@property (nonatomic, assign) id <MapViewControllerDelegate> delegate;
+
 @property (nonatomic, retain) NSString *stopTag;
+@property (nonatomic, retain) NSString *latitude;
+@property (nonatomic, retain) NSString *longitude;
+@property (nonatomic, retain) NSString *routeNumber;
+@property (nonatomic, retain) NSString *routeTitle;
+@property (nonatomic, retain) NSString *directionTag;
 
 @end

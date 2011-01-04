@@ -1,8 +1,8 @@
 //
-//  RouteStopViewController.h
+//  StopOperation.h
 //  Buster
 //
-//  Created by andyshep on 8/9/10.
+//  Created by andyshep on 1/3/11.
 //
 //  Copyright (c) 2010 Andrew Shepard
 // 
@@ -25,15 +25,33 @@
 //  THE SOFTWARE.
 //
 
-#import "StopListModel.h"
-#import "PredictionsViewController.h"
+#import "MBTAQueryStringBuilder.h"
 
+@protocol StopOperationDelegate
 
-@interface StopListViewController : UITableViewController {
+- (void)updatePredictions:(NSArray *)data;
+
+@end
+
+@interface PredictionsOperation : NSOperation {
+	id delegate;
 	
-	NSString *stopTag;
+	NSString *route;
+	NSString *stop;
+	NSString *direction;
 }
 
-@property (nonatomic, retain) NSString *stopTag;
+- (id)initWithDelegate:(id<StopOperationDelegate>)operationDelegate 
+				 route:(NSString *)routeId
+				  stop:(NSString *)stopTag;
+
+//- (NSString *)buildURL;
+- (NSData *)fetchData;
+- (NSArray *)consumeData;
+
+@property (assign) id<StopOperationDelegate> delegate;
+@property (nonatomic, retain) NSString *route;
+@property (nonatomic, retain) NSString *stop;
+@property (nonatomic, retain) NSString *direction;
 
 @end

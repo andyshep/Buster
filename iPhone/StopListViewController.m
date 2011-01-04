@@ -112,8 +112,7 @@
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
 	
-	StopListModel *model = [StopListModel sharedStopListModel];
-	
+	StopListModel *model = [StopListModel sharedStopListModel];	
 	NSUInteger row = [indexPath row];
 	NSMutableDictionary *dict = (NSMutableDictionary *)[model objectInStopsAtIndex:row];
 	
@@ -123,7 +122,27 @@
 }
 
 - (void) tableView:(UITableView *)tView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	NSLog(@"didSelectRowAtIndexPath:");
+	
+	StopListModel *model = [StopListModel sharedStopListModel];
+	NSUInteger row = [indexPath row];
+	NSMutableDictionary *dict = (NSMutableDictionary *)[model objectInStopsAtIndex:row];
+	NSString *routeTitle = (NSString *)[dict objectForKey:@"title"];
+	NSString *_directionTag = (NSString *)[dict objectForKey:@"dirTag"];
+	NSString *_tag = (NSString *)[dict objectForKey:@"tag"];
+	
+	PredictionsViewController *nextController = [[PredictionsViewController alloc] initWithStyle:UITableViewStyleGrouped];
+	nextController.title = routeTitle;
+	nextController.directionTag = _directionTag;
+	nextController.routeNumber = self.title;
+	nextController.stopTag = _tag;
+	nextController.routeTitle = routeTitle;
+	
+	// FIXME: figure out better delegate handling
+	// nextController.delegate = self.delegate;
+	
+	[self.navigationController pushViewController:nextController animated:YES];
+	
+	[nextController release];
 }
 
 
