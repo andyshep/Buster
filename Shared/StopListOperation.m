@@ -52,11 +52,12 @@
 #pragma mark Route Stop Processing
 
 - (NSString *)buildURL {
-	//	MBTAQueryStringBuilder *_builder = [[[MBTAQueryStringBuilder alloc] 
-	//										 initWithBaseURL:@"http://webservices.nextbus.com/service/publicXMLFeed"] autorelease];
 	
-	// build the url
-	// NSString *url = [_builder buildRouteConfigQuery:self.routeTitle];
+//	MBTAQueryStringBuilder *_builder = [[[MBTAQueryStringBuilder alloc] 
+//										 initWithBaseURL:@"http://webservices.nextbus.com/service/publicXMLFeed"] autorelease];
+//
+//	// build the url
+//	NSString *url = [_builder buildRouteConfigQuery:self.routeTitle];
 	
 	NSString *url = @"http://localhost:8081/routeConfig_r";
 	
@@ -68,17 +69,7 @@
 
 - (NSData *)fetchData {
 	
-//	MBTAQueryStringBuilder *_builder = [[[MBTAQueryStringBuilder alloc] 
-//										 initWithBaseURL:@"http://webservices.nextbus.com/service/publicXMLFeed"] autorelease];
-//	
-//	NSLog(@"%@", [_builder buildRouteConfigQuery:self.routeTitle]);
-	
-	// create a url and request
-	
-	NSString *addy = @"http://localhost:8081/routeConfig_r";
-	
-	addy = [addy stringByAppendingString:self.stopId];
-	addy = [addy stringByAppendingString:@".xml"];
+	NSString *addy = [self buildURL];
 	
 	NSURL *url = [NSURL URLWithString:addy];
 	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];

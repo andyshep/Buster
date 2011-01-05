@@ -57,22 +57,27 @@
 #pragma mark -
 #pragma mark Predictions Processing
 
+- (NSString *)buildURL {
+	
+//	MBTAQueryStringBuilder *_builder = [[[MBTAQueryStringBuilder alloc] 
+//										 initWithBaseURL:@"http://webservices.nextbus.com/service/publicXMLFeed"] autorelease];
+//	
+//	NSLog(@"%@", [_builder buildPredictionsQueryForRoute:self.route 
+//										   withDirection:self.direction 
+//												  atStop:self.stop]);
+//	
+//	NSString *url = [_builder buildPredictionsQueryForRoute:self.route 
+//											  withDirection:self.direction 
+//													 atStop:self.stop];
+	
+	NSString *url = @"http://127.0.0.1:8081/predictions_route57_stop918.xml";
+	
+	return url;
+}
+
 - (NSData *)fetchData {
 	
-//	NSURL *url;
-//	
-////	MBTAQueryStringBuilder *_builder = [[[MBTAQueryStringBuilder alloc] 
-////										 initWithBaseURL:@"http://webservices.nextbus.com/service/publicXMLFeed"] autorelease];
-////	
-////	NSLog(@"%@", [_builder buildPredictionsQueryForRoute:self.route 
-////										   withDirection:self.direction 
-////												  atStop:self.stop]);
-////	
-////	url = [[[NSURL alloc] initWithString:[_builder buildPredictionsQueryForRoute:self.route 
-////																   withDirection:self.direction 
-////																		  atStop:self.stop]] autorelease];
-	
-	NSString *addy = @"http://127.0.0.1:8081/predictions_route57_stop918.xml";
+	NSString *addy = [self buildURL];
 
 	NSURL *url = [NSURL URLWithString:addy];
 	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];

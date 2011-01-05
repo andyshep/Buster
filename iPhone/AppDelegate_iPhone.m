@@ -29,7 +29,7 @@
 
 @implementation AppDelegate_iPhone
 
-@synthesize window, mapViewController;
+@synthesize window, navigationController;
 
 
 #pragma mark -
@@ -37,12 +37,14 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
 	
-	MapViewController *aController = [[MapViewController alloc] initWithNibName:@"MapView" bundle:nil];
-	self.mapViewController = aController;
-	[aController release];
+//	MapViewController *aController = [[MapViewController alloc] initWithNibName:@"MapView" bundle:nil];
+//	self.mapViewController = aController;
+//	[aController release];
+//	
+//    mapViewController.view.frame = [UIScreen mainScreen].applicationFrame;
+//	[window addSubview:[mapViewController view]];
 	
-    mapViewController.view.frame = [UIScreen mainScreen].applicationFrame;
-	[window addSubview:[mapViewController view]];
+	[window addSubview:navigationController.view];
     [window makeKeyAndVisible];
 	
 	return YES;

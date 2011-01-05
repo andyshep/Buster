@@ -45,7 +45,7 @@
 				 route:(NSString *)routeId
 				  stop:(NSString *)stopTag;
 
-//- (NSString *)buildURL;
+- (NSString *)buildURL;
 - (NSData *)fetchData;
 - (NSArray *)consumeData;
 

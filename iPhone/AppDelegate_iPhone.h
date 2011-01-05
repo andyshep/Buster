@@ -30,11 +30,11 @@
 
 @interface AppDelegate_iPhone : NSObject <UIApplicationDelegate> {
     UIWindow *window;
-	MapViewController *mapViewController;
+	UINavigationController *navigationController;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
-@property (nonatomic, retain) MapViewController *mapViewController;
+@property (nonatomic, retain) IBOutlet UINavigationController *navigationController;
 
 @end
 

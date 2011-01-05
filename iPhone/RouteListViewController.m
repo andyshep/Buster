@@ -44,24 +44,19 @@
 #pragma mark -
 #pragma mark View lifecycle
 
-//- (void)awakeFromNib {
-//	BusterRouteList *model = [BusterRouteList sharedBusterRouteList];
-//	[model addObserver:self forKeyPath:@"routeList" options:NSKeyValueObservingOptionNew context:nil];
-//}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
 	// set up the navigation bar
-	UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" 
-																   style:UIBarButtonItemStyleDone 
-																  target:self 
-																  action:@selector(done)];
+//	UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" 
+//																   style:UIBarButtonItemStyleDone 
+//																  target:self 
+//																  action:@selector(done)];
+//	
+//	[[self navigationItem] setRightBarButtonItem:doneButton];
+//	[doneButton release];
 	
-	[[self navigationItem] setRightBarButtonItem:doneButton];
 	[[self navigationItem] setTitle:@"Routes"];
-	
-	[doneButton release];
 	
 	NSLog(@"viewDidLoad:");
 }

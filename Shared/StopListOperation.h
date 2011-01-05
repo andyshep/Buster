@@ -43,4 +43,8 @@
 
 - (id)initWithDelegate:(id<StopListOperationDelegate>)operationDelegate andStopId:(NSString *)stop;
 
+- (NSString *)buildURL;
+- (NSData *)fetchData;
+- (NSArray *)consumeData;
+
 @end

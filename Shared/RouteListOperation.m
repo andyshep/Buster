@@ -49,9 +49,24 @@
 #pragma mark -
 #pragma mark fetch data
 
+- (NSString *)buildURL {
+	
+//	MBTAQueryStringBuilder *_builder = [[[MBTAQueryStringBuilder alloc] 
+//										 initWithBaseURL:@"http://webservices.nextbus.com/service/publicXMLFeed"] autorelease];
+//
+//	// build the url
+//	NSString *url = [_builder buildRouteListQuery];
+	
+	NSString *url = @"http://localhost:8081/routeList.xml";
+	
+	return url;
+}
+
 - (NSData *)fetchData {
-	// create a url and request
-	NSURL *url = [NSURL URLWithString:@"http://localhost:8081/routeList.xml"];
+	
+	NSString *addy = [self buildURL];
+	
+	NSURL *url = [NSURL URLWithString:addy];
 	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
 	
 	// make a sync request
