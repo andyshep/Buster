@@ -51,38 +51,47 @@
 #pragma mark -
 #pragma mark View lifecycle
 
-/*
 - (void)viewDidLoad {
     [super viewDidLoad];
 
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+	
+	// [[self navigationItem] setTitle:self.title];
+	
+	PredictionsModel *model = [PredictionsModel sharedPredictionsModel];
+	[model requestPredictionsForRoute:self.routeNumber andStop:self.stopTag];
 }
-*/
 
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
 	
 	PredictionsModel *model = [PredictionsModel sharedPredictionsModel];
-	
-	[model requestPredictionsForRoute:self.routeNumber andStop:self.stopTag];
 	[model addObserver:self 
 			forKeyPath:@"predictions" 
 			   options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
 			   context:NULL];
 }
-/*
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-}
-*/
 
-- (void)viewWillDisappear:(BOOL)animated {
+//- (void)viewDidAppear:(BOOL)animated {
+//    [super viewDidAppear:animated];
+//	
+//	PredictionsModel *model = [PredictionsModel sharedPredictionsModel];
+//	
+//	[model requestPredictionsForRoute:self.routeNumber andStop:self.stopTag];
+//	[model addObserver:self 
+//			forKeyPath:@"predictions" 
+//			   options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
+//			   context:NULL];
+//}
+
+- (void)viewDidDisappear:(BOOL)animated {
 	PredictionsModel *model = [PredictionsModel sharedPredictionsModel];
+//	[model unloadPredictions];
 	[model removeObserver:self forKeyPath:@"predictions"];
 	
-	[super viewWillDisappear:animated];
+	[super viewDidDisappear:animated];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

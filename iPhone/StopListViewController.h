@@ -30,7 +30,7 @@
 
 
 @interface StopListViewController : UITableViewController {
-	
+	BOOL isUnloading;
 	NSString *stopTag;
 }
 

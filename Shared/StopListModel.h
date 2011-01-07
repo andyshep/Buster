@@ -43,6 +43,7 @@
 + (StopListModel *)sharedStopListModel;
 
 - (void)requestStopList:(NSString *)stop;
+- (void)unloadStopList;
 
 - (NSUInteger)countOfStops;
 - (id)objectInStopsAtIndex:(NSUInteger)index;

@@ -97,6 +97,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(StopListModel);
 	}
 }
 
+- (void)unloadStopList {
+	self.stops = nil;
+}
+
 #pragma mark -
 #pragma mark StopListOperationDelegate methods
 

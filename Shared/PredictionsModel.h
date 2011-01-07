@@ -42,6 +42,7 @@
 
 - (void)requestPredictionsForRoute:(NSString *)route andStop:(NSString *)stop;
 - (void)updatePredictions:(NSArray *)data;
+- (void)unloadPredictions;
 
 - (NSUInteger)countOfPredictions;
 - (id)objectInPredictionsAtIndex:(NSUInteger)index;

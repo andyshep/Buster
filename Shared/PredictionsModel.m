@@ -87,11 +87,14 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(PredictionsModel);
 	[loadingOp release];
 }
 
+- (void)unloadPredictions {
+	self.predictions = nil;
+}
+
 #pragma mark -
 #pragma mark PredictionsOperationDelegate methods
 
 - (void)updatePredictions:(NSArray *)data {
-	// TODO: implement
 	
 	self.predictions = data;
 }

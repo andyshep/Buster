@@ -35,11 +35,22 @@
 #pragma mark -
 #pragma mark View Lifecycle
 
+- (id)initWithStyle:(UITableViewStyle)style {
+    if ((self = [super initWithStyle:style])) {
+		isUnloading = YES;
+    }
+	
+    return self;
+}
+
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	
 	[[self navigationItem] setTitle:self.title];
+	
+	StopListModel *model = [StopListModel sharedStopListModel];
+	[model requestStopList:self.stopTag];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -47,19 +58,19 @@
 	
 	StopListModel *model = [StopListModel sharedStopListModel];
 	
-	[model requestStopList:self.stopTag];
 	[model addObserver:self 
 			forKeyPath:@"stops" 
 			   options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
 			   context:NULL];
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
+- (void)viewDidDisappear:(BOOL)animated {
+	NSLog(@"viewDidDisappear:");
 	
 	StopListModel *model = [StopListModel sharedStopListModel];
 	[model removeObserver:self forKeyPath:@"stops"];
 	
-	[super viewWillDisappear:animated];
+	[super viewDidDisappear:animated];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -82,11 +93,6 @@
 	
 	// Release any cached data, images, etc that aren't in use.
 }
-
-- (void)viewDidUnload {
-	
-}
-
 
 - (void)dealloc {
     [super dealloc];
@@ -129,7 +135,7 @@
 	NSString *_tag = (NSString *)[dict objectForKey:@"tag"];
 	
 	PredictionsViewController *nextController = [[PredictionsViewController alloc] initWithStyle:UITableViewStyleGrouped];
-	nextController.title = routeTitle;
+	nextController.title = @"Predictions";
 	nextController.directionTag = _directionTag;
 	nextController.routeNumber = self.title;
 	nextController.stopTag = _tag;
@@ -138,6 +144,7 @@
 	// FIXME: figure out better delegate handling
 	// nextController.delegate = self.delegate;
 	
+	isUnloading = NO;
 	[self.navigationController pushViewController:nextController animated:YES];
 	
 	[nextController release];

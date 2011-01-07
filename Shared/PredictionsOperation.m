@@ -62,10 +62,6 @@
 //	MBTAQueryStringBuilder *_builder = [[[MBTAQueryStringBuilder alloc] 
 //										 initWithBaseURL:@"http://webservices.nextbus.com/service/publicXMLFeed"] autorelease];
 //	
-//	NSLog(@"%@", [_builder buildPredictionsQueryForRoute:self.route 
-//										   withDirection:self.direction 
-//												  atStop:self.stop]);
-//	
 //	NSString *url = [_builder buildPredictionsQueryForRoute:self.route 
 //											  withDirection:self.direction 
 //													 atStop:self.stop];

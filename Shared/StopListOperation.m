@@ -56,8 +56,7 @@
 //	MBTAQueryStringBuilder *_builder = [[[MBTAQueryStringBuilder alloc] 
 //										 initWithBaseURL:@"http://webservices.nextbus.com/service/publicXMLFeed"] autorelease];
 //
-//	// build the url
-//	NSString *url = [_builder buildRouteConfigQuery:self.routeTitle];
+//	NSString *url = [_builder buildRouteConfigQuery:self.stopId];
 	
 	NSString *url = @"http://localhost:8081/routeConfig_r";
 	
