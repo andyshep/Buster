@@ -25,16 +25,16 @@
 //  THE SOFTWARE.
 //
 
-#import "MapViewController.h"
+#import "DetailViewController.h"
 #import "StopListViewController.h"
 #import "RouteListModel.h"
 
 @protocol MapViewControllerDelegate;
 
 @interface RouteListViewController : UITableViewController {
-	id <MapViewControllerDelegate> delegate;
+	DetailViewController *detailViewController;
 }
 
-@property (nonatomic, assign) id <MapViewControllerDelegate> delegate;
+@property (nonatomic, retain) IBOutlet DetailViewController *detailViewController;
 
 @end

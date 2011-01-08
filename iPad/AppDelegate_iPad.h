@@ -26,23 +26,28 @@
 //
 
 
-@class RootViewController;
+// fwd declare or import?
+//@class RootViewController;
 @class DetailViewController;
+
+#import "RouteListViewController.h"
 
 @interface AppDelegate_iPad : NSObject <UIApplicationDelegate> {
     UIWindow *window;
     
     UISplitViewController *splitViewController;
     
-    RootViewController *rootViewController;
+    //RootViewController *rootViewController;
     DetailViewController *detailViewController;
+	RouteListViewController *routeListViewController;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
 
 @property (nonatomic, retain) IBOutlet UISplitViewController *splitViewController;
-@property (nonatomic, retain) IBOutlet RootViewController *rootViewController;
+//@property (nonatomic, retain) IBOutlet RootViewController *rootViewController;
 @property (nonatomic, retain) IBOutlet DetailViewController *detailViewController;
+@property (nonatomic, retain) IBOutlet RouteListViewController *routeListViewController;
 
 @end
 
