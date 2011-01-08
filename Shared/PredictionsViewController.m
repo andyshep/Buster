@@ -30,22 +30,8 @@
 
 @implementation PredictionsViewController
 
-@synthesize delegate;
 @synthesize stopTag, latitude, longitude;
 @synthesize routeNumber, routeTitle, directionTag;
-
-
-#pragma mark -
-#pragma mark Initialization
-
-/*
-- (id)initWithStyle:(UITableViewStyle)style {
-    // Override initWithStyle: if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
-    if ((self = [super initWithStyle:style])) {
-    }
-    return self;
-}
-*/
 
 
 #pragma mark -
@@ -80,21 +66,8 @@
 			   context:NULL];
 }
 
-//- (void)viewDidAppear:(BOOL)animated {
-//    [super viewDidAppear:animated];
-//	
-//	PredictionsModel *model = [PredictionsModel sharedPredictionsModel];
-//	
-//	[model requestPredictionsForRoute:self.routeNumber andStop:self.stopTag];
-//	[model addObserver:self 
-//			forKeyPath:@"predictions" 
-//			   options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
-//			   context:NULL];
-//}
-
 - (void)viewDidDisappear:(BOOL)animated {
 	PredictionsModel *model = [PredictionsModel sharedPredictionsModel];
-//	[model unloadPredictions];
 	[model removeObserver:self forKeyPath:@"predictions"];
 	
 	[super viewDidDisappear:animated];
@@ -137,7 +110,6 @@
 	}
 	
     PredictionsModel *model = [PredictionsModel sharedPredictionsModel];
-	
 	return [model countOfPredictions];
 }
 
@@ -182,18 +154,11 @@
 #pragma mark Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-//	MapViewController *nextController = [[MapViewController alloc] initWithNibName:@"MapView" bundle:nil];
-//	
-//	nextController.title = @"Maps";
-//	
-//	[self.navigationController pushViewController:nextController animated:YES];
-//	
-//	[nextController release];
 	
-	// TODO: use a delegate to handle this logic?  call back to app delegate to invoke iphone/ipad functionality?
+	// TODO: use a delegate to handle this logic for both ipad and iphone.
+	// TODO: make your delegate conform to a protocol and get rid of this warning.
 	
 	id delegate = [[UIApplication sharedApplication] delegate];
-
 	[delegate loadPredictions];
 }
 
@@ -209,6 +174,8 @@
 
 - (IBAction)refreshList:(id)sender {
 	NSLog(@"refreshList:");
+	
+	// TODO: implement with periodic updater?
 }
 
 

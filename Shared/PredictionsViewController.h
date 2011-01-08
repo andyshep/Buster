@@ -31,7 +31,6 @@
 @protocol MapViewControllerDelegate;
 
 @interface PredictionsViewController : UITableViewController {
-	id <MapViewControllerDelegate> delegate;
 	
 	NSString *stopTag;
 	NSString *latitude;
@@ -40,8 +39,6 @@
 	NSString *routeTitle;
 	NSString *directionTag;
 }
-
-@property (nonatomic, assign) id <MapViewControllerDelegate> delegate;
 
 @property (nonatomic, retain) NSString *stopTag;
 @property (nonatomic, retain) NSString *latitude;

@@ -141,9 +141,6 @@
 	nextController.stopTag = _tag;
 	nextController.routeTitle = routeTitle;
 	
-	// TODO: figure out better delegate handling
-	// nextController.delegate = self.delegate;
-	
 	[self.navigationController pushViewController:nextController animated:YES];
 	
 	[nextController release];
