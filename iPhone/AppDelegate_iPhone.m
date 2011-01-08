@@ -81,6 +81,18 @@
      */
 }
 
+#pragma mark -
+#pragma mark Predictions Loading
+
+- (void)loadPredictions {
+	NSLog(@"loadPredictions for the iPhone!");
+	
+	MapViewController *nextController = [[MapViewController alloc] initWithNibName:@"MapView" bundle:nil];
+	nextController.title = @"Maps";
+	[self.navigationController pushViewController:nextController animated:YES];
+	[nextController release];
+}
+
 
 #pragma mark -
 #pragma mark Memory management

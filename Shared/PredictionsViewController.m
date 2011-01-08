@@ -191,6 +191,10 @@
 //	[nextController release];
 	
 	// TODO: use a delegate to handle this logic?  call back to app delegate to invoke iphone/ipad functionality?
+	
+	id delegate = [[UIApplication sharedApplication] delegate];
+
+	[delegate loadPredictions];
 }
 
 #pragma mark -

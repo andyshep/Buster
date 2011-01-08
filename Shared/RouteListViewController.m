@@ -30,7 +30,6 @@
 
 @implementation RouteListViewController
 
-@synthesize detailViewController;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
 	

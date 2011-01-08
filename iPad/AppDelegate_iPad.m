@@ -68,6 +68,18 @@
      */
 }
 
+#pragma mark -
+#pragma mark Predictions Loading
+
+- (void)loadPredictions {
+	NSLog(@"loadPredictions for the iPad!");
+	
+//    /*
+//     When a row is selected, set the detail view controller's detail item to the item associated with the selected row.
+//     */
+//    detailViewController.detailItem = [NSString stringWithFormat:@"Row %d", indexPath.row];
+}
+
 
 #pragma mark -
 #pragma mark Memory management
