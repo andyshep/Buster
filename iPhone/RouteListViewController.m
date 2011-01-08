@@ -48,17 +48,14 @@
     [super viewDidLoad];
 	
 	// set up the navigation bar
-//	UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" 
-//																   style:UIBarButtonItemStyleDone 
-//																  target:self 
-//																  action:@selector(done)];
-//	
-//	[[self navigationItem] setRightBarButtonItem:doneButton];
-//	[doneButton release];
-	
 	[[self navigationItem] setTitle:@"Routes"];
 	
-	NSLog(@"viewDidLoad:");
+	// setup a double tap gesture to scroll to the top of table
+//	UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc]
+//										  initWithTarget:self action:@selector(didDoubleTap:)];
+//    recognizer.numberOfTapsRequired = 2;
+//    [self.navigationController.navigationBar addGestureRecognizer:recognizer];
+//    [recognizer release];
 }
 
 
@@ -169,16 +166,6 @@
 
 - (void)dealloc {
     [super dealloc];
-}
-
-#pragma mark -
-#pragma mark IBActions
-
-#pragma mark -
-#pragma mark IBActions
-
-- (IBAction)done {
-	[self.delegate flipsideViewControllerDidFinish:self];	
 }
 
 

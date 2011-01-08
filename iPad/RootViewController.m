@@ -118,10 +118,22 @@
 
 - (void)tableView:(UITableView *)aTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    /*
-     When a row is selected, set the detail view controller's detail item to the item associated with the selected row.
-     */
-    detailViewController.detailItem = [NSString stringWithFormat:@"Row %d", indexPath.row];
+//    /*
+//     When a row is selected, set the detail view controller's detail item to the item associated with the selected row.
+//     */
+//    detailViewController.detailItem = [NSString stringWithFormat:@"Row %d", indexPath.row];
+	
+	RouteListModel *model = [RouteListModel sharedRouteListModel];
+	NSUInteger row = [indexPath row];
+	NSMutableDictionary *dict = (NSMutableDictionary *)[model objectInRoutesAtIndex:row];
+	
+	StopListViewController *nextController = [[StopListViewController alloc] initWithStyle:UITableViewStylePlain];
+	nextController.title = [dict objectForKey:@"title"];
+	nextController.stopTag = [dict objectForKey:@"tag"];
+	
+	[self.navigationController pushViewController:nextController animated:YES];
+	
+	[nextController release];
 }
 
 #pragma mark -

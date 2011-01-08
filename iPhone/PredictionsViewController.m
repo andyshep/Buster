@@ -59,6 +59,12 @@
 	
 	// [[self navigationItem] setTitle:self.title];
 	
+	UIBarButtonItem *refreshButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh 
+																				   target:self 
+																				   action:@selector(refreshList:)];
+	
+	self.navigationItem.rightBarButtonItem = refreshButton;
+	
 	PredictionsModel *model = [PredictionsModel sharedPredictionsModel];
 	[model requestPredictionsForRoute:self.routeNumber andStop:self.stopTag];
 }
@@ -190,6 +196,13 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
 	[self.tableView reloadData];
+}
+
+#pragma mark -
+#pragma mark IBActions
+
+- (IBAction)refreshList:(id)sender {
+	NSLog(@"refreshList:");
 }
 
 

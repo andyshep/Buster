@@ -37,6 +37,4 @@
 
 @property (nonatomic, assign) id <MapViewControllerDelegate> delegate;
 
-- (IBAction)done;
-
 @end

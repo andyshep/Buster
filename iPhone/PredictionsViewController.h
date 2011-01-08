@@ -50,4 +50,6 @@
 @property (nonatomic, retain) NSString *routeTitle;
 @property (nonatomic, retain) NSString *directionTag;
 
+- (IBAction)refreshList:(id)sender;
+
 @end

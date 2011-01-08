@@ -27,6 +27,7 @@
 
 #import <UIKit/UIKit.h>
 #import "RouteListModel.h"
+#import "StopListViewController.h"
 
 @class DetailViewController;
 

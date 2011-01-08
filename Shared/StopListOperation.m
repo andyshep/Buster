@@ -58,7 +58,7 @@
 //
 //	NSString *url = [_builder buildRouteConfigQuery:self.stopId];
 	
-	NSString *url = @"http://169.254.95.60:8081/routeConfig_r";
+	NSString *url = @"http://localhost:8081/routeConfig_r";
 	
 	url = [url stringByAppendingString:self.stopId];
 	url = [url stringByAppendingString:@".xml"];
