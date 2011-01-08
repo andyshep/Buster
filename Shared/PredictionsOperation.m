@@ -66,7 +66,7 @@
 //											  withDirection:self.direction 
 //													 atStop:self.stop];
 	
-	NSString *url = @"http://127.0.0.1:8081/predictions_route57_stop918.xml";
+	NSString *url = @"http://169.254.95.60:8081/predictions_route57_stop918.xml";
 	
 	return url;
 }

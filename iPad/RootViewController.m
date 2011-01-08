@@ -1,6 +1,6 @@
 //
 //  RootViewController.m
-//  SplitTest
+//  Buster
 //
 //  Created by andyshep on 12/16/10.
 //

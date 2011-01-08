@@ -1,6 +1,6 @@
 //
 //  DetailViewController.h
-//  SplitTest
+//  Buster
 //
 //  Created by andyshep on 12/16/10.
 //

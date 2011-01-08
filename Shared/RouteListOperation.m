@@ -56,7 +56,7 @@
 
 //	NSString *url = [_builder buildRouteListQuery];
 	
-	NSString *url = @"http://localhost:8081/routeList.xml";
+	NSString *url = @"http://169.254.95.60:8081/routeList.xml";
 	
 	return url;
 }
