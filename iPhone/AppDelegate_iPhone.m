@@ -37,13 +37,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
 	
-//	MapViewController *aController = [[MapViewController alloc] initWithNibName:@"MapView" bundle:nil];
-//	self.mapViewController = aController;
-//	[aController release];
-//	
-//    mapViewController.view.frame = [UIScreen mainScreen].applicationFrame;
-//	[window addSubview:[mapViewController view]];
-	
 	[window addSubview:navigationController.view];
     [window makeKeyAndVisible];
 	

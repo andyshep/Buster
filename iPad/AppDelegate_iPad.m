@@ -29,7 +29,7 @@
 
 @implementation AppDelegate_iPad
 
-@synthesize window, splitViewController, routeListViewController, detailViewController;
+@synthesize window, splitViewController, routeListViewController, mapViewController;
 
 
 #pragma mark -

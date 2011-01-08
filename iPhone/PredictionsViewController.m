@@ -182,13 +182,15 @@
 #pragma mark Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	MapViewController *nextController = [[MapViewController alloc] initWithNibName:@"MapView" bundle:nil];
+//	MapViewController *nextController = [[MapViewController alloc] initWithNibName:@"MapView" bundle:nil];
+//	
+//	nextController.title = @"Maps";
+//	
+//	[self.navigationController pushViewController:nextController animated:YES];
+//	
+//	[nextController release];
 	
-	nextController.title = @"Maps";
-	
-	[self.navigationController pushViewController:nextController animated:YES];
-	
-	[nextController release];
+	// TODO: use a delegate to handle this logic?  call back to app delegate to invoke iphone/ipad functionality?
 }
 
 #pragma mark -

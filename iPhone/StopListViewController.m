@@ -37,7 +37,7 @@
 
 - (id)initWithStyle:(UITableViewStyle)style {
     if ((self = [super initWithStyle:style])) {
-		isUnloading = YES;
+		
     }
 	
     return self;
@@ -141,10 +141,9 @@
 	nextController.stopTag = _tag;
 	nextController.routeTitle = routeTitle;
 	
-	// FIXME: figure out better delegate handling
+	// TODO: figure out better delegate handling
 	// nextController.delegate = self.delegate;
 	
-	isUnloading = NO;
 	[self.navigationController pushViewController:nextController animated:YES];
 	
 	[nextController release];
