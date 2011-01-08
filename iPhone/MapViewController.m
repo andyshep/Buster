@@ -72,29 +72,5 @@
     [super dealloc];
 }
 
-#pragma mark -
-#pragma mark IBActions
-
-- (IBAction)handleInfoButton:(id)sender {
-	NSLog(@"handleInfoButton:");
-	
-	RouteListViewController *controller = [[RouteListViewController alloc] 
-											   initWithNibName:@"RouteListViewController" bundle:nil];
-	
-	controller.delegate = self;
-	
-	UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:controller];
-	[controller release];
-	
-	navController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-	[self presentModalViewController:navController animated:YES];
-	
-	[navController release];
-}
-
-- (void)flipsideViewControllerDidFinish:(id)sender {
-	[self dismissModalViewControllerAnimated:YES];
-}
-
 
 @end

@@ -1,5 +1,5 @@
 //
-//  StopViewController.m
+//  PredictionsViewController.m
 //  Buster
 //
 //  Created by andyshep on 1/3/11.

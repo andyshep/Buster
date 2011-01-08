@@ -1,5 +1,5 @@
 //
-//  StopModel.h
+//  PredictionsModel.h
 //  Buster
 //
 //  Created by andyshep on 1/3/11.

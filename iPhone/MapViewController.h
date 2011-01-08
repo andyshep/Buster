@@ -27,18 +27,9 @@
 
 #import "RouteListViewController.h"
 
-@protocol MapViewControllerDelegate
 
-- (void)flipsideViewControllerDidFinish:(id)sender;
-
-@end
-
-
-@interface MapViewController : UIViewController <MapViewControllerDelegate> {
+@interface MapViewController : UIViewController {
 
 }
-
-- (IBAction)handleInfoButton:(id)sender;
-- (void)flipsideViewControllerDidFinish:(id)sender;
 
 @end

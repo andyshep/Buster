@@ -1,5 +1,5 @@
 //
-//  RouteStopViewController.m
+//  StopListViewController.m
 //  Buster
 //
 //  Created by andyshep on 8/9/10.
