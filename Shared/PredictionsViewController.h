@@ -28,6 +28,8 @@
 #import "MapViewController.h"
 #import "PredictionsModel.h"
 
+#import "AppDelegate_iPhone.h"
+
 @protocol MapViewControllerDelegate;
 
 @interface PredictionsViewController : UITableViewController {

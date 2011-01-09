@@ -71,13 +71,17 @@
 #pragma mark -
 #pragma mark Predictions Loading
 
-- (void)loadPredictions {
-	NSLog(@"loadPredictions for the iPad!");
+- (void)loadPredictionsForVehicle:(NSString *)vehicle runningRoute:(NSString *)route atEpochTime:(NSString *)time {
+	NSLog(@"loadPredictionsForVehicle: %@ runningRoute: %@ atEpochTime: %@", vehicle, route, time);
 	
-//    /*
-//     When a row is selected, set the detail view controller's detail item to the item associated with the selected row.
-//     */
-//    detailViewController.detailItem = [NSString stringWithFormat:@"Row %d", indexPath.row];
+	//  TODO: implement
+	//	updateTimer = [NSTimer scheduledTimerWithTimeInterval:60.0f 
+	//												   target:self 
+	//												 selector:@selector(updateVehicleLocation:) 
+	//												 userInfo:nil
+	//												  repeats:YES];
+	//	
+	//	[updateTimer fire];
 }
 
 

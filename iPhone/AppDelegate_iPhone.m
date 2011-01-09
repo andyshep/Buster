@@ -84,13 +84,30 @@
 #pragma mark -
 #pragma mark Predictions Loading
 
-- (void)loadPredictions {
-	NSLog(@"loadPredictions for the iPhone!");
+- (void)loadPredictionsForVehicle:(NSString *)vehicle runningRoute:(NSString *)route atEpochTime:(NSString *)time {
+	NSLog(@"loadPredictionsForVehicle: %@ runningRoute: %@ atEpochTime: %@", vehicle, route, time);
 	
 	MapViewController *nextController = [[MapViewController alloc] initWithNibName:@"MapView" bundle:nil];
+	
 	nextController.title = @"Maps";
+	nextController.vehicle = vehicle;
+	nextController.route = route;
+	nextController.time = time;
+	
 	[self.navigationController pushViewController:nextController animated:YES];
+	
+	[nextController dropPinForLocation];
+	
 	[nextController release];
+
+//  TODO: implement
+//	updateTimer = [NSTimer scheduledTimerWithTimeInterval:60.0f 
+//												   target:self 
+//												 selector:@selector(updateVehicleLocation:) 
+//												 userInfo:nil
+//												  repeats:YES];
+//	
+//	[updateTimer fire];
 }
 
 

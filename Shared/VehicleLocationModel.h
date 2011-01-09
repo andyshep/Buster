@@ -1,8 +1,8 @@
 //
-//  AppDelegate_iPad.h
+//  VehicleLocationModel.h
 //  Buster
 //
-//  Created by andyshep on 12/15/10.
+//  Created by andyshep on 1/9/11.
 //
 //  Copyright (c) 2010 Andrew Shepard
 // 
@@ -25,25 +25,24 @@
 //  THE SOFTWARE.
 //
 
-#import "RouteListViewController.h"
-#import "MapViewController.h"
+#import "SynthesizeSingleton.h"
+#import "VehicleLocationOperation.h"
 
-@interface AppDelegate_iPad : NSObject <UIApplicationDelegate> {
+
+@interface VehicleLocationModel : NSObject {
+	NSOperationQueue *opQueue;
 	
-    UIWindow *window;
-    UISplitViewController *splitViewController;
-	
-	RouteListViewController *routeListViewController;
-	MapViewController *mapViewController;
+	NSDictionary *location;
 }
 
-@property (nonatomic, retain) IBOutlet UIWindow *window;
-@property (nonatomic, retain) IBOutlet UISplitViewController *splitViewController;
+@property (copy) NSDictionary *location;
 
-@property (nonatomic, retain) IBOutlet RouteListViewController *routeListViewController;
-@property (nonatomic, retain) IBOutlet MapViewController *mapViewController;
++ (VehicleLocationModel *)sharedVehicleLocationModel;
 
-- (void)loadPredictionsForVehicle:(NSString *)vehicle runningRoute:(NSString *)route atEpochTime:(NSString *)time;
+- (void) requestLocation;
+
+//- (NSUInteger)countOfRoutes;
+//- (id)objectInRoutesAtIndex:(NSUInteger)index;
+//- (void)getRoutes:(id *)objects range:(NSRange)range;
 
 @end
-

@@ -1,8 +1,8 @@
 //
-//  AppDelegate_iPad.h
+//  VehicleLocationOperation.h
 //  Buster
 //
-//  Created by andyshep on 12/15/10.
+//  Created by andyshep on 11/14/10.
 //
 //  Copyright (c) 2010 Andrew Shepard
 // 
@@ -25,25 +25,34 @@
 //  THE SOFTWARE.
 //
 
-#import "RouteListViewController.h"
-#import "MapViewController.h"
+#import <Foundation/Foundation.h>
 
-@interface AppDelegate_iPad : NSObject <UIApplicationDelegate> {
-	
-    UIWindow *window;
-    UISplitViewController *splitViewController;
-	
-	RouteListViewController *routeListViewController;
-	MapViewController *mapViewController;
-}
+@protocol VehicleLocationOperationDelegate
 
-@property (nonatomic, retain) IBOutlet UIWindow *window;
-@property (nonatomic, retain) IBOutlet UISplitViewController *splitViewController;
-
-@property (nonatomic, retain) IBOutlet RouteListViewController *routeListViewController;
-@property (nonatomic, retain) IBOutlet MapViewController *mapViewController;
-
-- (void)loadPredictionsForVehicle:(NSString *)vehicle runningRoute:(NSString *)route atEpochTime:(NSString *)time;
+- (void)updatePredictions:(NSArray *)data;
 
 @end
 
+
+@interface VehicleLocationOperation : NSOperation {
+	id delegate;
+	
+	NSString *vehicleId;
+	NSString *routeNumber;
+	NSString *epochTime;
+}
+
+@property (assign) id<VehicleLocationOperationDelegate> delegate;
+@property (nonatomic, retain) NSString *vehicleId;
+@property (nonatomic, retain) NSString *epochTime;
+@property (nonatomic, retain) NSString *routeNumber;
+
+- (id)initWithDelegate:(id<VehicleLocationOperationDelegate>)operationDelegate 
+		  andVehicleId:(NSString *)vehicle
+		andRouteNumber:(NSString *)route
+		   atEpochTime:(NSString *)time;
+
+- (NSData *)fetchData;
+- (NSDictionary *)consumeData;
+
+@end

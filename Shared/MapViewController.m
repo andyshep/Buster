@@ -36,6 +36,7 @@
 @implementation MapViewController
 
 @synthesize toolbar, popoverController, detailItem, detailDescriptionLabel;
+@synthesize vehicle, route, time;
 
 #pragma mark -
 #pragma mark Managing the detail item
@@ -61,6 +62,10 @@
 - (void)configureView {
     // Update the user interface for the detail item.
     // detailDescriptionLabel.text = [detailItem description];   
+	
+	self.vehicle = nil;
+	self.route = nil;
+	self.time = nil;
 }
 
 
@@ -128,6 +133,14 @@
     [super dealloc];
 }
 
+#pragma mark -
+#pragma mark Location
+
+- (void)dropPinForLocation {
+	NSLog(@"dropPinForLocation:");
+	
+	VehicleLocationModel *model = [VehicleLocationModel sharedVehicleLocationModel];
+}
 
 
 @end

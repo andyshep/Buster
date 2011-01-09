@@ -25,7 +25,7 @@
 //  THE SOFTWARE.
 //
 
-#import "RouteListViewController.h"
+#import "VehicleLocationModel.h"
 
 
 @interface MapViewController : UIViewController <UIPopoverControllerDelegate, UISplitViewControllerDelegate> {
@@ -34,11 +34,19 @@
     
     id detailItem;
     UILabel *detailDescriptionLabel;
+	
+	NSString *vehicle;
+	NSString *route;
+	NSString *time;
 }
 
 @property (nonatomic, retain) IBOutlet UIToolbar *toolbar;
 
 @property (nonatomic, retain) id detailItem;
 @property (nonatomic, retain) IBOutlet UILabel *detailDescriptionLabel;
+
+@property (nonatomic, retain) NSString *vehicle;
+@property (nonatomic, retain) NSString *route;
+@property (nonatomic, retain) NSString *time;
 
 @end

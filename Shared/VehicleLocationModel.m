@@ -1,8 +1,8 @@
 //
-//  AppDelegate_iPad.h
+//  VehicleLocationModel.m
 //  Buster
 //
-//  Created by andyshep on 12/15/10.
+//  Created by andyshep on 1/9/11.
 //
 //  Copyright (c) 2010 Andrew Shepard
 // 
@@ -25,25 +25,55 @@
 //  THE SOFTWARE.
 //
 
-#import "RouteListViewController.h"
-#import "MapViewController.h"
+#import "VehicleLocationModel.h"
 
-@interface AppDelegate_iPad : NSObject <UIApplicationDelegate> {
+
+@implementation VehicleLocationModel
+
+@synthesize location;
+
+SYNTHESIZE_SINGLETON_FOR_CLASS(VehicleLocationModel);
+
+#pragma mark -
+#pragma mark Lifecycle
+
+- (id) init {
+    self = [super init];
+    
+	if (self != nil) {
+		
+		// init a nothing location for the model
+		self.location = nil;
+		
+		// create our operation queue
+		opQueue = [[NSOperationQueue alloc] init];
+    }
 	
-    UIWindow *window;
-    UISplitViewController *splitViewController;
-	
-	RouteListViewController *routeListViewController;
-	MapViewController *mapViewController;
+    return self;
 }
 
-@property (nonatomic, retain) IBOutlet UIWindow *window;
-@property (nonatomic, retain) IBOutlet UISplitViewController *splitViewController;
+- (void) dealloc {
+    [opQueue release];
+    [super dealloc];
+}
 
-@property (nonatomic, retain) IBOutlet RouteListViewController *routeListViewController;
-@property (nonatomic, retain) IBOutlet MapViewController *mapViewController;
+#pragma mark -
+#pragma mark Location Request
 
-- (void)loadPredictionsForVehicle:(NSString *)vehicle runningRoute:(NSString *)route atEpochTime:(NSString *)time;
+- (void) requestLocation {
+//	VehicleLocationOperation *locationOp = [[VehicleLocationOperation alloc] initWithDelegate:self 
+//																				 andVehicleId:self.vehicleId 
+//																			   andRouteNumber:self.routeNumber 
+//																				  atEpochTime:self.time];
+//	[opQueue addOperation:loadingOp];
+//	[locationOp release];																								   stop:self.stopTag];
+}
+
+#pragma mark -
+#pragma mark VehicleLocationOperationDelegate methods
+
+- (void)updatePredictions:(NSArray *)data {
+	NSLog(@"updatePredictions:");
+}
 
 @end
-
