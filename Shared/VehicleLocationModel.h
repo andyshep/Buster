@@ -29,7 +29,7 @@
 #import "VehicleLocationOperation.h"
 
 
-@interface VehicleLocationModel : NSObject {
+@interface VehicleLocationModel : NSObject <VehicleLocationOperationDelegate> {
 	NSOperationQueue *opQueue;
 	
 	NSDictionary *location;
@@ -39,7 +39,7 @@
 
 + (VehicleLocationModel *)sharedVehicleLocationModel;
 
-- (void) requestLocation;
+- (void) requestLocationOfVehicle:(NSString *)vehicleId runningRoute:(NSString *)routeNumber atEpochTime:(NSString *)time;
 
 //- (NSUInteger)countOfRoutes;
 //- (id)objectInRoutesAtIndex:(NSUInteger)index;

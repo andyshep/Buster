@@ -49,4 +49,6 @@
 @property (nonatomic, retain) NSString *route;
 @property (nonatomic, retain) NSString *time;
 
+- (void)dropPinForLocation;
+
 @end

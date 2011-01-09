@@ -39,6 +39,28 @@
 @synthesize vehicle, route, time;
 
 #pragma mark -
+#pragma mark View lifecycle
+
+- (void)viewWillAppear:(BOOL)animated {
+	NSLog(@"viewWillAppear for the map view!");
+	
+	VehicleLocationModel *model = [VehicleLocationModel sharedVehicleLocationModel];
+	[model addObserver:self 
+			forKeyPath:@"location" 
+			   options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
+			   context:NULL];	
+	
+	[super viewWillAppear:animated];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+	VehicleLocationModel *model = [VehicleLocationModel sharedVehicleLocationModel];
+	[model removeObserver:self forKeyPath:@"location"];
+	
+	[super viewDidDisappear:animated];
+}
+
+#pragma mark -
 #pragma mark Managing the detail item
 
 /*
@@ -57,7 +79,6 @@
         [popoverController dismissPopoverAnimated:YES];
     }        
 }
-
 
 - (void)configureView {
     // Update the user interface for the detail item.
@@ -102,15 +123,6 @@
     return YES;
 }
 
-#pragma mark -
-#pragma mark View lifecycle
-
-- (void)viewDidUnload {
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-    self.popoverController = nil;
-}
-
 
 #pragma mark -
 #pragma mark Memory management
@@ -140,6 +152,14 @@
 	NSLog(@"dropPinForLocation:");
 	
 	VehicleLocationModel *model = [VehicleLocationModel sharedVehicleLocationModel];
+	[model requestLocationOfVehicle:self.vehicle runningRoute:self.route atEpochTime:self.time];
+}
+
+#pragma mark -
+#pragma mark Model Observing
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+	NSLog(@"observeValueForKeyPath: for the map view!");
 }
 
 

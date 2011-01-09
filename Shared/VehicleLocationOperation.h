@@ -29,7 +29,7 @@
 
 @protocol VehicleLocationOperationDelegate
 
-- (void)updatePredictions:(NSArray *)data;
+- (void)updateLocation:(NSDictionary *)data;
 
 @end
 

@@ -155,11 +155,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	
-	// TODO: use a delegate to handle this logic for both ipad and iphone.
-	// TODO: make your delegate conform to a protocol and get rid of this warning.
-	
-	// TODO: implement for predictions
-	
 	PredictionsModel *model = [PredictionsModel sharedPredictionsModel];
 	NSMutableDictionary *dict = (NSMutableDictionary *)[model objectInPredictionsAtIndex:[indexPath row]];
 	NSString *vehicle = [dict objectForKey:@"vehicle"];

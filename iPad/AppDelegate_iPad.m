@@ -74,6 +74,12 @@
 - (void)loadPredictionsForVehicle:(NSString *)vehicle runningRoute:(NSString *)route atEpochTime:(NSString *)time {
 	NSLog(@"loadPredictionsForVehicle: %@ runningRoute: %@ atEpochTime: %@", vehicle, route, time);
 	
+	mapViewController.vehicle = vehicle;
+	mapViewController.route = route;
+	mapViewController.time = time;
+	
+	[mapViewController dropPinForLocation];
+	
 	//  TODO: implement
 	//	updateTimer = [NSTimer scheduledTimerWithTimeInterval:60.0f 
 	//												   target:self 

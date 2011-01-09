@@ -39,6 +39,7 @@
 		  andVehicleId:(NSString *)vehicle
 		andRouteNumber:(NSString *)route
 		   atEpochTime:(NSString *)time {
+	
 	if (self = [super init]) {
 		delegate = operationDelegate;
 		vehicleId = vehicle;
@@ -104,10 +105,10 @@
 		
 		// searching for vehicle nodes matching our id
 		
-		// build an XPath including the vehicle Id;
+		// build an XPath including the vehicle Id
 		NSString *vehicleXPath = [NSString stringWithString:@"//vehicle[@id='"];
-		vehicleXPath = [vehicleXPath stringByAppendingString:self.vehicleId];
-//		vehicleXPath = [vehicleXPath stringByAppendingString:@"2056"];
+//		vehicleXPath = [vehicleXPath stringByAppendingString:self.vehicleId];
+		vehicleXPath = [vehicleXPath stringByAppendingString:@"2056"];
 		vehicleXPath = [vehicleXPath stringByAppendingString:@"']"];
 		
 //		NSLog(@"vehicleXPath: %@", vehicleXPath);
@@ -151,9 +152,9 @@
 		
 		if (!self.isCancelled) {
 			
-//			NSLog(@"starting VehicleLocationOperation for vehicle %@", self.vehicleId);
+			NSLog(@"starting VehicleLocationOperation for vehicle %@", self.vehicleId);
 			
-			[delegate performSelectorOnMainThread:@selector(didUpdateVehicleLocation:) 
+			[delegate performSelectorOnMainThread:@selector(updateLocation:) 
 									   withObject:vehicleLocation
 									waitUntilDone:YES];
 		}
