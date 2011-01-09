@@ -42,6 +42,20 @@
 #pragma mark -
 #pragma mark View lifecycle
 
+- (id)init {
+	self = [super init];
+    
+	if (self != nil) {
+		
+		// do the init
+		mapView = [[MKMapView alloc] init];
+		
+		[self.view addSubview:mapView];
+    }
+	
+    return self;
+}
+
 - (void)viewWillAppear:(BOOL)animated {
 	NSLog(@"viewWillAppear for the map view!");
 	
@@ -159,6 +173,10 @@
 	[mView setRegion:region animated:YES];
 }
 
+- (void) mapViewDidFinishLoadingMap:(MKMapView *)mapView {
+	NSLog(@"mapViewDidFinishLoadingMap:");
+}
+
 #pragma mark -
 #pragma mark Location
 
@@ -177,7 +195,7 @@
 	
 	NSDictionary *locData = [change objectForKey:NSKeyValueChangeNewKey];
 	
-//	NSLog(@"location: %@", locData);
+	NSLog(@"location: %@", locData);
 	
 	CLLocationCoordinate2D location;
     location.latitude = [[locData objectForKey:@"latitude"] floatValue];

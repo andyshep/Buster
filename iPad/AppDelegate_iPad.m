@@ -78,6 +78,8 @@
 	mapViewController.route = route;
 	mapViewController.time = time;
 	
+	//[[mapViewController mapView] setDelegate:mapViewController];
+	
 	[mapViewController dropPinForLocation];
 	
 	//  TODO: implement

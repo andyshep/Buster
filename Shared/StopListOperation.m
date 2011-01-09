@@ -53,15 +53,15 @@
 
 - (NSString *)buildURL {
 	
-//	MBTAQueryStringBuilder *_builder = [[[MBTAQueryStringBuilder alloc] 
-//										 initWithBaseURL:@"http://webservices.nextbus.com/service/publicXMLFeed"] autorelease];
-//
-//	NSString *url = [_builder buildRouteConfigQuery:self.stopId];
+	MBTAQueryStringBuilder *_builder = [[[MBTAQueryStringBuilder alloc] 
+										 initWithBaseURL:@"http://webservices.nextbus.com/service/publicXMLFeed"] autorelease];
+
+	NSString *url = [_builder buildRouteConfigQuery:self.stopId];
 	
-	NSString *url = @"http://localhost:8081/routeConfig_r";
-	
-	url = [url stringByAppendingString:self.stopId];
-	url = [url stringByAppendingString:@".xml"];
+//	NSString *url = @"http://localhost:8081/routeConfig_r";
+//	
+//	url = [url stringByAppendingString:self.stopId];
+//	url = [url stringByAppendingString:@".xml"];
 	
 	return url;
 }

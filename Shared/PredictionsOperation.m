@@ -59,14 +59,14 @@
 
 - (NSString *)buildURL {
 	
-//	MBTAQueryStringBuilder *_builder = [[[MBTAQueryStringBuilder alloc] 
-//										 initWithBaseURL:@"http://webservices.nextbus.com/service/publicXMLFeed"] autorelease];
-//	
-//	NSString *url = [_builder buildPredictionsQueryForRoute:self.route 
-//											  withDirection:self.direction 
-//													 atStop:self.stop];
+	MBTAQueryStringBuilder *_builder = [[[MBTAQueryStringBuilder alloc] 
+										 initWithBaseURL:@"http://webservices.nextbus.com/service/publicXMLFeed"] autorelease];
 	
-	NSString *url = @"http://localhost:8081/predictions_route57_stop918.xml";
+	NSString *url = [_builder buildPredictionsQueryForRoute:self.route 
+											  withDirection:self.direction 
+													 atStop:self.stop];
+	
+//	NSString *url = @"http://localhost:8081/predictions_route57_stop918.xml";
 	
 	return url;
 }

@@ -29,7 +29,7 @@
 #import "VehicleLocationAnnotation.h"
 
 
-@interface MapViewController : UIViewController <UIPopoverControllerDelegate, UISplitViewControllerDelegate> {
+@interface MapViewController : UIViewController <UIPopoverControllerDelegate, UISplitViewControllerDelegate, MKMapViewDelegate> {
 	UIPopoverController *popoverController;
     UIToolbar *toolbar;
     

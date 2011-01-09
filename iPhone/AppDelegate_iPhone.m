@@ -87,7 +87,8 @@
 - (void)loadPredictionsForVehicle:(NSString *)vehicle runningRoute:(NSString *)route atEpochTime:(NSString *)time {
 	NSLog(@"loadPredictionsForVehicle: %@ runningRoute: %@ atEpochTime: %@", vehicle, route, time);
 	
-	MapViewController *nextController = [[MapViewController alloc] initWithNibName:@"MapView" bundle:nil];
+	//MapViewController *nextController = [[MapViewController alloc] initWithNibName:@"MapView" bundle:nil];
+	MapViewController *nextController = [[MapViewController alloc] init];
 	
 	nextController.title = @"Maps";
 	nextController.vehicle = vehicle;

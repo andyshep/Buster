@@ -59,13 +59,14 @@
 
 - (NSString *)buildURL {
 	
-//	MBTAQueryStringBuilder *_builder = [[[MBTAQueryStringBuilder alloc] 
-//										 initWithBaseURL:@"http://webservices.nextbus.com/service/publicXMLFeed"] autorelease];
-//	
-//	NSString *url = [_builder buildLocationsQueryForRoute:self.routeNumber 
-//											withEpochTime:self.epochTime];
+	MBTAQueryStringBuilder *_builder = [[[MBTAQueryStringBuilder alloc] 
+										 initWithBaseURL:@"http://webservices.nextbus.com/service/publicXMLFeed"] autorelease];
 	
-	NSString *url = @"http://127.0.0.1:8081/vehicles.xml";
+	// TODO: epochTime other than zero does not work
+	NSString *url = [_builder buildLocationsQueryForRoute:self.routeNumber 
+											withEpochTime:@"0"];
+	
+//	NSString *url = @"http://127.0.0.1:8081/vehicles.xml";
 	
 	return url;
 }
@@ -107,8 +108,10 @@
 		
 		// build an XPath including the vehicle Id
 		NSString *vehicleXPath = [NSString stringWithString:@"//vehicle[@id='"];
-//		vehicleXPath = [vehicleXPath stringByAppendingString:self.vehicleId];
-		vehicleXPath = [vehicleXPath stringByAppendingString:@"2056"];
+		
+		vehicleXPath = [vehicleXPath stringByAppendingString:self.vehicleId];
+//		vehicleXPath = [vehicleXPath stringByAppendingString:@"2056"];
+		
 		vehicleXPath = [vehicleXPath stringByAppendingString:@"']"];
 		
 //		NSLog(@"vehicleXPath: %@", vehicleXPath);
@@ -121,7 +124,7 @@
 			NSString *_latitude = [NSString stringWithString:[[node attributeForName:@"lat"] stringValue]];
 			NSString *_longitude = [NSString stringWithString:[[node attributeForName:@"lon"] stringValue]];
 			
-//			NSLog(@"found vehicle %@ at %@, %@", _vehicleId, _latitude, _longitude);
+			NSLog(@"found vehicle %@ at %@, %@", _vehicleId, _latitude, _longitude);
 			
 			[vehicleLocation setObject:_longitude forKey:@"longitude"];
 			[vehicleLocation setObject:_latitude forKey:@"latitude"];
