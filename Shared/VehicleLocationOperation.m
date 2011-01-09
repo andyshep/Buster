@@ -152,7 +152,7 @@
 		
 		if (!self.isCancelled) {
 			
-			NSLog(@"starting VehicleLocationOperation for vehicle %@", self.vehicleId);
+//			NSLog(@"starting VehicleLocationOperation for vehicle %@", self.vehicleId);
 			
 			[delegate performSelectorOnMainThread:@selector(updateLocation:) 
 									   withObject:vehicleLocation

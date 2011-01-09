@@ -73,7 +73,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(VehicleLocationModel);
 #pragma mark VehicleLocationOperationDelegate methods
 
 - (void)updateLocation:(NSDictionary *)data {
-	NSLog(@"updatePredictions: %@", data);
 	
 	self.location = data;
 }

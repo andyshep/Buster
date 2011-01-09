@@ -1,8 +1,8 @@
 //
-//  MapViewController.h
+//  VehicleLocationAnnotation.h
 //  Buster
 //
-//  Created by andyshep on 12/15/10.
+//  Created by andyshep on 9/19/10.
 //
 //  Copyright (c) 2010 Andrew Shepard
 // 
@@ -25,35 +25,20 @@
 //  THE SOFTWARE.
 //
 
-#import "VehicleLocationModel.h"
-#import "VehicleLocationAnnotation.h"
 
-
-@interface MapViewController : UIViewController <UIPopoverControllerDelegate, UISplitViewControllerDelegate> {
-	UIPopoverController *popoverController;
-    UIToolbar *toolbar;
-    
-    id detailItem;
-    UILabel *detailDescriptionLabel;
-	
-	NSString *vehicle;
-	NSString *route;
-	NSString *time;
-	
-	MKMapView *mapView;
+@interface VehicleLocationAnnotation : NSObject <MKAnnotation> {
+	CLLocationCoordinate2D _coordinate;
+	NSString *_title;
+	NSString *_tag;
+	NSString *_stopId;
 }
 
-@property (nonatomic, retain) IBOutlet UIToolbar *toolbar;
++ (id)annotationWithCoordinate:(CLLocationCoordinate2D)coordinate;
+- (id)initWithCoordinate:(CLLocationCoordinate2D)coordinate;
 
-@property (nonatomic, retain) id detailItem;
-@property (nonatomic, retain) IBOutlet UILabel *detailDescriptionLabel;
-
-@property (nonatomic, retain) NSString *vehicle;
-@property (nonatomic, retain) NSString *route;
-@property (nonatomic, retain) NSString *time;
-
-@property (nonatomic, retain) IBOutlet MKMapView *mapView;
-
-- (void)dropPinForLocation;
+@property (nonatomic, assign) CLLocationCoordinate2D coordinate;
+@property (nonatomic, copy) NSString *title;
+@property (nonatomic, copy) NSString *tag;
+@property (nonatomic, copy) NSString *stopId;
 
 @end

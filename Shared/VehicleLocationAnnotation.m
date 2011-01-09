@@ -1,8 +1,8 @@
 //
-//  MapViewController.h
+//  VehicleLocationAnnotation.m
 //  Buster
 //
-//  Created by andyshep on 12/15/10.
+//  Created by andyshep on 9/19/10.
 //
 //  Copyright (c) 2010 Andrew Shepard
 // 
@@ -25,35 +25,28 @@
 //  THE SOFTWARE.
 //
 
-#import "VehicleLocationModel.h"
 #import "VehicleLocationAnnotation.h"
 
 
-@interface MapViewController : UIViewController <UIPopoverControllerDelegate, UISplitViewControllerDelegate> {
-	UIPopoverController *popoverController;
-    UIToolbar *toolbar;
-    
-    id detailItem;
-    UILabel *detailDescriptionLabel;
-	
-	NSString *vehicle;
-	NSString *route;
-	NSString *time;
-	
-	MKMapView *mapView;
+@implementation VehicleLocationAnnotation
+
+@synthesize coordinate = _coordinate;
+@synthesize title = _title;
+@synthesize tag = _tag;
+@synthesize stopId = _stopId;
+
++ (id)annotationWithCoordinate:(CLLocationCoordinate2D)coordinate {
+	return [[[[self class] alloc] initWithCoordinate:coordinate] autorelease];
 }
 
-@property (nonatomic, retain) IBOutlet UIToolbar *toolbar;
-
-@property (nonatomic, retain) id detailItem;
-@property (nonatomic, retain) IBOutlet UILabel *detailDescriptionLabel;
-
-@property (nonatomic, retain) NSString *vehicle;
-@property (nonatomic, retain) NSString *route;
-@property (nonatomic, retain) NSString *time;
-
-@property (nonatomic, retain) IBOutlet MKMapView *mapView;
-
-- (void)dropPinForLocation;
+- (id)initWithCoordinate:(CLLocationCoordinate2D)coordinate {
+	self = [super init];
+	
+	if (nil != self) {
+		self.coordinate = coordinate;
+	}
+	
+	return self;
+}
 
 @end

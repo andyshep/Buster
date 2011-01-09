@@ -37,6 +37,7 @@
 
 @synthesize toolbar, popoverController, detailItem, detailDescriptionLabel;
 @synthesize vehicle, route, time;
+@synthesize mapView;
 
 #pragma mark -
 #pragma mark View lifecycle
@@ -146,6 +147,19 @@
 }
 
 #pragma mark -
+#pragma mark MKMapViewDelegate methods
+
+- (void)mapView:(MKMapView *)mView didAddAnnotationViews:(NSArray *)views {
+	NSLog(@"mapView:didAddAnnotationViews");
+	
+	// zoom and center to where the annotation is placed.
+	MKAnnotationView *annotationView = [views objectAtIndex:0];
+	id <MKAnnotation> mp = [annotationView annotation];
+	MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance([mp coordinate], 250, 250);
+	[mView setRegion:region animated:YES];
+}
+
+#pragma mark -
 #pragma mark Location
 
 - (void)dropPinForLocation {
@@ -160,6 +174,32 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
 	NSLog(@"observeValueForKeyPath: for the map view!");
+	
+	NSDictionary *locData = [change objectForKey:NSKeyValueChangeNewKey];
+	
+//	NSLog(@"location: %@", locData);
+	
+	CLLocationCoordinate2D location;
+    location.latitude = [[locData objectForKey:@"latitude"] floatValue];
+    location.longitude = [[locData objectForKey:@"longitude"] floatValue];
+	
+	MKCoordinateSpan span;
+    span.latitudeDelta = 0.00015f;
+    span.longitudeDelta = 0.00015f;
+	
+	MKCoordinateRegion region;
+    region.span = span;
+    region.center = location;
+	
+	VehicleLocationAnnotation *vehicleLocation = [[VehicleLocationAnnotation alloc] initWithCoordinate:location];
+	
+	[mapView setRegion:region animated:YES];
+    [mapView regionThatFits:region];
+	[mapView addAnnotation:vehicleLocation];
+	
+	[vehicleLocation release];
+	
+	NSLog(@"should have just dropped a pin!");
 }
 
 
