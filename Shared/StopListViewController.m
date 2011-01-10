@@ -121,6 +121,7 @@
 	NSMutableDictionary *dict = (NSMutableDictionary *)[model objectInStopsAtIndex:row];
 	
 	cell.textLabel.text = [dict objectForKey:@"title"];
+	cell.textLabel.adjustsFontSizeToFitWidth = YES;
 	
 	return cell;
 }
