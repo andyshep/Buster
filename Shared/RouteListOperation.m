@@ -51,12 +51,12 @@
 
 - (NSString *)buildURL {
 	
-	MBTAQueryStringBuilder *_builder = [[[MBTAQueryStringBuilder alloc] 
-										 initWithBaseURL:@"http://webservices.nextbus.com/service/publicXMLFeed"] autorelease];
-
-	NSString *url = [_builder buildRouteListQuery];
+//	MBTAQueryStringBuilder *_builder = [[[MBTAQueryStringBuilder alloc] 
+//										 initWithBaseURL:@"http://webservices.nextbus.com/service/publicXMLFeed"] autorelease];
+//
+//	NSString *url = [_builder buildRouteListQuery];
 	
-//	NSString *url = @"http://localhost:8081/routeList.xml";
+	NSString *url = @"http://localhost:8081/routeList.xml";
 	
 	return url;
 }

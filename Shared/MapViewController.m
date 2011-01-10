@@ -42,20 +42,6 @@
 #pragma mark -
 #pragma mark View lifecycle
 
-- (id)init {
-	self = [super init];
-    
-	if (self != nil) {
-		
-		// do the init
-		mapView = [[MKMapView alloc] init];
-		
-		[self.view addSubview:mapView];
-    }
-	
-    return self;
-}
-
 - (void)viewWillAppear:(BOOL)animated {
 	NSLog(@"viewWillAppear for the map view!");
 	
@@ -135,26 +121,19 @@
 
 // Ensure that the view controller supports rotation and that the split view can therefore show in both portrait and landscape.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    return YES;
+	
+	return YES;
 }
 
 
 #pragma mark -
 #pragma mark Memory management
 
-/*
- - (void)didReceiveMemoryWarning {
- // Releases the view if it doesn't have a superview.
- [super didReceiveMemoryWarning];
- 
- // Release any cached data, images, etc that aren't in use.
- }
- */
-
 - (void)dealloc {
     [popoverController release];
     [toolbar release];
-    
+    [mapView release];
+	
     [detailItem release];
     [detailDescriptionLabel release];
     [super dealloc];
@@ -173,10 +152,6 @@
 	[mView setRegion:region animated:YES];
 }
 
-- (void) mapViewDidFinishLoadingMap:(MKMapView *)mapView {
-	NSLog(@"mapViewDidFinishLoadingMap:");
-}
-
 #pragma mark -
 #pragma mark Location
 
@@ -191,11 +166,8 @@
 #pragma mark Model Observing
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-	NSLog(@"observeValueForKeyPath: for the map view!");
 	
 	NSDictionary *locData = [change objectForKey:NSKeyValueChangeNewKey];
-	
-	NSLog(@"location: %@", locData);
 	
 	CLLocationCoordinate2D location;
     location.latitude = [[locData objectForKey:@"latitude"] floatValue];
@@ -216,8 +188,6 @@
 	[mapView addAnnotation:vehicleLocation];
 	
 	[vehicleLocation release];
-	
-	NSLog(@"should have just dropped a pin!");
 }
 
 
