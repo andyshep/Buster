@@ -100,7 +100,7 @@
 		CXMLDocument *doc = [[CXMLDocument alloc] initWithData:stopListData options:0 error:nil];
 		NSArray *nodes;
 		
-		// searching for stop nodes
+		// first grab the stops
 		nodes = [doc nodesForXPath:@"//route/stop" error:nil];
 		
 		for (CXMLElement *node in nodes) {
@@ -122,21 +122,33 @@
 			[dict release];
 		}
 		
+		// next grab the route and direction data
 		nodes = [doc nodesForXPath:@"//route/direction" error:nil];
 		
 		for (CXMLElement *node in nodes) {
 			
 			NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
 			
-			// FIXME: this is leaky
 			[dict setObject:[[node attributeForName:@"title"] stringValue] forKey:@"title"];
 			[dict setObject:[[node attributeForName:@"tag"] stringValue] forKey:@"tag"];
 			[dict setObject:[[node attributeForName:@"name"] stringValue] forKey:@"name"];
 			[dict setObject:[[node attributeForName:@"useForUI"] stringValue] forKey:@"useForUI"];
 			
+			NSArray *stopNodes = [node nodesForXPath:@"//direction/stop" error:nil];
+			NSMutableArray *stops = [[NSMutableArray alloc] init];
+			
+			// account for the stops
+			for (CXMLElement *stop in stopNodes) {
+				[stops addObject:[[stop attributeForName:@"tag"] stringValue]];
+			}
+			
+			[dict setObject:[NSArray arrayWithArray:stops] forKey:@"stops"];
+			
 			[directions addObject:dict];
 			
 			[dict release];
+			[stops release];
+			stopNodes = nil;
 		}
 		
 		nodes = nil;
@@ -144,9 +156,9 @@
 	}
 	
 	NSArray *consumedData = [NSArray arrayWithObjects:self.stopId, 
-							 [NSArray arrayWithArray:stopList], 
-							 [NSArray arrayWithArray:directions], 
-							 nil];
+							[NSArray arrayWithArray:stopList], 
+							[NSArray arrayWithArray:directions], 
+							nil];
 	
 	return consumedData;
 }
