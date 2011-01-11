@@ -90,6 +90,8 @@
 	// a list of route stops will be passed back and stored into the model
 	NSMutableArray *stopList = [[[NSMutableArray alloc] init] autorelease];
 	
+	NSMutableArray *directions = [[[NSMutableArray alloc] init] autorelease];
+	
 	// first get the route xml from the intertubes
 	NSData *stopListData = [self fetchData];
 	
@@ -112,23 +114,39 @@
 			[dict setObject:[[node attributeForName:@"tag"] stringValue] forKey:@"tag"];
 			[dict setObject:[[node attributeForName:@"lon"] stringValue] forKey:@"longitude"];
 			[dict setObject:[[node attributeForName:@"lat"] stringValue] forKey:@"latitude"];
+			[dict setObject:[[node attributeForName:@"dirTag"] stringValue] forKey:@"dirTag"];
 			[dict setObject:(NSString *)self.stopId forKey:@"routeNumber"];
-			
-			// FIXME: not tracking this yet
-			[dict setObject:@"1_010003v0_1" forKey:@"dirTag"];
 			
 			[stopList addObject:dict];
 			
 			[dict release];
 		}
 		
+		nodes = [doc nodesForXPath:@"//route/direction" error:nil];
+		
+		for (CXMLElement *node in nodes) {
+			
+			NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+			
+			// FIXME: this is leaky
+			[dict setObject:[[node attributeForName:@"title"] stringValue] forKey:@"title"];
+			[dict setObject:[[node attributeForName:@"tag"] stringValue] forKey:@"tag"];
+			[dict setObject:[[node attributeForName:@"name"] stringValue] forKey:@"name"];
+			[dict setObject:[[node attributeForName:@"useForUI"] stringValue] forKey:@"useForUI"];
+			
+			[directions addObject:dict];
+			
+			[dict release];
+		}
+		
 		nodes = nil;
 		[doc release];
-		
-		// TODO: pull off direction metadata
 	}
 	
-	NSArray *consumedData = [NSArray arrayWithObjects:self.stopId, [NSArray arrayWithArray:stopList], nil];
+	NSArray *consumedData = [NSArray arrayWithObjects:self.stopId, 
+							 [NSArray arrayWithArray:stopList], 
+							 [NSArray arrayWithArray:directions], 
+							 nil];
 	
 	return consumedData;
 }

@@ -35,4 +35,6 @@
 
 @property (nonatomic, retain) NSString *stopTag;
 
+- (void)assembleRoutePath;
+
 @end

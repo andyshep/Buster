@@ -49,6 +49,13 @@
 	
 	[[self navigationItem] setTitle:self.title];
 	
+	UIBarButtonItem *showRouteButton = [[UIBarButtonItem alloc] initWithTitle:@"Show Route" 
+																		style:UIBarButtonItemStylePlain 
+																	   target:self 
+																	   action:@selector(showRoute)];
+	
+	self.navigationItem.rightBarButtonItem = showRouteButton;
+	
 	StopListModel *model = [StopListModel sharedStopListModel];
 	[model requestStopList:self.stopTag];
 }
@@ -145,6 +152,20 @@
 	[self.navigationController pushViewController:nextController animated:YES];
 	
 	[nextController release];
+}
+
+#pragma mark -
+#pragma mark Route Path Assembly
+
+- (void)assembleRoutePath {
+	StopListModel *model = [StopListModel sharedStopListModel];
+	NSArray *stops = [model stops];
+	
+	NSLog(@"assembleRoutePath: %@", stops);
+}
+
+- (IBAction)showRoute {
+	[self assembleRoutePath];
 }
 
 
