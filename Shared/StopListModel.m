@@ -113,22 +113,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(StopListModel);
 	
 	self.stops = list;
 	
-	NSMutableDictionary *directions = [[NSMutableDictionary alloc] initWithCapacity:5];
-	
-	for (NSDictionary *stop in stops) {
-		
-		if ([directions objectForKey:[stop valueForKey:@"dirTag"]] != nil) {
-			
-		}
-		else {
-			[directions setObject:[stop valueForKey:@"dirTag"] forKey:[stop valueForKey:@"dirTag"]];
-		}
-
-		
-		//NSLog(@"stop dirTag: %@", [stop valueForKey:@"dirTag"]);
-	}
-	
-	NSLog(@"directions: %@", directions);
 	NSLog(@"%@", [data objectAtIndex:2]);
 }
 

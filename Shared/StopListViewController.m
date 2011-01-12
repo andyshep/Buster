@@ -58,6 +58,26 @@
 	
 	StopListModel *model = [StopListModel sharedStopListModel];
 	[model requestStopList:self.stopTag];
+	
+	// set direction toggle switch view
+    UIView *containerView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 30)] autorelease];
+	UIToolbar *metaBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
+	
+	UISegmentedControl *directionControl = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"Inbound", @"Outbound", nil]];	
+	directionControl.segmentedControlStyle = UISegmentedControlStyleBar;
+	directionControl.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+	directionControl.frame = CGRectMake(0, 0, 295, 30);
+	
+	UIBarButtonItem *buttonItem = [[UIBarButtonItem alloc] initWithCustomView:directionControl];
+	
+	metaBar.items = [NSArray arrayWithObjects:buttonItem, nil];
+	[containerView addSubview:metaBar];
+	
+	[metaBar release];
+	[directionControl release];
+	
+    self.tableView.tableHeaderView = containerView;
+
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -161,7 +181,16 @@
 	StopListModel *model = [StopListModel sharedStopListModel];
 	NSArray *stops = [model stops];
 	
-	NSLog(@"assembleRoutePath: %@", stops);
+	NSMutableDictionary *directions = [[NSMutableDictionary alloc] initWithCapacity:3];
+	for (NSDictionary *stop in stops) {
+		if ([directions objectForKey:[stop valueForKey:@"dirTag"]] == nil) {
+			[directions setObject:[stop valueForKey:@"dirTag"] forKey:[stop valueForKey:@"dirTag"]];
+		}
+	}
+	
+	NSLog(@"assembleRoutePath: %@", directions);
+	
+	// NSLog(@"assembleRoutePath: %@", stops);
 }
 
 - (IBAction)showRoute {
