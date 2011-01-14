@@ -115,6 +115,7 @@
 			[dict setObject:[[node attributeForName:@"lon"] stringValue] forKey:@"longitude"];
 			[dict setObject:[[node attributeForName:@"lat"] stringValue] forKey:@"latitude"];
 			[dict setObject:[[node attributeForName:@"dirTag"] stringValue] forKey:@"dirTag"];
+			[dict setObject:[[node attributeForName:@"stopId"] stringValue] forKey:@"stopId"];
 			[dict setObject:(NSString *)self.stopId forKey:@"routeNumber"];
 			
 			[stopList addObject:dict];

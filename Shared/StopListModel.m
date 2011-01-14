@@ -107,13 +107,51 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(StopListModel);
 - (void)updateStopList:(NSArray *)data {
 	
 	NSString *stop = [data objectAtIndex:0];
+	
+	// FIXME: this isn't the list you really wanna track
 	NSArray *list = [data objectAtIndex:1];
-	
 	[stopListCache setObject:list forKey:stop];
-	
 	self.stops = list;
 	
-	NSLog(@"%@", [data objectAtIndex:2]);
+	NSMutableDictionary *directions = [[NSMutableDictionary alloc] initWithCapacity:4];
+	for (NSDictionary *stop in stops) {
+		
+		if ([directions objectForKey:[stop valueForKey:@"dirTag"]] == nil) {
+			
+			NSArray *currentStops = [NSArray arrayWithObject:stop];
+			
+			[directions setObject:currentStops
+						   forKey:[stop valueForKey:@"dirTag"]];
+			
+			currentStops = nil;
+		} else {
+			NSArray *existingStops = [directions objectForKey:[stop valueForKey:@"dirTag"]];
+			NSMutableArray *newStops = [NSMutableArray arrayWithArray:existingStops];
+			
+			[newStops addObject:stop];
+			
+			NSArray *currentStops = [NSArray arrayWithArray:newStops];
+			[directions setObject:currentStops 
+						   forKey:[stop valueForKey:@"dirTag"]];
+			
+			newStops = nil;
+			existingStops = nil;
+			currentStops = nil;
+		}
+	}
+	
+	// now have the an inbound/outbound direction pair
+	// attached to a list of stops
+	NSLog(@"%@", directions);
+	
+//	
+//	for (NSDictionary *entry in list) {
+//		NSLog(@"%@", entry);
+//	}
+	
+	//NSLog(@"%@", [data objectAtIndex:2]);
+	
+	[directions release];
 }
 
 @end
