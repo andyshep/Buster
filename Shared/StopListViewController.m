@@ -30,18 +30,11 @@
 
 @implementation StopListViewController
 
-@synthesize stopTag;
+@synthesize stopTag, tableView, directionControl;
 
 #pragma mark -
 #pragma mark View Lifecycle
 
-- (id)initWithStyle:(UITableViewStyle)style {
-    if ((self = [super initWithStyle:style])) {
-		
-    }
-	
-    return self;
-}
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
@@ -59,25 +52,7 @@
 	StopListModel *model = [StopListModel sharedStopListModel];
 	[model requestStopList:self.stopTag];
 	
-	// set direction toggle switch view
-    UIView *containerView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 30)] autorelease];
-	UIToolbar *metaBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
-	
-	UISegmentedControl *directionControl = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"Inbound", @"Outbound", nil]];	
-	directionControl.segmentedControlStyle = UISegmentedControlStyleBar;
-	directionControl.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-	directionControl.frame = CGRectMake(0, 0, 295, 30);
-	
-	UIBarButtonItem *buttonItem = [[UIBarButtonItem alloc] initWithCustomView:directionControl];
-	
-	metaBar.items = [NSArray arrayWithObjects:buttonItem, nil];
-	[containerView addSubview:metaBar];
-	
-	[metaBar release];
-	[directionControl release];
-	
-    self.tableView.tableHeaderView = containerView;
-
+	[self.directionControl addTarget:self action:@selector(switchDirection:) forControlEvents:UIControlEventValueChanged];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -193,8 +168,16 @@
 	// NSLog(@"assembleRoutePath: %@", stops);
 }
 
+#pragma mark -
+#pragma mark IBActions
+
 - (IBAction)showRoute {
 	[self assembleRoutePath];
+}
+
+- (IBAction)switchDirection:(id)sender {
+	// TODO: tell the model we're switching directions
+	// reload table view for inbound vs. outbound
 }
 
 

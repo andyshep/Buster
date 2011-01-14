@@ -29,12 +29,19 @@
 #import "PredictionsViewController.h"
 
 
-@interface StopListViewController : UITableViewController {
+@interface StopListViewController : UIViewController <UITableViewDataSource, UITableViewDelegate> {
 	NSString *stopTag;
+	IBOutlet UITableView *tableView;
+	
+	IBOutlet UISegmentedControl *directionControl;
 }
 
 @property (nonatomic, retain) NSString *stopTag;
+@property (nonatomic, retain) IBOutlet UITableView *tableView;
+@property (nonatomic, retain) IBOutlet UISegmentedControl *directionControl;
 
 - (void)assembleRoutePath;
+
+- (IBAction)switchDirection:(id)sender;
 
 @end

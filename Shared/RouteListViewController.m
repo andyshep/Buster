@@ -130,7 +130,9 @@
 	NSUInteger row = [indexPath row];
 	NSMutableDictionary *dict = (NSMutableDictionary *)[model objectInRoutesAtIndex:row];
 	
-	StopListViewController *nextController = [[StopListViewController alloc] initWithStyle:UITableViewStylePlain];
+	//StopListViewController *nextController = [[StopListViewController alloc] initWithStyle:UITableViewStylePlain];
+	
+	StopListViewController *nextController = [[StopListViewController alloc] initWithNibName:@"StopListViewController" bundle:nil];
 	nextController.title = [dict objectForKey:@"title"];
 	nextController.stopTag = [dict objectForKey:@"tag"];
 	
