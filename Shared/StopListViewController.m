@@ -30,7 +30,7 @@
 
 @implementation StopListViewController
 
-@synthesize stopTag, tableView, directionControl;
+@synthesize stopTag, tableView, directionControl, bottomToolbar;
 
 #pragma mark -
 #pragma mark View Lifecycle
@@ -48,11 +48,10 @@
 																	   action:@selector(showRoute)];
 	
 	self.navigationItem.rightBarButtonItem = showRouteButton;
+	[showRouteButton release];
 	
 	StopListModel *model = [StopListModel sharedStopListModel];
 	[model requestStopList:self.stopTag];
-	
-	[self.directionControl addTarget:self action:@selector(switchDirection:) forControlEvents:UIControlEventValueChanged];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -63,7 +62,12 @@
 	[model addObserver:self 
 			forKeyPath:@"stops" 
 			   options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
-			   context:NULL];
+			   context:@selector(reloadTable)];
+	
+	[model addObserver:self 
+			forKeyPath:@"tags" 
+			   options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
+			   context:@selector(reloadDirectionControl)];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -71,6 +75,7 @@
 	
 	StopListModel *model = [StopListModel sharedStopListModel];
 	[model removeObserver:self forKeyPath:@"stops"];
+	[model removeObserver:self forKeyPath:@"tags"];
 	
 	[super viewDidDisappear:animated];
 }
@@ -83,7 +88,33 @@
 #pragma mark Model Observing
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+	
+	SEL selector = (SEL)context;
+    [self performSelector:selector];
+}
+
+- (void)reloadTable {
+	NSLog(@"reloadTable:");
+	
 	[self.tableView reloadData];
+}
+
+- (void)reloadDirectionControl {
+	NSLog(@"reloadDirectionControl:");
+
+	StopListModel *model = [StopListModel sharedStopListModel];
+	
+	directionControl = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithArray:[model tags]]];
+	
+	directionControl.segmentedControlStyle = UISegmentedControlStyleBar;
+	directionControl.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+	directionControl.frame = CGRectMake(0, 0, 295, 30);
+	directionControl.selectedSegmentIndex = 0;
+	UIBarButtonItem *buttonItem = [[UIBarButtonItem alloc] initWithCustomView:directionControl];
+	
+	bottomToolbar.items = [NSArray arrayWithObjects:buttonItem, nil];
+	
+	[self.directionControl addTarget:self action:@selector(switchDirection:) forControlEvents:UIControlEventValueChanged];
 }
 
 #pragma mark -
@@ -178,6 +209,11 @@
 - (IBAction)switchDirection:(id)sender {
 	// TODO: tell the model we're switching directions
 	// reload table view for inbound vs. outbound
+	
+	NSLog(@"%d", self.directionControl.selectedSegmentIndex);
+	
+	StopListModel *model = [StopListModel sharedStopListModel];
+	[model loadStopsForTagIndex:self.directionControl.selectedSegmentIndex];
 }
 
 

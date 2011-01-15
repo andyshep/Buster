@@ -34,11 +34,13 @@
 	IBOutlet UITableView *tableView;
 	
 	IBOutlet UISegmentedControl *directionControl;
+	IBOutlet UIToolbar *bottomToolbar;
 }
 
 @property (nonatomic, retain) NSString *stopTag;
 @property (nonatomic, retain) IBOutlet UITableView *tableView;
 @property (nonatomic, retain) IBOutlet UISegmentedControl *directionControl;
+@property (nonatomic, retain) IBOutlet UIToolbar *bottomToolbar;
 
 - (void)assembleRoutePath;
 

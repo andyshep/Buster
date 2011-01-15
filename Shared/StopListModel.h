@@ -36,14 +36,19 @@
 	NSArray *stops;
 	
 	NSMutableDictionary *stopListCache;
+	
+	NSDictionary *qualifiedDirections;
+	NSArray *tags;
 }
 
-@property (copy) NSArray *stops;
+@property (copy) NSArray *stops, *tags;
+@property (copy) NSDictionary *qualifiedStops;
 
 + (StopListModel *)sharedStopListModel;
 
 - (void)requestStopList:(NSString *)stop;
 - (void)unloadStopList;
+- (void)loadStopsForTagIndex:(NSUInteger)index;
 
 - (NSUInteger)countOfStops;
 - (id)objectInStopsAtIndex:(NSUInteger)index;

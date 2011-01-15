@@ -30,7 +30,7 @@
 
 @implementation StopListModel
 
-@synthesize stops;
+@synthesize stops, qualifiedStops, tags;
 
 SYNTHESIZE_SINGLETON_FOR_CLASS(StopListModel);
 
@@ -44,6 +44,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(StopListModel);
 		
 		// init an empty set of routeTitles for the model
 		self.stops = nil;
+		self.tags = nil;
+		self.qualifiedStops = nil;
 		
 		// create our operation queue
 		opQueue = [[NSOperationQueue alloc] init];
@@ -101,20 +103,30 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(StopListModel);
 	self.stops = nil;
 }
 
+- (void)loadStopsForTagIndex:(NSUInteger)index {
+	self.stops = [[qualifiedStops objectForKey:[self.tags objectAtIndex:index]] objectForKey:@"stops"];
+}
+
 #pragma mark -
 #pragma mark StopListOperationDelegate methods
 
 - (void)updateStopList:(NSArray *)data {
 	
-	NSString *stopId = [data objectAtIndex:0];
+	// NSString *stopId = [data objectAtIndex:0];
 	
 	// FIXME: this isn't the list you really wanna track
-	NSArray *list = [data objectAtIndex:1];
-	[stopListCache setObject:list forKey:stopId];
-	self.stops = list;
+	NSArray *_stops = [data objectAtIndex:1];
+	
+	// turning off caching
+	// [stopListCache setObject:list forKey:stopId];
+	// self.stops = list;
 	
 	NSMutableDictionary *directions = [[NSMutableDictionary alloc] initWithCapacity:4];
-	for (NSDictionary *stop in stops) {
+	
+	// this should probably be a dictionary
+	NSMutableArray *_tags = [NSMutableArray arrayWithCapacity:4];
+	
+	for (NSDictionary *stop in _stops) {
 		
 		if ([directions objectForKey:[stop valueForKey:@"dirTag"]] == nil) {
 			
@@ -143,24 +155,46 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(StopListModel);
 	// now have the an inbound/outbound direction pair
 	// attached to a list of stops
 	
+	// go thru the metadata and determine the title of the route.
 	NSArray *metadata = [data objectAtIndex:2];
 	for (NSDictionary *data in metadata) {
 		
-		NSString *dataDirection = [data valueForKey:@"tag"];
-		NSString *directionName = [data valueForKey:@"name"];
-		NSString *directionTitle = [data valueForKey:@"title"];
+		NSString *_tag = [data valueForKey:@"tag"];
+		NSString *_name = [data valueForKey:@"name"];
+		NSString *_title = [data valueForKey:@"title"];
 		
-		if ([directions objectForKey:dataDirection] != nil) {
-			NSArray *existingStops = [[directions objectForKey:dataDirection] objectForKey:@"stops"];
+		// TODO: implement this?
+		// NSString *_useForUI = [data valueForKey:@"useForUI"];
+		
+		if ([directions objectForKey:_tag] != nil) {
+			NSArray *existingStops = [[directions objectForKey:_tag] objectForKey:@"stops"];
 			
-			[directions setObject:[NSDictionary dictionaryWithObjectsAndKeys:existingStops, @"stops", dataDirection, @"tag", directionName, @"name", directionTitle, @"title", nil]
-						   forKey:dataDirection];
+			[directions setObject:[NSDictionary dictionaryWithObjectsAndKeys:existingStops, @"stops", _tag, @"tag", _name, @"name", _title, @"title", nil]
+						   forKey:_tag];
+			
+			[_tags addObject:_tag];
 		}
 	}
 	
-	NSLog(@"%@", directions);
+	NSLog(@"found %d directions", [directions count]);
+	// NSLog(@"directions: %@", directions);
+	NSLog(@"tags: %@", _tags);
 	
+//	for (NSDictionary *data in metadata) {
+//
+//		NSString *_useForUI = [data valueForKey:@"useForUI"];
+//		NSString *_tag = [data valueForKey:@"tag"];
+//		
+//		if ([_useForUI compare:@"true"]) {
+//			NSLog(@"should be using tag %@ for UI display", _tag);
+//		}
+//	}
+
+	self.qualifiedStops = [NSDictionary dictionaryWithDictionary:directions];
 	[directions release];
+	
+	self.tags = _tags;
+	self.stops = [[qualifiedStops objectForKey:[self.tags objectAtIndex:0]] objectForKey:@"stops"];
 }
 
 @end
