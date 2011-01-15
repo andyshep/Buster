@@ -106,11 +106,11 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(StopListModel);
 
 - (void)updateStopList:(NSArray *)data {
 	
-	NSString *stop = [data objectAtIndex:0];
+	NSString *stopId = [data objectAtIndex:0];
 	
 	// FIXME: this isn't the list you really wanna track
 	NSArray *list = [data objectAtIndex:1];
-	[stopListCache setObject:list forKey:stop];
+	[stopListCache setObject:list forKey:stopId];
 	self.stops = list;
 	
 	NSMutableDictionary *directions = [[NSMutableDictionary alloc] initWithCapacity:4];
@@ -120,18 +120,18 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(StopListModel);
 			
 			NSArray *currentStops = [NSArray arrayWithObject:stop];
 			
-			[directions setObject:currentStops
+			[directions setObject:[NSDictionary dictionaryWithObjectsAndKeys:currentStops, @"stops", nil]
 						   forKey:[stop valueForKey:@"dirTag"]];
 			
 			currentStops = nil;
 		} else {
-			NSArray *existingStops = [directions objectForKey:[stop valueForKey:@"dirTag"]];
+			NSArray *existingStops = [[directions objectForKey:[stop valueForKey:@"dirTag"]] objectForKey:@"stops"];
 			NSMutableArray *newStops = [NSMutableArray arrayWithArray:existingStops];
 			
 			[newStops addObject:stop];
 			
 			NSArray *currentStops = [NSArray arrayWithArray:newStops];
-			[directions setObject:currentStops 
+			[directions setObject:[NSDictionary dictionaryWithObjectsAndKeys:currentStops, @"stops", nil]
 						   forKey:[stop valueForKey:@"dirTag"]];
 			
 			newStops = nil;
@@ -142,14 +142,23 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(StopListModel);
 	
 	// now have the an inbound/outbound direction pair
 	// attached to a list of stops
+	
+	NSArray *metadata = [data objectAtIndex:2];
+	for (NSDictionary *data in metadata) {
+		
+		NSString *dataDirection = [data valueForKey:@"tag"];
+		NSString *directionName = [data valueForKey:@"name"];
+		NSString *directionTitle = [data valueForKey:@"title"];
+		
+		if ([directions objectForKey:dataDirection] != nil) {
+			NSArray *existingStops = [[directions objectForKey:dataDirection] objectForKey:@"stops"];
+			
+			[directions setObject:[NSDictionary dictionaryWithObjectsAndKeys:existingStops, @"stops", dataDirection, @"tag", directionName, @"name", directionTitle, @"title", nil]
+						   forKey:dataDirection];
+		}
+	}
+	
 	NSLog(@"%@", directions);
-	
-//	
-//	for (NSDictionary *entry in list) {
-//		NSLog(@"%@", entry);
-//	}
-	
-	//NSLog(@"%@", [data objectAtIndex:2]);
 	
 	[directions release];
 }

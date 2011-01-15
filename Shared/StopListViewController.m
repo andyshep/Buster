@@ -165,7 +165,7 @@
 	
 	NSLog(@"assembleRoutePath: %@", directions);
 	
-	// NSLog(@"assembleRoutePath: %@", stops);
+//	NSLog(@"assembleRoutePath: %@", stops);
 }
 
 #pragma mark -
