@@ -88,9 +88,9 @@
 - (NSArray *)consumeData {
 	
 	// a list of route stops will be passed back and stored into the model
-	NSMutableArray *stopList = [[[NSMutableArray alloc] init] autorelease];
+	NSMutableArray *stopList = [NSMutableArray arrayWithCapacity:20];
 	
-	NSMutableArray *directions = [[[NSMutableArray alloc] init] autorelease];
+	NSMutableArray *directions = [NSMutableArray arrayWithCapacity:20];
 	
 	// first get the route xml from the intertubes
 	NSData *stopListData = [self fetchData];
@@ -107,7 +107,7 @@
 			// for each stop xml node create a dict
 			// with the attributes we care about
 			// and store it away
-			NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+			NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:8];
 			
 			// FIXME: this is leaky
 			[dict setObject:[[node attributeForName:@"title"] stringValue] forKey:@"title"];
@@ -119,8 +119,9 @@
 			[dict setObject:(NSString *)self.stopId forKey:@"routeNumber"];
 			
 			[stopList addObject:dict];
-			
-			[dict release];
+
+			dict = nil;
+			node = nil;
 		}
 		
 		// next grab the route and direction data
@@ -128,7 +129,7 @@
 		
 		for (CXMLElement *node in nodes) {
 			
-			NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+			NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:6];
 			
 			[dict setObject:[[node attributeForName:@"title"] stringValue] forKey:@"title"];
 			[dict setObject:[[node attributeForName:@"tag"] stringValue] forKey:@"tag"];
@@ -136,7 +137,7 @@
 			[dict setObject:[[node attributeForName:@"useForUI"] stringValue] forKey:@"useForUI"];
 			
 			NSArray *stopNodes = [node nodesForXPath:@"//direction/stop" error:nil];
-			NSMutableArray *stops = [[NSMutableArray alloc] init];
+			NSMutableArray *stops = [NSMutableArray arrayWithCapacity:3];
 			
 			// account for the stops
 			for (CXMLElement *stop in stopNodes) {
@@ -147,8 +148,8 @@
 			
 			[directions addObject:dict];
 			
-			[dict release];
-			[stops release];
+			dict = nil;
+			stops = nil;
 			stopNodes = nil;
 		}
 		

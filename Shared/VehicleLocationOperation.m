@@ -92,8 +92,7 @@
 
 - (NSDictionary *)consumeData {
 	
-	// a list of route stops will be passed back and stored into the model
-	NSMutableDictionary *vehicleLocation = [[[NSMutableDictionary alloc] init] autorelease];
+	NSMutableDictionary *vehicleLocation = [NSMutableDictionary dictionaryWithCapacity:3];
 	
 	// first get the route xml from the intertubes
 	NSData *locationsData = [self fetchData];
@@ -101,8 +100,8 @@
 	if (locationsData != nil) {
 		
 		// parse out the xml data
-		CXMLDocument *doc = [[[CXMLDocument alloc] initWithData:locationsData options:0 error:nil] autorelease];
-		NSArray *nodes = NULL;
+		CXMLDocument *doc = [[CXMLDocument alloc] initWithData:locationsData options:0 error:nil];
+		NSArray *nodes;
 		
 		// searching for vehicle nodes matching our id
 		
@@ -141,6 +140,9 @@
 //			
 //			[predictions addObject:dict];
 		}
+		
+		[doc release];
+		nodes = nil;
 	}
 	
 	return vehicleLocation;

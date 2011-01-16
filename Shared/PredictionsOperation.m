@@ -93,7 +93,7 @@
 - (NSArray *)consumeData {
 	
 	// a list of route stops will be passed back and stored into the model
-	NSMutableArray *predictions = [[[NSMutableArray alloc] init] autorelease];
+	NSMutableArray *predictions = [NSMutableArray arrayWithCapacity:5];
 	
 	// first get the route xml from the intertubes
 	NSData *predictionsData = [self fetchData];
@@ -101,15 +101,15 @@
 	if (predictionsData != nil) {
 		
 		// parse out the xml data
-		CXMLDocument *doc = [[[CXMLDocument alloc] initWithData:predictionsData options:0 error:nil] autorelease];
-		NSArray *nodes = NULL;
+		CXMLDocument *doc = [[CXMLDocument alloc] initWithData:predictionsData options:0 error:nil];
+		NSArray *nodes;
 		
 		// searching for prediction nodes
 		nodes = [doc nodesForXPath:@"//prediction" error:nil];
 		
 		for (CXMLElement *node in nodes) {
 			
-			NSMutableDictionary *dict = [[[NSMutableDictionary alloc] init] autorelease];
+			NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:5];
 			
 			// FIXME: this is leaky			
 			[dict setObject:[[node attributeForName:@"minutes"] stringValue] forKey:@"minutes"];
@@ -119,7 +119,12 @@
 			[dict setObject:[[node attributeForName:@"epochTime"] stringValue] forKey:@"time"];
 			
 			[predictions addObject:dict];
+			
+			dict = nil;
 		}
+		
+		[doc release];
+		nodes = nil;
 	}
 	
 	return predictions;

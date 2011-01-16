@@ -86,22 +86,22 @@
 - (NSArray *)consumeData {
 	
 	// a list of routes will be passed back and stored into the model
-	NSMutableArray *routeList = [[[NSMutableArray alloc] init] autorelease];
+	NSMutableArray *routeList = [NSMutableArray arrayWithCapacity:20];
 	
 	// first get the route xml from the intertubes
 	NSData *routeListData = [self fetchData];
 	
 	if (routeListData != nil) {
 		// then begin parsing the route xml
-		CXMLDocument *doc = [[[CXMLDocument alloc] initWithData:routeListData options:0 error:nil] autorelease];
-		NSArray *nodes = NULL;
+		CXMLDocument *doc = [[CXMLDocument alloc] initWithData:routeListData options:0 error:nil];
+		NSArray *nodes;
 		
 		// searching for route nodes
 		nodes = [doc nodesForXPath:@"//route" error:nil];
 		
 		// grab the title of each route and add into the model
 		for (CXMLElement *node in nodes) {
-			NSMutableDictionary *dict = [[[NSMutableDictionary alloc] init] autorelease];
+			NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:2];
 			// TODO: determine the inbound and outbound titles
 			
 			[dict setObject:[[node attributeForName:@"title"] stringValue] forKey:@"title"];
@@ -113,6 +113,9 @@
 		
 		// write the list to cache for future use
 		// [routeList writeToFile:[self dataFilePath] atomically:YES];
+		
+		[doc release];
+		nodes = nil;
 	}
 	
 	// return to the model
