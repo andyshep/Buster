@@ -34,15 +34,18 @@
 	
 	// these are used by table views
 	NSArray *stops;
+	NSArray *tags;
+	NSArray *titles;
+	NSString *title;
 	
 	NSMutableDictionary *stopListCache;
 	
 	NSDictionary *qualifiedDirections;
-	NSArray *tags;
 }
 
-@property (copy) NSArray *stops, *tags;
+@property (copy) NSArray *stops, *tags, *titles;
 @property (copy) NSDictionary *qualifiedStops;
+@property (nonatomic, retain) NSString *title;
 
 + (StopListModel *)sharedStopListModel;
 

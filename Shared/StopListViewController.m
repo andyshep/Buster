@@ -68,6 +68,11 @@
 			forKeyPath:@"tags" 
 			   options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
 			   context:@selector(reloadDirectionControl)];
+
+	[model addObserver:self 
+			forKeyPath:@"title" 
+			   options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
+			   context:@selector(reloadRouteTitle)];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -76,6 +81,7 @@
 	StopListModel *model = [StopListModel sharedStopListModel];
 	[model removeObserver:self forKeyPath:@"stops"];
 	[model removeObserver:self forKeyPath:@"tags"];
+	[model removeObserver:self forKeyPath:@"title"];
 	
 	[super viewDidDisappear:animated];
 }
@@ -115,6 +121,23 @@
 	bottomToolbar.items = [NSArray arrayWithObjects:buttonItem, nil];
 	
 	[self.directionControl addTarget:self action:@selector(switchDirection:) forControlEvents:UIControlEventValueChanged];
+}
+
+- (void)reloadRouteTitle {
+	
+	StopListModel *model = [StopListModel sharedStopListModel];
+	
+	UIView *containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
+	UILabel *routeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
+	
+	routeLabel.text = [model title];
+	routeLabel.textAlignment = UITextAlignmentCenter;
+	routeLabel.adjustsFontSizeToFitWidth = YES;
+	[containerView addSubview:routeLabel];
+	self.tableView.tableHeaderView = containerView;
+	
+	[routeLabel release];
+	[containerView release];
 }
 
 #pragma mark -
@@ -160,6 +183,8 @@
 }
 
 - (void) tableView:(UITableView *)tView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+	
+	[self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 	
 	StopListModel *model = [StopListModel sharedStopListModel];
 	NSUInteger row = [indexPath row];

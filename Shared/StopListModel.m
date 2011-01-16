@@ -30,7 +30,7 @@
 
 @implementation StopListModel
 
-@synthesize stops, qualifiedStops, tags;
+@synthesize stops, qualifiedStops, tags, titles, title;
 
 SYNTHESIZE_SINGLETON_FOR_CLASS(StopListModel);
 
@@ -46,6 +46,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(StopListModel);
 		self.stops = nil;
 		self.tags = nil;
 		self.qualifiedStops = nil;
+		self.titles = nil;
+		self.title = nil;
 		
 		// create our operation queue
 		opQueue = [[NSOperationQueue alloc] init];
@@ -105,6 +107,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(StopListModel);
 
 - (void)loadStopsForTagIndex:(NSUInteger)index {
 	self.stops = [[qualifiedStops objectForKey:[self.tags objectAtIndex:index]] objectForKey:@"stops"];
+	self.title = [titles objectAtIndex:index];
 }
 
 #pragma mark -
@@ -123,8 +126,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(StopListModel);
 	
 	NSMutableDictionary *directions = [[NSMutableDictionary alloc] initWithCapacity:4];
 	
-	// this should probably be a dictionary
+	// these both should probably be a dictionary
 	NSMutableArray *_tags = [NSMutableArray arrayWithCapacity:4];
+	NSMutableArray *_titles = [NSMutableArray arrayWithCapacity:4];
 	
 	for (NSDictionary *stop in _stops) {
 		
@@ -173,12 +177,14 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(StopListModel);
 						   forKey:_tag];
 			
 			[_tags addObject:_tag];
+			[_titles addObject:_title];
 		}
 	}
 	
 	NSLog(@"found %d directions", [directions count]);
 	// NSLog(@"directions: %@", directions);
 	NSLog(@"tags: %@", _tags);
+	NSLog(@"titles: %@", _titles);
 	
 //	for (NSDictionary *data in metadata) {
 //
@@ -194,7 +200,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(StopListModel);
 	[directions release];
 	
 	self.tags = _tags;
+	self.titles = _titles;
 	self.stops = [[qualifiedStops objectForKey:[self.tags objectAtIndex:0]] objectForKey:@"stops"];
+	self.title = [titles objectAtIndex:0];
 }
 
 @end
