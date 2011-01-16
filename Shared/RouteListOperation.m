@@ -101,14 +101,14 @@
 		
 		// grab the title of each route and add into the model
 		for (CXMLElement *node in nodes) {
-			NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:2];
-			// TODO: determine the inbound and outbound titles
 			
-			[dict setObject:[[node attributeForName:@"title"] stringValue] forKey:@"title"];
-			[dict setObject:[[node attributeForName:@"tag"] stringValue] forKey:@"tag"];
+			MBTARoute *route = [[MBTARoute alloc] init];
 			
-			[routeList addObject:dict];
-			dict = nil;
+			route.title = [[node attributeForName:@"title"] stringValue];
+			route.tag = [[node attributeForName:@"tag"] stringValue];
+			
+			[routeList addObject:route];
+			[route release];
 		}
 		
 		// write the list to cache for future use
@@ -117,18 +117,14 @@
 		[doc release];
 		nodes = nil;
 	}
-	
-	// return to the model
-	// should represent initial empty model?
-	// an array of dictionaries, where each dict is a route entity.
-	
+
 	return routeList;
 }
 
 - (void)main {
 	
 	@try {
-		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+//		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 		
 		NSArray *consumedData = [self consumeData];
 		
@@ -140,7 +136,7 @@
 									waitUntilDone:YES];
 		}
 		
-		[pool drain];
+//		[pool drain];
 	}
 	@catch (NSException *e) {
 		// an NSOperation cannot throw an exception

@@ -62,7 +62,6 @@
     [super viewWillAppear:animated];
 
 	RouteListModel *model = [RouteListModel sharedRouteListModel];
-	
 	[model requestRouteList];
 	[model addObserver:self 
 			forKeyPath:@"routes" 
@@ -112,9 +111,9 @@
     // Configure the cell...
 	RouteListModel *model = [RouteListModel sharedRouteListModel];
 	NSUInteger row = [indexPath row];
-	NSMutableDictionary *dict = (NSMutableDictionary *)[model objectInRoutesAtIndex:row];
+	MBTARoute *route = (MBTARoute *)[model objectInRoutesAtIndex:row];
 	
-	cell.textLabel.text = [dict objectForKey:@"title"];
+	cell.textLabel.text = route.title;
 	//cell.inboundDestination.text = [dict objectForKey:@"inboundTitle"];
 	//cell.outboundDestination.text = [dict objectForKey:@"outboundTitle"];
     
@@ -128,13 +127,13 @@
 	
 	RouteListModel *model = [RouteListModel sharedRouteListModel];
 	NSUInteger row = [indexPath row];
-	NSMutableDictionary *dict = (NSMutableDictionary *)[model objectInRoutesAtIndex:row];
+	MBTARoute *route = (MBTARoute *)[model objectInRoutesAtIndex:row];
 	
 	//StopListViewController *nextController = [[StopListViewController alloc] initWithStyle:UITableViewStylePlain];
 	
 	StopListViewController *nextController = [[StopListViewController alloc] initWithNibName:@"StopListViewController" bundle:nil];
-	nextController.title = [dict objectForKey:@"title"];
-	nextController.stopTag = [dict objectForKey:@"tag"];
+	nextController.title = route.title;
+	nextController.stopTag = route.tag;
 	
 	[self.navigationController pushViewController:nextController animated:YES];
 	

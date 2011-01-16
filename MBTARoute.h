@@ -1,8 +1,8 @@
 //
-//  RouteListModel.h
+//  MBTARoute.h
 //  Buster
 //
-//  Created by andyshep on 12/30/10.
+//  Created by Andrew Shepard on 1/16/11.
 //
 //  Copyright (c) 2010 Andrew Shepard
 // 
@@ -25,28 +25,15 @@
 //  THE SOFTWARE.
 //
 
-#import "SynthesizeSingleton.h"
-#import "RouteListOperation.h"
-#import "MBTARoute.h"
+#import <Foundation/Foundation.h>
 
 
-@interface RouteListModel : NSObject <RouteListOperationDelegate> {
-	NSOperationQueue *opQueue;
-	
-	// these are used by table views
-	NSArray *routes;
-	
-	NSMutableArray *routeListCache;
+@interface MBTARoute : NSObject <NSCoding> {
+	NSString *title, *tag;
+	NSArray *stops;
 }
 
-@property (copy) NSArray *routes;
-
-+ (RouteListModel *)sharedRouteListModel;
-
-- (void) requestRouteList;
-
-- (NSUInteger)countOfRoutes;
-- (id)objectInRoutesAtIndex:(NSUInteger)index;
-- (void)getRoutes:(id *)objects range:(NSRange)range;
+@property (nonatomic, retain) NSString *title, *tag;
+@property (copy) NSArray *stops;
 
 @end

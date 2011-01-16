@@ -106,7 +106,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(RouteListModel);
 - (void)updateRouteList:(NSArray *)data {
 	
 	self.routes = data;
-	
 	[routeListCache addObject:data];
 }
 

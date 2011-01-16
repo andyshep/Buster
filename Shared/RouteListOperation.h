@@ -26,6 +26,7 @@
 //
 
 #import "MBTAQueryStringBuilder.h"
+#import "MBTARoute.h"
 
 
 @protocol RouteListOperationDelegate

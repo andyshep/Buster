@@ -27,6 +27,7 @@
 
 #import "StopListViewController.h"
 #import "RouteListModel.h"
+#import "MBTARoute.h"
 
 @protocol MapViewControllerDelegate;
 

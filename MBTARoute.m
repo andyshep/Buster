@@ -1,8 +1,8 @@
 //
-//  RouteListModel.h
+//  MBTARoute.m
 //  Buster
 //
-//  Created by andyshep on 12/30/10.
+//  Created by Andrew Shepard on 1/16/11.
 //
 //  Copyright (c) 2010 Andrew Shepard
 // 
@@ -25,28 +25,52 @@
 //  THE SOFTWARE.
 //
 
-#import "SynthesizeSingleton.h"
-#import "RouteListOperation.h"
 #import "MBTARoute.h"
 
 
-@interface RouteListModel : NSObject <RouteListOperationDelegate> {
-	NSOperationQueue *opQueue;
+@implementation MBTARoute
+
+@synthesize title, tag;
+@synthesize stops;
+
+#pragma mark -
+#pragma mark Lifecycle
+
+- (id) init {
+    self = [super init];
+    
+	if (self != nil) {
+		
+		// init
+    }
 	
-	// these are used by table views
-	NSArray *routes;
-	
-	NSMutableArray *routeListCache;
+    return self;
 }
 
-@property (copy) NSArray *routes;
+- (void) dealloc {
+	
+    [super dealloc];
+}
 
-+ (RouteListModel *)sharedRouteListModel;
+#pragma mark -
+#pragma NSCoding
 
-- (void) requestRouteList;
-
-- (NSUInteger)countOfRoutes;
-- (id)objectInRoutesAtIndex:(NSUInteger)index;
-- (void)getRoutes:(id *)objects range:(NSRange)range;
+- (id)initWithCoder:(NSCoder *)coder {
+	
+	[super init];
+	
+	self.title = [coder decodeObjectForKey:@"title"];
+	self.tag = [coder decodeObjectForKey:@"tag"];
+	self.stops = [coder decodeObjectForKey:@"stops"];
+	
+	return self;
+}
+	 
+- (void)encodeWithCoder:(NSCoder *)coder {
+ 
+	[coder encodeObject:title forKey:@"title"];
+	[coder encodeObject:tag forKey:@"tag"];
+	[coder encodeObject:stops forKey:@"stops"];
+}
 
 @end
