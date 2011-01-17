@@ -190,12 +190,10 @@
 	NSUInteger row = [indexPath row];
 	MBTAStop *stop = (MBTAStop *)[model objectInStopsAtIndex:row];
 	NSString *routeTitle = stop.title;
-	//NSString *_directionTag = stop.directionTag;
 	NSString *_tag = stop.tag;
 	
 	PredictionsViewController *nextController = [[PredictionsViewController alloc] initWithStyle:UITableViewStyleGrouped];
 	nextController.title = @"Predictions";
-	// nextController.directionTag = _directionTag;
 	nextController.routeNumber = self.title;
 	nextController.stopTag = _tag;
 	nextController.routeTitle = routeTitle;

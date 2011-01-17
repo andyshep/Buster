@@ -108,7 +108,6 @@
 			// with the attributes we care about
 			// and store it away
 			
-			// new model with mbta stops
 			MBTAStop *stop = [[MBTAStop alloc] init];
 			stop.title = [[node attributeForName:@"title"] stringValue];
 			stop.tag = [[node attributeForName:@"tag"] stringValue];
@@ -119,31 +118,35 @@
 			[stop release];
 		}
 		
-		// NSMutableArray *directions = [NSMutableArray arrayWithCapacity:3];
-		
 		// next grab the route and direction data
 		nodes = [doc nodesForXPath:@"//route/direction" error:nil];
 		
+		NSLog(@"found %d directions", [nodes count]);
+		
+		int index = 1;
+		
 		for (CXMLElement *node in nodes) {
 			
-			// new model with mbta directions
 			MBTARouteDirection *direction = [[MBTARouteDirection alloc] init];
 			direction.title = [[node attributeForName:@"title"] stringValue];
 			direction.tag = [[node attributeForName:@"tag"] stringValue];
 			direction.name = [[node attributeForName:@"name"] stringValue];
 			
-			// FIXME: rename this on removal
-			NSArray *stopNodes = [node nodesForXPath:@"//direction/stop" error:nil];
+			NSString *xpath = [NSString stringWithFormat:@"//direction[%d]/stop", index];
+			
+			NSArray *stopNodes = [node nodesForXPath:xpath error:nil];
 			NSMutableArray *stops = [NSMutableArray arrayWithCapacity:10];
 			
 			for (CXMLElement *stop in stopNodes) {
-				[stops addObject:[[stop attributeForName:@"tag"] stringValue]];
+				[stops addObject:[stopsList objectForKey:[[stop attributeForName:@"tag"] stringValue]]];
 			}
 			
-			// FIXME: your xpath parsing above is wrong.  you need indexed based xpath
-			NSLog(@"found %d stops for direction %@", [stops count], direction.title);
+			// NSLog(@"found %d stops for direction %@", [stops count], direction.title);
+			
+			index += 1;
 			
 			direction.stops = stops;
+			
 			[directionsList addObject:direction];
 			
 			[direction release];
@@ -155,11 +158,11 @@
 //		NSLog(@"directionsList: %@", directionsList);
 		
 		nodes = nil;
+		stopsList = nil;
 		[doc release];
 	}
 	
 	NSArray *consumedData = [NSArray arrayWithObjects:self.stopId, 
-							[NSDictionary dictionaryWithDictionary:stopsList], 
 							[NSArray arrayWithArray:directionsList], 
 							nil];
 	

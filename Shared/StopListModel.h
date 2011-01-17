@@ -47,7 +47,7 @@
 }
 
 @property (copy) NSArray *stops, *tags, *titles;
-@property (copy) NSDictionary *qualifiedStops;
+@property (copy) NSDictionary *directions;
 @property (nonatomic, retain) NSString *title;
 
 + (StopListModel *)sharedStopListModel;

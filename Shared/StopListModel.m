@@ -30,7 +30,7 @@
 
 @implementation StopListModel
 
-@synthesize stops, qualifiedStops, tags, titles, title;
+@synthesize stops, directions, tags, titles, title;
 
 SYNTHESIZE_SINGLETON_FOR_CLASS(StopListModel);
 
@@ -45,7 +45,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(StopListModel);
 		// init an empty set of routeTitles for the model
 		self.stops = nil;
 		self.tags = nil;
-		self.qualifiedStops = nil;
+		self.directions = nil;
 		self.titles = nil;
 		self.title = nil;
 		
@@ -106,8 +106,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(StopListModel);
 }
 
 - (void)loadStopsForTagIndex:(NSUInteger)index {
-	self.stops = [[qualifiedStops objectForKey:[self.tags objectAtIndex:index]] objectForKey:@"stops"];
-	self.title = [titles objectAtIndex:index];
+	
+	MBTARouteDirection *_direction = [self.directions objectForKey:[self.tags objectAtIndex:index]];
+	self.stops = _direction.stops;
+	self.title = [self.titles objectAtIndex:index];
 }
 
 #pragma mark -
@@ -115,50 +117,28 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(StopListModel);
 
 - (void)updateStopList:(NSArray *)data {
 	
-	// NSString *stopId = [data objectAtIndex:0];
+	NSArray *_directions = [data objectAtIndex:1];
 	
-	// FIXME: this isn't the list you really wanna track
-	NSDictionary *_stops = [data objectAtIndex:1];
-	NSDictionary *_directions = [data objectAtIndex:2];
+	NSMutableDictionary *_qualifiedDirections = [NSMutableDictionary dictionaryWithCapacity:3];
+	NSMutableArray *_tags = [NSMutableArray arrayWithCapacity:3];
+	NSMutableArray *_titles = [NSMutableArray arrayWithCapacity:3];
 	
-//	NSLog(@"_stops: %@", _stops);
+	for (MBTARouteDirection *direction in _directions) {
+		NSLog(@"%@", direction.title);
+		
+		[_qualifiedDirections setObject:direction forKey:direction.tag];
+		
+		[_tags addObject:direction.tag];
+		[_titles addObject:direction.title];
+	}
 	
-//	for (MBTARouteDirection *direction in _directions) {
-//		
-//		NSLog(@"direction.title: %@", direction.title);
-//		
-//		for (NSString *stop in direction.stops) {
-//			NSLog(@"stop: %@", stop);
-//		}
-//		
-//	}
+	self.directions = [NSDictionary dictionaryWithDictionary:_qualifiedDirections];
+	self.tags = [NSArray arrayWithArray:_tags];
+	self.titles = [NSArray arrayWithArray:_titles];
+	self.title = [self.titles objectAtIndex:0];
 	
-//	// turning off caching
-//	// [stopListCache setObject:list forKey:stopId];
-//	self.stops = _stops;
-//	
-//	// NSLog(@"stops: %@", _stops);
-//	
-//	NSMutableDictionary *directions = [[NSMutableDictionary alloc] initWithCapacity:4];
-//	
-//	// these both should probably be a dictionary
-//	NSMutableArray *_tags = [NSMutableArray arrayWithCapacity:4];
-//	NSMutableArray *_titles = [NSMutableArray arrayWithCapacity:4];
-	
-	// FIXME: T isn't using dirTag anymore
-	// not all stops have a stopId
-	// tag seems to be the one to use
-	
-	
-	// old stuff
-
-//	self.qualifiedStops = [NSDictionary dictionaryWithDictionary:directions];
-//	[directions release];
-//	
-//	self.tags = _tags;
-//	self.titles = _titles;
-//	self.stops = [[qualifiedStops objectForKey:[self.tags objectAtIndex:0]] objectForKey:@"stops"];
-//	self.title = [titles objectAtIndex:0];
+	MBTARouteDirection *_direction = [self.directions objectForKey:[self.tags objectAtIndex:0]];
+	self.stops = _direction.stops;
 }
 
 @end
