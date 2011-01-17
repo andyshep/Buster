@@ -124,7 +124,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(StopListModel);
 	NSMutableArray *_titles = [NSMutableArray arrayWithCapacity:3];
 	
 	for (MBTARouteDirection *direction in _directions) {
-		NSLog(@"%@", direction.title);
 		
 		[_qualifiedDirections setObject:direction forKey:direction.tag];
 		

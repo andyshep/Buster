@@ -121,7 +121,7 @@
 		// next grab the route and direction data
 		nodes = [doc nodesForXPath:@"//route/direction" error:nil];
 		
-		NSLog(@"found %d directions", [nodes count]);
+		// NSLog(@"found %d directions", [nodes count]);
 		
 		int index = 1;
 		

@@ -40,7 +40,6 @@
 	NSArray *titles;
 	NSString *title;
 	
-	
 	NSMutableDictionary *stopListCache;
 	
 	NSDictionary *directions;

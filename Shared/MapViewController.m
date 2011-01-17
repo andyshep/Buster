@@ -43,7 +43,6 @@
 #pragma mark View lifecycle
 
 - (void)viewWillAppear:(BOOL)animated {
-	NSLog(@"viewWillAppear for the map view!");
 	
 	VehicleLocationModel *model = [VehicleLocationModel sharedVehicleLocationModel];
 	[model addObserver:self 

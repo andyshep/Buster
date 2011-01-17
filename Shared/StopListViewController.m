@@ -76,7 +76,6 @@
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
-	NSLog(@"viewDidDisappear:");
 	
 	StopListModel *model = [StopListModel sharedStopListModel];
 	[model removeObserver:self forKeyPath:@"stops"];
@@ -100,13 +99,10 @@
 }
 
 - (void)reloadTable {
-	NSLog(@"reloadTable:");
-	
 	[self.tableView reloadData];
 }
 
 - (void)reloadDirectionControl {
-	NSLog(@"reloadDirectionControl:");
 
 	StopListModel *model = [StopListModel sharedStopListModel];
 	
@@ -230,10 +226,7 @@
 }
 
 - (IBAction)switchDirection:(id)sender {
-	// TODO: tell the model we're switching directions
-	// reload table view for inbound vs. outbound
-	
-	NSLog(@"%d", self.directionControl.selectedSegmentIndex);
+	// tell the model we're switching directions
 	
 	StopListModel *model = [StopListModel sharedStopListModel];
 	[model loadStopsForTagIndex:self.directionControl.selectedSegmentIndex];
