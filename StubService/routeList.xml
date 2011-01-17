@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <body copyright="All data copyright MBTA 2010.">
   <route tag="1" title="1"/>
+  <route tag="4" title="4"/>
+  <route tag="10" title="10"/>
+  <route tag="21" title="21"/>
+  <route tag="39" title="39"/>
+  <route tag="52" title="52"/>
   <route tag="57" title="57"/>
-  <route tag="65" title="65"/>
+  <route tag="59" title="59"/>
   <route tag="66" title="66"/>
+  <route tag="70" title="70"/>
   <route tag="86" title="86"/>
+  <route tag="90" title="90"/>
+  <route tag="93" title="93"/>
   <route tag="501" title="501"/>
   <route tag="502" title="502"/>
-  <route tag="503" title="503"/>
   <route tag="504" title="504"/>
 </body>
