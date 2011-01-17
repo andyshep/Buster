@@ -118,91 +118,47 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(StopListModel);
 	// NSString *stopId = [data objectAtIndex:0];
 	
 	// FIXME: this isn't the list you really wanna track
-	NSArray *_stops = [data objectAtIndex:1];
+	NSDictionary *_stops = [data objectAtIndex:1];
+	NSDictionary *_directions = [data objectAtIndex:2];
 	
-	// turning off caching
-	// [stopListCache setObject:list forKey:stopId];
-	// self.stops = list;
+//	NSLog(@"_stops: %@", _stops);
 	
-	NSMutableDictionary *directions = [[NSMutableDictionary alloc] initWithCapacity:4];
-	
-	// these both should probably be a dictionary
-	NSMutableArray *_tags = [NSMutableArray arrayWithCapacity:4];
-	NSMutableArray *_titles = [NSMutableArray arrayWithCapacity:4];
-	
-	for (NSDictionary *stop in _stops) {
-		
-		if ([directions objectForKey:[stop valueForKey:@"dirTag"]] == nil) {
-			
-			NSArray *currentStops = [NSArray arrayWithObject:stop];
-			
-			[directions setObject:[NSDictionary dictionaryWithObjectsAndKeys:currentStops, @"stops", nil]
-						   forKey:[stop valueForKey:@"dirTag"]];
-			
-			currentStops = nil;
-		} else {
-			NSArray *existingStops = [[directions objectForKey:[stop valueForKey:@"dirTag"]] objectForKey:@"stops"];
-			NSMutableArray *newStops = [NSMutableArray arrayWithArray:existingStops];
-			
-			[newStops addObject:stop];
-			
-			NSArray *currentStops = [NSArray arrayWithArray:newStops];
-			[directions setObject:[NSDictionary dictionaryWithObjectsAndKeys:currentStops, @"stops", nil]
-						   forKey:[stop valueForKey:@"dirTag"]];
-			
-			newStops = nil;
-			existingStops = nil;
-			currentStops = nil;
-		}
-	}
-	
-	// now have the an inbound/outbound direction pair
-	// attached to a list of stops
-	
-	// go thru the metadata and determine the title of the route.
-	NSArray *metadata = [data objectAtIndex:2];
-	for (NSDictionary *data in metadata) {
-		
-		NSString *_tag = [data valueForKey:@"tag"];
-		NSString *_name = [data valueForKey:@"name"];
-		NSString *_title = [data valueForKey:@"title"];
-		
-		// TODO: implement this?
-		// NSString *_useForUI = [data valueForKey:@"useForUI"];
-		
-		if ([directions objectForKey:_tag] != nil) {
-			NSArray *existingStops = [[directions objectForKey:_tag] objectForKey:@"stops"];
-			
-			[directions setObject:[NSDictionary dictionaryWithObjectsAndKeys:existingStops, @"stops", _tag, @"tag", _name, @"name", _title, @"title", nil]
-						   forKey:_tag];
-			
-			[_tags addObject:_tag];
-			[_titles addObject:_title];
-		}
-	}
-	
-	NSLog(@"found %d directions", [directions count]);
-	// NSLog(@"directions: %@", directions);
-	NSLog(@"tags: %@", _tags);
-	NSLog(@"titles: %@", _titles);
-	
-//	for (NSDictionary *data in metadata) {
-//
-//		NSString *_useForUI = [data valueForKey:@"useForUI"];
-//		NSString *_tag = [data valueForKey:@"tag"];
+//	for (MBTARouteDirection *direction in _directions) {
 //		
-//		if ([_useForUI compare:@"true"]) {
-//			NSLog(@"should be using tag %@ for UI display", _tag);
+//		NSLog(@"direction.title: %@", direction.title);
+//		
+//		for (NSString *stop in direction.stops) {
+//			NSLog(@"stop: %@", stop);
 //		}
+//		
 //	}
-
-	self.qualifiedStops = [NSDictionary dictionaryWithDictionary:directions];
-	[directions release];
 	
-	self.tags = _tags;
-	self.titles = _titles;
-	self.stops = [[qualifiedStops objectForKey:[self.tags objectAtIndex:0]] objectForKey:@"stops"];
-	self.title = [titles objectAtIndex:0];
+//	// turning off caching
+//	// [stopListCache setObject:list forKey:stopId];
+//	self.stops = _stops;
+//	
+//	// NSLog(@"stops: %@", _stops);
+//	
+//	NSMutableDictionary *directions = [[NSMutableDictionary alloc] initWithCapacity:4];
+//	
+//	// these both should probably be a dictionary
+//	NSMutableArray *_tags = [NSMutableArray arrayWithCapacity:4];
+//	NSMutableArray *_titles = [NSMutableArray arrayWithCapacity:4];
+	
+	// FIXME: T isn't using dirTag anymore
+	// not all stops have a stopId
+	// tag seems to be the one to use
+	
+	
+	// old stuff
+
+//	self.qualifiedStops = [NSDictionary dictionaryWithDictionary:directions];
+//	[directions release];
+//	
+//	self.tags = _tags;
+//	self.titles = _titles;
+//	self.stops = [[qualifiedStops objectForKey:[self.tags objectAtIndex:0]] objectForKey:@"stops"];
+//	self.title = [titles objectAtIndex:0];
 }
 
 @end

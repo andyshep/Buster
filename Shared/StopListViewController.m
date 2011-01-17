@@ -174,9 +174,9 @@
 	
 	StopListModel *model = [StopListModel sharedStopListModel];	
 	NSUInteger row = [indexPath row];
-	NSMutableDictionary *dict = (NSMutableDictionary *)[model objectInStopsAtIndex:row];
+	MBTAStop *stop = (MBTAStop *)[model objectInStopsAtIndex:row];
 	
-	cell.textLabel.text = [dict objectForKey:@"title"];
+	cell.textLabel.text = stop.title;
 	cell.textLabel.adjustsFontSizeToFitWidth = YES;
 	
 	return cell;
@@ -188,14 +188,14 @@
 	
 	StopListModel *model = [StopListModel sharedStopListModel];
 	NSUInteger row = [indexPath row];
-	NSMutableDictionary *dict = (NSMutableDictionary *)[model objectInStopsAtIndex:row];
-	NSString *routeTitle = (NSString *)[dict objectForKey:@"title"];
-	NSString *_directionTag = (NSString *)[dict objectForKey:@"dirTag"];
-	NSString *_tag = (NSString *)[dict objectForKey:@"tag"];
+	MBTAStop *stop = (MBTAStop *)[model objectInStopsAtIndex:row];
+	NSString *routeTitle = stop.title;
+	//NSString *_directionTag = stop.directionTag;
+	NSString *_tag = stop.tag;
 	
 	PredictionsViewController *nextController = [[PredictionsViewController alloc] initWithStyle:UITableViewStyleGrouped];
 	nextController.title = @"Predictions";
-	nextController.directionTag = _directionTag;
+	// nextController.directionTag = _directionTag;
 	nextController.routeNumber = self.title;
 	nextController.stopTag = _tag;
 	nextController.routeTitle = routeTitle;
@@ -209,17 +209,17 @@
 #pragma mark Route Path Assembly
 
 - (void)assembleRoutePath {
-	StopListModel *model = [StopListModel sharedStopListModel];
-	NSArray *stops = [model stops];
-	
-	NSMutableDictionary *directions = [[NSMutableDictionary alloc] initWithCapacity:3];
-	for (NSDictionary *stop in stops) {
-		if ([directions objectForKey:[stop valueForKey:@"dirTag"]] == nil) {
-			[directions setObject:[stop valueForKey:@"dirTag"] forKey:[stop valueForKey:@"dirTag"]];
-		}
-	}
-	
-	NSLog(@"assembleRoutePath: %@", directions);
+//	StopListModel *model = [StopListModel sharedStopListModel];
+//	NSArray *stops = [model stops];
+//	
+//	NSMutableDictionary *directions = [[NSMutableDictionary alloc] initWithCapacity:3];
+//	for (NSDictionary *stop in stops) {
+//		if ([directions objectForKey:[stop valueForKey:@"dirTag"]] == nil) {
+//			[directions setObject:[stop valueForKey:@"dirTag"] forKey:[stop valueForKey:@"dirTag"]];
+//		}
+//	}
+//	
+//	NSLog(@"assembleRoutePath: %@", directions);
 	
 //	NSLog(@"assembleRoutePath: %@", stops);
 }

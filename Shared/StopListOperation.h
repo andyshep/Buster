@@ -26,6 +26,9 @@
 //
 
 #import "MBTAQueryStringBuilder.h"
+#import "MBTAStop.h"
+#import "MBTAStopList.h"
+#import "MBTARouteDirection.h"
 
 @protocol StopListOperationDelegate
 

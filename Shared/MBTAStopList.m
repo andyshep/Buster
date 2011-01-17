@@ -1,5 +1,5 @@
 //
-//  MBTARoute.m
+//  MBTAStopList.m
 //  Buster
 //
 //  Created by andyshep on 1/16/11.
@@ -25,15 +25,13 @@
 //  THE SOFTWARE.
 //
 
-#import "MBTARoute.h"
+#import "MBTAStopList.h"
 
 
-@implementation MBTARoute
+@implementation MBTAStopList
 
-@synthesize title, tag;
 @synthesize stops;
-
-@synthesize stopList;
+@synthesize tag, name, title;
 
 #pragma mark -
 #pragma mark Lifecycle
@@ -61,18 +59,18 @@
 	
 	[super init];
 	
-	self.title = [coder decodeObjectForKey:@"title"];
 	self.tag = [coder decodeObjectForKey:@"tag"];
-	self.stops = [coder decodeObjectForKey:@"stops"];
+	self.name = [coder decodeObjectForKey:@"name"];
+	self.title = [coder decodeObjectForKey:@"title"];
 	
 	return self;
 }
-	 
+
 - (void)encodeWithCoder:(NSCoder *)coder {
- 
-	[coder encodeObject:title forKey:@"title"];
-	[coder encodeObject:tag forKey:@"tag"];
-	[coder encodeObject:stops forKey:@"stops"];
+	
+	[coder encodeObject:self.tag forKey:@"tag"];
+	[coder encodeObject:self.name forKey:@"name"];
+	[coder encodeObject:self.title forKey:@"title"];
 }
 
 @end

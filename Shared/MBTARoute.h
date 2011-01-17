@@ -2,7 +2,7 @@
 //  MBTARoute.h
 //  Buster
 //
-//  Created by Andrew Shepard on 1/16/11.
+//  Created by andyshep on 1/16/11.
 //
 //  Copyright (c) 2010 Andrew Shepard
 // 
@@ -25,15 +25,18 @@
 //  THE SOFTWARE.
 //
 
-#import <Foundation/Foundation.h>
-
+#import "MBTAStopList.h"
 
 @interface MBTARoute : NSObject <NSCoding> {
 	NSString *title, *tag;
 	NSArray *stops;
+	
+	MBTAStopList *stopList;
 }
 
 @property (nonatomic, retain) NSString *title, *tag;
 @property (copy) NSArray *stops;
+
+@property (copy) MBTAStopList *stopList;
 
 @end

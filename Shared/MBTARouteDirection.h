@@ -1,8 +1,8 @@
 //
-//  MBTARoute.m
+//  MBTARouteDirection.h
 //  Buster
 //
-//  Created by andyshep on 1/16/11.
+//  Created by andyshep on 1/17/11.
 //
 //  Copyright (c) 2010 Andrew Shepard
 // 
@@ -25,54 +25,14 @@
 //  THE SOFTWARE.
 //
 
-#import "MBTARoute.h"
 
-
-@implementation MBTARoute
-
-@synthesize title, tag;
-@synthesize stops;
-
-@synthesize stopList;
-
-#pragma mark -
-#pragma mark Lifecycle
-
-- (id) init {
-    self = [super init];
-    
-	if (self != nil) {
-		
-		// init
-    }
+@interface MBTARouteDirection : NSObject <NSCoding> {
+	NSString *title, *tag, *name;
 	
-    return self;
+	NSArray *stops;
 }
 
-- (void) dealloc {
-	
-    [super dealloc];
-}
-
-#pragma mark -
-#pragma NSCoding
-
-- (id)initWithCoder:(NSCoder *)coder {
-	
-	[super init];
-	
-	self.title = [coder decodeObjectForKey:@"title"];
-	self.tag = [coder decodeObjectForKey:@"tag"];
-	self.stops = [coder decodeObjectForKey:@"stops"];
-	
-	return self;
-}
-	 
-- (void)encodeWithCoder:(NSCoder *)coder {
- 
-	[coder encodeObject:title forKey:@"title"];
-	[coder encodeObject:tag forKey:@"tag"];
-	[coder encodeObject:stops forKey:@"stops"];
-}
+@property (nonatomic, retain) NSString *title, *tag, *name;
+@property (copy) NSArray *stops;
 
 @end

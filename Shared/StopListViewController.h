@@ -28,6 +28,8 @@
 #import "StopListModel.h"
 #import "PredictionsViewController.h"
 
+#import "MBTAStop.h"
+
 
 @interface StopListViewController : UIViewController <UITableViewDataSource, UITableViewDelegate> {
 	NSString *stopTag;

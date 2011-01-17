@@ -1,5 +1,5 @@
 //
-//  MBTARoute.m
+//  MBTAStopList.h
 //  Buster
 //
 //  Created by andyshep on 1/16/11.
@@ -25,54 +25,14 @@
 //  THE SOFTWARE.
 //
 
-#import "MBTARoute.h"
 
-
-@implementation MBTARoute
-
-@synthesize title, tag;
-@synthesize stops;
-
-@synthesize stopList;
-
-#pragma mark -
-#pragma mark Lifecycle
-
-- (id) init {
-    self = [super init];
-    
-	if (self != nil) {
-		
-		// init
-    }
+@interface MBTAStopList : NSObject <NSCoding> {
+	NSArray *stops;
 	
-    return self;
+	NSString *tag, *name, *title;
 }
 
-- (void) dealloc {
-	
-    [super dealloc];
-}
-
-#pragma mark -
-#pragma NSCoding
-
-- (id)initWithCoder:(NSCoder *)coder {
-	
-	[super init];
-	
-	self.title = [coder decodeObjectForKey:@"title"];
-	self.tag = [coder decodeObjectForKey:@"tag"];
-	self.stops = [coder decodeObjectForKey:@"stops"];
-	
-	return self;
-}
-	 
-- (void)encodeWithCoder:(NSCoder *)coder {
- 
-	[coder encodeObject:title forKey:@"title"];
-	[coder encodeObject:tag forKey:@"tag"];
-	[coder encodeObject:stops forKey:@"stops"];
-}
+@property (copy) NSArray *stops;
+@property (nonatomic, retain) NSString *tag, *name, *title;
 
 @end

@@ -27,6 +27,8 @@
 
 #import "SynthesizeSingleton.h"
 #import "StopListOperation.h"
+#import "MBTARouteDirection.h"
+#import "MBTAStop.h"
 
 
 @interface StopListModel : NSObject <StopListOperationDelegate> {
@@ -38,9 +40,10 @@
 	NSArray *titles;
 	NSString *title;
 	
+	
 	NSMutableDictionary *stopListCache;
 	
-	NSDictionary *qualifiedDirections;
+	NSDictionary *directions;
 }
 
 @property (copy) NSArray *stops, *tags, *titles;

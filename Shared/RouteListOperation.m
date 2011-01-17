@@ -124,7 +124,7 @@
 - (void)main {
 	
 	@try {
-//		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 		
 		NSArray *consumedData = [self consumeData];
 		
@@ -136,7 +136,7 @@
 									waitUntilDone:YES];
 		}
 		
-//		[pool drain];
+		[pool drain];
 	}
 	@catch (NSException *e) {
 		// an NSOperation cannot throw an exception

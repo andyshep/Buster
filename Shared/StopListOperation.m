@@ -88,9 +88,9 @@
 - (NSArray *)consumeData {
 	
 	// a list of route stops will be passed back and stored into the model
-	NSMutableArray *stopList = [NSMutableArray arrayWithCapacity:20];
+	NSMutableDictionary *stopsList = [NSMutableDictionary dictionaryWithCapacity:20];
 	
-	NSMutableArray *directions = [NSMutableArray arrayWithCapacity:20];
+	NSMutableArray *directionsList = [NSMutableArray arrayWithCapacity:20];
 	
 	// first get the route xml from the intertubes
 	NSData *stopListData = [self fetchData];
@@ -107,59 +107,60 @@
 			// for each stop xml node create a dict
 			// with the attributes we care about
 			// and store it away
-			NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:8];
 			
-			// FIXME: this is leaky
-			[dict setObject:[[node attributeForName:@"title"] stringValue] forKey:@"title"];
-			[dict setObject:[[node attributeForName:@"tag"] stringValue] forKey:@"tag"];
-			[dict setObject:[[node attributeForName:@"lon"] stringValue] forKey:@"longitude"];
-			[dict setObject:[[node attributeForName:@"lat"] stringValue] forKey:@"latitude"];
-			[dict setObject:[[node attributeForName:@"dirTag"] stringValue] forKey:@"dirTag"];
-			[dict setObject:[[node attributeForName:@"stopId"] stringValue] forKey:@"stopId"];
-			[dict setObject:(NSString *)self.stopId forKey:@"routeNumber"];
+			// new model with mbta stops
+			MBTAStop *stop = [[MBTAStop alloc] init];
+			stop.title = [[node attributeForName:@"title"] stringValue];
+			stop.tag = [[node attributeForName:@"tag"] stringValue];
+			stop.latitude = [[node attributeForName:@"lat"] stringValue];
+			stop.longitude = [[node attributeForName:@"lon"] stringValue];
 			
-			[stopList addObject:dict];
-
-			dict = nil;
-			node = nil;
+			[stopsList setObject:stop forKey:stop.tag];
+			[stop release];
 		}
+		
+		// NSMutableArray *directions = [NSMutableArray arrayWithCapacity:3];
 		
 		// next grab the route and direction data
 		nodes = [doc nodesForXPath:@"//route/direction" error:nil];
 		
 		for (CXMLElement *node in nodes) {
 			
-			NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:6];
+			// new model with mbta directions
+			MBTARouteDirection *direction = [[MBTARouteDirection alloc] init];
+			direction.title = [[node attributeForName:@"title"] stringValue];
+			direction.tag = [[node attributeForName:@"tag"] stringValue];
+			direction.name = [[node attributeForName:@"name"] stringValue];
 			
-			[dict setObject:[[node attributeForName:@"title"] stringValue] forKey:@"title"];
-			[dict setObject:[[node attributeForName:@"tag"] stringValue] forKey:@"tag"];
-			[dict setObject:[[node attributeForName:@"name"] stringValue] forKey:@"name"];
-			[dict setObject:[[node attributeForName:@"useForUI"] stringValue] forKey:@"useForUI"];
-			
+			// FIXME: rename this on removal
 			NSArray *stopNodes = [node nodesForXPath:@"//direction/stop" error:nil];
-			NSMutableArray *stops = [NSMutableArray arrayWithCapacity:3];
+			NSMutableArray *stops = [NSMutableArray arrayWithCapacity:10];
 			
-			// account for the stops
 			for (CXMLElement *stop in stopNodes) {
 				[stops addObject:[[stop attributeForName:@"tag"] stringValue]];
 			}
 			
-			[dict setObject:[NSArray arrayWithArray:stops] forKey:@"stops"];
+			// FIXME: your xpath parsing above is wrong.  you need indexed based xpath
+			NSLog(@"found %d stops for direction %@", [stops count], direction.title);
 			
-			[directions addObject:dict];
+			direction.stops = stops;
+			[directionsList addObject:direction];
 			
-			dict = nil;
+			[direction release];
 			stops = nil;
-			stopNodes = nil;
+			
 		}
+		
+//		NSLog(@"stopsList: %@", stopsList);
+//		NSLog(@"directionsList: %@", directionsList);
 		
 		nodes = nil;
 		[doc release];
 	}
 	
 	NSArray *consumedData = [NSArray arrayWithObjects:self.stopId, 
-							[NSArray arrayWithArray:stopList], 
-							[NSArray arrayWithArray:directions], 
+							[NSDictionary dictionaryWithDictionary:stopsList], 
+							[NSArray arrayWithArray:directionsList], 
 							nil];
 	
 	return consumedData;
