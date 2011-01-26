@@ -50,6 +50,9 @@
 	self.navigationItem.rightBarButtonItem = showRouteButton;
 	[showRouteButton release];
 	
+	// show a spinner
+	[self showActivityViewer];
+	
 	StopListModel *model = [StopListModel sharedStopListModel];
 	[model requestStopList:self.stopTag];
 }
@@ -99,15 +102,46 @@
 }
 
 - (void)reloadTable {
+	
 	[self.tableView reloadData];
+	
+	[self hideActivityViewer];
+	
+//	StopListModel *model = [StopListModel sharedStopListModel];
+//	
+//	int stopsToAdd = [model countOfStops];
+//	int stopsToDelete = [self.tableView numberOfRowsInSection:0];
+//	
+//	[self.tableView beginUpdates];
+//	
+//	for (int i = 0; i < stopsToDelete; i++) {
+//		NSArray *delete = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:i inSection:0]];
+//		[self.tableView deleteRowsAtIndexPaths:delete withRowAnimation:UITableViewRowAnimationBottom];
+//	}
+//	
+//	for (int i = 0; i < stopsToAdd; i++) {
+//		// for each route title
+//		// and stick it into the model
+//		// then insert it into the table with animations
+//		NSArray *insert = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:i inSection:0]];
+//		[self.tableView insertRowsAtIndexPaths:insert withRowAnimation:UITableViewRowAnimationTop];
+//	}
+//	
+//	// we're all done so do the cleanup
+//	[self.tableView endUpdates];
 }
 
 - (void)reloadDirectionControl {
 
-	StopListModel *model = [StopListModel sharedStopListModel];
+	StopListModel *model = [StopListModel sharedStopListModel];	
 	
-	directionControl = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithArray:[model tags]]];
+	NSMutableArray *items = [NSMutableArray arrayWithCapacity:2];
+	for (int i = 0 ; i < model.tags.count ; i++) {
+		[items addObject:[NSString stringWithFormat:@"%d", i]];
+		//[items addObject:[model.titles objectAtIndex:i]];
+	}
 	
+	directionControl = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithArray:items]];
 	directionControl.segmentedControlStyle = UISegmentedControlStyleBar;
 	directionControl.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 	directionControl.frame = CGRectMake(0, 0, 295, 30);
@@ -216,6 +250,44 @@
 //	NSLog(@"assembleRoutePath: %@", directions);
 	
 //	NSLog(@"assembleRoutePath: %@", stops);
+}
+
+#pragma mark -
+#pragma mark Spinners
+
+-(void)showActivityViewer
+{
+    [activityView release];
+    activityView = [[UIView alloc] initWithFrame: CGRectMake(self.tableView.frame.origin.x, 
+															 self.tableView.frame.origin.y,
+															 self.tableView.frame.size.width, 
+															 self.tableView.frame.size.height)];
+    activityView.backgroundColor = [UIColor blackColor];
+    activityView.alpha = 0.5;
+    
+    UIActivityIndicatorView *activityWheel = 
+		[[UIActivityIndicatorView alloc] initWithFrame: CGRectMake(self.tableView.frame.size.width / 2 - 18, 
+																   self.tableView.frame.size.height / 2 - 18, 
+																   36, 
+																   36)];
+    activityWheel.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhite;
+    activityWheel.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin |
+                                      UIViewAutoresizingFlexibleRightMargin |
+                                      UIViewAutoresizingFlexibleTopMargin |
+                                      UIViewAutoresizingFlexibleBottomMargin);
+    [activityView addSubview:activityWheel];
+    [activityWheel release];
+    [self.view addSubview:activityView];
+    [activityView release];
+    
+    [[[activityView subviews] objectAtIndex:0] startAnimating];
+}
+
+-(void)hideActivityViewer
+{
+    [[[activityView subviews] objectAtIndex:0] stopAnimating];
+    [activityView removeFromSuperview];
+    activityView = nil;
 }
 
 #pragma mark -

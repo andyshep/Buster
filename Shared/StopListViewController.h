@@ -37,6 +37,8 @@
 	
 	IBOutlet UISegmentedControl *directionControl;
 	IBOutlet UIToolbar *bottomToolbar;
+	
+	UIView *activityView;
 }
 
 @property (nonatomic, retain) NSString *stopTag;
