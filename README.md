@@ -17,7 +17,7 @@ Selecting a route brings up a list of associated stops.  Inbound and outbound di
 ![prediction-list.png](/docs/images/prediction-list.png)
 Selecting a stop will display of list of predictions for when the next bus will arrive.  No predictions shown indicates the bus is not running.
 
-![location-view.png](/docs/images/location-view.png)
+![location-view.png](https://github.com/andyshep/Buster/raw/master/docs/images/location-view.png)
 Selecting a prediction will display a map of where the bus currently is.  Location data is updated by the MBTA about every 1 minute. 
 
 
