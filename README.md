@@ -17,4 +17,6 @@ A group of screenshots depicting the flow of Buster in action are shown below.
 
 The route list represents a list of all routes the MBTA currently provides XML predictions for.  Selecting a route brings up a list of associated stops.  Inbound and outbound directions are specified via the control at the bottom of the TableView.  Selecting a stop will display of list of predictions for when the next bus will arrive.  No predictions shown indicates the bus is not running.  Selecting a prediction will display a map of where the bus currently is.  Location data is updated by the MBTA about once per minute.
 
+![buster-ipad.png](http://i.imgur.com/63DyX.png)
+
 
