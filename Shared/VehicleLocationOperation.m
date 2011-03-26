@@ -59,14 +59,12 @@
 
 - (NSString *)buildURL {
 	
-//	MBTAQueryStringBuilder *_builder = [[[MBTAQueryStringBuilder alloc] 
-//										 initWithBaseURL:@"http://webservices.nextbus.com/service/publicXMLFeed"] autorelease];
-//	
-//	// TODO: epochTime other than zero does not work
-//	NSString *url = [_builder buildLocationsQueryForRoute:self.routeNumber 
-//											withEpochTime:@"0"];
+	MBTAQueryStringBuilder *_builder = [[[MBTAQueryStringBuilder alloc] 
+										 initWithBaseURL:@"http://webservices.nextbus.com/service/publicXMLFeed"] autorelease];
 	
-	NSString *url = @"http://127.0.0.1:8081/vehicles.xml";
+	// TODO: epochTime other than zero does not work
+	NSString *url = [_builder buildLocationsQueryForRoute:self.routeNumber 
+											withEpochTime:@"0"];
 	
 	return url;
 }
@@ -108,12 +106,9 @@
 		// build an XPath including the vehicle Id
 		NSString *vehicleXPath = [NSString stringWithString:@"//vehicle[@id='"];
 		
-//		vehicleXPath = [vehicleXPath stringByAppendingString:self.vehicleId];
-		vehicleXPath = [vehicleXPath stringByAppendingString:@"2056"];
+		vehicleXPath = [vehicleXPath stringByAppendingString:self.vehicleId];
 		
 		vehicleXPath = [vehicleXPath stringByAppendingString:@"']"];
-		
-//		NSLog(@"vehicleXPath: %@", vehicleXPath);
 		
 		nodes = [doc nodesForXPath:vehicleXPath error:nil];
 		
@@ -156,8 +151,6 @@
 		NSDictionary *vehicleLocation = [self consumeData];
 		
 		if (!self.isCancelled) {
-			
-//			NSLog(@"starting VehicleLocationOperation for vehicle %@", self.vehicleId);
 			
 			[delegate performSelectorOnMainThread:@selector(updateLocation:) 
 									   withObject:vehicleLocation

@@ -19,4 +19,9 @@ The route list represents a list of all routes the MBTA currently provides XML p
 
 ![buster-ipad.png](http://i.imgur.com/63DyX.png)
 
+Caveats
+-------
+
+Buster was written with the intent of sharing code between multiple platforms.  The app is incomplete and lacking polish.
+
 

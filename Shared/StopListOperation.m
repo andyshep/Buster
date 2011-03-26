@@ -53,15 +53,10 @@
 
 - (NSString *)buildURL {
 	
-//	MBTAQueryStringBuilder *_builder = [[[MBTAQueryStringBuilder alloc] 
-//										 initWithBaseURL:@"http://webservices.nextbus.com/service/publicXMLFeed"] autorelease];
-//
-//	NSString *url = [_builder buildRouteConfigQuery:self.stopId];
-	
-	NSString *url = @"http://localhost:8081/routeConfig_r";
-	
-	url = [url stringByAppendingString:self.stopId];
-	url = [url stringByAppendingString:@".xml"];
+	MBTAQueryStringBuilder *_builder = [[[MBTAQueryStringBuilder alloc] 
+										 initWithBaseURL:@"http://webservices.nextbus.com/service/publicXMLFeed"] autorelease];
+
+	NSString *url = [_builder buildRouteConfigQuery:self.stopId];
 	
 	return url;
 }
@@ -141,21 +136,13 @@
 				[stops addObject:[stopsList objectForKey:[[stop attributeForName:@"tag"] stringValue]]];
 			}
 			
-			// NSLog(@"found %d stops for direction %@", [stops count], direction.title);
-			
 			index += 1;
-			
 			direction.stops = stops;
-			
 			[directionsList addObject:direction];
 			
 			[direction release];
 			stops = nil;
-			
 		}
-		
-//		NSLog(@"stopsList: %@", stopsList);
-//		NSLog(@"directionsList: %@", directionsList);
 		
 		nodes = nil;
 		stopsList = nil;

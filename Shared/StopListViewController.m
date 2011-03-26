@@ -51,7 +51,7 @@
 	[showRouteButton release];
 	
 	// show a spinner
-	[self showActivityViewer];
+//	[self showActivityViewer];
 	
 	StopListModel *model = [StopListModel sharedStopListModel];
 	[model requestStopList:self.stopTag];
@@ -105,30 +105,30 @@
 	
 	[self.tableView reloadData];
 	
-	[self hideActivityViewer];
+//	[self hideActivityViewer];
 	
-//	StopListModel *model = [StopListModel sharedStopListModel];
-//	
-//	int stopsToAdd = [model countOfStops];
-//	int stopsToDelete = [self.tableView numberOfRowsInSection:0];
-//	
-//	[self.tableView beginUpdates];
-//	
-//	for (int i = 0; i < stopsToDelete; i++) {
-//		NSArray *delete = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:i inSection:0]];
-//		[self.tableView deleteRowsAtIndexPaths:delete withRowAnimation:UITableViewRowAnimationBottom];
-//	}
-//	
-//	for (int i = 0; i < stopsToAdd; i++) {
-//		// for each route title
-//		// and stick it into the model
-//		// then insert it into the table with animations
-//		NSArray *insert = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:i inSection:0]];
-//		[self.tableView insertRowsAtIndexPaths:insert withRowAnimation:UITableViewRowAnimationTop];
-//	}
-//	
-//	// we're all done so do the cleanup
-//	[self.tableView endUpdates];
+	StopListModel *model = [StopListModel sharedStopListModel];
+	
+	int stopsToAdd = [model countOfStops];
+	int stopsToDelete = [self.tableView numberOfRowsInSection:0];
+	
+	[self.tableView beginUpdates];
+	
+	for (int i = 0; i < stopsToDelete; i++) {
+		NSArray *delete = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:i inSection:0]];
+		[self.tableView deleteRowsAtIndexPaths:delete withRowAnimation:UITableViewRowAnimationBottom];
+	}
+	
+	for (int i = 0; i < stopsToAdd; i++) {
+		// for each route title
+		// and stick it into the model
+		// then insert it into the table with animations
+		NSArray *insert = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:i inSection:0]];
+		[self.tableView insertRowsAtIndexPaths:insert withRowAnimation:UITableViewRowAnimationTop];
+	}
+	
+	// we're all done so do the cleanup
+	[self.tableView endUpdates];
 }
 
 - (void)reloadDirectionControl {
@@ -151,6 +151,8 @@
 	bottomToolbar.items = [NSArray arrayWithObjects:buttonItem, nil];
 	
 	[self.directionControl addTarget:self action:@selector(switchDirection:) forControlEvents:UIControlEventValueChanged];
+	
+	[buttonItem release];
 }
 
 - (void)reloadRouteTitle {
