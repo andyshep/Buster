@@ -40,7 +40,7 @@
 				 route:(NSString *)routeId 
 				  stop:(NSString *)stopTag {
 	
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		delegate = operationDelegate;
 		
 		self.route = routeId;

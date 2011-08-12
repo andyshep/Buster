@@ -35,7 +35,7 @@
 #pragma mark Memory Management
 
 - (id)initWithDelegate:(id<RouteListOperationDelegate>)operationDelegate {
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		delegate = operationDelegate;
 	}
 	

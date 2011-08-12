@@ -80,10 +80,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(StopListModel);
 	[stops getObjects:objects range:range];
 }
 
-- (id)stops {
-	return stops;
-}
-
 #pragma mark -
 #pragma mark Route List building
 

@@ -38,9 +38,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(RouteListModel);
 #pragma mark Lifecycle
 
 - (id) init {
-    self = [super init];
-    
-	if (self != nil) {
+	if ((self = [super init])) {
 		
 		// init an empty set of routeTitles for the model
 		self.routes = nil;
@@ -74,10 +72,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(RouteListModel);
 
 - (void)getRoutes:(id *)objects range:(NSRange)range {
 	[routes getObjects:objects range:range];
-}
-
-- (id)routes {
-	return routes;
 }
 
 #pragma mark -

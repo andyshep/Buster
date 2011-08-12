@@ -36,7 +36,7 @@
 #pragma mark Memory Management
 
 - (id)initWithDelegate:(id<StopListOperationDelegate>)operationDelegate andStopId:(NSString *)stop {
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		delegate = operationDelegate;
 		self.stopId = stop;
 	}

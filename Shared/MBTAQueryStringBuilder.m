@@ -36,9 +36,7 @@
 #pragma mark Memory Manangement
 
 - (id)initWithBaseURL:(NSString *)baseURL {
-	self = [super init];
-	
-	if (nil != self) {
+	if ((self = [super init])) {
 		self.baseURL = baseURL;
 	}
 	

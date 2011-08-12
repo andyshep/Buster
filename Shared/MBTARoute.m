@@ -39,10 +39,8 @@
 #pragma mark Lifecycle
 
 - (id) init {
-    self = [super init];
     
-	if (self != nil) {
-		
+	if ((self = [super init])) {
 		// init
     }
 	

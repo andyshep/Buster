@@ -38,9 +38,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(PredictionsModel);
 #pragma mark Lifecycle
 
 - (id) init {
-    self = [super init];
     
-	if (self != nil) {
+	if ((self = [super init])) {
 		
 		// init an empty set of predictions for the model
 		self.predictions = nil;
