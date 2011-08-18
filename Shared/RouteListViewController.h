@@ -26,14 +26,19 @@
 //
 
 #import "StopListViewController.h"
-#import "RouteListModel.h"
 #import "MBTARoute.h"
+#import "RouteListOperation.h"
+#import "MBTAQueryStringBuilder.h"
+
 
 @protocol MapViewControllerDelegate;
 
-@interface RouteListViewController : UITableViewController {
-	
+@interface RouteListViewController : UITableViewController <RouteListOperationDelegate> {
+    NSArray *routes;
 }
 
+@property (nonatomic, retain) NSArray *routes;
+
+- (void)loadRouteList;
 
 @end

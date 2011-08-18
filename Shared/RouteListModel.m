@@ -88,11 +88,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(RouteListModel);
 		self.routes = [routeListCache objectAtIndex:0];
 	}
 	else {
-        MBTAQueryStringBuilder *_builder = [[[MBTAQueryStringBuilder alloc] 
-                                             initWithBaseURL:@"http://webservices.nextbus.com/service/publicXMLFeed"] autorelease];
-        
-		RouteListOperation *loadingOp = [[RouteListOperation alloc] initWithURLString:[_builder buildRouteListQuery] delegate:self];
-        [loadingOp start];
+
 	
     }
 }
@@ -101,6 +97,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(RouteListModel);
 #pragma mark RouteListOperationDelegate methods
 
 - (void)didConsumeRouteList:(NSArray *)aRouteList {
+    NSLog(@"didCOnsumeRouteList: %@", aRouteList);
+    
     self.routes = aRouteList;
 	[routeListCache addObject:aRouteList];
 }

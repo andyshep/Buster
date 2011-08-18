@@ -30,6 +30,7 @@
 
 @implementation RouteListViewController
 
+@synthesize routes;
 
 #pragma mark -
 #pragma mark View lifecycle
@@ -39,33 +40,8 @@
 	
 	// set up the navigation bar
 	[[self navigationItem] setTitle:@"Routes"];
-	
-	// setup a double tap gesture to scroll to the top of table
-//	UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc]
-//										  initWithTarget:self action:@selector(didDoubleTap:)];
-//    recognizer.numberOfTapsRequired = 2;
-//    [self.navigationController.navigationBar addGestureRecognizer:recognizer];
-//    [recognizer release];
-}
-
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-
-	RouteListModel *model = [RouteListModel sharedRouteListModel];
-	[model requestRouteList];
-	[model addObserver:self 
-			forKeyPath:@"routes" 
-			   options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
-			   context:NULL];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-	
-	RouteListModel *model = [RouteListModel sharedRouteListModel];
-	[model removeObserver:self forKeyPath:@"routes"];
-	
-	[super viewWillDisappear:animated];
+    
+    [self loadRouteList];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -77,15 +53,12 @@
 #pragma mark Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-	
 	return 1;
 }
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	
-	RouteListModel *model = [RouteListModel sharedRouteListModel];
-	return [model countOfRoutes];
+    return [routes count];
 }
 
 
@@ -100,9 +73,7 @@
     }
     
     // Configure the cell...
-	RouteListModel *model = [RouteListModel sharedRouteListModel];
-	NSUInteger row = [indexPath row];
-	MBTARoute *route = (MBTARoute *)[model objectInRoutesAtIndex:row];
+	MBTARoute *route = (MBTARoute *)[routes objectAtIndex:indexPath.row];
 	
 	cell.textLabel.text = route.title;
 	//cell.inboundDestination.text = [dict objectForKey:@"inboundTitle"];
@@ -115,10 +86,7 @@
 #pragma mark Table view delegate
 
 - (void) tableView:(UITableView *)tView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	
-	RouteListModel *model = [RouteListModel sharedRouteListModel];
-	NSUInteger row = [indexPath row];
-	MBTARoute *route = (MBTARoute *)[model objectInRoutesAtIndex:row];
+	MBTARoute *route = (MBTARoute *)[routes objectAtIndex:indexPath.row];
 	
 	//StopListViewController *nextController = [[StopListViewController alloc] initWithStyle:UITableViewStylePlain];
 	
@@ -131,11 +99,27 @@
 	[nextController release];
 }
 
-#pragma mark -
-#pragma mark Model Observing
+- (void)loadRouteList {
+//    MBTAQueryStringBuilder *_builder = [[[MBTAQueryStringBuilder alloc] 
+//                                         initWithBaseURL:@"http://webservices.nextbus.com/service/publicXMLFeed"] autorelease];
+    
+    // RouteListOperation *loadingOp = [[RouteListOperation alloc] initWithURLString:[_builder buildRouteListQuery] delegate:self];
+    
+    RouteListOperation *loadingOp = [[RouteListOperation alloc] initWithURLString:@"http://localhost:8081/routeList.xml" delegate:self];
+    [loadingOp start];
+}
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-	[self.tableView reloadData];
+#pragma mark -
+#pragma mark RouteListOperationDelegate methods
+
+- (void)didConsumeRouteList:(NSArray *)aRouteList {
+    NSLog(@"didCOnsumeRouteList: %@", aRouteList);
+    
+    self.routes = aRouteList;
+}
+
+- (void)didConsumeData:(NSData *)data {
+    // [self didConsumeRouteList:data];
 }
 
 
