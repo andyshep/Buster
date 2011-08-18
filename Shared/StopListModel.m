@@ -97,6 +97,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(StopListModel);
 //        NSString *url = [_builder buildRouteConfigQuery:stop];
         
 		StopListOperation *loadingOp = [[StopListOperation alloc] initWithURLString:@"http://localhost:8081/routeConfig_r57.xml" delegate:self];
+        
+        //FIXME: why is stop id not getting seT?
+        loadingOp.stopId = @"57";
         [loadingOp start];
 //		[opQueue addOperation:loadingOp];
 //		[loadingOp release];
@@ -115,11 +118,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(StopListModel);
 }
 
 #pragma mark -
-#pragma mark StopListOperationDelegate methods
+#pragma mark BSNetworkOperationDelegate methods
 
-- (void)updateStopList:(NSArray *)data {
-	
-	NSArray *_directions = [data objectAtIndex:1];
+- (void)didConsumeData:(id)data {
+    
+    NSArray *consumedData = (NSArray *)data;
+	NSArray *_directions = [consumedData objectAtIndex:1];
 	
 	NSMutableDictionary *_qualifiedDirections = [NSMutableDictionary dictionaryWithCapacity:3];
 	NSMutableArray *_tags = [NSMutableArray arrayWithCapacity:3];
@@ -140,10 +144,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(StopListModel);
 	
 	MBTARouteDirection *_direction = [self.directions objectForKey:[self.tags objectAtIndex:0]];
 	self.stops = _direction.stops;
-}
-
-- (void)didConsumeData:(id)data {
-    NSLog(@"didCOnsumeData: %@", data);
 }
 
 @end

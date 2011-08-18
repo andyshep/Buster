@@ -71,10 +71,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(PredictionsModel);
 	[predictions getObjects:objects range:range];
 }
 
-- (id)predictions {
-	return predictions;
-}
-
 #pragma mark -
 #pragma mark Predictions building
 
@@ -88,9 +84,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(PredictionsModel);
 //											  withDirection:self.direction 
 //													 atStop:self.stop];
 	
-	PredictionsOperation *loadingOp = [[PredictionsOperation alloc] initWithDelegate:self route:route stop:stop];
-	[opQueue addOperation:loadingOp];
-	[loadingOp release];
+	PredictionsOperation *loadingOp = [[PredictionsOperation alloc] initWithURLString:@"http://localhost:8081/predictions_route57_stop918.xml" delegate:self];
+    
+    // FIXME: you op doesn't really need these properties
+    // leftover refactor
+    loadingOp.stop = @"918";
+    [loadingOp start];
 }
 
 - (void)unloadPredictions {
@@ -98,11 +97,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(PredictionsModel);
 }
 
 #pragma mark -
-#pragma mark PredictionsOperationDelegate methods
-
-- (void)updatePredictions:(NSArray *)data {
-	
-	self.predictions = data;
+#pragma mark BSNetworkOperationDelegate
+     
+- (void)didConsumeData:(id)data {
+ self.predictions = (NSArray *)data;
 }
 
 @end

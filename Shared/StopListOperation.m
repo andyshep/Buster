@@ -45,19 +45,16 @@
 //	return url;
 //}
 
-- (NSArray *)consumeData {
+- (NSArray *)consumeData:(NSData *)dataToComsume {
 	
 	// a list of route stops will be passed back and stored into the model
 	NSMutableDictionary *stopsList = [NSMutableDictionary dictionaryWithCapacity:20];
 	
 	NSMutableArray *directionsList = [NSMutableArray arrayWithCapacity:20];
 	
-	// first get the route xml from the intertubes
-	NSData *stopListData = nil;
-	
-	if (stopListData != nil) {
+	if (dataToComsume != nil) {
 		
-		CXMLDocument *doc = [[CXMLDocument alloc] initWithData:stopListData options:0 error:nil];
+		CXMLDocument *doc = [[CXMLDocument alloc] initWithData:dataToComsume options:0 error:nil];
 		NSArray *nodes;
 		
 		// first grab the stops
@@ -124,13 +121,13 @@
 - (void)performOperationTasks {
     [dataRequest fetchData];
     NSData *data = [dataRequest data];
-    SMXMLDocument *xml = [SMXMLDocument documentWithData:data error:NULL];
+    NSArray *consumedData = [self consumeData:data];
     
     if (!self.isCancelled) {
         
         // return the data back to the main thread
         [delegate performSelectorOnMainThread:@selector(didConsumeData:) 
-                                   withObject:xml
+                                   withObject:consumedData
                                 waitUntilDone:YES];
     }
 }

@@ -30,23 +30,20 @@
 
 @implementation PredictionsOperation
 
-@synthesize route, stop, direction;
+@synthesize route, stop;
 
 #pragma mark -
 #pragma mark Predictions Processing
 
-- (NSArray *)consumeData {
+- (NSArray *)consumeData:(NSData *)data {
 	
 	// a list of route stops will be passed back and stored into the model
 	NSMutableArray *predictions = [NSMutableArray arrayWithCapacity:5];
 	
-	// first get the route xml from the intertubes
-	NSData *predictionsData = nil;
-	
-	if (predictionsData != nil) {
+	if (data != nil) {
 		
 		// parse out the xml data
-		CXMLDocument *doc = [[CXMLDocument alloc] initWithData:predictionsData options:0 error:nil];
+		CXMLDocument *doc = [[CXMLDocument alloc] initWithData:data options:0 error:nil];
 		NSArray *nodes;
 		
 		// searching for prediction nodes
@@ -78,25 +75,15 @@
 - (void)performOperationTasks {
     [dataRequest fetchData];
     NSData *data = [dataRequest data];
-    SMXMLDocument *xml = [SMXMLDocument documentWithData:data error:NULL];
-    NSMutableArray *routeList = [NSMutableArray arrayWithCapacity:20];
+    NSArray *consumedData = [self consumeData:data];
     
-    for (SMXMLElement *routeElement in [xml.root childrenNamed:@"route"]) {
-        
-        //        MBTARoute *route = [[MBTARoute alloc] init];
-        //        
-        //        route.title = [routeElement attributeNamed:@"title"];
-        //        route.tag = [routeElement attributeNamed:@"tag"];
-        //        
-        //        [routeList addObject:route];
-        //        [route release];
-    }
+    NSLog(@"consumedData: %@", consumedData);
     
     if (!self.isCancelled) {
         
         // return the data back to the main thread
-        [delegate performSelectorOnMainThread:@selector(didConsumeRouteList:) 
-                                   withObject:routeList
+        [delegate performSelectorOnMainThread:@selector(didConsumeData:) 
+                                   withObject:consumedData
                                 waitUntilDone:YES];
     }
 }

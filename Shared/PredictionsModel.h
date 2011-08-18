@@ -29,7 +29,7 @@
 #import "PredictionsOperation.h"
 
 
-@interface PredictionsModel : NSObject <PredictionsOperationDelegate> {
+@interface PredictionsModel : NSObject <BSNetworkOperationDelegate> {
 	NSOperationQueue *opQueue;
 	
 	// these are used by table views
@@ -41,7 +41,6 @@
 + (PredictionsModel *)sharedPredictionsModel;
 
 - (void)requestPredictionsForRoute:(NSString *)route andStop:(NSString *)stop;
-- (void)updatePredictions:(NSArray *)data;
 - (void)unloadPredictions;
 
 - (NSUInteger)countOfPredictions;

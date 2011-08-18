@@ -35,17 +35,17 @@
 #pragma mark -
 #pragma mark Vehicle Locations Processing
 
-- (NSString *)buildURL {
-	
-	MBTAQueryStringBuilder *_builder = [[[MBTAQueryStringBuilder alloc] 
-										 initWithBaseURL:@"http://webservices.nextbus.com/service/publicXMLFeed"] autorelease];
-	
-	// TODO: epochTime other than zero does not work
-	NSString *url = [_builder buildLocationsQueryForRoute:self.routeNumber 
-											withEpochTime:@"0"];
-	
-	return url;
-}
+//- (NSString *)buildURL {
+//	
+//	MBTAQueryStringBuilder *_builder = [[[MBTAQueryStringBuilder alloc] 
+//										 initWithBaseURL:@"http://webservices.nextbus.com/service/publicXMLFeed"] autorelease];
+//	
+//	// TODO: epochTime other than zero does not work
+//	NSString *url = [_builder buildLocationsQueryForRoute:self.routeNumber 
+//											withEpochTime:@"0"];
+//	
+//	return url;
+//}
 
 - (NSDictionary *)consumeData {
 	

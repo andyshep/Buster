@@ -61,12 +61,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(VehicleLocationModel);
 #pragma mark Location Request
 
 - (void) requestLocationOfVehicle:(NSString *)vehicleId runningRoute:(NSString *)routeNumber atEpochTime:(NSString *)time {
-	VehicleLocationOperation *locationOp = [[VehicleLocationOperation alloc] initWithDelegate:self 
-																				 andVehicleId:vehicleId
-																			   andRouteNumber:routeNumber 
-																				  atEpochTime:time];
-	[opQueue addOperation:locationOp];
-	[locationOp release];
+//	VehicleLocationOperation *locationOp = [[VehicleLocationOperation alloc] initWithDelegate:self 
+//																				 andVehicleId:vehicleId
+//																			   andRouteNumber:routeNumber 
+//																				  atEpochTime:time];
+//	[opQueue addOperation:locationOp];
+//	[locationOp release];
 }
 
 #pragma mark -

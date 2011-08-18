@@ -40,11 +40,11 @@
 	
 	NSString *route;
 	NSString *stop;
-	NSString *direction;
 }
 
 @property (nonatomic, retain) NSString *route;
 @property (nonatomic, retain) NSString *stop;
-@property (nonatomic, retain) NSString *direction;
+
+- (NSArray *)consumeData:(NSData *)data;
 
 @end
