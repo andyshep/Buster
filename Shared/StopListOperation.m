@@ -30,23 +30,7 @@
 
 @implementation StopListOperation
 
-@synthesize delegate, stopId;
-
-#pragma mark -
-#pragma mark Memory Management
-
-- (id)initWithDelegate:(id<StopListOperationDelegate>)operationDelegate andStopId:(NSString *)stop {
-	if ((self = [super init])) {
-		delegate = operationDelegate;
-		self.stopId = stop;
-	}
-	
-	return self;
-}
-
-- (void)dealloc {
-	[super dealloc];
-}
+@synthesize stopId;
 
 #pragma mark -
 #pragma mark Route Stop Processing
@@ -61,25 +45,6 @@
 	return url;
 }
 
-- (NSData *)fetchData {
-	
-	NSString *addy = [self buildURL];
-	
-	NSURL *url = [NSURL URLWithString:addy];
-	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-	
-	// make a sync request
-	[request startSynchronous];
-	NSError *error = [request error];
-	
-	if (!error) {
-		return [request responseData];
-	}
-	
-	// TODO: handle error
-	return nil;
-}
-
 - (NSArray *)consumeData {
 	
 	// a list of route stops will be passed back and stored into the model
@@ -88,7 +53,7 @@
 	NSMutableArray *directionsList = [NSMutableArray arrayWithCapacity:20];
 	
 	// first get the route xml from the intertubes
-	NSData *stopListData = [self fetchData];
+	NSData *stopListData = nil;
 	
 	if (stopListData != nil) {
 		
@@ -156,25 +121,30 @@
 	return consumedData;
 }
 
-- (void)main {
-	
-	@try {
-		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-		
-		NSArray *consumedData = [self consumeData];
-		
-		if (!self.isCancelled) {
-			[delegate performSelectorOnMainThread:@selector(updateStopList:) 
-									   withObject:consumedData
-									waitUntilDone:YES];
-		}
-		
-		[pool drain];
-	}
-	@catch (NSException *e) {
-		// do not throw exception just bag it and tag it
-		NSLog(@"exception: %@", e);
-	}
+- (void)performOperationTasks {
+    [dataRequest fetchData];
+    NSData *data = [dataRequest data];
+    SMXMLDocument *xml = [SMXMLDocument documentWithData:data error:NULL];
+    NSMutableArray *routeList = [NSMutableArray arrayWithCapacity:20];
+    
+    for (SMXMLElement *routeElement in [xml.root childrenNamed:@"route"]) {
+        
+//        MBTARoute *route = [[MBTARoute alloc] init];
+//        
+//        route.title = [routeElement attributeNamed:@"title"];
+//        route.tag = [routeElement attributeNamed:@"tag"];
+//        
+//        [routeList addObject:route];
+//        [route release];
+    }
+    
+    if (!self.isCancelled) {
+        
+        // return the data back to the main thread
+        [delegate performSelectorOnMainThread:@selector(didConsumeRouteList:) 
+                                   withObject:routeList
+                                waitUntilDone:YES];
+    }
 }
 
 @end

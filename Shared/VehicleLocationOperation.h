@@ -25,6 +25,9 @@
 //  THE SOFTWARE.
 //
 
+#import "BSNetworkOperation.h"
+#import "SMXMLDocument.h"
+
 #import "MBTAQueryStringBuilder.h"
 
 @protocol VehicleLocationOperationDelegate
@@ -34,25 +37,14 @@
 @end
 
 
-@interface VehicleLocationOperation : NSOperation {
-	id delegate;
-	
+@interface VehicleLocationOperation : BSNetworkOperation {	
 	NSString *vehicleId;
 	NSString *routeNumber;
 	NSString *epochTime;
 }
 
-@property (assign) id<VehicleLocationOperationDelegate> delegate;
 @property (nonatomic, retain) NSString *vehicleId;
 @property (nonatomic, retain) NSString *epochTime;
 @property (nonatomic, retain) NSString *routeNumber;
-
-- (id)initWithDelegate:(id<VehicleLocationOperationDelegate>)operationDelegate 
-		  andVehicleId:(NSString *)vehicle
-		andRouteNumber:(NSString *)route
-		   atEpochTime:(NSString *)time;
-
-- (NSData *)fetchData;
-- (NSDictionary *)consumeData;
 
 @end

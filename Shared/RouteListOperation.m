@@ -29,23 +29,6 @@
 
 @implementation RouteListOperation
 
-@synthesize delegate;
-
-#pragma mark -
-#pragma mark Memory Management
-
-- (id)initWithDelegate:(id<RouteListOperationDelegate>)operationDelegate {
-	if ((self = [super init])) {
-		delegate = operationDelegate;
-	}
-	
-	return self;
-}
-
-- (void)dealloc {
-	[super dealloc];
-}
-
 #pragma mark -
 #pragma mark fetch data
 
@@ -59,87 +42,30 @@
 	return url;
 }
 
-- (NSData *)fetchData {
-	
-	NSString *addy = [self buildURL];
-	
-	NSURL *url = [NSURL URLWithString:addy];
-	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-	
-	// make a sync request
-	[request startSynchronous];
-	NSError *error = [request error];
-	
-	if (!error) {
-		return [request responseData];
-	}
-	
-	// TODO: handle error
-	return nil;
-}
-
-#pragma mark -
-#pragma mark consume data
-
-- (NSArray *)consumeData {
-	
-	// a list of routes will be passed back and stored into the model
-	NSMutableArray *routeList = [NSMutableArray arrayWithCapacity:20];
-	
-	// first get the route xml from the intertubes
-	NSData *routeListData = [self fetchData];
-	
-	if (routeListData != nil) {
-		// then begin parsing the route xml
-		CXMLDocument *doc = [[CXMLDocument alloc] initWithData:routeListData options:0 error:nil];
-		NSArray *nodes;
-		
-		// searching for route nodes
-		nodes = [doc nodesForXPath:@"//route" error:nil];
-		
-		// grab the title of each route and add into the model
-		for (CXMLElement *node in nodes) {
-			
-			MBTARoute *route = [[MBTARoute alloc] init];
-			
-			route.title = [[node attributeForName:@"title"] stringValue];
-			route.tag = [[node attributeForName:@"tag"] stringValue];
-			
-			[routeList addObject:route];
-			[route release];
-		}
-		
-		// write the list to cache for future use
-		// [routeList writeToFile:[self dataFilePath] atomically:YES];
-		
-		[doc release];
-		nodes = nil;
-	}
-
-	return routeList;
-}
-
-- (void)main {
-	
-	@try {
-		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-		
-		NSArray *consumedData = [self consumeData];
-		
-		if (!self.isCancelled) {
-			
-			// return the data back to the main thread
-			[delegate performSelectorOnMainThread:@selector(updateRouteList:) 
-									   withObject:consumedData
-									waitUntilDone:YES];
-		}
-		
-		[pool drain];
-	}
-	@catch (NSException *e) {
-		// an NSOperation cannot throw an exception
-		NSLog(@"exception: %@", e);
-	}
+- (void)performOperationTasks {
+    [dataRequest fetchData];
+    NSData *data = [dataRequest data];
+    SMXMLDocument *xml = [SMXMLDocument documentWithData:data error:NULL];
+    NSMutableArray *routeList = [NSMutableArray arrayWithCapacity:20];
+    
+    for (SMXMLElement *routeElement in [xml.root childrenNamed:@"route"]) {
+        
+        MBTARoute *route = [[MBTARoute alloc] init];
+        
+        route.title = [routeElement attributeNamed:@"title"];
+        route.tag = [routeElement attributeNamed:@"tag"];
+        
+        [routeList addObject:route];
+        [route release];
+    }
+    
+    if (!self.isCancelled) {
+        
+        // return the data back to the main thread
+        [delegate performSelectorOnMainThread:@selector(didConsumeRouteList:) 
+                                   withObject:routeList
+                                waitUntilDone:YES];
+    }
 }
 
 @end

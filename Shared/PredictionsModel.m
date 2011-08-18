@@ -80,6 +80,13 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(PredictionsModel);
 
 - (void)requestPredictionsForRoute:(NSString *)route andStop:(NSString *)stop {
 	// a controller has requested a prediction
+    
+//    MBTAQueryStringBuilder *_builder = [[[MBTAQueryStringBuilder alloc] 
+//										 initWithBaseURL:@"http://webservices.nextbus.com/service/publicXMLFeed"] autorelease];
+//	
+//	NSString *url = [_builder buildPredictionsQueryForRoute:self.route 
+//											  withDirection:self.direction 
+//													 atStop:self.stop];
 	
 	PredictionsOperation *loadingOp = [[PredictionsOperation alloc] initWithDelegate:self route:route stop:stop];
 	[opQueue addOperation:loadingOp];

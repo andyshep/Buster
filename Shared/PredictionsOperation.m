@@ -30,29 +30,7 @@
 
 @implementation PredictionsOperation
 
-@synthesize delegate;
 @synthesize route, stop, direction;
-
-#pragma mark -
-#pragma mark Memory Management
-
-- (id)initWithDelegate:(id<PredictionsOperationDelegate>)operationDelegate 
-				 route:(NSString *)routeId 
-				  stop:(NSString *)stopTag {
-	
-	if ((self = [super init])) {
-		delegate = operationDelegate;
-		
-		self.route = routeId;
-		self.stop = stopTag;
-	}
-	
-	return self;
-}
-
-- (void)dealloc {
-	[super dealloc];
-}
 
 #pragma mark -
 #pragma mark Predictions Processing
@@ -69,32 +47,13 @@
 	return url;
 }
 
-- (NSData *)fetchData {
-	
-	NSString *addy = [self buildURL];
-
-	NSURL *url = [NSURL URLWithString:addy];
-	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-	
-	// make a sync request
-	[request startSynchronous];
-	NSError *error = [request error];
-	
-	if (!error) {
-		return [request responseData];
-	}
-	
-	// TODO: handle error
-	return nil;
-}
-
 - (NSArray *)consumeData {
 	
 	// a list of route stops will be passed back and stored into the model
 	NSMutableArray *predictions = [NSMutableArray arrayWithCapacity:5];
 	
 	// first get the route xml from the intertubes
-	NSData *predictionsData = [self fetchData];
+	NSData *predictionsData = nil;
 	
 	if (predictionsData != nil) {
 		
@@ -128,25 +87,30 @@
 	return predictions;
 }
 
-- (void)main {
-	
-	@try {
-		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-		
-		NSArray *consumedData = [self consumeData];
-		
-		if (!self.isCancelled) {
-			[delegate performSelectorOnMainThread:@selector(updatePredictions:) 
-									   withObject:consumedData
-									waitUntilDone:YES];
-		}
-		
-		[pool drain];
-	}
-	@catch (NSException *e) {
-		// do not throw exception just bag it and tag it
-		NSLog(@"exception: %@", e);
-	}
+- (void)performOperationTasks {
+    [dataRequest fetchData];
+    NSData *data = [dataRequest data];
+    SMXMLDocument *xml = [SMXMLDocument documentWithData:data error:NULL];
+    NSMutableArray *routeList = [NSMutableArray arrayWithCapacity:20];
+    
+    for (SMXMLElement *routeElement in [xml.root childrenNamed:@"route"]) {
+        
+        //        MBTARoute *route = [[MBTARoute alloc] init];
+        //        
+        //        route.title = [routeElement attributeNamed:@"title"];
+        //        route.tag = [routeElement attributeNamed:@"tag"];
+        //        
+        //        [routeList addObject:route];
+        //        [route release];
+    }
+    
+    if (!self.isCancelled) {
+        
+        // return the data back to the main thread
+        [delegate performSelectorOnMainThread:@selector(didConsumeRouteList:) 
+                                   withObject:routeList
+                                waitUntilDone:YES];
+    }
 }
 
 @end

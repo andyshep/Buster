@@ -91,9 +91,15 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(StopListModel);
 		self.stops = cachedList;
 	}
 	else {
-		StopListOperation *loadingOp = [[StopListOperation alloc] initWithDelegate:self andStopId:stop];
-		[opQueue addOperation:loadingOp];
-		[loadingOp release];
+        MBTAQueryStringBuilder *_builder = [[[MBTAQueryStringBuilder alloc] 
+                                             initWithBaseURL:@"http://webservices.nextbus.com/service/publicXMLFeed"] autorelease];
+        
+        NSString *url = [_builder buildRouteConfigQuery:stop];
+        
+		StopListOperation *loadingOp = [[StopListOperation alloc] initWithURLString:url delegate:self];
+        [loadingOp start];
+//		[opQueue addOperation:loadingOp];
+//		[loadingOp release];
 	}
 }
 

@@ -25,6 +25,9 @@
 //  THE SOFTWARE.
 //
 
+#import "BSNetworkOperation.h"
+#import "SMXMLDocument.h"
+
 #import "MBTAQueryStringBuilder.h"
 
 @protocol PredictionsOperationDelegate
@@ -33,23 +36,13 @@
 
 @end
 
-@interface PredictionsOperation : NSOperation {
-	id delegate;
+@interface PredictionsOperation : BSNetworkOperation {
 	
 	NSString *route;
 	NSString *stop;
 	NSString *direction;
 }
 
-- (id)initWithDelegate:(id<PredictionsOperationDelegate>)operationDelegate 
-				 route:(NSString *)routeId
-				  stop:(NSString *)stopTag;
-
-- (NSString *)buildURL;
-- (NSData *)fetchData;
-- (NSArray *)consumeData;
-
-@property (assign) id<PredictionsOperationDelegate> delegate;
 @property (nonatomic, retain) NSString *route;
 @property (nonatomic, retain) NSString *stop;
 @property (nonatomic, retain) NSString *direction;

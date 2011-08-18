@@ -25,22 +25,18 @@
 //  THE SOFTWARE.
 //
 
+#import "BSNetworkOperation.h"
+#import "SMXMLDocument.h"
 #import "MBTAQueryStringBuilder.h"
 #import "MBTARoute.h"
 
 
 @protocol RouteListOperationDelegate
-
-- (void)updateRouteList:(NSArray *)data;
-
+- (void)didConsumeRouteList:(NSArray *)aRouteList;
 @end
 
-@interface RouteListOperation : NSOperation {
-	id delegate;
+@interface RouteListOperation : BSNetworkOperation {
+    
 }
-
-@property (assign) id<RouteListOperationDelegate> delegate;
-
-- (id)initWithDelegate:(id<RouteListOperationDelegate>)operationDelegate;
 
 @end

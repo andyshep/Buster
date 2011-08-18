@@ -25,6 +25,9 @@
 //  THE SOFTWARE.
 //
 
+#import "BSNetworkOperation.h"
+#import "SMXMLDocument.h"
+
 #import "MBTAQueryStringBuilder.h"
 #import "MBTAStop.h"
 #import "MBTAStopList.h"
@@ -36,18 +39,10 @@
 
 @end
 
-@interface StopListOperation : NSOperation {
-	id	delegate;
+@interface StopListOperation : BSNetworkOperation {
 	NSString *stopId;
 }
 
-@property (assign) id<StopListOperationDelegate> delegate;
-@property (nonatomic, retain) NSString *stopId;
-
-- (id)initWithDelegate:(id<StopListOperationDelegate>)operationDelegate andStopId:(NSString *)stop;
-
-- (NSString *)buildURL;
-- (NSData *)fetchData;
-- (NSArray *)consumeData;
+@property (nonatomic, assign) NSString *stopId;
 
 @end

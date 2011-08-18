@@ -30,29 +30,7 @@
 
 @implementation VehicleLocationOperation
 
-@synthesize delegate, vehicleId, routeNumber, epochTime;
-
-#pragma mark -
-#pragma mark Memory Management
-
-- (id)initWithDelegate:(id<VehicleLocationOperationDelegate>)operationDelegate 
-		  andVehicleId:(NSString *)vehicle
-		andRouteNumber:(NSString *)route
-		   atEpochTime:(NSString *)time {
-	
-	if (self = [super init]) {
-		delegate = operationDelegate;
-		vehicleId = vehicle;
-		epochTime = time;
-		routeNumber = route;
-	}
-	
-	return self;
-}
-
-- (void)dealloc {
-	[super dealloc];
-}
+@synthesize vehicleId, routeNumber, epochTime;
 
 #pragma mark -
 #pragma mark Vehicle Locations Processing
@@ -69,31 +47,12 @@
 	return url;
 }
 
-- (NSData *)fetchData {
-	
-	NSString *addy = [self buildURL];
-	
-	NSURL *url = [NSURL URLWithString:addy];
-	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-	
-	// make a sync request
-	[request startSynchronous];
-	NSError *error = [request error];
-	
-	if (!error) {
-		return [request responseData];
-	}
-	
-	// TODO: handle error
-	return nil;
-}
-
 - (NSDictionary *)consumeData {
 	
 	NSMutableDictionary *vehicleLocation = [NSMutableDictionary dictionaryWithCapacity:3];
 	
 	// first get the route xml from the intertubes
-	NSData *locationsData = [self fetchData];
+	NSData *locationsData = nil;
 	
 	if (locationsData != nil) {
 		
@@ -143,26 +102,30 @@
 	return vehicleLocation;
 }
 
-- (void)main {
-	
-	@try {
-		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-		
-		NSDictionary *vehicleLocation = [self consumeData];
-		
-		if (!self.isCancelled) {
-			
-			[delegate performSelectorOnMainThread:@selector(updateLocation:) 
-									   withObject:vehicleLocation
-									waitUntilDone:YES];
-		}
-		
-		[pool drain];
-	}
-	@catch (NSException *e) {
-		// do not throw an exception just bag it and tag it
-		NSLog(@"exception: %@", e);
-	}
+- (void)performOperationTasks {
+    [dataRequest fetchData];
+    NSData *data = [dataRequest data];
+    SMXMLDocument *xml = [SMXMLDocument documentWithData:data error:NULL];
+    NSMutableArray *routeList = [NSMutableArray arrayWithCapacity:20];
+    
+    for (SMXMLElement *routeElement in [xml.root childrenNamed:@"route"]) {
+        
+        //        MBTARoute *route = [[MBTARoute alloc] init];
+        //        
+        //        route.title = [routeElement attributeNamed:@"title"];
+        //        route.tag = [routeElement attributeNamed:@"tag"];
+        //        
+        //        [routeList addObject:route];
+        //        [route release];
+    }
+    
+    if (!self.isCancelled) {
+        
+        // return the data back to the main thread
+        [delegate performSelectorOnMainThread:@selector(didConsumeRouteList:) 
+                                   withObject:routeList
+                                waitUntilDone:YES];
+    }
 }
 
 @end
