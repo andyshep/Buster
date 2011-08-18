@@ -35,18 +35,6 @@
 #pragma mark -
 #pragma mark Predictions Processing
 
-- (NSString *)buildURL {
-	
-	MBTAQueryStringBuilder *_builder = [[[MBTAQueryStringBuilder alloc] 
-										 initWithBaseURL:@"http://webservices.nextbus.com/service/publicXMLFeed"] autorelease];
-	
-	NSString *url = [_builder buildPredictionsQueryForRoute:self.route 
-											  withDirection:self.direction 
-													 atStop:self.stop];
-	
-	return url;
-}
-
 - (NSArray *)consumeData {
 	
 	// a list of route stops will be passed back and stored into the model

@@ -33,7 +33,7 @@
 
 @protocol MapViewControllerDelegate;
 
-@interface RouteListViewController : UITableViewController <RouteListOperationDelegate> {
+@interface RouteListViewController : UITableViewController <BSNetworkOperationDelegate> {
     NSArray *routes;
 }
 

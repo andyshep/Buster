@@ -30,7 +30,7 @@
 #import "MBTARoute.h"
 
 
-@interface RouteListModel : NSObject <RouteListOperationDelegate> {
+@interface RouteListModel : NSObject <BSNetworkOperationDelegate> {
 	NSOperationQueue *opQueue;
 	
 	// these are used by table views

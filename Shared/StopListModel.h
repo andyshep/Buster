@@ -31,7 +31,7 @@
 #import "MBTAStop.h"
 
 
-@interface StopListModel : NSObject <StopListOperationDelegate> {
+@interface StopListModel : NSObject <BSNetworkOperationDelegate> {
 	NSOperationQueue *opQueue;
 	
 	// these are used by table views

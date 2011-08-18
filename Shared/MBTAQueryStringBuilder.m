@@ -27,17 +27,20 @@
 
 #import "MBTAQueryStringBuilder.h"
 
+static NSString *MBTABaseQueryURL = @"http://webservices.nextbus.com/service/publicXMLFeed";
 
 @implementation MBTAQueryStringBuilder
 
 @synthesize baseURL = _baseURL;
 
+SYNTHESIZE_SINGLETON_FOR_CLASS(MBTAQueryStringBuilder);
+
 #pragma mark -
 #pragma mark Memory Manangement
 
-- (id)initWithBaseURL:(NSString *)baseURL {
+- (id)init {
 	if ((self = [super init])) {
-		self.baseURL = baseURL;
+		self.baseURL = MBTABaseQueryURL;
 	}
 	
 	return self;

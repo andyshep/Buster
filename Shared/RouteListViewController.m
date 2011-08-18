@@ -112,13 +112,9 @@
 #pragma mark -
 #pragma mark RouteListOperationDelegate methods
 
-- (void)didConsumeRouteList:(NSArray *)aRouteList {
-    NSLog(@"didCOnsumeRouteList: %@", aRouteList);
+- (void)didConsumeData:(id)data {
+    self.routes = (NSArray *)data;
     
-    self.routes = aRouteList;
-}
-
-- (void)didConsumeData:(NSData *)data {
     // [self didConsumeRouteList:data];
 }
 

@@ -58,9 +58,7 @@
 	
 	@try {
 		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-
         [self performOperationTasks];
-		
 		[pool drain];
 	}
 	@catch (NSException *e) {

@@ -11,7 +11,7 @@
 
 
 @protocol BSNetworkOperationDelegate
-- (void)didConsumeData:(NSData *)data;
+- (void)didConsumeData:(id)data;
 @end
 
 @interface BSNetworkOperation : NSOperation {

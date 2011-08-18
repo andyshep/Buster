@@ -10,11 +10,6 @@
 #import "BSNetworkOperation.h"
 #import "SMXMLDocument.h"
 
-
-@protocol BSXMLOperationDelegate
-- (void)didConsumeXML:(SMXMLDocument *)xml;
-@end
-
 @interface BSXMLOperation : BSNetworkOperation {
     
 }

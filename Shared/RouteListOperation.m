@@ -32,16 +32,6 @@
 #pragma mark -
 #pragma mark fetch data
 
-- (NSString *)buildURL {
-	
-	MBTAQueryStringBuilder *_builder = [[[MBTAQueryStringBuilder alloc] 
-										 initWithBaseURL:@"http://webservices.nextbus.com/service/publicXMLFeed"] autorelease];
-
-	NSString *url = [_builder buildRouteListQuery];
-	
-	return url;
-}
-
 - (void)performOperationTasks {
     [dataRequest fetchData];
     NSData *data = [dataRequest data];
@@ -62,7 +52,7 @@
     if (!self.isCancelled) {
         
         // return the data back to the main thread
-        [delegate performSelectorOnMainThread:@selector(didConsumeRouteList:) 
+        [delegate performSelectorOnMainThread:@selector(didConsumeData:) 
                                    withObject:routeList
                                 waitUntilDone:YES];
     }

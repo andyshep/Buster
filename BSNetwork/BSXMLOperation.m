@@ -19,7 +19,7 @@
     if (!self.isCancelled) {
         
         // return the data back to the main thread
-        [delegate performSelectorOnMainThread:@selector(didConsumeXML:) 
+        [delegate performSelectorOnMainThread:@selector(didConsumeData:) 
                                    withObject:xml
                                 waitUntilDone:YES];
     }

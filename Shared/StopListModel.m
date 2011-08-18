@@ -91,12 +91,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(StopListModel);
 		self.stops = cachedList;
 	}
 	else {
-        MBTAQueryStringBuilder *_builder = [[[MBTAQueryStringBuilder alloc] 
-                                             initWithBaseURL:@"http://webservices.nextbus.com/service/publicXMLFeed"] autorelease];
+//        MBTAQueryStringBuilder *_builder = [[[MBTAQueryStringBuilder alloc] 
+//                                             initWithBaseURL:@"http://webservices.nextbus.com/service/publicXMLFeed"] autorelease];
+//        
+//        NSString *url = [_builder buildRouteConfigQuery:stop];
         
-        NSString *url = [_builder buildRouteConfigQuery:stop];
-        
-		StopListOperation *loadingOp = [[StopListOperation alloc] initWithURLString:url delegate:self];
+		StopListOperation *loadingOp = [[StopListOperation alloc] initWithURLString:@"http://localhost:8081/routeConfig_r57.xml" delegate:self];
         [loadingOp start];
 //		[opQueue addOperation:loadingOp];
 //		[loadingOp release];
@@ -140,6 +140,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(StopListModel);
 	
 	MBTARouteDirection *_direction = [self.directions objectForKey:[self.tags objectAtIndex:0]];
 	self.stops = _direction.stops;
+}
+
+- (void)didConsumeData:(id)data {
+    NSLog(@"didCOnsumeData: %@", data);
 }
 
 @end

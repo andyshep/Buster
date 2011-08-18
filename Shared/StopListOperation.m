@@ -35,15 +35,15 @@
 #pragma mark -
 #pragma mark Route Stop Processing
 
-- (NSString *)buildURL {
-	
-	MBTAQueryStringBuilder *_builder = [[[MBTAQueryStringBuilder alloc] 
-										 initWithBaseURL:@"http://webservices.nextbus.com/service/publicXMLFeed"] autorelease];
-
-	NSString *url = [_builder buildRouteConfigQuery:self.stopId];
-	
-	return url;
-}
+//- (NSString *)buildURL {
+//	
+//	MBTAQueryStringBuilder *_builder = [[[MBTAQueryStringBuilder alloc] 
+//										 initWithBaseURL:@"http://webservices.nextbus.com/service/publicXMLFeed"] autorelease];
+//
+//	NSString *url = [_builder buildRouteConfigQuery:self.stopId];
+//	
+//	return url;
+//}
 
 - (NSArray *)consumeData {
 	
@@ -125,24 +125,12 @@
     [dataRequest fetchData];
     NSData *data = [dataRequest data];
     SMXMLDocument *xml = [SMXMLDocument documentWithData:data error:NULL];
-    NSMutableArray *routeList = [NSMutableArray arrayWithCapacity:20];
-    
-    for (SMXMLElement *routeElement in [xml.root childrenNamed:@"route"]) {
-        
-//        MBTARoute *route = [[MBTARoute alloc] init];
-//        
-//        route.title = [routeElement attributeNamed:@"title"];
-//        route.tag = [routeElement attributeNamed:@"tag"];
-//        
-//        [routeList addObject:route];
-//        [route release];
-    }
     
     if (!self.isCancelled) {
         
         // return the data back to the main thread
-        [delegate performSelectorOnMainThread:@selector(didConsumeRouteList:) 
-                                   withObject:routeList
+        [delegate performSelectorOnMainThread:@selector(didConsumeData:) 
+                                   withObject:xml
                                 waitUntilDone:YES];
     }
 }

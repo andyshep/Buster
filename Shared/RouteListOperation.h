@@ -31,10 +31,6 @@
 #import "MBTARoute.h"
 
 
-@protocol RouteListOperationDelegate
-- (void)didConsumeRouteList:(NSArray *)aRouteList;
-@end
-
 @interface RouteListOperation : BSNetworkOperation {
     
 }

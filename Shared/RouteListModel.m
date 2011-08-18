@@ -96,7 +96,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(RouteListModel);
 #pragma mark -
 #pragma mark RouteListOperationDelegate methods
 
-- (void)didConsumeRouteList:(NSArray *)aRouteList {
+- (void)did:(NSArray *)aRouteList {
     NSLog(@"didCOnsumeRouteList: %@", aRouteList);
     
     self.routes = aRouteList;
