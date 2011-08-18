@@ -45,6 +45,4 @@
 @property (nonatomic, retain) NSString *route;
 @property (nonatomic, retain) NSString *stop;
 
-- (NSArray *)consumeData:(NSData *)data;
-
 @end

@@ -39,7 +39,6 @@
 #pragma mark Lifecycle
 
 - (id) init {
-    
 	if ((self = [super init])) {
 		// init
     }
@@ -48,7 +47,6 @@
 }
 
 - (void) dealloc {
-	
     [super dealloc];
 }
 

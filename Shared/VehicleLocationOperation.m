@@ -48,16 +48,15 @@
 //}
 
 - (NSDictionary *)consumeData {
+    
+    consumedData = [super consumeData];
 	
 	NSMutableDictionary *vehicleLocation = [NSMutableDictionary dictionaryWithCapacity:3];
 	
-	// first get the route xml from the intertubes
-	NSData *locationsData = nil;
-	
-	if (locationsData != nil) {
+	if (consumedData != nil) {
 		
 		// parse out the xml data
-		CXMLDocument *doc = [[CXMLDocument alloc] initWithData:locationsData options:0 error:nil];
+		CXMLDocument *doc = [[CXMLDocument alloc] initWithData:consumedData options:0 error:nil];
 		NSArray *nodes;
 		
 		// searching for vehicle nodes matching our id
@@ -100,32 +99,6 @@
 	}
 	
 	return vehicleLocation;
-}
-
-- (void)performOperationTasks {
-    [dataRequest fetchData];
-    NSData *data = [dataRequest data];
-    SMXMLDocument *xml = [SMXMLDocument documentWithData:data error:NULL];
-    NSMutableArray *routeList = [NSMutableArray arrayWithCapacity:20];
-    
-    for (SMXMLElement *routeElement in [xml.root childrenNamed:@"route"]) {
-        
-        //        MBTARoute *route = [[MBTARoute alloc] init];
-        //        
-        //        route.title = [routeElement attributeNamed:@"title"];
-        //        route.tag = [routeElement attributeNamed:@"tag"];
-        //        
-        //        [routeList addObject:route];
-        //        [route release];
-    }
-    
-    if (!self.isCancelled) {
-        
-        // return the data back to the main thread
-        [delegate performSelectorOnMainThread:@selector(didConsumeRouteList:) 
-                                   withObject:routeList
-                                waitUntilDone:YES];
-    }
 }
 
 @end

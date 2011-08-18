@@ -35,15 +35,17 @@
 #pragma mark -
 #pragma mark Predictions Processing
 
-- (NSArray *)consumeData:(NSData *)data {
+- (NSArray *)consumeData {
+    
+    consumedData = [super consumeData];
 	
 	// a list of route stops will be passed back and stored into the model
 	NSMutableArray *predictions = [NSMutableArray arrayWithCapacity:5];
 	
-	if (data != nil) {
+	if (consumedData != nil) {
 		
 		// parse out the xml data
-		CXMLDocument *doc = [[CXMLDocument alloc] initWithData:data options:0 error:nil];
+		CXMLDocument *doc = [[CXMLDocument alloc] initWithData:consumedData options:0 error:nil];
 		NSArray *nodes;
 		
 		// searching for prediction nodes
@@ -70,22 +72,6 @@
 	}
 	
 	return predictions;
-}
-
-- (void)performOperationTasks {
-    [dataRequest fetchData];
-    NSData *data = [dataRequest data];
-    NSArray *consumedData = [self consumeData:data];
-    
-    NSLog(@"consumedData: %@", consumedData);
-    
-    if (!self.isCancelled) {
-        
-        // return the data back to the main thread
-        [delegate performSelectorOnMainThread:@selector(didConsumeData:) 
-                                   withObject:consumedData
-                                waitUntilDone:YES];
-    }
 }
 
 @end

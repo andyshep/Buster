@@ -32,10 +32,9 @@
 #pragma mark -
 #pragma mark fetch data
 
-- (void)performOperationTasks {
-    [dataRequest fetchData];
-    NSData *data = [dataRequest data];
-    SMXMLDocument *xml = [SMXMLDocument documentWithData:data error:NULL];
+- (id)consumeData {
+    consumedData = [super consumeData];
+    SMXMLDocument *xml = [SMXMLDocument documentWithData:consumedData error:NULL];
     NSMutableArray *routeList = [NSMutableArray arrayWithCapacity:20];
     
     for (SMXMLElement *routeElement in [xml.root childrenNamed:@"route"]) {
@@ -49,13 +48,7 @@
         [route release];
     }
     
-    if (!self.isCancelled) {
-        
-        // return the data back to the main thread
-        [delegate performSelectorOnMainThread:@selector(didConsumeData:) 
-                                   withObject:routeList
-                                waitUntilDone:YES];
-    }
+    return routeList;
 }
 
 @end

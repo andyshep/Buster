@@ -38,9 +38,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(StopListModel);
 #pragma mark Lifecycle
 
 - (id) init {
-    self = [super init];
-    
-	if (self != nil) {
+	if ((self = [super init])) {
 		
 		// init an empty set of routeTitles for the model
 		self.stops = nil;
@@ -58,8 +56,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(StopListModel);
     return self;
 }
 
-- (void) dealloc
-{
+- (void) dealloc {
     [opQueue release];
 	[stopListCache release];
     [super dealloc];

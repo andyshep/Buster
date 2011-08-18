@@ -37,18 +37,14 @@
 #pragma mark Lifecycle
 
 - (id) init {
-    self = [super init];
-    
-	if (self != nil) {
-		
-		// init
+	if ((self = [super init])) {
+        //
     }
-	
+    
     return self;
 }
 
 - (void) dealloc {
-	
     [super dealloc];
 }
 
@@ -58,7 +54,7 @@
 - (id)initWithCoder:(NSCoder *)coder {
 	
 	[super init];
-	
+    
 	self.title = [coder decodeObjectForKey:@"title"];
 	self.tag = [coder decodeObjectForKey:@"tag"];
 	self.name = [coder decodeObjectForKey:@"name"];
@@ -67,7 +63,6 @@
 }
 
 - (void)encodeWithCoder:(NSCoder *)coder {
-	
 	[coder encodeObject:self.title forKey:@"title"];
 	[coder encodeObject:self.tag forKey:@"tag"];
 	[coder encodeObject:self.name forKey:@"name"];

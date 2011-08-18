@@ -35,26 +35,17 @@
 #pragma mark -
 #pragma mark Route Stop Processing
 
-//- (NSString *)buildURL {
-//	
-//	MBTAQueryStringBuilder *_builder = [[[MBTAQueryStringBuilder alloc] 
-//										 initWithBaseURL:@"http://webservices.nextbus.com/service/publicXMLFeed"] autorelease];
-//
-//	NSString *url = [_builder buildRouteConfigQuery:self.stopId];
-//	
-//	return url;
-//}
-
-- (NSArray *)consumeData:(NSData *)dataToComsume {
+- (NSArray *)consumeData {
 	
+    consumedData = [super consumeData];
+    
 	// a list of route stops will be passed back and stored into the model
 	NSMutableDictionary *stopsList = [NSMutableDictionary dictionaryWithCapacity:20];
-	
 	NSMutableArray *directionsList = [NSMutableArray arrayWithCapacity:20];
 	
-	if (dataToComsume != nil) {
+	if (consumedData != nil) {
 		
-		CXMLDocument *doc = [[CXMLDocument alloc] initWithData:dataToComsume options:0 error:nil];
+		CXMLDocument *doc = [[CXMLDocument alloc] initWithData:consumedData options:0 error:nil];
 		NSArray *nodes;
 		
 		// first grab the stops
@@ -111,25 +102,11 @@
 		[doc release];
 	}
 	
-	NSArray *consumedData = [NSArray arrayWithObjects:self.stopId, 
+	NSArray *stopListMeta = [NSArray arrayWithObjects:self.stopId, 
 							[NSArray arrayWithArray:directionsList], 
 							nil];
 	
-	return consumedData;
-}
-
-- (void)performOperationTasks {
-    [dataRequest fetchData];
-    NSData *data = [dataRequest data];
-    NSArray *consumedData = [self consumeData:data];
-    
-    if (!self.isCancelled) {
-        
-        // return the data back to the main thread
-        [delegate performSelectorOnMainThread:@selector(didConsumeData:) 
-                                   withObject:consumedData
-                                waitUntilDone:YES];
-    }
+	return stopListMeta;
 }
 
 @end

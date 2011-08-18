@@ -17,6 +17,7 @@
 @interface BSNetworkOperation : NSOperation {
     id<BSNetworkOperationDelegate> delegate;
     BSDataRequest *dataRequest;
+    id consumedData;
 }
 
 @property (assign) id<BSNetworkOperationDelegate> delegate;
@@ -26,6 +27,6 @@
 - (id)initWithURLString:(NSString *)aURLString 
                 delegate:(id<BSNetworkOperationDelegate>)aDelegate;
 
-- (void)performOperationTasks;
+- (id)consumeData;
 
 @end

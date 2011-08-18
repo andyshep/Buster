@@ -40,9 +40,7 @@
 }
 
 - (id)initWithCoordinate:(CLLocationCoordinate2D)coordinate {
-	self = [super init];
-	
-	if (nil != self) {
+	if ((self = [super init])) {
 		self.coordinate = coordinate;
 	}
 	

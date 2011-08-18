@@ -19,6 +19,7 @@
                 delegate:(id<BSNetworkOperationDelegate>)aDelegate {
     if ((self = [super init])) {
         self.delegate = aDelegate;
+        consumedData = nil;
         dataRequest = [[BSDataRequest alloc] initWithURLRequest:aURLRequest];
     }
     
@@ -39,17 +40,13 @@
     [super dealloc];
 }
 
-- (void)performOperationTasks {
+- (id)consumeData {
+    // fetch the data
     [dataRequest fetchData];
-    NSData *data = [dataRequest data];
+    consumedData = [dataRequest data];
     
-    if (!self.isCancelled) {
-        
-        // return the data back to the main thread
-        [delegate performSelectorOnMainThread:@selector(didConsumeData:) 
-                                   withObject:data
-                                waitUntilDone:YES];
-    }
+    // subclass shall then consume the data
+    return consumedData;
 }
 
 #pragma mark - NSOperation
@@ -58,7 +55,17 @@
 	
 	@try {
 		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-        [self performOperationTasks];
+        
+        consumedData = [self consumeData];
+        
+        if (!self.isCancelled) {
+            
+            // return the data back to the main thread
+            [delegate performSelectorOnMainThread:@selector(didConsumeData:) 
+                                       withObject:consumedData
+                                    waitUntilDone:YES];
+        }
+        
 		[pool drain];
 	}
 	@catch (NSException *e) {

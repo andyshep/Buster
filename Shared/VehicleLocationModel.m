@@ -38,9 +38,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(VehicleLocationModel);
 #pragma mark Lifecycle
 
 - (id) init {
-    self = [super init];
-    
-	if (self != nil) {
+	if ((self = [super init])) {
 		
 		// init a nothing location for the model
 		self.location = nil;
