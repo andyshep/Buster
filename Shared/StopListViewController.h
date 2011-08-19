@@ -27,7 +27,6 @@
 
 #import "StopListModel.h"
 #import "PredictionsViewController.h"
-
 #import "MBTAStop.h"
 
 
@@ -39,6 +38,8 @@
 	IBOutlet UIToolbar *bottomToolbar;
 	
 	UIView *activityView;
+    
+    StopListModel *model_;
 }
 
 @property (nonatomic, retain) NSString *stopTag;

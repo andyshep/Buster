@@ -11,10 +11,10 @@
 
 @implementation BSXMLOperation
 
-- (id)consumeData {
-    consumedData = [super consumeData];
-    SMXMLDocument *xml = [SMXMLDocument documentWithData:consumedData error:NULL];
-    return xml;
+- (void)consumeData {
+    [super consumeData];
+    NSError *error;
+    consumedData = [SMXMLDocument documentWithData:consumedData error:&error];
 }
 
 @end

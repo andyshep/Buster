@@ -10,14 +10,17 @@
 #import "BSDataRequest.h"
 
 
-@protocol BSNetworkOperationDelegate
-- (void)didConsumeData:(id)data;
+@protocol BSNetworkOperationDelegate <NSObject>
+- (void)didConsumeData:(id)consumedData;
 @end
 
 @interface BSNetworkOperation : NSOperation {
     id<BSNetworkOperationDelegate> delegate;
-    BSDataRequest *dataRequest;
     id consumedData;
+    
+    BSDataRequest *dataRequest;
+    
+    BOOL executing_, finished_;
 }
 
 @property (assign) id<BSNetworkOperationDelegate> delegate;
@@ -27,6 +30,7 @@
 - (id)initWithURLString:(NSString *)aURLString 
                 delegate:(id<BSNetworkOperationDelegate>)aDelegate;
 
-- (id)consumeData;
+- (void)consumeData;
+- (void)done;
 
 @end

@@ -32,8 +32,6 @@
 
 
 @interface StopListModel : NSObject <BSNetworkOperationDelegate> {
-	NSOperationQueue *opQueue;
-	
 	// these are used by table views
 	NSArray *stops;
 	NSArray *tags;
@@ -43,13 +41,14 @@
 	NSMutableDictionary *stopListCache;
 	
 	NSDictionary *directions;
+    
+    StopListOperation *stopListOp_;
+    NSOperationQueue *opQueue_;
 }
 
 @property (copy) NSArray *stops, *tags, *titles;
 @property (copy) NSDictionary *directions;
 @property (nonatomic, retain) NSString *title;
-
-+ (StopListModel *)sharedStopListModel;
 
 - (void)requestStopList:(NSString *)stop;
 - (void)unloadStopList;

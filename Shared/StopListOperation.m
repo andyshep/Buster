@@ -35,9 +35,9 @@
 #pragma mark -
 #pragma mark Route Stop Processing
 
-- (NSArray *)consumeData {
+- (void)consumeData {
 	
-    consumedData = [super consumeData];
+    [super consumeData];
     
 	// a list of route stops will be passed back and stored into the model
 	NSMutableDictionary *stopsList = [NSMutableDictionary dictionaryWithCapacity:20];
@@ -106,7 +106,7 @@
 							[NSArray arrayWithArray:directionsList], 
 							nil];
 	
-	return stopListMeta;
+	consumedData = stopListMeta;
 }
 
 @end

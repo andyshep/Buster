@@ -53,7 +53,7 @@
     NSHTTPURLResponse *response = nil;
     NSError *error = nil;
     NSData *reqData = nil;
-    reqData = [NSURLConnection sendSynchronousRequest:self.request returningResponse:&response error:&error];
+    reqData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
     
     if ([response statusCode] >= 400) {
         NSLog(@"Connection failed with status code: %d", [response statusCode]);

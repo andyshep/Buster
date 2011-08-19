@@ -53,37 +53,35 @@
 	// show a spinner
 //	[self showActivityViewer];
 	
-	StopListModel *model = [StopListModel sharedStopListModel];
-	[model requestStopList:self.stopTag];
+	model_ = [[StopListModel alloc] init];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
 	
-	StopListModel *model = [StopListModel sharedStopListModel];
-	
-	[model addObserver:self 
+	[model_ addObserver:self 
 			forKeyPath:@"stops" 
 			   options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
 			   context:@selector(reloadTable)];
 	
-	[model addObserver:self 
+	[model_ addObserver:self 
 			forKeyPath:@"tags" 
 			   options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
 			   context:@selector(reloadDirectionControl)];
 
-	[model addObserver:self 
+	[model_ addObserver:self 
 			forKeyPath:@"title" 
 			   options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
 			   context:@selector(reloadRouteTitle)];
+    
+    [model_ requestStopList:self.stopTag];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
 	
-	StopListModel *model = [StopListModel sharedStopListModel];
-	[model removeObserver:self forKeyPath:@"stops"];
-	[model removeObserver:self forKeyPath:@"tags"];
-	[model removeObserver:self forKeyPath:@"title"];
+	[model_ removeObserver:self forKeyPath:@"stops"];
+	[model_ removeObserver:self forKeyPath:@"tags"];
+	[model_ removeObserver:self forKeyPath:@"title"];
 	
 	[super viewDidDisappear:animated];
 }
@@ -107,9 +105,7 @@
 	
 //	[self hideActivityViewer];
 	
-	StopListModel *model = [StopListModel sharedStopListModel];
-	
-	int stopsToAdd = [model countOfStops];
+	int stopsToAdd = [model_ countOfStops];
 	int stopsToDelete = [self.tableView numberOfRowsInSection:0];
 	
 	[self.tableView beginUpdates];
@@ -132,11 +128,9 @@
 }
 
 - (void)reloadDirectionControl {
-
-	StopListModel *model = [StopListModel sharedStopListModel];	
 	
 	NSMutableArray *items = [NSMutableArray arrayWithCapacity:2];
-	for (int i = 0 ; i < model.tags.count ; i++) {
+	for (int i = 0 ; i < model_.tags.count ; i++) {
 		[items addObject:[NSString stringWithFormat:@"%d", i]];
 		//[items addObject:[model.titles objectAtIndex:i]];
 	}
@@ -157,12 +151,10 @@
 
 - (void)reloadRouteTitle {
 	
-	StopListModel *model = [StopListModel sharedStopListModel];
-	
 	UIView *containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
 	UILabel *routeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
 	
-	routeLabel.text = [model title];
+	routeLabel.text = [model_ title];
 	routeLabel.textAlignment = UITextAlignmentCenter;
 	routeLabel.adjustsFontSizeToFitWidth = YES;
 	[containerView addSubview:routeLabel];
@@ -190,9 +182,7 @@
 #pragma mark UITableViewDataSource methods
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	
-	StopListModel *model = [StopListModel sharedStopListModel];
-	return [model countOfStops];
+	return [model_ countOfStops];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -203,11 +193,8 @@
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
-	
-	StopListModel *model = [StopListModel sharedStopListModel];	
-	NSUInteger row = [indexPath row];
-	MBTAStop *stop = (MBTAStop *)[model objectInStopsAtIndex:row];
-	
+    
+	MBTAStop *stop = (MBTAStop *)[model_ objectInStopsAtIndex:indexPath.row];
 	cell.textLabel.text = stop.title;
 	cell.textLabel.adjustsFontSizeToFitWidth = YES;
 	
@@ -218,9 +205,7 @@
 	
 	[self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 	
-	StopListModel *model = [StopListModel sharedStopListModel];
-	NSUInteger row = [indexPath row];
-	MBTAStop *stop = (MBTAStop *)[model objectInStopsAtIndex:row];
+	MBTAStop *stop = (MBTAStop *)[model_ objectInStopsAtIndex:indexPath.row];
 	NSString *routeTitle = stop.title;
 	NSString *_tag = stop.tag;
 	
@@ -301,9 +286,7 @@
 
 - (IBAction)switchDirection:(id)sender {
 	// tell the model we're switching directions
-	
-	StopListModel *model = [StopListModel sharedStopListModel];
-	[model loadStopsForTagIndex:self.directionControl.selectedSegmentIndex];
+	[model_ loadStopsForTagIndex:self.directionControl.selectedSegmentIndex];
 }
 
 

@@ -31,17 +31,14 @@
 
 
 @interface RouteListModel : NSObject <BSNetworkOperationDelegate> {
-	NSOperationQueue *opQueue;
-	
-	// these are used by table views
 	NSArray *routes;
-	
 	NSMutableArray *routeListCache;
+    
+    RouteListOperation *routeListOp_;
+	NSOperationQueue *opQueue_;
 }
 
 @property (copy) NSArray *routes;
-
-+ (RouteListModel *)sharedRouteListModel;
 
 - (void) requestRouteList;
 

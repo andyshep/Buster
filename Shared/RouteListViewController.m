@@ -30,8 +30,6 @@
 
 @implementation RouteListViewController
 
-@synthesize routes;
-
 #pragma mark -
 #pragma mark View lifecycle
 
@@ -41,7 +39,20 @@
 	// set up the navigation bar
 	[[self navigationItem] setTitle:@"Routes"];
     
-    [self loadRouteList];
+    // first time the view loads so init the model
+    model_ = [[RouteListModel alloc] init];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [model_ addObserver:self 
+			forKeyPath:@"routes" 
+			   options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
+			   context:NULL];
+    
+    // ideally this would return a cached list too
+    [model_ requestRouteList];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -56,13 +67,10 @@
 	return 1;
 }
 
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [routes count];
+    return [model_ countOfRoutes];
 }
 
-
-// Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     static NSString *CellIdentifier = @"Cell";
@@ -72,8 +80,7 @@
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
     
-    // Configure the cell...
-	MBTARoute *route = (MBTARoute *)[routes objectAtIndex:indexPath.row];
+	MBTARoute *route = (MBTARoute *)[model_ objectInRoutesAtIndex:indexPath.row];
 	
 	cell.textLabel.text = route.title;
 	//cell.inboundDestination.text = [dict objectForKey:@"inboundTitle"];
@@ -86,7 +93,7 @@
 #pragma mark Table view delegate
 
 - (void) tableView:(UITableView *)tView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	MBTARoute *route = (MBTARoute *)[routes objectAtIndex:indexPath.row];
+	MBTARoute *route = (MBTARoute *)[model_ objectInRoutesAtIndex:indexPath.row];
 	
 	//StopListViewController *nextController = [[StopListViewController alloc] initWithStyle:UITableViewStylePlain];
 	
@@ -99,25 +106,13 @@
 	[nextController release];
 }
 
-- (void)loadRouteList {
-//    MBTAQueryStringBuilder *_builder = [[[MBTAQueryStringBuilder alloc] 
-//                                         initWithBaseURL:@"http://webservices.nextbus.com/service/publicXMLFeed"] autorelease];
-    
-    // RouteListOperation *loadingOp = [[RouteListOperation alloc] initWithURLString:[_builder buildRouteListQuery] delegate:self];
-    
-    RouteListOperation *loadingOp = [[RouteListOperation alloc] initWithURLString:@"http://localhost:8081/routeList.xml" delegate:self];
-    [loadingOp start];
-}
-
 #pragma mark -
-#pragma mark RouteListOperationDelegate methods
+#pragma mark Model Observing
 
-- (void)didConsumeData:(id)data {
-    self.routes = (NSArray *)data;
-    
-    // [self didConsumeRouteList:data];
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    // FIXME: animate
+	[self.tableView reloadData];
 }
-
 
 #pragma mark -
 #pragma mark Memory management

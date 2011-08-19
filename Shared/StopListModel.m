@@ -32,8 +32,6 @@
 
 @synthesize stops, directions, tags, titles, title;
 
-SYNTHESIZE_SINGLETON_FOR_CLASS(StopListModel);
-
 #pragma mark -
 #pragma mark Lifecycle
 
@@ -48,7 +46,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(StopListModel);
 		self.title = nil;
 		
 		// create our operation queue
-		opQueue = [[NSOperationQueue alloc] init];
+		opQueue_ = [[NSOperationQueue alloc] init];
 		
 		stopListCache = [[NSMutableDictionary alloc] init];
     }
@@ -57,7 +55,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(StopListModel);
 }
 
 - (void) dealloc {
-    [opQueue release];
+    [opQueue_ release];
 	[stopListCache release];
     [super dealloc];
 }
@@ -78,6 +76,18 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(StopListModel);
 }
 
 #pragma mark -
+#pragma mark Operation Observing
+
+// we use this method to cleanup after operations complete
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    // only observing keyPath "isFinished".  cleanup stop list op
+    // NSLog(@"StopListOperation isFinished");
+    [stopListOp_ removeObserver:self forKeyPath:@"isFinished"];
+    [stopListOp_ release];
+}
+
+#pragma mark -
 #pragma mark Route List building
 
 - (void)requestStopList:(NSString *)stop {
@@ -88,18 +98,16 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(StopListModel);
 		self.stops = cachedList;
 	}
 	else {
-//        MBTAQueryStringBuilder *_builder = [[[MBTAQueryStringBuilder alloc] 
-//                                             initWithBaseURL:@"http://webservices.nextbus.com/service/publicXMLFeed"] autorelease];
+//        MBTAQueryStringBuilder *_builder = [MBTAQueryStringBuilder sharedMBTAQueryStringBuilder];
 //        
-//        NSString *url = [_builder buildRouteConfigQuery:stop];
+//        stopListOp_ = [[StopListOperation alloc] initWithURLString:[_builder buildRouteConfigQuery:stop] delegate:self];
         
-		StopListOperation *loadingOp = [[StopListOperation alloc] initWithURLString:@"http://localhost:8081/routeConfig_r57.xml" delegate:self];
+		stopListOp_ = [[StopListOperation alloc] initWithURLString:@"http://localhost:8081/routeConfig_r57.xml" delegate:self];
         
-        //FIXME: why is stop id not getting seT?
-        loadingOp.stopId = @"57";
-        [loadingOp start];
-//		[opQueue addOperation:loadingOp];
-//		[loadingOp release];
+        stopListOp_.stopId = stop;
+        
+        [stopListOp_ addObserver:self forKeyPath:@"isFinished" options:NSKeyValueObservingOptionNew context:NULL];
+		[opQueue_ addOperation:stopListOp_];
 	}
 }
 
@@ -117,10 +125,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(StopListModel);
 #pragma mark -
 #pragma mark BSNetworkOperationDelegate methods
 
-- (void)didConsumeData:(id)data {
+- (void)didConsumeData:(id)consumedData {
     
-    NSArray *consumedData = (NSArray *)data;
-	NSArray *_directions = [consumedData objectAtIndex:1];
+    NSArray *stopListMeta = (NSArray *)consumedData;
+	NSArray *_directions = [stopListMeta objectAtIndex:1];
 	
 	NSMutableDictionary *_qualifiedDirections = [NSMutableDictionary dictionaryWithCapacity:3];
 	NSMutableArray *_tags = [NSMutableArray arrayWithCapacity:3];

@@ -40,38 +40,56 @@
     [super dealloc];
 }
 
-- (id)consumeData {
-    // fetch the data
+#pragma mark - Network Resource Consumption
+
+- (void)consumeData {
     [dataRequest fetchData];
     consumedData = [dataRequest data];
-    
-    // subclass shall then consume the data
-    return consumedData;
 }
 
 #pragma mark - NSOperation
 
-- (void)main {
-	
-	@try {
-		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-        
-        consumedData = [self consumeData];
-        
-        if (!self.isCancelled) {
-            
-            // return the data back to the main thread
-            [delegate performSelectorOnMainThread:@selector(didConsumeData:) 
-                                       withObject:consumedData
-                                    waitUntilDone:YES];
-        }
-        
-		[pool drain];
-	}
-	@catch (NSException *e) {
-		// an NSOperation cannot throw an exception
-		NSLog(@"exception: %@", e);
-	}
+- (BOOL)isConcurrent {
+    return YES;
+}
+
+- (BOOL)isExecuting {
+    return executing_;
+}
+
+- (BOOL)isFinished {
+    return finished_;
+}
+
+- (void)start {
+    if( finished_ || [self isCancelled] ) { 
+        [self done]; 
+        return; 
+    }
+    
+    [self willChangeValueForKey:@"isExecuting"];
+    executing_ = YES;
+    [self didChangeValueForKey:@"isExecuting"];
+
+    // do the actual work
+    [self consumeData];
+    
+    // call our delegate when complete
+    [(NSObject *)delegate performSelectorOnMainThread:@selector(didConsumeData:) 
+                                           withObject:consumedData
+                                        waitUntilDone:YES];
+    
+    // notify any observer this operation is complete
+    [self done];
+}
+    
+- (void)done {
+    [self willChangeValueForKey:@"isExecuting"];
+    [self willChangeValueForKey:@"isFinished"];
+    executing_ = NO;
+    finished_  = YES;
+    [self didChangeValueForKey:@"isFinished"];
+    [self didChangeValueForKey:@"isExecuting"];
 }
 
 @end

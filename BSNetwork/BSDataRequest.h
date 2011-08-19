@@ -13,8 +13,8 @@
 	NSURLRequest *request;
 }
 
-@property (nonatomic, assign) NSData *data;
-@property (nonatomic, assign) NSURLRequest *request;
+@property (retain) NSData *data;
+@property (retain) NSURLRequest *request;
 
 - (id)initWithURLRequest:(NSURLRequest *)aURLRequest;
 - (id)initWithURLString:(NSString *)aURLString;

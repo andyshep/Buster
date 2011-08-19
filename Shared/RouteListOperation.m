@@ -32,8 +32,8 @@
 #pragma mark -
 #pragma mark fetch data
 
-- (id)consumeData {
-    consumedData = [super consumeData];
+- (void)consumeData {
+    [super consumeData];
     SMXMLDocument *xml = [SMXMLDocument documentWithData:consumedData error:NULL];
     NSMutableArray *routeList = [NSMutableArray arrayWithCapacity:20];
     
@@ -48,7 +48,7 @@
         [route release];
     }
     
-    return routeList;
+    consumedData = routeList;
 }
 
 @end

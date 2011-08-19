@@ -32,8 +32,6 @@
 
 @synthesize routes;
 
-SYNTHESIZE_SINGLETON_FOR_CLASS(RouteListModel);
-
 #pragma mark -
 #pragma mark Lifecycle
 
@@ -44,7 +42,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(RouteListModel);
 		self.routes = nil;
 		
 		// create our operation queue
-		opQueue = [[NSOperationQueue alloc] init];
+		opQueue_ = [[NSOperationQueue alloc] init];
 		
 		routeListCache = [[NSMutableArray alloc] initWithCapacity:5];
     }
@@ -52,15 +50,18 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(RouteListModel);
     return self;
 }
 
-- (void) dealloc
-{
-    [opQueue release];
+- (void) dealloc {
+    [opQueue_ release];
+    [routeListOp_ release];
+    [routes release];
 	[routeListCache release];
     [super dealloc];
 }
 
 #pragma mark -
 #pragma mark Model KVC
+
+// our view controller uses these to display table data
 
 - (NSUInteger)countOfRoutes {
 	return [routes count];
@@ -72,6 +73,18 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(RouteListModel);
 
 - (void)getRoutes:(id *)objects range:(NSRange)range {
 	[routes getObjects:objects range:range];
+}
+
+#pragma mark -
+#pragma mark Operation Observing
+
+// we use this method to cleanup after operations complete
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    // only observing keyPath "isFinished".  cleanup route list op
+    // NSLog(@"RouteListOperation isFinished");
+    [routeListOp_ removeObserver:self forKeyPath:@"isFinished"];
+    [routeListOp_ release];
 }
 
 #pragma mark -
@@ -88,19 +101,22 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(RouteListModel);
 		self.routes = [routeListCache objectAtIndex:0];
 	}
 	else {
-
-	
+        
+//        MBTAQueryStringBuilder *_builder = [MBTAQueryStringBuilder sharedMBTAQueryStringBuilder];
+//        routeListOp_ = [[RouteListOperation alloc] initWithURLString:[_builder buildRouteListQuery] delegate:self];
+        
+        routeListOp_ = [[RouteListOperation alloc] initWithURLString:@"http://localhost:8081/routeList.xml" delegate:self];
+        [routeListOp_ addObserver:self forKeyPath:@"isFinished" options:NSKeyValueObservingOptionNew context:NULL];
+        [opQueue_ addOperation:routeListOp_];
     }
 }
 
-#pragma mark -
-#pragma mark RouteListOperationDelegate methods
+#pragma mark - BSNetworkOperationDelegate
 
-- (void)did:(NSArray *)aRouteList {
-    NSLog(@"didCOnsumeRouteList: %@", aRouteList);
+- (void)didConsumeData:(id)consumedData {
+    NSLog(@"didConsumeData: %@", consumedData);
     
-    self.routes = aRouteList;
-	[routeListCache addObject:aRouteList];
+    self.routes = consumedData;
 }
 
 @end

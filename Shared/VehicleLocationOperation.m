@@ -47,9 +47,9 @@
 //	return url;
 //}
 
-- (NSDictionary *)consumeData {
+- (void)consumeData {
     
-    consumedData = [super consumeData];
+    [super consumeData];
 	
 	NSMutableDictionary *vehicleLocation = [NSMutableDictionary dictionaryWithCapacity:3];
 	
@@ -98,7 +98,7 @@
 		nodes = nil;
 	}
 	
-	return vehicleLocation;
+	consumedData = vehicleLocation;
 }
 
 @end

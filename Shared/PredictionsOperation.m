@@ -35,9 +35,9 @@
 #pragma mark -
 #pragma mark Predictions Processing
 
-- (NSArray *)consumeData {
+- (void)consumeData {
     
-    consumedData = [super consumeData];
+    [super consumeData];
 	
 	// a list of route stops will be passed back and stored into the model
 	NSMutableArray *predictions = [NSMutableArray arrayWithCapacity:5];
@@ -71,7 +71,7 @@
 		nodes = nil;
 	}
 	
-	return predictions;
+	consumedData = predictions;
 }
 
 @end
