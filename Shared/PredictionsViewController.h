@@ -40,6 +40,8 @@
 	NSString *routeNumber;
 	NSString *routeTitle;
 	NSString *directionTag;
+    
+    PredictionsModel *model_;
 }
 
 @property (nonatomic, retain) NSString *stopTag;

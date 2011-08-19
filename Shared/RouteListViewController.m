@@ -41,15 +41,15 @@
     
     // first time the view loads so init the model
     model_ = [[RouteListModel alloc] init];
+    
+    [model_ addObserver:self 
+             forKeyPath:@"routes" 
+                options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
+                context:NULL];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
-    [model_ addObserver:self 
-			forKeyPath:@"routes" 
-			   options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
-			   context:NULL];
     
     // ideally this would return a cached list too
     [model_ requestRouteList];
@@ -131,6 +131,8 @@
 
 
 - (void)dealloc {
+    [model_ removeObserver:self forKeyPath:@"routes"];
+    [model_ release];
     [super dealloc];
 }
 

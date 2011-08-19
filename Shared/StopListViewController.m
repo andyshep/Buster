@@ -54,36 +54,27 @@
 //	[self showActivityViewer];
 	
 	model_ = [[StopListModel alloc] init];
+    
+    [model_ addObserver:self 
+             forKeyPath:@"stops" 
+                options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
+                context:@selector(reloadTable)];
+	
+	[model_ addObserver:self 
+             forKeyPath:@"tags" 
+                options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
+                context:@selector(reloadDirectionControl)];
+    
+	[model_ addObserver:self 
+             forKeyPath:@"title" 
+                options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
+                context:@selector(reloadRouteTitle)];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
-	
-	[model_ addObserver:self 
-			forKeyPath:@"stops" 
-			   options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
-			   context:@selector(reloadTable)];
-	
-	[model_ addObserver:self 
-			forKeyPath:@"tags" 
-			   options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
-			   context:@selector(reloadDirectionControl)];
-
-	[model_ addObserver:self 
-			forKeyPath:@"title" 
-			   options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
-			   context:@selector(reloadRouteTitle)];
     
     [model_ requestStopList:self.stopTag];
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-	
-	[model_ removeObserver:self forKeyPath:@"stops"];
-	[model_ removeObserver:self forKeyPath:@"tags"];
-	[model_ removeObserver:self forKeyPath:@"title"];
-	
-	[super viewDidDisappear:animated];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -175,6 +166,12 @@
 }
 
 - (void)dealloc {
+    
+    [model_ removeObserver:self forKeyPath:@"stops"];
+	[model_ removeObserver:self forKeyPath:@"tags"];
+	[model_ removeObserver:self forKeyPath:@"title"];
+    [model_ release];
+    
     [super dealloc];
 }
 

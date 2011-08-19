@@ -51,26 +51,21 @@
 	
 	self.navigationItem.rightBarButtonItem = refreshButton;
 	
-	PredictionsModel *model = [PredictionsModel sharedPredictionsModel];
-	[model requestPredictionsForRoute:self.routeNumber andStop:self.stopTag];
+    model_ = [[PredictionsModel alloc] init];
+    
+    [model_ addObserver:self 
+             forKeyPath:@"predictions" 
+                options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
+                context:NULL];
 }
 
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
-	
-	PredictionsModel *model = [PredictionsModel sharedPredictionsModel];
-	[model addObserver:self 
-			forKeyPath:@"predictions" 
-			   options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
-			   context:NULL];
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-	PredictionsModel *model = [PredictionsModel sharedPredictionsModel];
-	[model removeObserver:self forKeyPath:@"predictions"];
-	
-	[super viewDidDisappear:animated];
+    
+    NSLog(@"viewWillAppear:");
+    
+    [model_ requestPredictionsForRoute:self.routeNumber andStop:self.stopTag];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -108,9 +103,8 @@
 	if (section == 0) {
 		return 1;
 	}
-	
-    PredictionsModel *model = [PredictionsModel sharedPredictionsModel];
-	return [model countOfPredictions];
+
+	return [model_ countOfPredictions];
 }
 
 
@@ -138,9 +132,8 @@
 	if (cell == nil) {
 		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
 	}
-	
-	PredictionsModel *model = [PredictionsModel sharedPredictionsModel];
-	NSMutableDictionary *dict = (NSMutableDictionary *)[model objectInPredictionsAtIndex:[indexPath row]];
+
+	NSMutableDictionary *dict = (NSMutableDictionary *)[model_ objectInPredictionsAtIndex:[indexPath row]];
 	NSString *title = [dict objectForKey:@"minutes"];
 	title = [title stringByAppendingFormat:@" minutes"];
 	
@@ -155,8 +148,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	
-	PredictionsModel *model = [PredictionsModel sharedPredictionsModel];
-	NSMutableDictionary *dict = (NSMutableDictionary *)[model objectInPredictionsAtIndex:[indexPath row]];
+	NSMutableDictionary *dict = (NSMutableDictionary *)[model_ objectInPredictionsAtIndex:[indexPath row]];
 	NSString *vehicle = [dict objectForKey:@"vehicle"];
 	NSString *time = [dict objectForKey:@"time"];
 	
@@ -196,11 +188,11 @@
     // For example: self.myOutlet = nil;
 }
 
-
 - (void)dealloc {
+    [model_ removeObserver:self forKeyPath:@"predictions"];
+    [model_ release];
     [super dealloc];
 }
-
 
 @end
 

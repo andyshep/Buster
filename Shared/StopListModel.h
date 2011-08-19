@@ -25,7 +25,6 @@
 //  THE SOFTWARE.
 //
 
-#import "SynthesizeSingleton.h"
 #import "StopListOperation.h"
 #import "MBTARouteDirection.h"
 #import "MBTAStop.h"

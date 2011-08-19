@@ -27,14 +27,7 @@
 
 #import "BSNetworkOperation.h"
 #import "SMXMLDocument.h"
-
 #import "MBTAQueryStringBuilder.h"
-
-@protocol VehicleLocationOperationDelegate
-
-- (void)updateLocation:(NSDictionary *)data;
-
-@end
 
 
 @interface VehicleLocationOperation : BSNetworkOperation {	

@@ -25,20 +25,19 @@
 //  THE SOFTWARE.
 //
 
-#import "SynthesizeSingleton.h"
 #import "PredictionsOperation.h"
 
 
 @interface PredictionsModel : NSObject <BSNetworkOperationDelegate> {
-	NSOperationQueue *opQueue;
-	
+    
 	// these are used by table views
 	NSArray *predictions;
+    
+    PredictionsOperation *predictionsOp_;
+    NSOperationQueue *opQueue_;
 }
 
 @property (copy) NSArray *predictions;
-
-+ (PredictionsModel *)sharedPredictionsModel;
 
 - (void)requestPredictionsForRoute:(NSString *)route andStop:(NSString *)stop;
 - (void)unloadPredictions;

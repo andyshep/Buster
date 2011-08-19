@@ -25,7 +25,6 @@
 //  THE SOFTWARE.
 //
 
-#import "SynthesizeSingleton.h"
 #import "RouteListOperation.h"
 #import "MBTARoute.h"
 

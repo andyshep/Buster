@@ -70,9 +70,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(VehicleLocationModel);
 #pragma mark -
 #pragma mark VehicleLocationOperationDelegate methods
 
-- (void)updateLocation:(NSDictionary *)data {
-	
-	self.location = data;
+- (void)didConsumeData:(id)consumedData {
+	self.location = consumedData;
 }
 
 @end

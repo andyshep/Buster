@@ -44,14 +44,14 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(PredictionsModel);
 		self.predictions = nil;
 		
 		// create our operation queue
-		opQueue = [[NSOperationQueue alloc] init];
+		opQueue_ = [[NSOperationQueue alloc] init];
     }
 	
     return self;
 }
 
 - (void) dealloc {
-    [opQueue release];
+    [opQueue_ release];
     [super dealloc];
 }
 
@@ -71,6 +71,18 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(PredictionsModel);
 }
 
 #pragma mark -
+#pragma mark Operation Observing
+
+// we use this method to cleanup after operations complete
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    // only observing keyPath "isFinished".  cleanup stop list op
+    // NSLog(@"StopListOperation isFinished");
+    [predictionsOp_ removeObserver:self forKeyPath:@"isFinished"];
+    [predictionsOp_ release];
+}
+
+#pragma mark -
 #pragma mark Predictions building
 
 - (void)requestPredictionsForRoute:(NSString *)route andStop:(NSString *)stop {
@@ -83,12 +95,14 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(PredictionsModel);
 //											  withDirection:self.direction 
 //													 atStop:self.stop];
 	
-	PredictionsOperation *loadingOp = [[PredictionsOperation alloc] initWithURLString:@"http://localhost:8081/predictions_route57_stop918.xml" delegate:self];
+    NSLog(@"requesting predictions for %@ at %@", route, stop);
+    
+	predictionsOp_ = [[PredictionsOperation alloc] initWithURLString:@"http://localhost:8081/predictions_route57_stop918.xml" delegate:self];
     
     // FIXME: you op doesn't really need these properties
     // leftover refactor
-    loadingOp.stop = @"918";
-    [loadingOp start];
+    predictionsOp_.stop = @"918";
+    [predictionsOp_ start];
 }
 
 - (void)unloadPredictions {
@@ -98,8 +112,11 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(PredictionsModel);
 #pragma mark -
 #pragma mark BSNetworkOperationDelegate
      
-- (void)didConsumeData:(id)data {
- self.predictions = (NSArray *)data;
+- (void)didConsumeData:(id)consumedData {
+    
+    NSLog(@"predictions mdoel did consume data: %@", consumedData);
+    
+    self.predictions = (NSArray *)consumedData;
 }
 
 @end

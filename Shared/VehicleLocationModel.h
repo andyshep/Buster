@@ -29,7 +29,7 @@
 #import "VehicleLocationOperation.h"
 
 
-@interface VehicleLocationModel : NSObject <VehicleLocationOperationDelegate> {
+@interface VehicleLocationModel : NSObject <BSNetworkOperationDelegate> {
 	NSOperationQueue *opQueue;
 	
 	NSDictionary *location;
