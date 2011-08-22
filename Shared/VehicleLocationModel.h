@@ -25,14 +25,12 @@
 //  THE SOFTWARE.
 //
 
-#import "SynthesizeSingleton.h"
 #import "VehicleLocationOperation.h"
 
 
 @interface VehicleLocationModel : NSObject <BSNetworkOperationDelegate> {
-	NSOperationQueue *opQueue;
-	
 	NSDictionary *location;
+    NSOperationQueue *opQueue_;
 }
 
 @property (copy) NSDictionary *location;

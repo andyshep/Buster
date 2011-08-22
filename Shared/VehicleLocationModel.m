@@ -42,14 +42,14 @@
 		self.location = nil;
 		
 		// create our operation queue
-		opQueue = [[NSOperationQueue alloc] init];
+		opQueue_ = [[NSOperationQueue alloc] init];
     }
 	
     return self;
 }
 
 - (void) dealloc {
-    [opQueue release];
+    [opQueue_ release];
     [super dealloc];
 }
 
@@ -57,12 +57,21 @@
 #pragma mark Location Request
 
 - (void) requestLocationOfVehicle:(NSString *)vehicleId runningRoute:(NSString *)routeNumber atEpochTime:(NSString *)time {
-//	VehicleLocationOperation *locationOp = [[VehicleLocationOperation alloc] initWithDelegate:self 
-//																				 andVehicleId:vehicleId
-//																			   andRouteNumber:routeNumber 
-//																				  atEpochTime:time];
-//	[opQueue addOperation:locationOp];
-//	[locationOp release];
+    
+	MBTAQueryStringBuilder *_builder = [MBTAQueryStringBuilder sharedMBTAQueryStringBuilder];
+	
+	// TODO: epochTime other than zero does not work
+	NSString *locationURL = [_builder buildLocationsQueryForRoute:routeNumber
+											withEpochTime:@"0"];
+    
+    VehicleLocationOperation *locationOp = [[VehicleLocationOperation alloc] initWithURLString:locationURL delegate:self];
+    
+    locationOp.vehicleId = vehicleId;
+    locationOp.routeNumber = routeNumber;
+    locationOp.epochTime = time;
+    
+    [opQueue_ addOperation:locationOp];
+    [locationOp release];
 }
 
 #pragma mark -

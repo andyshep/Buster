@@ -74,8 +74,7 @@
 // we use this method to cleanup after operations complete
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    // only observing keyPath "isFinished".  cleanup stop list op
-    // NSLog(@"StopListOperation isFinished");
+    // only observing keyPath "isFinished".
     [predictionsOp_ removeObserver:self forKeyPath:@"isFinished"];
     [predictionsOp_ release];
 }

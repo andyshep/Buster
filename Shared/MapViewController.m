@@ -42,10 +42,15 @@
 #pragma mark -
 #pragma mark View lifecycle
 
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    model_ = [[VehicleLocationModel alloc] init];
+}
+
 - (void)viewWillAppear:(BOOL)animated {
 	
-	VehicleLocationModel *model = [[VehicleLocationModel alloc] init];
-	[model addObserver:self 
+	[model_ addObserver:self 
 			forKeyPath:@"location" 
 			   options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
 			   context:NULL];	
@@ -54,8 +59,7 @@
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
-	VehicleLocationModel *model = [[VehicleLocationModel alloc] init];
-	[model removeObserver:self forKeyPath:@"location"];
+	[model_ removeObserver:self forKeyPath:@"location"];
 	
 	[super viewDidDisappear:animated];
 }
@@ -135,6 +139,9 @@
 	
     [detailItem release];
     [detailDescriptionLabel release];
+    
+    [model_ release];
+    
     [super dealloc];
 }
 
@@ -157,8 +164,7 @@
 - (void)dropPinForLocation {
 	NSLog(@"dropPinForLocation:");
 	
-	VehicleLocationModel *model = [[VehicleLocationModel alloc] init];
-	[model requestLocationOfVehicle:self.vehicle runningRoute:self.route atEpochTime:self.time];
+	[model_ requestLocationOfVehicle:vehicle runningRoute:route atEpochTime:time];
 }
 
 #pragma mark -

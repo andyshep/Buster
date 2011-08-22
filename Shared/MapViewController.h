@@ -41,6 +41,8 @@
 	NSString *time;
 	
 	MKMapView *mapView;
+    
+    VehicleLocationModel *model_;
 }
 
 @property (nonatomic, retain) IBOutlet UIToolbar *toolbar;
