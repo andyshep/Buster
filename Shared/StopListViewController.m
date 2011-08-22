@@ -206,7 +206,7 @@
 	NSString *routeTitle = stop.title;
 	NSString *_tag = stop.tag;
 	
-	PredictionsViewController *nextController = [[PredictionsViewController alloc] initWithStyle:UITableViewStyleGrouped];
+	PredictionsViewController *nextController = [[PredictionsViewController alloc] init];
 	nextController.title = @"Predictions";
 	nextController.routeNumber = self.title;
 	nextController.stopTag = _tag;

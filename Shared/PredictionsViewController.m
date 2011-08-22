@@ -33,24 +33,25 @@
 @synthesize stopTag, latitude, longitude;
 @synthesize routeNumber, routeTitle, directionTag;
 
-
 #pragma mark -
 #pragma mark View lifecycle
 
+- (id)init {
+    if ((self = [super initWithStyle:UITableViewStyleGrouped])) {
+        // init
+    }
+                 
+    return self;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-	
-	// [[self navigationItem] setTitle:self.title];
 	
 	UIBarButtonItem *refreshButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh 
 																				   target:self 
 																				   action:@selector(refreshList:)];
 	
 	self.navigationItem.rightBarButtonItem = refreshButton;
-	
+    
     model_ = [[PredictionsModel alloc] init];
     
     [model_ addObserver:self 
@@ -61,11 +62,8 @@
 
 
 - (void)viewWillAppear:(BOOL)animated {
-	[super viewWillAppear:animated];
-    
-    NSLog(@"viewWillAppear:");
-    
-    [model_ requestPredictionsForRoute:self.routeNumber andStop:self.stopTag];
+	[super viewWillAppear:animated];    
+    [model_ requestPredictionsForRoute:routeNumber andStop:stopTag];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

@@ -44,7 +44,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
 	
-	VehicleLocationModel *model = [VehicleLocationModel sharedVehicleLocationModel];
+	VehicleLocationModel *model = [[VehicleLocationModel alloc] init];
 	[model addObserver:self 
 			forKeyPath:@"location" 
 			   options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
@@ -54,7 +54,7 @@
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
-	VehicleLocationModel *model = [VehicleLocationModel sharedVehicleLocationModel];
+	VehicleLocationModel *model = [[VehicleLocationModel alloc] init];
 	[model removeObserver:self forKeyPath:@"location"];
 	
 	[super viewDidDisappear:animated];
@@ -157,7 +157,7 @@
 - (void)dropPinForLocation {
 	NSLog(@"dropPinForLocation:");
 	
-	VehicleLocationModel *model = [VehicleLocationModel sharedVehicleLocationModel];
+	VehicleLocationModel *model = [[VehicleLocationModel alloc] init];
 	[model requestLocationOfVehicle:self.vehicle runningRoute:self.route atEpochTime:self.time];
 }
 

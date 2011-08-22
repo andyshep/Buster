@@ -32,8 +32,6 @@
 
 @synthesize predictions;
 
-SYNTHESIZE_SINGLETON_FOR_CLASS(PredictionsModel);
-
 #pragma mark -
 #pragma mark Lifecycle
 
@@ -87,22 +85,25 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(PredictionsModel);
 
 - (void)requestPredictionsForRoute:(NSString *)route andStop:(NSString *)stop {
 	// a controller has requested a prediction
+    // NSLog(@"requesting predictions for %@ at %@", route, stop);
     
-//    MBTAQueryStringBuilder *_builder = [[[MBTAQueryStringBuilder alloc] 
-//										 initWithBaseURL:@"http://webservices.nextbus.com/service/publicXMLFeed"] autorelease];
-//	
-//	NSString *url = [_builder buildPredictionsQueryForRoute:self.route 
-//											  withDirection:self.direction 
-//													 atStop:self.stop];
-	
-    NSLog(@"requesting predictions for %@ at %@", route, stop);
+    #ifdef USE_STUB_SERVICE
+        predictionsOp_ = [[PredictionsOperation alloc] initWithURLString:@"http://localhost:8081/predictions_route57_stop918.xml" delegate:self];
+    #else
+        MBTAQueryStringBuilder *_builder = [MBTAQueryStringBuilder sharedMBTAQueryStringBuilder];
+        NSString *predictionsUrl = [_builder buildPredictionsQueryForRoute:route 
+                                                  withDirection:nil 
+                                                         atStop:stop];
     
-	predictionsOp_ = [[PredictionsOperation alloc] initWithURLString:@"http://localhost:8081/predictions_route57_stop918.xml" delegate:self];
+        predictionsOp_ = [[PredictionsOperation alloc] initWithURLString:predictionsUrl delegate:self];
+    #endif
     
     // FIXME: you op doesn't really need these properties
     // leftover refactor
-    predictionsOp_.stop = @"918";
-    [predictionsOp_ start];
+    
+    predictionsOp_.stop = stop;
+    [predictionsOp_ addObserver:self forKeyPath:@"isFinished" options:NSKeyValueObservingOptionNew context:NULL];
+    [opQueue_ addOperation:predictionsOp_];
 }
 
 - (void)unloadPredictions {
@@ -113,9 +114,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(PredictionsModel);
 #pragma mark BSNetworkOperationDelegate
      
 - (void)didConsumeData:(id)consumedData {
-    
-    NSLog(@"predictions mdoel did consume data: %@", consumedData);
-    
+    // NSLog(@"predictions model didConsumeData: %@", consumedData);
     self.predictions = (NSArray *)consumedData;
 }
 

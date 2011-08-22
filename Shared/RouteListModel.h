@@ -31,7 +31,6 @@
 
 @interface RouteListModel : NSObject <BSNetworkOperationDelegate> {
 	NSArray *routes;
-	NSMutableArray *routeListCache;
     
     RouteListOperation *routeListOp_;
 	NSOperationQueue *opQueue_;

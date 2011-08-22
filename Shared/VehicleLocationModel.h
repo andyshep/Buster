@@ -37,8 +37,6 @@
 
 @property (copy) NSDictionary *location;
 
-+ (VehicleLocationModel *)sharedVehicleLocationModel;
-
 - (void) requestLocationOfVehicle:(NSString *)vehicleId runningRoute:(NSString *)routeNumber atEpochTime:(NSString *)time;
 
 //- (NSUInteger)countOfRoutes;

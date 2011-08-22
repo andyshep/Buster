@@ -43,8 +43,6 @@
 		
 		// create our operation queue
 		opQueue_ = [[NSOperationQueue alloc] init];
-		
-		routeListCache = [[NSMutableArray alloc] initWithCapacity:5];
     }
 	
     return self;
@@ -54,7 +52,6 @@
     [opQueue_ release];
     [routeListOp_ release];
     [routes release];
-	[routeListCache release];
     [super dealloc];
 }
 
@@ -96,19 +93,20 @@
 	// make sure the route list is available if someone wants it
 	
 	// TODO: should be checking a cache here
-	
-	if ([routeListCache count] > 0) {
-		self.routes = [routeListCache objectAtIndex:0];
-	}
-	else {
         
 //        MBTAQueryStringBuilder *_builder = [MBTAQueryStringBuilder sharedMBTAQueryStringBuilder];
 //        routeListOp_ = [[RouteListOperation alloc] initWithURLString:[_builder buildRouteListQuery] delegate:self];
-        
-        routeListOp_ = [[RouteListOperation alloc] initWithURLString:@"http://localhost:8081/routeList.xml" delegate:self];
-        [routeListOp_ addObserver:self forKeyPath:@"isFinished" options:NSKeyValueObservingOptionNew context:NULL];
-        [opQueue_ addOperation:routeListOp_];
-    }
+   
+    
+    #ifdef USE_STUB_SERVICE
+    routeListOp_ = [[RouteListOperation alloc] initWithURLString:@"http://localhost:8081/routeList.xml" delegate:self];
+    #else
+    MBTAQueryStringBuilder *_builder = [MBTAQueryStringBuilder sharedMBTAQueryStringBuilder];
+    routeListOp_ = [[RouteListOperation alloc] initWithURLString:[_builder buildRouteListQuery] delegate:self];    
+    #endif
+    
+    [routeListOp_ addObserver:self forKeyPath:@"isFinished" options:NSKeyValueObservingOptionNew context:NULL];
+    [opQueue_ addOperation:routeListOp_];
 }
 
 #pragma mark - BSNetworkOperationDelegate

@@ -32,8 +32,6 @@
 
 @synthesize location;
 
-SYNTHESIZE_SINGLETON_FOR_CLASS(VehicleLocationModel);
-
 #pragma mark -
 #pragma mark Lifecycle
 
