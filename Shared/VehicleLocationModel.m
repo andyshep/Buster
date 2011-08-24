@@ -62,6 +62,7 @@
         
 #if USE_STUB_SERVICE
     VehicleLocationOperation *locationOp = [[VehicleLocationOperation alloc] initWithURLString:@"http://localhost:8081/vehicles.xml" delegate:self];
+    locationOp.vehicleId = @"1034";
 #else
     MBTAQueryStringBuilder *_builder = [MBTAQueryStringBuilder sharedMBTAQueryStringBuilder];
     
@@ -69,9 +70,9 @@
                                                     withEpochTime:@"0"];
     
     VehicleLocationOperation *locationOp = [[VehicleLocationOperation alloc] initWithURLString:locationURL delegate:self];
+    locationOp.vehicleId = vehicleId;
 #endif
     
-    locationOp.vehicleId = vehicleId;
     locationOp.routeNumber = routeNumber;
     locationOp.epochTime = time;
     
@@ -83,7 +84,7 @@
 #pragma mark VehicleLocationOperationDelegate methods
 
 - (void)didConsumeData:(id)consumedData {
-	self.location = consumedData;
+	self.location = (NSDictionary *)consumedData;
 }
 
 - (void)didFailWithError:(NSError *)aError {

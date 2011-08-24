@@ -166,29 +166,31 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
 
-	NSLog(@"%@", keyPath);
+	// NSLog(@"%@", keyPath);
     
-//	NSDictionary *locData = [change objectForKey:NSKeyValueChangeNewKey];
-//	
-//	CLLocationCoordinate2D location;
-//    location.latitude = [[locData objectForKey:@"latitude"] floatValue];
-//    location.longitude = [[locData objectForKey:@"longitude"] floatValue];
-//	
-//	MKCoordinateSpan span;
-//    span.latitudeDelta = 0.00015f;
-//    span.longitudeDelta = 0.00015f;
-//	
-//	MKCoordinateRegion region;
-//    region.span = span;
-//    region.center = location;
-//	
-//	VehicleLocationAnnotation *vehicleLocation = [[VehicleLocationAnnotation alloc] initWithCoordinate:location];
-//	
-//	[mapView setRegion:region animated:YES];
-//    [mapView regionThatFits:region];
-//	[mapView addAnnotation:vehicleLocation];
-//	
-//	[vehicleLocation release];
+    if ([keyPath compare:@"location"] == 0) {
+        NSDictionary *locData = [change objectForKey:NSKeyValueChangeNewKey];
+        
+        CLLocationCoordinate2D location;
+        location.latitude = [[locData objectForKey:@"latitude"] floatValue];
+        location.longitude = [[locData objectForKey:@"longitude"] floatValue];
+        
+        MKCoordinateSpan span;
+        span.latitudeDelta = 0.00015f;
+        span.longitudeDelta = 0.00015f;
+        
+        MKCoordinateRegion region;
+        region.span = span;
+        region.center = location;
+        
+        VehicleLocationAnnotation *vehicleLocation = [[VehicleLocationAnnotation alloc] initWithCoordinate:location];
+        
+        [mapView setRegion:region animated:YES];
+        [mapView regionThatFits:region];
+        [mapView addAnnotation:vehicleLocation];
+        
+        [vehicleLocation release];
+    }
 }
 
 - (void)updateLocation {

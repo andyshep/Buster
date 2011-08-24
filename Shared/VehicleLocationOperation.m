@@ -45,59 +45,29 @@
     SMXMLDocument *xml = [SMXMLDocument documentWithData:consumedData error:&error_];
     
     if (!error_) {
+        
+        NSMutableDictionary *vehicleLocation = [NSMutableDictionary dictionaryWithCapacity:3];
+        
         for (SMXMLElement *vehicleElement in [xml.root childrenNamed:@"vehicle"]) {
-            NSLog(@"%@", vehicleElement);
+            NSString *currentVehicleId = [vehicleElement attributeNamed:@"id"];
+
+            if ([currentVehicleId compare:vehicleId] == 0) {
+                // found a matching vehicle id so 
+                // the vehicle we want is currently vehicleElement
+                
+                NSString *_vehicleId = [vehicleElement attributeNamed:@"id"];
+                NSString *_latitude = [vehicleElement attributeNamed:@"lat"];
+                NSString *_longitude = [vehicleElement attributeNamed:@"lon"];
+                
+                NSLog(@"found vehicle %@ at %@, %@", _vehicleId, _latitude, _longitude);
+                
+                [vehicleLocation setObject:_longitude forKey:@"longitude"];
+                [vehicleLocation setObject:_latitude forKey:@"latitude"];
+                
+                consumedData = vehicleLocation;
+            }
         }
     }
-    
-	NSMutableDictionary *vehicleLocation = [NSMutableDictionary dictionaryWithCapacity:3];
-	
-//	if (consumedData != nil) {
-//		
-//		// parse out the xml data
-//		CXMLDocument *doc = [[CXMLDocument alloc] initWithData:consumedData options:0 error:nil];
-//		NSArray *nodes;
-//		
-//		// searching for vehicle nodes matching our id
-//		
-//		// build an XPath including the vehicle Id
-//		NSString *vehicleXPath = [NSString stringWithString:@"//vehicle[@id='"];
-//		
-//		vehicleXPath = [vehicleXPath stringByAppendingString:self.vehicleId];
-//		
-//		vehicleXPath = [vehicleXPath stringByAppendingString:@"']"];
-//		
-//		nodes = [doc nodesForXPath:vehicleXPath error:nil];
-//		
-//		for (CXMLElement *node in nodes) {
-//			
-//			NSString *_vehicleId = [NSString stringWithString:[[node attributeForName:@"id"] stringValue]];
-//			NSString *_latitude = [NSString stringWithString:[[node attributeForName:@"lat"] stringValue]];
-//			NSString *_longitude = [NSString stringWithString:[[node attributeForName:@"lon"] stringValue]];
-//			
-//			NSLog(@"found vehicle %@ at %@, %@", _vehicleId, _latitude, _longitude);
-//			
-//			[vehicleLocation setObject:_longitude forKey:@"longitude"];
-//			[vehicleLocation setObject:_latitude forKey:@"latitude"];
-//			
-////			NSMutableDictionary *dict = [[[NSMutableDictionary alloc] init] autorelease];
-////			
-////			NSString *_vehicleId = [NSString stringWithString:[[node attributeForName:@"id"] stringValue]];
-////			
-////			// FIXME: this is leaky			
-////			[dict setObject:[[node attributeForName:@"minutes"] stringValue] forKey:@"minutes"];
-////			[dict setObject:[[node attributeForName:@"seconds"] stringValue] forKey:@"seconds"];
-////			[dict setObject:[[node attributeForName:@"vehicle"] stringValue] forKey:@"vehicle"];
-////			[dict setObject:[[node attributeForName:@"dirTag"] stringValue] forKey:@"dirTag"];
-////			
-////			[predictions addObject:dict];
-//		}
-//		
-//		[doc release];
-//		nodes = nil;
-//	}
-	
-	consumedData = vehicleLocation;
 }
 
 @end
