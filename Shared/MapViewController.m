@@ -29,7 +29,7 @@
 
 @implementation MapViewController
 
-@synthesize toolbar, popoverController, detailItem, detailDescriptionLabel;
+@synthesize toolbar, popoverController;
 @synthesize vehicle, route, time;
 @synthesize mapView;
 
@@ -56,38 +56,18 @@
                 context:NULL];
 }
 
-#pragma mark -
-#pragma mark Managing the detail item
-
-/*
- When setting the detail item, update the view and dismiss the popover controller if it's showing.
- */
-- (void)setDetailItem:(id)newDetailItem {
-    if (detailItem != newDetailItem) {
-        [detailItem release];
-        detailItem = [newDetailItem retain];
-        
-        // Update the view.
-        [self configureView];
-    }
-	
-    if (popoverController != nil) {
-        [popoverController dismissPopoverAnimated:YES];
-    }        
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    return interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown;
 }
 
-- (void)configureView {
-    // Update the user interface for the detail item.
-    // detailDescriptionLabel.text = [detailItem description];   
-	
+- (void)configureView {	
 	self.vehicle = nil;
 	self.route = nil;
 	self.time = nil;
 }
 
 
-#pragma mark -
-#pragma mark Split view support
+#pragma mark - Split view support
 
 - (void)splitViewController: (UISplitViewController*)svc willHideViewController:(UIViewController *)aViewController withBarButtonItem:(UIBarButtonItem*)barButtonItem forPopoverController: (UIPopoverController*)pc {
     
@@ -99,8 +79,6 @@
     self.popoverController = pc;
 }
 
-
-// Called when the view is shown again in the split view, invalidating the button and popover controller.
 - (void)splitViewController: (UISplitViewController*)svc willShowViewController:(UIViewController *)aViewController invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem {
     
     NSMutableArray *items = [[toolbar items] mutableCopy];
@@ -110,19 +88,9 @@
     self.popoverController = nil;
 }
 
-#pragma mark -
-#pragma mark Rotation support
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    return interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown;
-}
-
-#pragma mark -
-#pragma mark MKMapViewDelegate methods
+#pragma mark - MKMapViewDelegate methods
 
 - (void)mapView:(MKMapView *)mView didAddAnnotationViews:(NSArray *)views {
-	NSLog(@"mapView:didAddAnnotationViews");
-	
 	// zoom and center to where the annotation is placed.
 	MKAnnotationView *annotationView = [views objectAtIndex:0];
 	id <MKAnnotation> mp = [annotationView annotation];
@@ -130,21 +98,9 @@
 	[mView setRegion:region animated:YES];
 }
 
-#pragma mark -
-#pragma mark Location
-
-- (void)dropPinForLocation {
-	NSLog(@"dropPinForLocation:");
-	
-	[model_ requestLocationOfVehicle:vehicle runningRoute:route atEpochTime:time];
-}
-
-#pragma mark -
-#pragma mark Model Observing
+#pragma mark - Model Observing
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-
-	// NSLog(@"%@", keyPath);
     
     if ([keyPath compare:@"location"] == 0) {
         NSDictionary *locData = [change objectForKey:NSKeyValueChangeNewKey];
@@ -169,22 +125,33 @@
         
         [vehicleLocation release];
     }
+    else if ([keyPath compare:@"error"] == 0) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"error alert view title") 
+                                                        message:[[model_ error] localizedDescription] 
+                                                       delegate:nil 
+                                              cancelButtonTitle:NSLocalizedString(@"OK", @"ok button title") 
+                                              otherButtonTitles:nil];
+        [alert show];
+        [alert release];
+    }
+}
+
+#pragma mark - Location Management
+
+- (void)dropPinForLocation {	
+	[model_ requestLocationOfVehicle:vehicle runningRoute:route atEpochTime:time];
 }
 
 - (void)updateLocation {
     
 }
 
-#pragma mark -
-#pragma mark Memory management
+#pragma mark - Memory management
 
 - (void)dealloc {
     [popoverController release];
     [toolbar release];
     [mapView release];
-	
-    [detailItem release];
-    [detailDescriptionLabel release];
     
     [model_ removeObserver:self forKeyPath:@"location"];
     [model_ removeObserver:self forKeyPath:@"error"];
@@ -192,6 +159,5 @@
     
     [super dealloc];
 }
-
 
 @end

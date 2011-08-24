@@ -85,10 +85,7 @@
 #pragma mark -
 #pragma mark Operation Observing
 
-// we use this method to cleanup after operations complete
-
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    // only observing keyPath "isFinished".  cleanup stop list op
     NSLog(@"StopListOperation isFinished");
     [stopListOp_ removeObserver:self forKeyPath:@"isFinished"];
     [stopListOp_ release];
@@ -98,13 +95,6 @@
 #pragma mark Route List building
 
 - (void)requestStopList:(NSString *)stop {
-	// a controller has requested a route stop list
-	
-//	if ([stopListCache objectForKey:stop] != nil) {
-//		NSArray *cachedList = [stopListCache objectForKey:stop];
-//		self.stops = cachedList;
-//	}
-//	else {
         
 #ifdef USE_STUB_SERVICE
     stopListOp_ = [[StopListOperation alloc] initWithURLString:@"http://localhost:8081/routeConfig_r57.xml" delegate:self];

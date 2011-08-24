@@ -43,7 +43,6 @@
     return self;
 }
 
-
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
 	[super viewDidLoad];
@@ -78,12 +77,6 @@
     [model_ requestStopList:self.stopTag];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-	[super viewWillAppear:animated];
-    
-    // [model_ requestStopList:self.stopTag];
-}
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
 	return interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown;
 }
@@ -92,14 +85,11 @@
 #pragma mark Model Observing
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-	
 	SEL selector = (SEL)context;
     [self performSelector:selector];
 }
 
 - (void)reloadTable {
-	
-	// [self.tableView reloadData];
 	
 //	[self hideActivityViewer];
 	

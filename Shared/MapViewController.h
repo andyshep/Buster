@@ -32,9 +32,6 @@
 @interface MapViewController : UIViewController <UIPopoverControllerDelegate, UISplitViewControllerDelegate, MKMapViewDelegate> {
 	UIPopoverController *popoverController;
     UIToolbar *toolbar;
-    
-    id detailItem;
-    UILabel *detailDescriptionLabel;
 	
 	NSString *vehicle;
 	NSString *route;
@@ -46,9 +43,6 @@
 }
 
 @property (nonatomic, retain) IBOutlet UIToolbar *toolbar;
-
-@property (nonatomic, retain) id detailItem;
-@property (nonatomic, retain) IBOutlet UILabel *detailDescriptionLabel;
 
 @property (nonatomic, retain) NSString *vehicle;
 @property (nonatomic, retain) NSString *route;

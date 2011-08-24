@@ -134,8 +134,6 @@
 		[self.tableView insertRowsAtIndexPaths:insert withRowAnimation:UITableViewRowAnimationTop];
 	}
     
-    NSLog(@"reloadRoutes: just animated %d rows.. i am tired!", routesToAdd);
-    
     [self.tableView endUpdates];
 }
 
@@ -174,4 +172,3 @@
 
 
 @end
-
