@@ -11,8 +11,12 @@
 
 @interface PredictionsTableViewCell : UITableViewCell {
 
+    UILabel *routeNumberLabel, *routeDirectionLabel, *stopNameLabel;
+    
 @private
 	UIView *containerView;
 }
+
+@property (nonatomic, retain) UILabel *routeNumberLabel, *routeDirectionLabel, *stopNameLabel;
 
 @end

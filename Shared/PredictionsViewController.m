@@ -61,6 +61,11 @@
                 context:@selector(reloadPredictions)];
     
     [model_ addObserver:self 
+             forKeyPath:@"predictionMeta" 
+                options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
+                context:@selector(reloadPredictionMeta)];
+    
+    [model_ addObserver:self 
              forKeyPath:@"error" 
                 options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
                 context:@selector(operationDidFail)];
@@ -95,13 +100,12 @@
 
 
 #pragma mark -
-#pragma mark Table view data source
+#pragma mark Table view data source and delegate
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
     return 2;
 }
-
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 	if (section == 0) {
@@ -111,26 +115,29 @@
 	return [model_ countOfPredictions];
 }
 
-
-// Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	
-	// return the first placeholder title cell
+	// return the prediction meta data cell with route/stop info
 	if ([indexPath section] == 0) {
-		static NSString *CellIdentifier = @"Cell";
 		
-		UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+		PredictionsTableViewCell *cell = (PredictionsTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"PredictionsInfoTableCell"];
 		if (cell == nil) {
-			cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+			cell = [[[PredictionsTableViewCell alloc] init] autorelease];
 		}
 		
 		// Configure the cell...
+        // NSLog(@"%@", [[model_ predictionMeta] objectForKey:@"routeTitle"]);
+        cell.routeNumberLabel.text = [[model_ predictionMeta] objectForKey:@"routeTitle"];
+        cell.routeDirectionLabel.text = [[model_ predictionMeta] objectForKey:@"directionTitle"];
+        cell.stopNameLabel.text = [[model_ predictionMeta] objectForKey:@"stopTitle"];
+        
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
 		
 		return cell;
 	}
 	
-	// return a prediction cell
-	static NSString *CellIdentifier = @"Cell";
+	// return a prediction cell with a time
+	NSString *CellIdentifier = @"PredictionsTimeTableCell";
 	
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 	if (cell == nil) {
@@ -146,11 +153,9 @@
 	return cell;
 }
 
-
-#pragma mark -
-#pragma mark Table view delegate
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if ([indexPath section] == 0) return;
 	
 	NSMutableDictionary *dict = (NSMutableDictionary *)[model_ objectInPredictionsAtIndex:[indexPath row]];
 	NSString *vehicle = [dict objectForKey:@"vehicle"];
@@ -158,6 +163,14 @@
 	
 	id delegate = [[UIApplication sharedApplication] delegate];
 	[delegate loadPredictionsForVehicle:vehicle runningRoute:self.routeNumber atEpochTime:time];
+}
+
+- (void)configureCell:(PredictionsTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+    cell.routeNumberLabel.text = [[model_ predictionMeta] objectForKey:@"routeTitle"];
+    cell.routeDirectionLabel.text = [[model_ predictionMeta] objectForKey:@"directionTitle"];
+    cell.stopNameLabel.text = [[model_ predictionMeta] objectForKey:@"stopTitle"];
+    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
 }
 
 #pragma mark -
@@ -169,8 +182,6 @@
 }
 
 - (void)reloadPredictions {
-    // FIXME: animate these
-    // [self.tableView reloadData];
     
     int predictionsToAdd = [model_ countOfPredictions];
 	int predictionsToDelete = [self.tableView numberOfRowsInSection:1];
@@ -190,6 +201,14 @@
     [self.tableView endUpdates];
 }
 
+- (void)reloadPredictionMeta {
+
+    // reconfigure the predictions meta data cell
+    NSIndexPath *path = [NSIndexPath indexPathForRow:0 inSection:0];
+    PredictionsTableViewCell *cell = (PredictionsTableViewCell *)[self.tableView cellForRowAtIndexPath:path];
+    [self configureCell:cell atIndexPath:path];
+}
+
 - (void)operationDidFail {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"error alert view title") 
                                                     message:[[model_ error] localizedDescription] 
@@ -204,8 +223,6 @@
 #pragma mark IBActions
 
 - (IBAction)refreshList:(id)sender {
-	NSLog(@"refreshList:");
-    // [self reloadPredictions];
     [model_ requestPredictionsForRoute:routeNumber andStop:stopTag];
 }
 
@@ -234,6 +251,7 @@
     [directionTag release];
     
     [model_ removeObserver:self forKeyPath:@"predictions"];
+    [model_ removeObserver:self forKeyPath:@"predictionMeta"];
     [model_ removeObserver:self forKeyPath:@"error"];
     [model_ release];
     

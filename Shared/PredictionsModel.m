@@ -30,7 +30,7 @@
 
 @implementation PredictionsModel
 
-@synthesize predictions, error;
+@synthesize predictions, predictionMeta, error;
 
 #pragma mark -
 #pragma mark Lifecycle
@@ -39,7 +39,7 @@
 	if ((self = [super init])) {
 		
 		// init an empty set of predictions for the model
-		self.predictions = nil, self.error = nil;
+		self.predictions = nil, self.error = nil, self.predictionMeta = nil;
 		
 		// create our operation queue
 		opQueue_ = [[NSOperationQueue alloc] init];
@@ -51,6 +51,7 @@
 - (void) dealloc {
     [opQueue_ release];
     [predictions release];
+    [predictionMeta release];
     [error release];
     
     [super dealloc];
@@ -110,6 +111,7 @@
 
 - (void)unloadPredictions {
 	self.predictions = nil;
+    self.predictionMeta = nil;
 }
 
 #pragma mark -
@@ -118,6 +120,7 @@
 - (void)didConsumeData:(id)consumedData {
     NSLog(@"predictions model didConsumeData: %@", consumedData);
     
+    self.predictionMeta = [(NSArray *)consumedData objectAtIndex:0];
     self.predictions = [(NSArray *)consumedData objectAtIndex:1];
 }
 

@@ -6,7 +6,7 @@ Buster is a universal iOS app for retrieving bus predictions from the MBTA.  Bus
 Overview
 ------------------
 
-A model object governs the display of route, stop, and vehicle data for each table view.  Each model object has an BSNetworkOperation subclass that handles fetching and parsing of XML data for its respective operation.  As each view controller is pushed onto the stack, it initializes a new model object and uses KVO to observe property changes.  In response to observed property changes a view controller might reload table data or display an error to the user.
+A model object governs the display of route, stop, and vehicle data for each table view.  Each model object has an BSNetworkOperation subclass that handles fetching and parsing of XML data for its respective operation.  As each view controller is pushed onto the stack, it initializes a new model object and uses KVO to observe property changes.  In response to observed property changes a view controller might reload table data or display an error message to the user.
 
 Screenshots
 -----------

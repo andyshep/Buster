@@ -26,6 +26,7 @@
 //
 
 #import "MapViewController.h"
+#import "PredictionsTableViewCell.h"
 #import "PredictionsModel.h"
 
 #import "AppDelegate_iPhone.h"
