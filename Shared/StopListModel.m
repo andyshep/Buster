@@ -48,8 +48,6 @@
 		
 		// create our operation queue
 		opQueue_ = [[NSOperationQueue alloc] init];
-		
-		stopListCache = [[NSMutableDictionary alloc] init];
     }
 	
     return self;
@@ -57,11 +55,15 @@
 
 - (void) dealloc {
     [opQueue_ release];
-	[stopListCache release];
     [error release];
+    
     [stops release];
     [titles release];
+    [title release];
+    
+    [directions release];
     [tags release];
+    
     [super dealloc];
 }
 
@@ -87,7 +89,7 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     // only observing keyPath "isFinished".  cleanup stop list op
-    // NSLog(@"StopListOperation isFinished");
+    NSLog(@"StopListOperation isFinished");
     [stopListOp_ removeObserver:self forKeyPath:@"isFinished"];
     [stopListOp_ release];
 }
@@ -98,22 +100,21 @@
 - (void)requestStopList:(NSString *)stop {
 	// a controller has requested a route stop list
 	
-	if ([stopListCache objectForKey:stop] != nil) {
-		NSArray *cachedList = [stopListCache objectForKey:stop];
-		self.stops = cachedList;
-	}
-	else {
+//	if ([stopListCache objectForKey:stop] != nil) {
+//		NSArray *cachedList = [stopListCache objectForKey:stop];
+//		self.stops = cachedList;
+//	}
+//	else {
         
-    #ifdef USE_STUB_SERVICE
-		stopListOp_ = [[StopListOperation alloc] initWithURLString:@"http://localhost:8081/routeConfig_r57.xml" delegate:self];
-    #else    
-        MBTAQueryStringBuilder *_builder = [MBTAQueryStringBuilder sharedMBTAQueryStringBuilder];     
-        stopListOp_ = [[StopListOperation alloc] initWithURLString:[_builder buildRouteConfigQuery:stop] delegate:self];
-    #endif
-        stopListOp_.stopId = stop;
-        [stopListOp_ addObserver:self forKeyPath:@"isFinished" options:NSKeyValueObservingOptionNew context:NULL];
-		[opQueue_ addOperation:stopListOp_];
-	}
+#ifdef USE_STUB_SERVICE
+    stopListOp_ = [[StopListOperation alloc] initWithURLString:@"http://localhost:8081/routeConfig_r57.xml" delegate:self];
+#else    
+    MBTAQueryStringBuilder *_builder = [MBTAQueryStringBuilder sharedMBTAQueryStringBuilder];     
+    stopListOp_ = [[StopListOperation alloc] initWithURLString:[_builder buildRouteConfigQuery:stop] delegate:self];
+#endif
+    stopListOp_.stopId = stop;
+    [stopListOp_ addObserver:self forKeyPath:@"isFinished" options:NSKeyValueObservingOptionNew context:NULL];
+    [opQueue_ addOperation:stopListOp_];
 }
 
 - (void)unloadStopList {

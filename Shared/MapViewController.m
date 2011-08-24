@@ -110,33 +110,11 @@
     self.popoverController = nil;
 }
 
-
 #pragma mark -
 #pragma mark Rotation support
 
-// Ensure that the view controller supports rotation and that the split view can therefore show in both portrait and landscape.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-	
-	return YES;
-}
-
-
-#pragma mark -
-#pragma mark Memory management
-
-- (void)dealloc {
-    [popoverController release];
-    [toolbar release];
-    [mapView release];
-	
-    [detailItem release];
-    [detailDescriptionLabel release];
-    
-    [model_ removeObserver:self forKeyPath:@"location"];
-    [model_ removeObserver:self forKeyPath:@"error"];
-    [model_ release];
-    
-    [super dealloc];
+    return interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown;
 }
 
 #pragma mark -
@@ -195,6 +173,24 @@
 
 - (void)updateLocation {
     
+}
+
+#pragma mark -
+#pragma mark Memory management
+
+- (void)dealloc {
+    [popoverController release];
+    [toolbar release];
+    [mapView release];
+	
+    [detailItem release];
+    [detailDescriptionLabel release];
+    
+    [model_ removeObserver:self forKeyPath:@"location"];
+    [model_ removeObserver:self forKeyPath:@"error"];
+    [model_ release];
+    
+    [super dealloc];
 }
 
 

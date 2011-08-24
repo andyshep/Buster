@@ -36,14 +36,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
-	// set up the navigation bar
 	[[self navigationItem] setTitle:NSLocalizedString(@"Routes", @"routes table view title")];
     
     UIBarButtonItem *refreshButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(requestRouteList)];
     [[self navigationItem] setRightBarButtonItem:refreshButton animated:YES];
     [refreshButton release];
     
-    // first time the view loads so init the model
     model_ = [[RouteListModel alloc] init];
     
     [model_ addObserver:self 
@@ -55,18 +53,13 @@
              forKeyPath:@"error" 
                 options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
                 context:@selector(operationDidFail)];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
     
     [self requestRouteList];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-	return YES;
+	return interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown;
 }
-
 
 #pragma mark -
 #pragma mark Table view data source
@@ -91,8 +84,6 @@
 	MBTARoute *route = (MBTARoute *)[model_ objectInRoutesAtIndex:indexPath.row];
 	
 	cell.textLabel.text = route.title;
-	//cell.inboundDestination.text = [dict objectForKey:@"inboundTitle"];
-	//cell.outboundDestination.text = [dict objectForKey:@"outboundTitle"];
     
     return cell;
 }
@@ -125,8 +116,27 @@
 }
 
 - (void)reloadRoutes {
-    // FIXME: animate these
-    [self.tableView reloadData];
+
+    // FIXME: you are needlessly animating in 40 rows
+    // only animate in the rows which are visible.
+    int routesToAdd = [model_ countOfRoutes];
+	int routesToDelete = [self.tableView numberOfRowsInSection:0];
+    
+    [self.tableView beginUpdates];
+	
+	for (int i = 0; i < routesToDelete; i++) {
+		NSArray *delete = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:i inSection:0]];
+		[self.tableView deleteRowsAtIndexPaths:delete withRowAnimation:UITableViewRowAnimationBottom];
+	}
+    
+    for (int i = 0; i < routesToAdd; i++) {
+		NSArray *insert = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:i inSection:0]];
+		[self.tableView insertRowsAtIndexPaths:insert withRowAnimation:UITableViewRowAnimationTop];
+	}
+    
+    NSLog(@"reloadRoutes: just animated %d rows.. i am tired!", routesToAdd);
+    
+    [self.tableView endUpdates];
 }
 
 - (void)operationDidFail {    

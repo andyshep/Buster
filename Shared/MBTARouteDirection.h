@@ -33,6 +33,6 @@
 }
 
 @property (nonatomic, retain) NSString *title, *tag, *name;
-@property (copy) NSArray *stops;
+@property (nonatomic, retain) NSArray *stops;
 
 @end

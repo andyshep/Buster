@@ -64,19 +64,19 @@
              forKeyPath:@"error" 
                 options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
                 context:@selector(operationDidFail)];
+    
+    [model_ requestPredictionsForRoute:routeNumber andStop:stopTag];
 }
 
-
-- (void)viewWillAppear:(BOOL)animated {
-	[super viewWillAppear:animated];    
-    [model_ requestPredictionsForRoute:routeNumber andStop:stopTag];
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+	return interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 	
 	// first section is the custom cell
 	if ([indexPath section] == 0) {
-		return 150.0f;
+		return 88.0f;
 	}
 	
 	// else return standard detail table cell height
@@ -170,7 +170,24 @@
 
 - (void)reloadPredictions {
     // FIXME: animate these
-    [self.tableView reloadData];
+    // [self.tableView reloadData];
+    
+    int predictionsToAdd = [model_ countOfPredictions];
+	int predictionsToDelete = [self.tableView numberOfRowsInSection:1];
+    
+    [self.tableView beginUpdates];
+	
+	for (int i = 0; i < predictionsToDelete; i++) {
+		NSArray *delete = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:i inSection:1]];
+		[self.tableView deleteRowsAtIndexPaths:delete withRowAnimation:UITableViewRowAnimationBottom];
+	}
+    
+    for (int i = 0; i < predictionsToAdd; i++) {
+		NSArray *insert = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:i inSection:1]];
+		[self.tableView insertRowsAtIndexPaths:insert withRowAnimation:UITableViewRowAnimationTop];
+	}
+    
+    [self.tableView endUpdates];
 }
 
 - (void)operationDidFail {
@@ -188,8 +205,8 @@
 
 - (IBAction)refreshList:(id)sender {
 	NSLog(@"refreshList:");
-	
-	// TODO: implement with periodic updater?
+    // [self reloadPredictions];
+    [model_ requestPredictionsForRoute:routeNumber andStop:stopTag];
 }
 
 
@@ -209,9 +226,17 @@
 }
 
 - (void)dealloc {
+    [stopTag release];
+    [latitude release];
+    [longitude release];
+    [routeNumber release];
+    [routeTitle release];
+    [directionTag release];
+    
     [model_ removeObserver:self forKeyPath:@"predictions"];
     [model_ removeObserver:self forKeyPath:@"error"];
     [model_ release];
+    
     [super dealloc];
 }
 

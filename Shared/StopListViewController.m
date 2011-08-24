@@ -49,15 +49,6 @@
 	[super viewDidLoad];
 	
 	[[self navigationItem] setTitle:self.title];
-
-	// TODO: implement route showing
-//	UIBarButtonItem *showRouteButton = [[UIBarButtonItem alloc] initWithTitle:@"Show Route" 
-//																		style:UIBarButtonItemStylePlain 
-//																	   target:self 
-//																	   action:@selector(showRoute)];
-//	
-//	self.navigationItem.rightBarButtonItem = showRouteButton;
-//	[showRouteButton release];
 	
 	// show a spinner
 //	[self showActivityViewer];
@@ -83,16 +74,18 @@
              forKeyPath:@"error" 
                 options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
                 context:@selector(operationDidFail)];
+    
+    [model_ requestStopList:self.stopTag];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
     
-    [model_ requestStopList:self.stopTag];
+    // [model_ requestStopList:self.stopTag];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-	return YES;
+	return interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown;
 }
 
 #pragma mark -
@@ -106,7 +99,7 @@
 
 - (void)reloadTable {
 	
-	[self.tableView reloadData];
+	// [self.tableView reloadData];
 	
 //	[self hideActivityViewer];
 	
@@ -236,6 +229,8 @@
 	
 	PredictionsViewController *nextController = [[PredictionsViewController alloc] init];
 	nextController.title = NSLocalizedString(@"Predictions", @"predictions table view title");
+    
+    // FIXME: how much of this do i need?
 	nextController.routeNumber = self.title;
 	nextController.stopTag = _tag;
 	nextController.routeTitle = routeTitle;
