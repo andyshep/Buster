@@ -19,7 +19,7 @@
                 delegate:(id<BSNetworkOperationDelegate>)aDelegate {
     if ((self = [super init])) {
         self.delegate = aDelegate;
-        consumedData = nil;
+        consumedData = nil, error_ = nil;
         dataRequest = [[BSDataRequest alloc] initWithURLRequest:aURLRequest];
     }
     
@@ -43,8 +43,11 @@
 #pragma mark - Network Resource Consumption
 
 - (void)consumeData {
-    [dataRequest fetchData];
-    consumedData = [dataRequest data];
+    error_ = [dataRequest fetchData];
+    
+    if (!error_) {
+        consumedData = [dataRequest data];
+    }
 }
 
 #pragma mark - NSOperation
@@ -75,9 +78,16 @@
     [self consumeData];
     
     // call our delegate when complete
-    [(NSObject *)delegate performSelectorOnMainThread:@selector(didConsumeData:) 
-                                           withObject:consumedData
-                                        waitUntilDone:YES];
+    if (!error_) {
+        [(NSObject *)delegate performSelectorOnMainThread:@selector(didConsumeData:) 
+                                               withObject:consumedData
+                                            waitUntilDone:YES];
+    }
+    else {
+        [(NSObject *)delegate performSelectorOnMainThread:@selector(didFailWithError:) 
+                                               withObject:error_
+                                            waitUntilDone:YES];
+    }
     
     // notify any observer this operation is complete
     [self done];

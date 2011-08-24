@@ -40,6 +40,7 @@
 	NSMutableDictionary *stopListCache;
 	
 	NSDictionary *directions;
+    NSError *error;
     
     StopListOperation *stopListOp_;
     NSOperationQueue *opQueue_;
@@ -47,6 +48,7 @@
 
 @property (copy) NSArray *stops, *tags, *titles;
 @property (copy) NSDictionary *directions;
+@property (copy) NSError *error;
 @property (nonatomic, retain) NSString *title;
 
 - (void)requestStopList:(NSString *)stop;

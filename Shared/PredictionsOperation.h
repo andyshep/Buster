@@ -27,14 +27,8 @@
 
 #import "BSNetworkOperation.h"
 #import "SMXMLDocument.h"
-
 #import "MBTAQueryStringBuilder.h"
 
-@protocol PredictionsOperationDelegate
-
-- (void)updatePredictions:(NSArray *)data;
-
-@end
 
 @interface PredictionsOperation : BSNetworkOperation {
 	

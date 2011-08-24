@@ -45,6 +45,10 @@
 }
 
 - (void) dealloc {
+    [title release];
+    [tag release];
+    [name release];
+    [stops release];
     [super dealloc];
 }
 

@@ -30,7 +30,7 @@
 
 @implementation RouteListModel
 
-@synthesize routes;
+@synthesize routes, error;
 
 #pragma mark -
 #pragma mark Lifecycle
@@ -39,7 +39,7 @@
 	if ((self = [super init])) {
 		
 		// init an empty set of routeTitles for the model
-		self.routes = nil;
+		self.routes = nil, self.error = nil;
 		
 		// create our operation queue
 		opQueue_ = [[NSOperationQueue alloc] init];
@@ -52,6 +52,7 @@
     [opQueue_ release];
     [routeListOp_ release];
     [routes release];
+    [error release];
     [super dealloc];
 }
 
@@ -75,11 +76,8 @@
 #pragma mark -
 #pragma mark Operation Observing
 
-// we use this method to cleanup after operations complete
-
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     // only observing keyPath "isFinished".  cleanup route list op
-    // NSLog(@"RouteListOperation isFinished");
     [routeListOp_ removeObserver:self forKeyPath:@"isFinished"];
     [routeListOp_ release];
 }
@@ -88,21 +86,12 @@
 #pragma mark Route List building
 
 - (void) requestRouteList {
-	// a controller has requested a route list
-	// controller is observing routeList property
-	// make sure the route list is available if someone wants it
-	
-	// TODO: should be checking a cache here
-        
-//        MBTAQueryStringBuilder *_builder = [MBTAQueryStringBuilder sharedMBTAQueryStringBuilder];
-//        routeListOp_ = [[RouteListOperation alloc] initWithURLString:[_builder buildRouteListQuery] delegate:self];
-   
     
     #ifdef USE_STUB_SERVICE
-    routeListOp_ = [[RouteListOperation alloc] initWithURLString:@"http://localhost:8081/routeList.xml" delegate:self];
+        routeListOp_ = [[RouteListOperation alloc] initWithURLString:@"http://localhost:8081/routeList.xml" delegate:self];
     #else
-    MBTAQueryStringBuilder *_builder = [MBTAQueryStringBuilder sharedMBTAQueryStringBuilder];
-    routeListOp_ = [[RouteListOperation alloc] initWithURLString:[_builder buildRouteListQuery] delegate:self];    
+        MBTAQueryStringBuilder *_builder = [MBTAQueryStringBuilder sharedMBTAQueryStringBuilder];
+        routeListOp_ = [[RouteListOperation alloc] initWithURLString:[_builder buildRouteListQuery] delegate:self];    
     #endif
     
     [routeListOp_ addObserver:self forKeyPath:@"isFinished" options:NSKeyValueObservingOptionNew context:NULL];
@@ -112,9 +101,13 @@
 #pragma mark - BSNetworkOperationDelegate
 
 - (void)didConsumeData:(id)consumedData {
-    NSLog(@"didConsumeData: %@", consumedData);
-    
+    // NSLog(@"didConsumeData: %@", consumedData);
     self.routes = consumedData;
+}
+
+- (void)didFailWithError:(NSError *)aError {
+    // NSLog(@"didFailWithError: %@", [aError localizedDescription]);
+    self.error = aError;
 }
 
 @end

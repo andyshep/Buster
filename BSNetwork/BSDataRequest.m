@@ -49,7 +49,7 @@
     [super dealloc];
 }
 
-- (void)fetchData {
+- (NSError *)fetchData {
     NSHTTPURLResponse *response = nil;
     NSError *error = nil;
     NSData *reqData = nil;
@@ -57,16 +57,16 @@
     
     if ([response statusCode] >= 400) {
         NSLog(@"Connection failed with status code: %d", [response statusCode]);
-        return;
     }
-    
-    if (error && [[error domain] compare:@"NSURLErrorDomain"] == 0) {
-        NSLog(@"Connection did fail with error message: %@", [error localizedDescription]);
+    else if (error && [[error domain] compare:@"NSURLErrorDomain"] == 0) {
+        NSLog(@"Connection did fail with error message: %@", [error localizedDescription]);    
     }
     
     if (reqData) {
         self.data  = reqData;
     }
+    
+    return error;
 }
 
 @end

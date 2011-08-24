@@ -30,7 +30,7 @@
 
 @implementation StopListModel
 
-@synthesize stops, directions, tags, titles, title;
+@synthesize stops, directions, tags, titles, title, error;
 
 #pragma mark -
 #pragma mark Lifecycle
@@ -44,6 +44,7 @@
 		self.directions = nil;
 		self.titles = nil;
 		self.title = nil;
+        self.error = nil;
 		
 		// create our operation queue
 		opQueue_ = [[NSOperationQueue alloc] init];
@@ -57,6 +58,10 @@
 - (void) dealloc {
     [opQueue_ release];
 	[stopListCache release];
+    [error release];
+    [stops release];
+    [titles release];
+    [tags release];
     [super dealloc];
 }
 
@@ -149,6 +154,11 @@
 	
 	MBTARouteDirection *_direction = [self.directions objectForKey:[self.tags objectAtIndex:0]];
 	self.stops = _direction.stops;
+}
+
+- (void)didFailWithError:(NSError *)aError {
+    NSLog(@"didFailWithError: %@", [aError localizedDescription]);
+    self.error = aError;
 }
 
 @end

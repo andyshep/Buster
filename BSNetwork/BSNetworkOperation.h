@@ -12,6 +12,7 @@
 
 @protocol BSNetworkOperationDelegate <NSObject>
 - (void)didConsumeData:(id)consumedData;
+- (void)didFailWithError:(NSError *)aError;
 @end
 
 @interface BSNetworkOperation : NSOperation {
@@ -21,6 +22,7 @@
     BSDataRequest *dataRequest;
     
     BOOL executing_, finished_;
+    NSError *error_;
 }
 
 @property (assign) id<BSNetworkOperationDelegate> delegate;

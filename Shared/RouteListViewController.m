@@ -37,7 +37,11 @@
     [super viewDidLoad];
 	
 	// set up the navigation bar
-	[[self navigationItem] setTitle:@"Routes"];
+	[[self navigationItem] setTitle:NSLocalizedString(@"Routes", @"routes table view title")];
+    
+    UIBarButtonItem *refreshButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(requestRouteList)];
+    [[self navigationItem] setRightBarButtonItem:refreshButton animated:YES];
+    [refreshButton release];
     
     // first time the view loads so init the model
     model_ = [[RouteListModel alloc] init];
@@ -45,14 +49,18 @@
     [model_ addObserver:self 
              forKeyPath:@"routes" 
                 options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
-                context:NULL];
+                context:@selector(reloadRoutes)];
+    
+    [model_ addObserver:self 
+             forKeyPath:@"error" 
+                options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
+                context:@selector(operationDidFail)];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    // ideally this would return a cached list too
-    [model_ requestRouteList];
+    [self requestRouteList];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -95,9 +103,7 @@
 - (void) tableView:(UITableView *)tView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	MBTARoute *route = (MBTARoute *)[model_ objectInRoutesAtIndex:indexPath.row];
 	
-	//StopListViewController *nextController = [[StopListViewController alloc] initWithStyle:UITableViewStylePlain];
-	
-	StopListViewController *nextController = [[StopListViewController alloc] initWithNibName:@"StopListViewController" bundle:nil];
+	StopListViewController *nextController = [[StopListViewController alloc] init];
 	nextController.title = route.title;
 	nextController.stopTag = route.tag;
 	
@@ -107,11 +113,30 @@
 }
 
 #pragma mark -
-#pragma mark Model Observing
+#pragma mark Route Loading and Model Observing
+
+- (void)requestRouteList {
+    [model_ requestRouteList];
+}
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    // FIXME: animate
-	[self.tableView reloadData];
+    SEL selector = (SEL)context;
+    [self performSelector:selector];
+}
+
+- (void)reloadRoutes {
+    // FIXME: animate these
+    [self.tableView reloadData];
+}
+
+- (void)operationDidFail {    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"error alert view title") 
+                                                    message:[[model_ error] localizedDescription] 
+                                                   delegate:nil 
+                                          cancelButtonTitle:NSLocalizedString(@"OK", @"ok button title") 
+                                          otherButtonTitles:nil];
+    [alert show];
+    [alert release];
 }
 
 #pragma mark -
@@ -132,6 +157,7 @@
 
 - (void)dealloc {
     [model_ removeObserver:self forKeyPath:@"routes"];
+    [model_ removeObserver:self forKeyPath:@"error"];
     [model_ release];
     [super dealloc];
 }

@@ -51,13 +51,19 @@
 																				   action:@selector(refreshList:)];
 	
 	self.navigationItem.rightBarButtonItem = refreshButton;
+    [refreshButton release];
     
     model_ = [[PredictionsModel alloc] init];
     
     [model_ addObserver:self 
              forKeyPath:@"predictions" 
                 options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
-                context:NULL];
+                context:@selector(reloadPredictions)];
+    
+    [model_ addObserver:self 
+             forKeyPath:@"error" 
+                options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
+                context:@selector(operationDidFail)];
 }
 
 
@@ -158,7 +164,23 @@
 #pragma mark Model Observing
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-	[self.tableView reloadData];
+    SEL selector = (SEL)context;
+    [self performSelector:selector];
+}
+
+- (void)reloadPredictions {
+    // FIXME: animate these
+    [self.tableView reloadData];
+}
+
+- (void)operationDidFail {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"error alert view title") 
+                                                    message:[[model_ error] localizedDescription] 
+                                                   delegate:nil 
+                                          cancelButtonTitle:NSLocalizedString(@"OK", @"ok button title") 
+                                          otherButtonTitles:nil];
+    [alert show];
+    [alert release];
 }
 
 #pragma mark -
@@ -188,6 +210,7 @@
 
 - (void)dealloc {
     [model_ removeObserver:self forKeyPath:@"predictions"];
+    [model_ removeObserver:self forKeyPath:@"error"];
     [model_ release];
     [super dealloc];
 }

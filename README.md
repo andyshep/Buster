@@ -1,12 +1,12 @@
 Buster
 ======
 
-Buster is a universal iOS app for retrieving bus predictions from the MBTA.  Buster uses [ASIHTTPRequest](http://allseeing-i.com/ASIHTTPRequest/) for retrieving data from the web and [TouchXML](https://github.com/TouchCode/TouchXML) for parsing XML from the MBTA.  For more information about bus predictions check out the [MassDOT/MBTA Real-Time XML TRIAL Feed](http://www.eot.state.ma.us/developers/realtime/).
+Buster is a universal iOS app for retrieving bus predictions from the MBTA.  Buster uses [BSNetwork](http://github.com/andyshep/BSNetwork/) for requesting data from the web and [SMXMLDocument](https://github.com/) for parsing XML.  For more information about bus predictions check out the [MassDOT/MBTA Real-Time XML TRIAL Feed](http://www.eot.state.ma.us/developers/realtime/).
 
 Overview
 ------------------
 
-As each table view is displayed, an NSOperation is created to handle the fetching and parsing of XML.  Each view controller uses KVO to observe model changes from completed NSOperations.
+A model object governs the display of route, stop, and vehicle data for each table view.  Each model object has an BSNetworkOperation subclass that handles fetching and parsing of XML data for its respective operation.  As each view controller is pushed onto the stack, it initializes a new model object and uses KVO to observe property changes.  In response to observed property changes a view controller might reload table data or display an error to the user.
 
 Screenshots
 -----------

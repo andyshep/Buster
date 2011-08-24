@@ -32,10 +32,10 @@
 
 @interface StopListViewController : UIViewController <UITableViewDataSource, UITableViewDelegate> {
 	NSString *stopTag;
-	IBOutlet UITableView *tableView;
+	UITableView *tableView;
 	
-	IBOutlet UISegmentedControl *directionControl;
-	IBOutlet UIToolbar *bottomToolbar;
+	UISegmentedControl *directionControl;
+	UIToolbar *bottomToolbar;
 	
 	UIView *activityView;
     
@@ -43,9 +43,9 @@
 }
 
 @property (nonatomic, retain) NSString *stopTag;
-@property (nonatomic, retain) IBOutlet UITableView *tableView;
-@property (nonatomic, retain) IBOutlet UISegmentedControl *directionControl;
-@property (nonatomic, retain) IBOutlet UIToolbar *bottomToolbar;
+@property (nonatomic, retain) UITableView *tableView;
+@property (nonatomic, retain) UISegmentedControl *directionControl;
+@property (nonatomic, retain) UIToolbar *bottomToolbar;
 
 - (void)assembleRoutePath;
 

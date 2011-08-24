@@ -30,7 +30,7 @@
 
 @implementation PredictionsModel
 
-@synthesize predictions;
+@synthesize predictions, error;
 
 #pragma mark -
 #pragma mark Lifecycle
@@ -39,7 +39,7 @@
 	if ((self = [super init])) {
 		
 		// init an empty set of predictions for the model
-		self.predictions = nil;
+		self.predictions = nil, self.error = nil;
 		
 		// create our operation queue
 		opQueue_ = [[NSOperationQueue alloc] init];
@@ -50,6 +50,9 @@
 
 - (void) dealloc {
     [opQueue_ release];
+    [predictions release];
+    [error release];
+    
     [super dealloc];
 }
 
@@ -86,16 +89,16 @@
 	// a controller has requested a prediction
     // NSLog(@"requesting predictions for %@ at %@", route, stop);
     
-    #ifdef USE_STUB_SERVICE
-        predictionsOp_ = [[PredictionsOperation alloc] initWithURLString:@"http://localhost:8081/predictions_route57_stop918.xml" delegate:self];
-    #else
-        MBTAQueryStringBuilder *_builder = [MBTAQueryStringBuilder sharedMBTAQueryStringBuilder];
-        NSString *predictionsUrl = [_builder buildPredictionsQueryForRoute:route 
-                                                  withDirection:nil 
-                                                         atStop:stop];
-    
-        predictionsOp_ = [[PredictionsOperation alloc] initWithURLString:predictionsUrl delegate:self];
-    #endif
+#ifdef USE_STUB_SERVICE
+    predictionsOp_ = [[PredictionsOperation alloc] initWithURLString:@"http://localhost:8081/predictions_route57_stop918.xml" delegate:self];
+#else
+    MBTAQueryStringBuilder *_builder = [MBTAQueryStringBuilder sharedMBTAQueryStringBuilder];
+    NSString *predictionsUrl = [_builder buildPredictionsQueryForRoute:route 
+                                              withDirection:nil 
+                                                     atStop:stop];
+
+    predictionsOp_ = [[PredictionsOperation alloc] initWithURLString:predictionsUrl delegate:self];
+#endif
     
     // FIXME: you op doesn't really need these properties
     // leftover refactor
@@ -113,8 +116,13 @@
 #pragma mark BSNetworkOperationDelegate
      
 - (void)didConsumeData:(id)consumedData {
-    // NSLog(@"predictions model didConsumeData: %@", consumedData);
-    self.predictions = (NSArray *)consumedData;
+    NSLog(@"predictions model didConsumeData: %@", consumedData);
+    
+    self.predictions = [(NSArray *)consumedData objectAtIndex:1];
+}
+
+- (void)didFailWithError:(NSError *)aError {
+    self.error = aError;
 }
 
 @end

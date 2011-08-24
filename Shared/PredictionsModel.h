@@ -32,12 +32,14 @@
     
 	// these are used by table views
 	NSArray *predictions;
+    NSError *error;
     
     PredictionsOperation *predictionsOp_;
     NSOperationQueue *opQueue_;
 }
 
 @property (copy) NSArray *predictions;
+@property (copy) NSError *error;
 
 - (void)requestPredictionsForRoute:(NSString *)route andStop:(NSString *)stop;
 - (void)unloadPredictions;

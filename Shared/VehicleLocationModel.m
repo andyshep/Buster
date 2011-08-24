@@ -30,7 +30,7 @@
 
 @implementation VehicleLocationModel
 
-@synthesize location;
+@synthesize location, error;
 
 #pragma mark -
 #pragma mark Lifecycle
@@ -39,7 +39,7 @@
 	if ((self = [super init])) {
 		
 		// init a nothing location for the model
-		self.location = nil;
+		self.location = nil, self.error = nil;
 		
 		// create our operation queue
 		opQueue_ = [[NSOperationQueue alloc] init];
@@ -50,6 +50,8 @@
 
 - (void) dealloc {
     [opQueue_ release];
+    [location release];
+    [error release];
     [super dealloc];
 }
 
@@ -57,14 +59,17 @@
 #pragma mark Location Request
 
 - (void) requestLocationOfVehicle:(NSString *)vehicleId runningRoute:(NSString *)routeNumber atEpochTime:(NSString *)time {
+        
+#if USE_STUB_SERVICE
+    VehicleLocationOperation *locationOp = [[VehicleLocationOperation alloc] initWithURLString:@"http://localhost:8081/vehicles.xml" delegate:self];
+#else
+    MBTAQueryStringBuilder *_builder = [MBTAQueryStringBuilder sharedMBTAQueryStringBuilder];
     
-	MBTAQueryStringBuilder *_builder = [MBTAQueryStringBuilder sharedMBTAQueryStringBuilder];
-	
-	// TODO: epochTime other than zero does not work
 	NSString *locationURL = [_builder buildLocationsQueryForRoute:routeNumber
-											withEpochTime:@"0"];
+                                                    withEpochTime:@"0"];
     
     VehicleLocationOperation *locationOp = [[VehicleLocationOperation alloc] initWithURLString:locationURL delegate:self];
+#endif
     
     locationOp.vehicleId = vehicleId;
     locationOp.routeNumber = routeNumber;
@@ -79,6 +84,10 @@
 
 - (void)didConsumeData:(id)consumedData {
 	self.location = consumedData;
+}
+
+- (void)didFailWithError:(NSError *)aError {
+    self.error = aError;
 }
 
 @end

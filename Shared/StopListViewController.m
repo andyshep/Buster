@@ -35,20 +35,29 @@
 #pragma mark -
 #pragma mark View Lifecycle
 
+- (id)init {
+    if ((self = [super init])) {
+        //
+    }
+    
+    return self;
+}
+
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	
 	[[self navigationItem] setTitle:self.title];
-	
-	UIBarButtonItem *showRouteButton = [[UIBarButtonItem alloc] initWithTitle:@"Show Route" 
-																		style:UIBarButtonItemStylePlain 
-																	   target:self 
-																	   action:@selector(showRoute)];
-	
-	self.navigationItem.rightBarButtonItem = showRouteButton;
-	[showRouteButton release];
+
+	// TODO: implement route showing
+//	UIBarButtonItem *showRouteButton = [[UIBarButtonItem alloc] initWithTitle:@"Show Route" 
+//																		style:UIBarButtonItemStylePlain 
+//																	   target:self 
+//																	   action:@selector(showRoute)];
+//	
+//	self.navigationItem.rightBarButtonItem = showRouteButton;
+//	[showRouteButton release];
 	
 	// show a spinner
 //	[self showActivityViewer];
@@ -69,6 +78,11 @@
              forKeyPath:@"title" 
                 options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
                 context:@selector(reloadRouteTitle)];
+    
+    [model_ addObserver:self 
+             forKeyPath:@"error" 
+                options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
+                context:@selector(operationDidFail)];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -125,11 +139,13 @@
 		[items addObject:[NSString stringWithFormat:@"%d", i]];
 		//[items addObject:[model.titles objectAtIndex:i]];
 	}
-	
+    
+    // FIXME: alloc/initWithFrame and the add/remove segments to controll
+    // stop allocing a new one each time.
 	directionControl = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithArray:items]];
 	directionControl.segmentedControlStyle = UISegmentedControlStyleBar;
-	directionControl.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-	directionControl.frame = CGRectMake(0, 0, 295, 30);
+	directionControl.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
+	directionControl.frame = CGRectMake(0, 0, 305, 30);
 	directionControl.selectedSegmentIndex = 0;
 	UIBarButtonItem *buttonItem = [[UIBarButtonItem alloc] initWithCustomView:directionControl];
 	
@@ -142,6 +158,7 @@
 
 - (void)reloadRouteTitle {
 	
+    // FIXME: stop init these views each time
 	UIView *containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
 	UILabel *routeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
 	
@@ -153,6 +170,16 @@
 	
 	[routeLabel release];
 	[containerView release];
+}
+
+- (void)operationDidFail {    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"error alert view title") 
+                                                    message:[[model_ error] localizedDescription] 
+                                                   delegate:nil 
+                                          cancelButtonTitle:NSLocalizedString(@"OK", @"ok button title") 
+                                          otherButtonTitles:nil];
+    [alert show];
+    [alert release];
 }
 
 #pragma mark -
@@ -170,6 +197,7 @@
     [model_ removeObserver:self forKeyPath:@"stops"];
 	[model_ removeObserver:self forKeyPath:@"tags"];
 	[model_ removeObserver:self forKeyPath:@"title"];
+    [model_ removeObserver:self forKeyPath:@"error"];
     [model_ release];
     
     [super dealloc];
@@ -207,7 +235,7 @@
 	NSString *_tag = stop.tag;
 	
 	PredictionsViewController *nextController = [[PredictionsViewController alloc] init];
-	nextController.title = @"Predictions";
+	nextController.title = NSLocalizedString(@"Predictions", @"predictions table view title");
 	nextController.routeNumber = self.title;
 	nextController.stopTag = _tag;
 	nextController.routeTitle = routeTitle;

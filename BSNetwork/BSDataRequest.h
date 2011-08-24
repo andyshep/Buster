@@ -23,6 +23,6 @@
             cachePolicy:(NSURLCacheStoragePolicy)aCachePolicy;
 
 
-- (void)fetchData;
+- (NSError *)fetchData;
 
 @end

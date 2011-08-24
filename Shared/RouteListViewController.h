@@ -36,4 +36,7 @@
     RouteListModel *model_;
 }
 
+- (void)requestRouteList;
+- (void)reloadRoutes;
+
 @end

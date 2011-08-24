@@ -31,12 +31,14 @@
 
 @interface RouteListModel : NSObject <BSNetworkOperationDelegate> {
 	NSArray *routes;
+    NSError *error;
     
     RouteListOperation *routeListOp_;
 	NSOperationQueue *opQueue_;
 }
 
 @property (copy) NSArray *routes;
+@property (copy) NSError *error;
 
 - (void) requestRouteList;
 

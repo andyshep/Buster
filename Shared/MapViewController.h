@@ -56,6 +56,9 @@
 
 @property (nonatomic, retain) IBOutlet MKMapView *mapView;
 
+@property (nonatomic, retain) UIPopoverController *popoverController;
+
 - (void)dropPinForLocation;
+- (void)configureView;
 
 @end

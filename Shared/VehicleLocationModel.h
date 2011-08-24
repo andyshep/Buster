@@ -30,10 +30,12 @@
 
 @interface VehicleLocationModel : NSObject <BSNetworkOperationDelegate> {
 	NSDictionary *location;
+    NSError *error;
     NSOperationQueue *opQueue_;
 }
 
 @property (copy) NSDictionary *location;
+@property (copy) NSError *error;
 
 - (void) requestLocationOfVehicle:(NSString *)vehicleId runningRoute:(NSString *)routeNumber atEpochTime:(NSString *)time;
 

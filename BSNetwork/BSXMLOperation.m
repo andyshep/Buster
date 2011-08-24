@@ -13,8 +13,8 @@
 
 - (void)consumeData {
     [super consumeData];
-    NSError *error;
-    consumedData = [SMXMLDocument documentWithData:consumedData error:&error];
+    if (error_) return;
+    consumedData = [SMXMLDocument documentWithData:consumedData error:&error_];
 }
 
 @end
