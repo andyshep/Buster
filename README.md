@@ -1,7 +1,7 @@
 Buster
 ======
 
-Buster is a universal iOS app for retrieving bus predictions from the MBTA.  Buster uses [BSNetwork](http://github.com/andyshep/BSNetwork/) for requesting data from the web and [SMXMLDocument](https://github.com/) for parsing XML.  For more information about bus predictions check out the [MassDOT/MBTA Real-Time XML TRIAL Feed](http://www.eot.state.ma.us/developers/realtime/).
+Buster is a universal iOS app for retrieving bus predictions from the MBTA.  Buster uses [BSNetwork](http://github.com/andyshep/BSNetwork) for requesting data from the web and [SMXMLDocument](https://github.com/nfarina/xmldocument) for parsing XML.  For more information about bus predictions check out the [MassDOT/MBTA Real-Time XML TRIAL Feed](http://www.eot.state.ma.us/developers/realtime/).
 
 Overview
 ------------------

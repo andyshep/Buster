@@ -66,7 +66,6 @@
 	self.time = nil;
 }
 
-
 #pragma mark - Split view support
 
 - (void)splitViewController: (UISplitViewController*)svc willHideViewController:(UIViewController *)aViewController withBarButtonItem:(UIBarButtonItem*)barButtonItem forPopoverController: (UIPopoverController*)pc {

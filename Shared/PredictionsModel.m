@@ -118,8 +118,6 @@
 #pragma mark BSNetworkOperationDelegate
      
 - (void)didConsumeData:(id)consumedData {
-    NSLog(@"predictions model didConsumeData: %@", consumedData);
-    
     self.predictionMeta = [(NSArray *)consumedData objectAtIndex:0];
     self.predictions = [(NSArray *)consumedData objectAtIndex:1];
 }
