@@ -1,10 +1,10 @@
 //
-//  MBTAStopList.h
+//  BSRoutesModel.h
 //  Buster
 //
-//  Created by andyshep on 1/16/11.
+//  Created by andyshep on 12/30/10.
 //
-//  Copyright (c) 2010 Andrew Shepard
+//  Copyright (c) 2010-2011 Andrew Shepard
 // 
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,14 +25,23 @@
 //  THE SOFTWARE.
 //
 
+#import "MBTAQueryStringBuilder.h"
+#import "AFHTTPRequestOperation.h"
+#import "SMXMLDocument.h"
+#import "BSRoute.h"
 
-@interface MBTAStopList : NSObject <NSCoding> {
-	NSArray *stops;
-	
-	NSString *tag, *name, *title;
+@interface BSRoutesModel : NSObject {
+	NSArray *routes;
+    NSError *error;
 }
 
-@property (copy) NSArray *stops;
-@property (nonatomic, retain) NSString *tag, *name, *title;
+@property (copy) NSArray *routes;
+@property (copy) NSError *error;
+
+- (void) requestRouteList;
+
+- (NSUInteger)countOfRoutes;
+- (id)objectInRoutesAtIndex:(NSUInteger)index;
+- (void)getRoutes:(id *)objects range:(NSRange)range;
 
 @end

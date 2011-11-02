@@ -25,7 +25,7 @@
 //  THE SOFTWARE.
 //
 
-#import "VehicleLocationModel.h"
+#import "BSPredictionsModel.h"
 #import "VehicleLocationAnnotation.h"
 
 
@@ -39,7 +39,7 @@
 	
 	MKMapView *mapView;
     
-    VehicleLocationModel *model_;
+    BSPredictionsModel *model_;
 }
 
 @property (nonatomic, retain) IBOutlet UIToolbar *toolbar;

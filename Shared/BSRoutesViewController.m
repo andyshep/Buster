@@ -1,10 +1,10 @@
 //
-//  RouteListViewController.m
+//  BSRoutesViewController.m
 //  Buster
 //
 //  Created by andyshep on 12/15/10.
 //
-//  Copyright (c) 2010 Andrew Shepard
+//  Copyright (c) 2010-2011 Andrew Shepard
 // 
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,10 +25,10 @@
 //  THE SOFTWARE.
 //
 
-#import "RouteListViewController.h"
+#import "BSRoutesViewController.h"
 
 
-@implementation RouteListViewController
+@implementation BSRoutesViewController
 
 #pragma mark -
 #pragma mark View lifecycle
@@ -42,7 +42,7 @@
     [[self navigationItem] setRightBarButtonItem:refreshButton animated:YES];
     [refreshButton release];
     
-    model_ = [[RouteListModel alloc] init];
+    model_ = [[BSRoutesModel alloc] init];
     
     [model_ addObserver:self 
              forKeyPath:@"routes" 
@@ -81,7 +81,7 @@
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
     
-	MBTARoute *route = (MBTARoute *)[model_ objectInRoutesAtIndex:indexPath.row];
+	BSRoute *route = (BSRoute *)[model_ objectInRoutesAtIndex:indexPath.row];
 	
 	cell.textLabel.text = route.title;
     
@@ -92,9 +92,9 @@
 #pragma mark Table view delegate
 
 - (void) tableView:(UITableView *)tView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	MBTARoute *route = (MBTARoute *)[model_ objectInRoutesAtIndex:indexPath.row];
+	BSRoute *route = (BSRoute *)[model_ objectInRoutesAtIndex:[indexPath row]];
 	
-	StopListViewController *nextController = [[StopListViewController alloc] init];
+	BSDirectionsViewController *nextController = [[BSDirectionsViewController alloc] init];
 	nextController.title = route.title;
 	nextController.stopTag = route.tag;
 	

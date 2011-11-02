@@ -39,7 +39,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    model_ = [[VehicleLocationModel alloc] init];
+    model_ = [[BSPredictionsModel alloc] init];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

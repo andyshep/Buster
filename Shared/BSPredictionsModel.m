@@ -4,7 +4,7 @@
 //
 //  Created by andyshep on 1/3/11.
 //
-//  Copyright (c) 2010 Andrew Shepard
+//  Copyright (c) 2010-2011 Andrew Shepard
 // 
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,10 +25,10 @@
 //  THE SOFTWARE.
 //
 
-#import "PredictionsModel.h"
+#import "BSPredictionsModel.h"
 
 
-@implementation PredictionsModel
+@implementation BSPredictionsModel
 
 @synthesize predictions, predictionMeta, error;
 
@@ -40,16 +40,12 @@
 		
 		// init an empty set of predictions for the model
 		self.predictions = nil, self.error = nil, self.predictionMeta = nil;
-		
-		// create our operation queue
-		opQueue_ = [[NSOperationQueue alloc] init];
     }
 	
     return self;
 }
 
 - (void) dealloc {
-    [opQueue_ release];
     [predictions release];
     [predictionMeta release];
     [error release];
@@ -73,40 +69,66 @@
 }
 
 #pragma mark -
-#pragma mark Operation Observing
-
-// we use this method to cleanup after operations complete
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    // only observing keyPath "isFinished".
-    [predictionsOp_ removeObserver:self forKeyPath:@"isFinished"];
-    [predictionsOp_ release];
-}
-
-#pragma mark -
 #pragma mark Predictions building
 
 - (void)requestPredictionsForRoute:(NSString *)route andStop:(NSString *)stop {
 	// a controller has requested a prediction
     // NSLog(@"requesting predictions for %@ at %@", route, stop);
     
-#ifdef USE_STUB_SERVICE
-    predictionsOp_ = [[PredictionsOperation alloc] initWithURLString:@"http://localhost:8081/predictions_route57_stop918.xml" delegate:self];
-#else
-    MBTAQueryStringBuilder *_builder = [MBTAQueryStringBuilder sharedMBTAQueryStringBuilder];
-    NSString *predictionsUrl = [_builder buildPredictionsQueryForRoute:route 
-                                              withDirection:nil 
-                                                     atStop:stop];
-
-    predictionsOp_ = [[PredictionsOperation alloc] initWithURLString:predictionsUrl delegate:self];
-#endif
+//#ifdef USE_STUB_SERVICE
+//    predictionsOp_ = [[PredictionsOperation alloc] initWithURLString:@"http://localhost:8081/predictions_route57_stop918.xml" delegate:self];
+//#else
+//    MBTAQueryStringBuilder *_builder = [MBTAQueryStringBuilder sharedMBTAQueryStringBuilder];
+//    NSString *predictionsUrl = [_builder buildPredictionsQueryForRoute:route 
+//                                              withDirection:nil 
+//                                                     atStop:stop];
+//
+//    predictionsOp_ = [[PredictionsOperation alloc] initWithURLString:predictionsUrl delegate:self];
+//#endif
     
     // FIXME: you op doesn't really need these properties
     // leftover refactor
     
-    predictionsOp_.stop = stop;
-    [predictionsOp_ addObserver:self forKeyPath:@"isFinished" options:NSKeyValueObservingOptionNew context:NULL];
-    [opQueue_ addOperation:predictionsOp_];
+//    predictionsOp_.stop = stop;
+//    [predictionsOp_ addObserver:self forKeyPath:@"isFinished" options:NSKeyValueObservingOptionNew context:NULL];
+//    [opQueue_ addOperation:predictionsOp_];
+    
+    NSString *urlString = [NSString stringWithFormat:@"http://localhost:4000/route.json/%@/stop/%@", route, stop]; 
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation operationWithRequest:request success:^(id JSON) {
+        
+        // TODO: check for error JSON returned
+        // TODO: parse out predictions meta
+        
+        NSArray *_predictions = (NSArray *)JSON;
+        NSLog(@"%@", [_predictions objectAtIndex:0]);
+        
+        self.predictions = _predictions;
+
+//        NSMutableArray *_routes = [NSMutableArray arrayWithCapacity:20];
+//        
+//        for (NSDictionary *route in [JSON valueForKeyPath:@"routes"]) {
+//            // NSLog(@"%@, %@", [route valueForKeyPath:@"tag"], [route valueForKeyPath:@"title"]);
+//            
+//            BSRoute *aRoute = [[[BSRoute alloc] init] autorelease];
+//            [aRoute setTag:[route valueForKeyPath:@"tag"]];
+//            [aRoute setTitle:[route valueForKeyPath:@"title"]];
+//            
+//            [_routes addObject:aRoute];
+//        }
+//        
+//        self.routes = _routes;
+//        
+//        // TODO: implement
+//        [self saveChanges];
+        
+    } failure:^(NSError *err) {
+        // TODO: handle error
+        self.error = err;
+    }];
+    
+    NSOperationQueue *queue = [[[NSOperationQueue alloc] init] autorelease];
+    [queue addOperation:operation];
 }
 
 - (void)unloadPredictions {

@@ -1,10 +1,10 @@
 //
-//  RouteListOperation.h
+//  BSRoute.h
 //  Buster
 //
-//  Created by andyshep on 10/30/10.
+//  Created by andyshep on 1/16/11.
 //
-//  Copyright (c) 2010 Andrew Shepard
+//  Copyright (c) 2010-2011 Andrew Shepard
 // 
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,14 +25,13 @@
 //  THE SOFTWARE.
 //
 
-#import "BSNetworkOperation.h"
-#import "SMXMLDocument.h"
-#import "MBTAQueryStringBuilder.h"
-#import "MBTARoute.h"
 
-
-@interface RouteListOperation : BSNetworkOperation {
-    
+@interface BSRoute : NSObject <NSCoding> {
+	NSString *title, *tag;
+	NSArray *stops;
 }
+
+@property (nonatomic, retain) NSString *title, *tag;
+@property (copy) NSArray *stops;
 
 @end

@@ -1,10 +1,10 @@
 //
-//  MBTAStop.m
+//  BSRoutesViewController.h
 //  Buster
 //
-//  Created by andyshep on 1/16/11.
+//  Created by andyshep on 12/15/10.
 //
-//  Copyright (c) 2010 Andrew Shepard
+//  Copyright (c) 2010-2011 Andrew Shepard
 // 
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,54 +25,18 @@
 //  THE SOFTWARE.
 //
 
-#import "MBTAStop.h"
+#import "BSDirectionsViewController.h"
+#import "BSRoute.h"
+#import "BSRoutesModel.h"
 
 
-@implementation MBTAStop
+@protocol MapViewControllerDelegate;
 
-@synthesize title, tag, directionTag;
-@synthesize routeNumber, stopId;
-@synthesize latitude, longitude;
-
-#pragma mark -
-#pragma mark Lifecycle
-
-- (id) init {
-	if ((self = [super init])) {
-		// init
-    }
-	
-    return self;
+@interface BSRoutesViewController : UITableViewController {
+    BSRoutesModel *model_;
 }
 
-- (void) dealloc {
-    [super dealloc];
-}
-
-#pragma mark -
-#pragma NSCoding
-
-- (id)initWithCoder:(NSCoder *)coder {
-	
-	[super init];
-	
-	self.title = [coder decodeObjectForKey:@"title"];
-	self.tag = [coder decodeObjectForKey:@"tag"];
-	self.directionTag = [coder decodeObjectForKey:@"directionTag"];
-	self.routeNumber = [coder decodeObjectForKey:@"routeNumber"];
-	self.stopId = [coder decodeObjectForKey:@"stopId"];
-	
-	return self;
-}
-
-- (void)encodeWithCoder:(NSCoder *)coder {
-	
-	[coder encodeObject:self.title forKey:@"title"];
-	[coder encodeObject:self.tag forKey:@"tag"];
-	[coder encodeObject:self.directionTag forKey:@"directionTag"];
-	[coder encodeObject:self.routeNumber forKey:@"routeNumber"];
-	[coder encodeObject:self.stopId forKey:@"stopId"];
-	
-}
+- (void)requestRouteList;
+- (void)reloadRoutes;
 
 @end

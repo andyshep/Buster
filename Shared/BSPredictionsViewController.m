@@ -4,7 +4,7 @@
 //
 //  Created by andyshep on 1/3/11.
 //
-//  Copyright (c) 2010 Andrew Shepard
+//  Copyright (c) 2010-2011 Andrew Shepard
 // 
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,10 +25,10 @@
 //  THE SOFTWARE.
 //
 
-#import "PredictionsViewController.h"
+#import "BSPredictionsViewController.h"
 
 
-@implementation PredictionsViewController
+@implementation BSPredictionsViewController
 
 @synthesize stopTag, latitude, longitude;
 @synthesize routeNumber, routeTitle, directionTag;
@@ -53,7 +53,7 @@
 	self.navigationItem.rightBarButtonItem = refreshButton;
     [refreshButton release];
     
-    model_ = [[PredictionsModel alloc] init];
+    model_ = [[BSPredictionsModel alloc] init];
     
     [model_ addObserver:self 
              forKeyPath:@"predictions" 
@@ -120,9 +120,9 @@
 	// return the prediction meta data cell with route/stop info
 	if ([indexPath section] == 0) {
 		
-		PredictionsTableViewCell *cell = (PredictionsTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"PredictionsInfoTableCell"];
+		BSPredictionMetaTableViewCell *cell = (BSPredictionMetaTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"PredictionsInfoTableCell"];
 		if (cell == nil) {
-			cell = [[[PredictionsTableViewCell alloc] init] autorelease];
+			cell = [[[BSPredictionMetaTableViewCell alloc] init] autorelease];
 		}
 		
 		// Configure the cell...
@@ -155,17 +155,17 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    if ([indexPath section] == 0) return;
-	
-	NSMutableDictionary *dict = (NSMutableDictionary *)[model_ objectInPredictionsAtIndex:[indexPath row]];
-	NSString *vehicle = [dict objectForKey:@"vehicle"];
-	NSString *time = [dict objectForKey:@"time"];
-	
-	id delegate = [[UIApplication sharedApplication] delegate];
-	[delegate loadPredictionsForVehicle:vehicle runningRoute:self.routeNumber atEpochTime:time];
+//    if ([indexPath section] == 0) return;
+//	
+//	NSMutableDictionary *dict = (NSMutableDictionary *)[model_ objectInPredictionsAtIndex:[indexPath row]];
+//	NSString *vehicle = [dict objectForKey:@"vehicle"];
+//	NSString *time = [dict objectForKey:@"time"];
+//	
+//	id delegate = [[UIApplication sharedApplication] delegate];
+//	[delegate loadPredictionsForVehicle:vehicle runningRoute:self.routeNumber atEpochTime:time];
 }
 
-- (void)configureCell:(PredictionsTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+- (void)configureCell:(BSPredictionMetaTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     cell.routeNumberLabel.text = [[model_ predictionMeta] objectForKey:@"routeTitle"];
     cell.routeDirectionLabel.text = [[model_ predictionMeta] objectForKey:@"directionTitle"];
     cell.stopNameLabel.text = [[model_ predictionMeta] objectForKey:@"stopTitle"];
@@ -205,7 +205,7 @@
 
     // reconfigure the predictions meta data cell
     NSIndexPath *path = [NSIndexPath indexPathForRow:0 inSection:0];
-    PredictionsTableViewCell *cell = (PredictionsTableViewCell *)[self.tableView cellForRowAtIndexPath:path];
+    BSPredictionMetaTableViewCell *cell = (BSPredictionMetaTableViewCell *)[self.tableView cellForRowAtIndexPath:path];
     [self configureCell:cell atIndexPath:path];
 }
 

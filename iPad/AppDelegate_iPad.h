@@ -25,7 +25,7 @@
 //  THE SOFTWARE.
 //
 
-#import "RouteListViewController.h"
+#import "BSRoutesViewController.h"
 #import "MapViewController.h"
 
 @interface AppDelegate_iPad : NSObject <UIApplicationDelegate> {
@@ -33,14 +33,14 @@
     UIWindow *window;
     UISplitViewController *splitViewController;
 	
-	RouteListViewController *routeListViewController;
+	BSRoutesViewController *routeListViewController;
 	MapViewController *mapViewController;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
 @property (nonatomic, retain) IBOutlet UISplitViewController *splitViewController;
 
-@property (nonatomic, retain) IBOutlet RouteListViewController *routeListViewController;
+@property (nonatomic, retain) IBOutlet BSRoutesViewController *routeListViewController;
 @property (nonatomic, retain) IBOutlet MapViewController *mapViewController;
 
 - (void)loadPredictionsForVehicle:(NSString *)vehicle runningRoute:(NSString *)route atEpochTime:(NSString *)time;

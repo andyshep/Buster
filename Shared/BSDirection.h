@@ -1,10 +1,10 @@
 //
-//  PredictionsOperation.h
+//  BSDirection.h
 //  Buster
 //
-//  Created by andyshep on 1/3/11.
+//  Created by andyshep on 1/16/11.
 //
-//  Copyright (c) 2010 Andrew Shepard
+//  Copyright (c) 2010-2011 Andrew Shepard
 // 
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,18 +25,14 @@
 //  THE SOFTWARE.
 //
 
-#import "BSNetworkOperation.h"
-#import "SMXMLDocument.h"
-#import "MBTAQueryStringBuilder.h"
 
-
-@interface PredictionsOperation : BSNetworkOperation {
+@interface BSDirection : NSObject <NSCoding> {
+	NSArray *stops;
 	
-	NSString *route;
-	NSString *stop;
+	NSString *tag, *name, *title;
 }
 
-@property (nonatomic, retain) NSString *route;
-@property (nonatomic, retain) NSString *stop;
+@property (copy) NSArray *stops;
+@property (nonatomic, retain) NSString *tag, *name, *title;
 
 @end

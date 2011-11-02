@@ -1,10 +1,10 @@
 //
-//  StopListModel.h
+//  BSDirection.m
 //  Buster
 //
-//  Created by andyshep on 12/30/10.
+//  Created by andyshep on 1/16/11.
 //
-//  Copyright (c) 2010 Andrew Shepard
+//  Copyright (c) 2010-2011 Andrew Shepard
 // 
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,36 +25,51 @@
 //  THE SOFTWARE.
 //
 
-#import "StopListOperation.h"
-#import "MBTARouteDirection.h"
-#import "MBTAStop.h"
+#import "BSDirection.h"
 
 
-@interface StopListModel : NSObject <BSNetworkOperationDelegate> {
-	// these are used by table views
-	NSArray *stops;
-	NSArray *tags;
-	NSArray *titles;
-	NSString *title;
-	
-	NSDictionary *directions;
-    NSError *error;
+@implementation BSDirection
+
+@synthesize stops;
+@synthesize tag, name, title;
+
+#pragma mark -
+#pragma mark Lifecycle
+
+- (id) init {
+    self = [super init];
     
-    StopListOperation *stopListOp_;
-    NSOperationQueue *opQueue_;
+	if (self != nil) {
+		
+		// init
+    }
+	
+    return self;
 }
 
-@property (copy) NSArray *stops, *tags, *titles;
-@property (copy) NSDictionary *directions;
-@property (copy) NSError *error;
-@property (nonatomic, retain) NSString *title;
+- (void) dealloc {
+    [super dealloc];
+}
 
-- (void)requestStopList:(NSString *)stop;
-- (void)unloadStopList;
-- (void)loadStopsForTagIndex:(NSUInteger)index;
+#pragma mark -
+#pragma NSCoding
 
-- (NSUInteger)countOfStops;
-- (id)objectInStopsAtIndex:(NSUInteger)index;
-- (void)getStops:(id *)objects range:(NSRange)range;
+- (id)initWithCoder:(NSCoder *)coder {
+	
+	[super init];
+	
+	self.tag = [coder decodeObjectForKey:@"tag"];
+	self.name = [coder decodeObjectForKey:@"name"];
+	self.title = [coder decodeObjectForKey:@"title"];
+	
+	return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)coder {
+	
+	[coder encodeObject:self.tag forKey:@"tag"];
+	[coder encodeObject:self.name forKey:@"name"];
+	[coder encodeObject:self.title forKey:@"title"];
+}
 
 @end

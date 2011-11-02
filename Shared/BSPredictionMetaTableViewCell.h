@@ -1,10 +1,10 @@
 //
-//  MBTARoute.h
+//  BSPredictionMetaTableViewCell.h
 //  Buster
 //
-//  Created by andyshep on 1/16/11.
+//  Created by andyshep on 8/23/11.
 //
-//  Copyright (c) 2010 Andrew Shepard
+//  Copyright (c) 2010-2011 Andrew Shepard
 // 
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,18 +25,15 @@
 //  THE SOFTWARE.
 //
 
-#import "MBTAStopList.h"
 
-@interface MBTARoute : NSObject <NSCoding> {
-	NSString *title, *tag;
-	NSArray *stops;
-	
-	MBTAStopList *stopList;
+@interface BSPredictionMetaTableViewCell : UITableViewCell {
+
+    UILabel *routeNumberLabel, *routeDirectionLabel, *stopNameLabel;
+    
+@private
+	UIView *containerView;
 }
 
-@property (nonatomic, retain) NSString *title, *tag;
-@property (copy) NSArray *stops;
-
-@property (copy) MBTAStopList *stopList;
+@property (nonatomic, retain) UILabel *routeNumberLabel, *routeDirectionLabel, *stopNameLabel;
 
 @end

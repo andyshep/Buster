@@ -1,10 +1,10 @@
 //
-//  StopListViewController.h
+//  PredictionsViewController.h
 //  Buster
 //
-//  Created by andyshep on 8/9/10.
+//  Created by andyshep on 1/3/11.
 //
-//  Copyright (c) 2010 Andrew Shepard
+//  Copyright (c) 2010-2011 Andrew Shepard
 // 
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,30 +25,29 @@
 //  THE SOFTWARE.
 //
 
-#import "StopListModel.h"
-#import "PredictionsViewController.h"
-#import "MBTAStop.h"
+#import "BSPredictionMetaTableViewCell.h"
+#import "BSPredictionsModel.h"
 
 
-@interface StopListViewController : UIViewController <UITableViewDataSource, UITableViewDelegate> {
+@interface BSPredictionsViewController : UITableViewController {
+	
 	NSString *stopTag;
-	UITableView *tableView;
-	
-	UISegmentedControl *directionControl;
-	UIToolbar *bottomToolbar;
-	
-	UIView *activityView;
+	NSString *latitude;
+	NSString *longitude;
+	NSString *routeNumber;
+	NSString *routeTitle;
+	NSString *directionTag;
     
-    StopListModel *model_;
+    BSPredictionsModel *model_;
 }
 
 @property (nonatomic, retain) NSString *stopTag;
-@property (nonatomic, retain) UITableView *tableView;
-@property (nonatomic, retain) UISegmentedControl *directionControl;
-@property (nonatomic, retain) UIToolbar *bottomToolbar;
+@property (nonatomic, retain) NSString *latitude;
+@property (nonatomic, retain) NSString *longitude;
+@property (nonatomic, retain) NSString *routeNumber;
+@property (nonatomic, retain) NSString *routeTitle;
+@property (nonatomic, retain) NSString *directionTag;
 
-- (void)assembleRoutePath;
-
-- (IBAction)switchDirection:(id)sender;
+- (IBAction)refreshList:(id)sender;
 
 @end

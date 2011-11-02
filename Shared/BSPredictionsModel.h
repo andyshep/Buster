@@ -1,10 +1,10 @@
 //
-//  MBTARouteDirection.h
+//  PredictionsModel.h
 //  Buster
 //
-//  Created by andyshep on 1/17/11.
+//  Created by andyshep on 1/3/11.
 //
-//  Copyright (c) 2010 Andrew Shepard
+//  Copyright (c) 2010-2011 Andrew Shepard
 // 
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,14 +25,26 @@
 //  THE SOFTWARE.
 //
 
+#import "AFJSONRequestOperation.h"
 
-@interface MBTARouteDirection : NSObject <NSCoding> {
-	NSString *title, *tag, *name;
-	
-	NSArray *stops;
+
+@interface BSPredictionsModel : NSObject {
+    
+	// these are used by table views
+	NSArray *predictions;
+    NSDictionary *predictionMeta;
+    NSError *error;
 }
 
-@property (nonatomic, retain) NSString *title, *tag, *name;
-@property (nonatomic, retain) NSArray *stops;
+@property (copy) NSArray *predictions;
+@property (copy) NSDictionary *predictionMeta;
+@property (copy) NSError *error;
+
+- (void)requestPredictionsForRoute:(NSString *)route andStop:(NSString *)stop;
+- (void)unloadPredictions;
+
+- (NSUInteger)countOfPredictions;
+- (id)objectInPredictionsAtIndex:(NSUInteger)index;
+- (void)getPredictions:(id *)objects range:(NSRange)range;
 
 @end

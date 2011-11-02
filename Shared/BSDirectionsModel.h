@@ -1,10 +1,10 @@
 //
-//  PredictionsModel.h
+//  BSDirectionsModel.h
 //  Buster
 //
-//  Created by andyshep on 1/3/11.
+//  Created by andyshep on 12/30/10.
 //
-//  Copyright (c) 2010 Andrew Shepard
+//  Copyright (c) 2010-2011 Andrew Shepard
 // 
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,29 +25,34 @@
 //  THE SOFTWARE.
 //
 
-#import "PredictionsOperation.h"
+#import "AFHTTPRequestOperation.h"
+#import "MBTAQueryStringBuilder.h"
+#import "SMXMLDocument.h"
+#import "BSDirection.h"
 
-
-@interface PredictionsModel : NSObject <BSNetworkOperationDelegate> {
-    
+@interface BSDirectionsModel : NSObject {
 	// these are used by table views
-	NSArray *predictions;
-    NSDictionary *predictionMeta;
-    NSError *error;
+	NSArray *stops;
+	NSArray *tags;
+	NSArray *titles;
+	NSString *title;
     
-    PredictionsOperation *predictionsOp_;
-    NSOperationQueue *opQueue_;
+	NSArray *directions;
+    NSError *error;
 }
 
-@property (copy) NSArray *predictions;
-@property (copy) NSDictionary *predictionMeta;
+@property (copy) NSArray *stops, *tags, *titles;
+@property (copy) NSArray *directions;
 @property (copy) NSError *error;
+@property (nonatomic, retain) NSString *title;
 
-- (void)requestPredictionsForRoute:(NSString *)route andStop:(NSString *)stop;
-- (void)unloadPredictions;
+- (void)requestDirectionsList:(NSString *)stop;
+- (void)unloadStopList;
+//- (void)loadStopsForTagIndex:(NSUInteger)index;
+- (void)loadStopsForDirection:(NSUInteger)directionIndex;
 
-- (NSUInteger)countOfPredictions;
-- (id)objectInPredictionsAtIndex:(NSUInteger)index;
-- (void)getPredictions:(id *)objects range:(NSRange)range;
+- (NSUInteger)countOfStops;
+- (id)objectInStopsAtIndex:(NSUInteger)index;
+- (void)getStops:(id *)objects range:(NSRange)range;
 
 @end

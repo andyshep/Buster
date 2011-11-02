@@ -1,10 +1,10 @@
 //
-//  MBTARoute.m
+//  BSDirectionsViewController.h
 //  Buster
 //
-//  Created by andyshep on 1/16/11.
+//  Created by andyshep on 8/9/10.
 //
-//  Copyright (c) 2010 Andrew Shepard
+//  Copyright (c) 2010-2011 Andrew Shepard
 // 
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,50 +25,28 @@
 //  THE SOFTWARE.
 //
 
-#import "MBTARoute.h"
+#import "BSDirectionsModel.h"
+#import "BSPredictionsViewController.h"
 
-
-@implementation MBTARoute
-
-@synthesize title, tag;
-@synthesize stops;
-
-@synthesize stopList;
-
-#pragma mark -
-#pragma mark Lifecycle
-
-- (id) init {
-	if ((self = [super init])) {
-		// init
-    }
-	
-    return self;
+@interface BSDirectionsViewController : UITableViewController {
+	NSString *stopTag;
+//	UITableView *tableView;
+//	
+//	UISegmentedControl *directionControl;
+//	UIToolbar *bottomToolbar;
+//	
+//	UIView *activityView;
+    
+    BSDirectionsModel *model_;
 }
 
-- (void) dealloc {
-    [super dealloc];
-}
+@property (nonatomic, retain) NSString *stopTag;
+//@property (nonatomic, retain) UITableView *tableView;
+//@property (nonatomic, retain) UISegmentedControl *directionControl;
+//@property (nonatomic, retain) UIToolbar *bottomToolbar;
 
-#pragma mark -
-#pragma NSCoding
-
-- (id)initWithCoder:(NSCoder *)coder {
-	
-	[super init];
-	
-	self.title = [coder decodeObjectForKey:@"title"];
-	self.tag = [coder decodeObjectForKey:@"tag"];
-	self.stops = [coder decodeObjectForKey:@"stops"];
-	
-	return self;
-}
-	 
-- (void)encodeWithCoder:(NSCoder *)coder {
- 
-	[coder encodeObject:title forKey:@"title"];
-	[coder encodeObject:tag forKey:@"tag"];
-	[coder encodeObject:stops forKey:@"stops"];
-}
+//- (void)assembleRoutePath;
+//
+//- (IBAction)switchDirection:(id)sender;
 
 @end
