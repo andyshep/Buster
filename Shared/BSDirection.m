@@ -30,24 +30,28 @@
 
 @implementation BSDirection
 
-@synthesize stops;
-@synthesize tag, name, title;
+@synthesize stops = _stops;
+@synthesize tag = _tag;
+@synthesize name = _name;
+@synthesize title = _title;
 
 #pragma mark -
 #pragma mark Lifecycle
 
 - (id) init {
-    self = [super init];
-    
-	if (self != nil) {
-		
-		// init
+    if ((self = [super init])) {
+        //
     }
-	
+    
     return self;
 }
 
 - (void) dealloc {
+    [_stops release];
+    [_tag release];
+    [_name release];
+    [_title release];
+    
     [super dealloc];
 }
 

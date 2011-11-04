@@ -30,9 +30,9 @@
 
 @implementation BSStop
 
-@synthesize title, tag, directionTag;
-@synthesize routeNumber, stopId;
-@synthesize latitude, longitude;
+@synthesize title = _title, tag = _tag, directionTag = _directionTag;
+@synthesize routeNumber = _routeNumber, stopId = _stopId;
+@synthesize latitude = _latitude, longitude = _longitude;
 
 #pragma mark -
 #pragma mark Lifecycle
@@ -46,6 +46,16 @@
 }
 
 - (void) dealloc {
+    [_title release];
+    [_tag release];
+    [_directionTag release];
+    
+    [_routeNumber release];
+    [_stopId release];
+    
+    [_latitude release];
+    [_longitude release];
+    
     [super dealloc];
 }
 

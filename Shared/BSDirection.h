@@ -26,11 +26,7 @@
 //
 
 
-@interface BSDirection : NSObject <NSCoding> {
-	NSArray *stops;
-	
-	NSString *tag, *name, *title;
-}
+@interface BSDirection : NSObject <NSCoding>
 
 @property (copy) NSArray *stops;
 @property (nonatomic, retain) NSString *tag, *name, *title;

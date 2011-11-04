@@ -26,11 +26,7 @@
 //
 
 
-@interface BSStop : NSObject <NSCoding> {
-	NSString *title, *tag, *directionTag;
-	NSString *routeNumber, *stopId;
-	NSString *latitude, *longitude;
-}
+@interface BSStop : NSObject <NSCoding>
 
 @property (nonatomic, retain) NSString *title, *tag, *directionTag;
 @property (nonatomic, retain) NSString *routeNumber, *stopId;

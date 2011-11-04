@@ -30,7 +30,12 @@
 
 @implementation BSDirectionsModel
 
-@synthesize stops, directions, tags, titles, title, error;
+@synthesize stops = _stops;
+@synthesize directions = _directions;
+@synthesize tags = _tags;
+@synthesize titles = _titles;
+@synthesize title = _title;
+@synthesize error = _error;
 
 #pragma mark -
 #pragma mark Lifecycle
@@ -51,14 +56,14 @@
 }
 
 - (void) dealloc {
-    [error release];
+    [_error release];
     
-    [stops release];
-    [titles release];
-    [title release];
+    [_stops release];
+    [_titles release];
+    [_title release];
     
-    [directions release];
-    [tags release];
+    [_directions release];
+    [_tags release];
     
     [super dealloc];
 }
@@ -67,15 +72,15 @@
 #pragma mark Model KVC
 
 - (NSUInteger)countOfStops {
-	return [stops count];
+	return [self.stops count];
 }
 
 - (id)objectInStopsAtIndex:(NSUInteger)index {
-	return [stops objectAtIndex:index];
+	return [self.stops objectAtIndex:index];
 }
 
 - (void)getStops:(id *)objects range:(NSRange)range {
-	[stops getObjects:objects range:range];
+	[self.stops getObjects:objects range:range];
 }
 
 
@@ -94,7 +99,7 @@
 //    [stopListOp_ addObserver:self forKeyPath:@"isFinished" options:NSKeyValueObservingOptionNew context:NULL];
 //    [opQueue_ addOperation:stopListOp_];
     
-    if (stops == nil) {
+    if (self.stops == nil) {
         NSLog(@"loading stops from the intertubes...");
         
         MBTAQueryStringBuilder *_builder = [MBTAQueryStringBuilder sharedInstance];
@@ -144,7 +149,7 @@
                     [directionsList addObject:direction];
                     
                     [direction release];
-                    stops = nil;
+                    stops_ = nil;
                 }
                 
                 NSLog(@"directionList: %@", [(BSDirection *)[directionsList objectAtIndex:0] stops]);
@@ -224,7 +229,7 @@
 - (BOOL)saveChanges {
     // TODO: probbaly want to archive directions
     // returns success or failure
-    return [NSKeyedArchiver archiveRootObject:stops
+    return [NSKeyedArchiver archiveRootObject:self.stops
                                        toFile:[self stopsArchivePath]];
 }
 

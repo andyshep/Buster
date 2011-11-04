@@ -32,16 +32,7 @@
 #import "BSDirection.h"
 #import "BSStop.h"
 
-@interface BSDirectionsModel : NSObject {
-	// these are used by table views
-	NSArray *stops;
-	NSArray *tags;
-	NSArray *titles;
-	NSString *title;
-    
-	NSArray *directions;
-    NSError *error;
-}
+@interface BSDirectionsModel : NSObject 
 
 @property (copy) NSArray *stops, *tags, *titles;
 @property (copy) NSArray *directions;
