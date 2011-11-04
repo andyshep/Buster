@@ -120,7 +120,7 @@
 	// return the prediction meta data cell with route/stop info
 	if ([indexPath section] == 0) {
 		
-		BSPredictionMetaTableViewCell *cell = (BSPredictionMetaTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"PredictionsInfoTableCell"];
+		BSPredictionMetaTableViewCell *cell = (BSPredictionMetaTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"BSPredictionsInfoTableCell"];
 		if (cell == nil) {
 			cell = [[[BSPredictionMetaTableViewCell alloc] init] autorelease];
 		}
@@ -137,11 +137,11 @@
 	}
 	
 	// return a prediction cell with a time
-	NSString *CellIdentifier = @"PredictionsTimeTableCell";
+	NSString *BSPredictionsCellIdentifier = @"BSPredictionsTimeTableCell";
 	
-	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:BSPredictionsCellIdentifier];
 	if (cell == nil) {
-		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:BSPredictionsCellIdentifier] autorelease];
 	}
 
 	NSMutableDictionary *dict = (NSMutableDictionary *)[model_ objectInPredictionsAtIndex:[indexPath row]];

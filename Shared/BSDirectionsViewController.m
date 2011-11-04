@@ -220,11 +220,11 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	
-    static NSString *CellIdentifier = @"Cell";
+    static NSString *BSStopCellIdentifier = @"BSStopTableViewCell";
     
-    UITableViewCell *cell = [tView dequeueReusableCellWithIdentifier:CellIdentifier];
+    UITableViewCell *cell = [tView dequeueReusableCellWithIdentifier:BSStopCellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:BSStopCellIdentifier] autorelease];
     }
     
 	BSDirection *stop = (BSDirection *)[model_ objectInStopsAtIndex:indexPath.row];

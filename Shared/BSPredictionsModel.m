@@ -79,7 +79,37 @@
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     
     AFHTTPRequestOperation *operation = [AFHTTPRequestOperation HTTPRequestOperationWithRequest:request success:^(id object) {
-        NSLog(@"%@", object);
+        NSError *error_ = nil;
+        SMXMLDocument *xml = [SMXMLDocument documentWithData:object error:NULL];
+        
+        if (!error_) {
+            NSMutableArray *predictions = [NSMutableArray arrayWithCapacity:5];
+            NSDictionary *predictionInfo = [NSMutableDictionary dictionaryWithCapacity:3];
+            SMXMLElement *predictionsElement = [xml.root childNamed:@"predictions"];
+            SMXMLElement *directionElement = [predictionsElement childNamed:@"direction"];
+            
+            [predictionInfo setValue:[predictionsElement attributeNamed:@"routeTitle"] forKey:@"routeTitle"];
+            [predictionInfo setValue:[predictionsElement attributeNamed:@"stopTitle"] forKey:@"stopTitle"];
+            [predictionInfo setValue:[directionElement attributeNamed:@"title"] forKey:@"directionTitle"]; 
+            
+            // go thru each prediction and get the time and vehicle attributes
+            for (SMXMLElement *predictionElement in [directionElement childrenNamed:@"prediction"]) {
+                NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:5];
+                
+                [dict setObject:[predictionElement attributeNamed:@"minutes"] forKey:@"minutes"];
+                [dict setObject:[predictionElement attributeNamed:@"seconds"] forKey:@"seconds"];
+                [dict setObject:[predictionElement attributeNamed:@"vehicle"] forKey:@"vehicle"];
+                [dict setObject:[predictionElement attributeNamed:@"dirTag"] forKey:@"dirTag"];
+                [dict setObject:[predictionElement attributeNamed:@"epochTime"] forKey:@"epochTime"];
+                
+                [predictions addObject:dict];
+                dict = nil;
+            }
+            
+            // NSArray *predictionMeta_ = [NSArray arrayWithObjects:predictionInfo, predictions, nil];
+            
+            self.predictionMeta = predictionInfo;
+        }
     } failure:^(NSHTTPURLResponse *response, NSError *err) {
         self.error = err;
     }];
