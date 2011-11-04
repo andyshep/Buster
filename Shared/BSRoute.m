@@ -29,8 +29,10 @@
 
 @implementation BSRoute
 
-@synthesize title, tag;
-@synthesize stops;
+@synthesize title = _title;
+@synthesize tag = _tag;
+@synthesize endpoints = _endpoints;
+@synthesize stops = _stops;
 
 #pragma mark -
 #pragma mark Lifecycle
@@ -44,6 +46,10 @@
 }
 
 - (void) dealloc {
+    [_title release];
+    [_tag release];
+    [_endpoints release];
+    [_stops release];
     [super dealloc];
 }
 
@@ -63,9 +69,9 @@
 	 
 - (void)encodeWithCoder:(NSCoder *)coder {
  
-	[coder encodeObject:title forKey:@"title"];
-	[coder encodeObject:tag forKey:@"tag"];
-	[coder encodeObject:stops forKey:@"stops"];
+	[coder encodeObject:self.title forKey:@"title"];
+	[coder encodeObject:self.tag forKey:@"tag"];
+	[coder encodeObject:self.stops forKey:@"stops"];
 }
 
 @end

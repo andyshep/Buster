@@ -30,10 +30,7 @@
 #import "SMXMLDocument.h"
 #import "BSRoute.h"
 
-@interface BSRoutesModel : NSObject {
-	NSArray *routes;
-    NSError *error;
-}
+@interface BSRoutesModel : NSObject
 
 @property (copy) NSArray *routes;
 @property (copy) NSError *error;
@@ -43,5 +40,7 @@
 - (NSUInteger)countOfRoutes;
 - (id)objectInRoutesAtIndex:(NSUInteger)index;
 - (void)getRoutes:(id *)objects range:(NSRange)range;
+
+- (NSString *)routesEndpointsArchivePath;
 
 @end

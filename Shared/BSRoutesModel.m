@@ -29,7 +29,8 @@
 
 @implementation BSRoutesModel
 
-@synthesize routes, error;
+@synthesize routes = _routes;
+@synthesize error = _error;
 
 #pragma mark -
 #pragma mark Lifecycle
@@ -39,14 +40,16 @@
 		
 		// init an empty set of routeTitles for the model
 		self.routes = nil, self.error = nil;
+        
+        NSLog(@"%@", [self routesEndpointsArchivePath]);
     }
 	
     return self;
 }
 
 - (void) dealloc {
-    [routes release];
-    [error release];
+    [_routes release];
+    [_error release];
     [super dealloc];
 }
 
@@ -56,18 +59,22 @@
 // our view controller uses these to display table data
 
 - (NSUInteger)countOfRoutes {
-	return [routes count];
+	return [self.routes count];
 }
 
 - (id)objectInRoutesAtIndex:(NSUInteger)index {
-	return [routes objectAtIndex:index];
+	return [self.routes objectAtIndex:index];
 }
 
 - (void)getRoutes:(id *)objects range:(NSRange)range {
-	[routes getObjects:objects range:range];
+	[self.routes getObjects:objects range:range];
 }
 
 #pragma mark - Disk Access
+
+- (NSString *)routesEndpointsArchivePath {
+    return [[NSBundle mainBundle] pathForResource:@"routes.endpoints" ofType:@"plist"];
+}
 
 - (NSString *)pathInDocumentDirectory:(NSString *)aPath {
     NSArray *documentPaths =
@@ -87,7 +94,7 @@
 - (BOOL)saveChanges
 {
     // returns success or failure
-    return [NSKeyedArchiver archiveRootObject:routes
+    return [NSKeyedArchiver archiveRootObject:self.routes
                                        toFile:[self routesArchivePath]];
 }
 
@@ -107,15 +114,17 @@
 //    [opQueue_ addOperation:routeListOp_];
 //
     
+    NSDictionary *routeEndpoints = [NSDictionary dictionaryWithContentsOfFile:[self routesEndpointsArchivePath]];
+    
     NSLog(@"routesArchivePath: %@", [self routesArchivePath]);
     
     // FIXME: not implement right yet...
-    if (routes == nil) {
+    if (self.routes == nil) {
         NSLog(@"loading from disk...");
         self.routes = [NSKeyedUnarchiver unarchiveObjectWithFile:[self routesArchivePath]];
     }
     
-    if (routes == nil) {
+    if (self.routes == nil) {
         NSLog(@"loading from the intertubes...");
         MBTAQueryStringBuilder *_builder = [MBTAQueryStringBuilder sharedMBTAQueryStringBuilder];
         NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[_builder buildRouteListQuery]]];
@@ -134,6 +143,13 @@
                     
                     route.title = [routeElement attributeNamed:@"title"];
                     route.tag = [routeElement attributeNamed:@"tag"];
+                    
+                    NSString *endpoints = [routeEndpoints objectForKey:route.tag];
+                    
+                    if (endpoints != nil) {
+                        NSLog(@"endpoints: %@", endpoints);
+                        route.endpoints = endpoints;
+                    }
                     
                     [routeList addObject:route];
                     [route release];

@@ -37,6 +37,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
 	
+    UIColor *lightBlueColor = [UIColor colorWithRed:66.0f/255.0f green:155.0f/255.0f blue:194.0f/255.0f alpha:1.0f];
+    
+    [[navigationController navigationBar] setTintColor:lightBlueColor];
+    
 	[window addSubview:navigationController.view];
     [window makeKeyAndVisible];
 	

@@ -42,6 +42,11 @@
     [[self navigationItem] setRightBarButtonItem:refreshButton animated:YES];
     [refreshButton release];
     
+    UIColor *lightYelloColor = [UIColor colorWithRed:214.0f/255.0f green:212.0f/255.0f blue:206.0f/255.0f alpha:1.0f];
+    
+    [self.tableView setBackgroundColor:lightYelloColor];
+    [self.tableView setSeparatorColor:[UIColor lightGrayColor]];
+    
     model_ = [[BSRoutesModel alloc] init];
     
     [model_ addObserver:self 
@@ -78,12 +83,19 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
     }
     
 	BSRoute *route = (BSRoute *)[model_ objectInRoutesAtIndex:indexPath.row];
 	
 	cell.textLabel.text = route.title;
+    
+    if (route.endpoints != nil) {
+        cell.detailTextLabel.text = route.endpoints;
+        cell.detailTextLabel.adjustsFontSizeToFitWidth = YES;
+    } else {
+        cell.detailTextLabel.text = @"unknown";
+    }
     
     return cell;
 }

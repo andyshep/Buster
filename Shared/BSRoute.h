@@ -26,12 +26,9 @@
 //
 
 
-@interface BSRoute : NSObject <NSCoding> {
-	NSString *title, *tag;
-	NSArray *stops;
-}
+@interface BSRoute : NSObject <NSCoding>
 
-@property (nonatomic, retain) NSString *title, *tag;
+@property (nonatomic, retain) NSString *title, *tag, *endpoints;
 @property (copy) NSArray *stops;
 
 @end
