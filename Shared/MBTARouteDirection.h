@@ -1,8 +1,8 @@
 //
-//  BSDirectionsModel.h
+//  MBTARouteDirection.h
 //  Buster
 //
-//  Created by andyshep on 12/30/10.
+//  Created by andyshep on 1/17/11.
 //
 //  Copyright (c) 2010-2011 Andrew Shepard
 // 
@@ -25,35 +25,14 @@
 //  THE SOFTWARE.
 //
 
-#import "AFHTTPRequestOperation.h"
-#import "MBTAQueryStringBuilder.h"
-#import "SMXMLDocument.h"
 
-#import "BSDirection.h"
-
-@interface BSDirectionsModel : NSObject {
-	// these are used by table views
+@interface MBTARouteDirection : NSObject <NSCoding> {
+	NSString *title, *tag, *name;
+	
 	NSArray *stops;
-	NSArray *tags;
-	NSArray *titles;
-	NSString *title;
-    
-	NSArray *directions;
-    NSError *error;
 }
 
-@property (copy) NSArray *stops, *tags, *titles;
-@property (copy) NSArray *directions;
-@property (copy) NSError *error;
-@property (nonatomic, retain) NSString *title;
-
-- (void)requestDirectionsList:(NSString *)stop;
-- (void)unloadStopList;
-//- (void)loadStopsForTagIndex:(NSUInteger)index;
-- (void)loadStopsForDirection:(NSUInteger)directionIndex;
-
-- (NSUInteger)countOfStops;
-- (id)objectInStopsAtIndex:(NSUInteger)index;
-- (void)getStops:(id *)objects range:(NSRange)range;
+@property (nonatomic, retain) NSString *title, *tag, *name;
+@property (nonatomic, retain) NSArray *stops;
 
 @end

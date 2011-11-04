@@ -108,11 +108,12 @@
                 // a list of route stops will be passed back and stored into the model
                 NSMutableDictionary *stopsList = [NSMutableDictionary dictionaryWithCapacity:20];
                 NSMutableArray *directionsList = [NSMutableArray arrayWithCapacity:20];
+                // NSMutableArray *pathsList = [NSMutableArray arrayWithCapacity:20];
                 
                 SMXMLElement *routeElement = [xml.root childNamed:@"route"];
                 
 //                for (SMXMLElement *stopElement in [routeElement childrenNamed:@"stop"]) {
-//                    BSDirection *stop = [[MBTAStop alloc] init];
+//                    MBTAStop *stop = [[MBTAStop alloc] init];
 //                    
 //                    stop.title = [stopElement attributeNamed:@"title"];
 //                    stop.tag = [stopElement attributeNamed:@"tag"];
@@ -130,24 +131,43 @@
 //                    direction.tag = [directionElement attributeNamed:@"tag"];
 //                    direction.name = [directionElement attributeNamed:@"name"];
 //                    
-//                    NSMutableArray *stops = [NSMutableArray arrayWithCapacity:10];
+//                    NSMutableArray *stops_ = [NSMutableArray arrayWithCapacity:10];
 //                    for (SMXMLElement *directionStopElement in [directionElement childrenNamed:@"stop"]) {
-//                        [stops addObject:[stopsList objectForKey:[directionStopElement attributeNamed:@"tag"]]];
+//                        [stops_ addObject:[stopsList objectForKey:[directionStopElement attributeNamed:@"tag"]]];
 //                    }
 //                    
-//                    direction.stops = stops;
+//                    direction.stops = stops_;
 //                    [directionsList addObject:direction];
 //                    
 //                    [direction release];
 //                    stops = nil;
 //                }
-//                
-//                stopsList = nil;
+                
+                NSMutableArray *pathPoints_ = [NSMutableArray arrayWithCapacity:10];
+                
+                for (SMXMLElement *pathElement in [routeElement childrenNamed:@"path"]) {
+                    
+                    for (SMXMLElement *pointOnPath in [pathElement childrenNamed:@"point"]) {
+                        
+                        NSString *lat_ = [pointOnPath attributeNamed:@"lat"];
+                        NSString *lon_ = [pointOnPath attributeNamed:@"lon"];
+                        
+                        NSDictionary *point_ = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:lat_, lon_, nil]
+                                                                           forKeys:[NSArray arrayWithObjects:@"lat", @"lon", nil]];
+                        
+                        [pathPoints_ addObject:point_];
+                        point_ = nil;
+                    }
+                }
+                
+                // we don't need to stopsList anymore since we have
+                // built a list of stops based on the direction of travel
+                stopsList = nil;
+                
 //                NSArray *stopListMeta = [NSArray arrayWithObjects:self.stopId, 
-//                                         [NSArray arrayWithArray:directionsList], 
+//                                         [NSArray arrayWithArray:directionsList],
+//                                         [NSArray arrayWithArray:pathPoints_],
 //                                         nil];
-//                
-//                consumedData = stopListMeta;
             }
             
             [xml release];
@@ -165,19 +185,19 @@
 }
 
 - (void)loadStopsForDirection:(NSUInteger)directionIndex {
-    NSArray *directionStops = [[directions objectAtIndex:directionIndex] valueForKey:@"stops"];
-    NSMutableArray *_stops = [NSMutableArray arrayWithCapacity:20];
-    
-    for (NSDictionary *stop in directionStops) {
-        BSDirection *aStop = [[[BSDirection alloc] init] autorelease];
-        [aStop setTag:[stop valueForKey:@"tag"]];
-        [aStop setTitle:[stop valueForKey:@"title"]];
-        
-        [_stops addObject:aStop];
-    }
-    
-    self.stops = _stops;
-    self.title = [[directions objectAtIndex:directionIndex] valueForKey:@"title"];
+//    NSArray *directionStops = [[directions objectAtIndex:directionIndex] valueForKey:@"stops"];
+//    NSMutableArray *_stops = [NSMutableArray arrayWithCapacity:20];
+//    
+//    for (NSDictionary *stop in directionStops) {
+//        BSDirection *aStop = [[[BSDirection alloc] init] autorelease];
+//        [aStop setTag:[stop valueForKey:@"tag"]];
+//        [aStop setTitle:[stop valueForKey:@"title"]];
+//        
+//        [_stops addObject:aStop];
+//    }
+//    
+//    self.stops = _stops;
+//    self.title = [[directions objectAtIndex:directionIndex] valueForKey:@"title"];
 }
 
 #pragma mark - Disk Access

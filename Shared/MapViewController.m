@@ -138,7 +138,7 @@
 #pragma mark - Location Management
 
 - (void)dropPinForLocation {	
-	[model_ requestLocationOfVehicle:vehicle runningRoute:route atEpochTime:time];
+	// [model_ requestLocationOfVehicle:vehicle runningRoute:route atEpochTime:time];
 }
 
 - (void)updateLocation {

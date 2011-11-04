@@ -1,8 +1,8 @@
 //
-//  BSDirectionsModel.h
+//  MBTAStop.m
 //  Buster
 //
-//  Created by andyshep on 12/30/10.
+//  Created by andyshep on 1/16/11.
 //
 //  Copyright (c) 2010-2011 Andrew Shepard
 // 
@@ -25,35 +25,54 @@
 //  THE SOFTWARE.
 //
 
-#import "AFHTTPRequestOperation.h"
-#import "MBTAQueryStringBuilder.h"
-#import "SMXMLDocument.h"
+#import "MBTAStop.h"
 
-#import "BSDirection.h"
 
-@interface BSDirectionsModel : NSObject {
-	// these are used by table views
-	NSArray *stops;
-	NSArray *tags;
-	NSArray *titles;
-	NSString *title;
-    
-	NSArray *directions;
-    NSError *error;
+@implementation MBTAStop
+
+@synthesize title, tag, directionTag;
+@synthesize routeNumber, stopId;
+@synthesize latitude, longitude;
+
+#pragma mark -
+#pragma mark Lifecycle
+
+- (id) init {
+	if ((self = [super init])) {
+		// init
+    }
+	
+    return self;
 }
 
-@property (copy) NSArray *stops, *tags, *titles;
-@property (copy) NSArray *directions;
-@property (copy) NSError *error;
-@property (nonatomic, retain) NSString *title;
+- (void) dealloc {
+    [super dealloc];
+}
 
-- (void)requestDirectionsList:(NSString *)stop;
-- (void)unloadStopList;
-//- (void)loadStopsForTagIndex:(NSUInteger)index;
-- (void)loadStopsForDirection:(NSUInteger)directionIndex;
+#pragma mark -
+#pragma NSCoding
 
-- (NSUInteger)countOfStops;
-- (id)objectInStopsAtIndex:(NSUInteger)index;
-- (void)getStops:(id *)objects range:(NSRange)range;
+- (id)initWithCoder:(NSCoder *)coder {
+	
+	[super init];
+	
+	self.title = [coder decodeObjectForKey:@"title"];
+	self.tag = [coder decodeObjectForKey:@"tag"];
+	self.directionTag = [coder decodeObjectForKey:@"directionTag"];
+	self.routeNumber = [coder decodeObjectForKey:@"routeNumber"];
+	self.stopId = [coder decodeObjectForKey:@"stopId"];
+	
+	return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)coder {
+	
+	[coder encodeObject:self.title forKey:@"title"];
+	[coder encodeObject:self.tag forKey:@"tag"];
+	[coder encodeObject:self.directionTag forKey:@"directionTag"];
+	[coder encodeObject:self.routeNumber forKey:@"routeNumber"];
+	[coder encodeObject:self.stopId forKey:@"stopId"];
+	
+}
 
 @end

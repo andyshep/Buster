@@ -1,8 +1,8 @@
 //
-//  BSDirectionsModel.h
+//  MBTARouteDirection.m
 //  Buster
 //
-//  Created by andyshep on 12/30/10.
+//  Created by andyshep on 1/17/11.
 //
 //  Copyright (c) 2010-2011 Andrew Shepard
 // 
@@ -25,35 +25,51 @@
 //  THE SOFTWARE.
 //
 
-#import "AFHTTPRequestOperation.h"
-#import "MBTAQueryStringBuilder.h"
-#import "SMXMLDocument.h"
+#import "MBTARouteDirection.h"
 
-#import "BSDirection.h"
 
-@interface BSDirectionsModel : NSObject {
-	// these are used by table views
-	NSArray *stops;
-	NSArray *tags;
-	NSArray *titles;
-	NSString *title;
+@implementation MBTARouteDirection
+
+@synthesize title, tag, name;
+@synthesize stops;
+
+#pragma mark -
+#pragma mark Lifecycle
+
+- (id) init {
+	if ((self = [super init])) {
+        //
+    }
     
-	NSArray *directions;
-    NSError *error;
+    return self;
 }
 
-@property (copy) NSArray *stops, *tags, *titles;
-@property (copy) NSArray *directions;
-@property (copy) NSError *error;
-@property (nonatomic, retain) NSString *title;
+- (void) dealloc {
+    [title release];
+    [tag release];
+    [name release];
+    [stops release];
+    [super dealloc];
+}
 
-- (void)requestDirectionsList:(NSString *)stop;
-- (void)unloadStopList;
-//- (void)loadStopsForTagIndex:(NSUInteger)index;
-- (void)loadStopsForDirection:(NSUInteger)directionIndex;
+#pragma mark -
+#pragma NSCoding
 
-- (NSUInteger)countOfStops;
-- (id)objectInStopsAtIndex:(NSUInteger)index;
-- (void)getStops:(id *)objects range:(NSRange)range;
+- (id)initWithCoder:(NSCoder *)coder {
+	
+	[super init];
+    
+	self.title = [coder decodeObjectForKey:@"title"];
+	self.tag = [coder decodeObjectForKey:@"tag"];
+	self.name = [coder decodeObjectForKey:@"name"];
+	
+	return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)coder {
+	[coder encodeObject:self.title forKey:@"title"];
+	[coder encodeObject:self.tag forKey:@"tag"];
+	[coder encodeObject:self.name forKey:@"name"];
+}
 
 @end
