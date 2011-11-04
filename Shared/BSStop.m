@@ -1,5 +1,5 @@
 //
-//  MBTAStop.m
+//  BSStop.m
 //  Buster
 //
 //  Created by andyshep on 1/16/11.
@@ -25,10 +25,10 @@
 //  THE SOFTWARE.
 //
 
-#import "MBTAStop.h"
+#import "BSStop.h"
 
 
-@implementation MBTAStop
+@implementation BSStop
 
 @synthesize title, tag, directionTag;
 @synthesize routeNumber, stopId;

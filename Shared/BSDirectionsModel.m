@@ -97,11 +97,11 @@
     if (stops == nil) {
         NSLog(@"loading stops from the intertubes...");
         
-        MBTAQueryStringBuilder *_builder = [MBTAQueryStringBuilder sharedMBTAQueryStringBuilder];
+        MBTAQueryStringBuilder *_builder = [MBTAQueryStringBuilder sharedInstance];
         NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[_builder buildRouteConfigQuery:stop]]];
         
         AFHTTPRequestOperation *operation = [AFHTTPRequestOperation HTTPRequestOperationWithRequest:request success:^(id object) {
-            NSError *error_;
+            NSError *error_ = nil;
             SMXMLDocument *xml = [[SMXMLDocument alloc] initWithData:object error:NULL];
             
             if (!error_) {
@@ -112,36 +112,42 @@
                 
                 SMXMLElement *routeElement = [xml.root childNamed:@"route"];
                 
-//                for (SMXMLElement *stopElement in [routeElement childrenNamed:@"stop"]) {
-//                    MBTAStop *stop = [[MBTAStop alloc] init];
-//                    
-//                    stop.title = [stopElement attributeNamed:@"title"];
-//                    stop.tag = [stopElement attributeNamed:@"tag"];
-//                    stop.latitude = [stopElement attributeNamed:@"lat"];
-//                    stop.longitude = [stopElement attributeNamed:@"lon"];
-//                    
-//                    [stopsList setObject:stop forKey:stop.tag];
-//                    [stop release];
-//                }
-//                
-//                for (SMXMLElement *directionElement in [routeElement childrenNamed:@"direction"]) {
-//                    MBTARouteDirection *direction = [[MBTARouteDirection alloc] init];
-//                    
-//                    direction.title = [directionElement attributeNamed:@"title"];
-//                    direction.tag = [directionElement attributeNamed:@"tag"];
-//                    direction.name = [directionElement attributeNamed:@"name"];
-//                    
-//                    NSMutableArray *stops_ = [NSMutableArray arrayWithCapacity:10];
-//                    for (SMXMLElement *directionStopElement in [directionElement childrenNamed:@"stop"]) {
-//                        [stops_ addObject:[stopsList objectForKey:[directionStopElement attributeNamed:@"tag"]]];
-//                    }
-//                    
-//                    direction.stops = stops_;
-//                    [directionsList addObject:direction];
-//                    
-//                    [direction release];
-//                    stops = nil;
-//                }
+                NSLog(@"route: %@", routeElement);
+                
+                for (SMXMLElement *stopElement in [routeElement childrenNamed:@"stop"]) {
+                    BSStop *stop = [[BSStop alloc] init];
+                    
+                    stop.title = [stopElement attributeNamed:@"title"];
+                    stop.tag = [stopElement attributeNamed:@"tag"];
+                    stop.latitude = [stopElement attributeNamed:@"lat"];
+                    stop.longitude = [stopElement attributeNamed:@"lon"];
+                    
+                    [stopsList setObject:stop forKey:stop.tag];
+                    [stop release];
+                }
+                
+                NSLog(@"stopsList: %@", stopsList);
+                
+                for (SMXMLElement *directionElement in [routeElement childrenNamed:@"direction"]) {
+                    BSDirection *direction = [[BSDirection alloc] init];
+                    
+                    direction.title = [directionElement attributeNamed:@"title"];
+                    direction.tag = [directionElement attributeNamed:@"tag"];
+                    direction.name = [directionElement attributeNamed:@"name"];
+                    
+                    NSMutableArray *stops_ = [NSMutableArray arrayWithCapacity:10];
+                    for (SMXMLElement *directionStopElement in [directionElement childrenNamed:@"stop"]) {
+                        [stops_ addObject:[stopsList objectForKey:[directionStopElement attributeNamed:@"tag"]]];
+                    }
+                    
+                    direction.stops = stops_;
+                    [directionsList addObject:direction];
+                    
+                    [direction release];
+                    stops = nil;
+                }
+                
+                NSLog(@"directionList: %@", directionsList);
                 
                 NSMutableArray *pathPoints_ = [NSMutableArray arrayWithCapacity:10];
                 

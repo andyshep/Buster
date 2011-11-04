@@ -30,6 +30,7 @@
 #import "SMXMLDocument.h"
 
 #import "BSDirection.h"
+#import "BSStop.h"
 
 @interface BSDirectionsModel : NSObject {
 	// these are used by table views

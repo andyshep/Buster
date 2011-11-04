@@ -40,6 +40,11 @@
     [super viewDidLoad];
     
     model_ = [[BSPredictionsModel alloc] init];
+    
+    // zoom center on boston
+    CLLocationCoordinate2D boston = CLLocationCoordinate2DMake(42.37, -71.03);
+    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(boston, 15 * 1000, 15 * 1000);
+	[mapView setRegion:region animated:YES];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

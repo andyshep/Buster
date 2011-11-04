@@ -43,25 +43,15 @@
     return self;
 }
 
-//- (void)loadView {
-//    [super loadView];
-//    
-//    [self.tableView setFrame:CGRectMake(0, 0, 320, 320)];
-//}
-
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	
 	// [[self navigationItem] setTitle:self.title];
     [[self navigationItem] setTitle:@"Stops"];
     
-//    UIBarButtonItem *showRoutesButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Show Route", @"Show Route")
-//                                                                         style:UIBarButtonItemStyleBordered 
-//                                                                        target:self 
-//                                                                        action:@selector(showRoutePath)];
-//    [[self navigationItem] setRightBarButtonItem:showRoutesButton];
-//    [showRoutesButton release];
-	
+//    UIBarButtonItem *addToFavoritesButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"28-star.png"] style:UIBarButtonItemStylePlain target:self action:@selector(somthing)];
+//    [[self navigationItem] setRightBarButtonItem:addToFavoritesButton];
+//    [addToFavoritesButton release];
 	// show a spinner
 //	[self showActivityViewer];
     

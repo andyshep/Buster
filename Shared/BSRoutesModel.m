@@ -42,6 +42,8 @@
 		self.routes = nil, self.error = nil;
         
         NSLog(@"%@", [self routesEndpointsArchivePath]);
+        
+        [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
     }
 	
     return self;
@@ -126,7 +128,7 @@
     
     if (self.routes == nil) {
         NSLog(@"loading from the intertubes...");
-        MBTAQueryStringBuilder *_builder = [MBTAQueryStringBuilder sharedMBTAQueryStringBuilder];
+        MBTAQueryStringBuilder *_builder = [MBTAQueryStringBuilder sharedInstance];
         NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[_builder buildRouteListQuery]]];
 
         AFHTTPRequestOperation *operation = [AFHTTPRequestOperation HTTPRequestOperationWithRequest:request success:^(id object) {
@@ -147,9 +149,10 @@
                     NSString *endpoints = [routeEndpoints objectForKey:route.tag];
                     
                     if (endpoints != nil) {
-                        NSLog(@"endpoints: %@", endpoints);
                         route.endpoints = endpoints;
                     }
+                    
+                    NSLog(@"tag: %@", route.tag);
                     
                     [routeList addObject:route];
                     [route release];

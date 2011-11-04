@@ -25,8 +25,6 @@
 //  THE SOFTWARE.
 //
 
-#import "SynthesizeSingleton.h"
-
 
 @interface MBTAQueryStringBuilder : NSObject {
 	NSString *_baseURL;
@@ -34,7 +32,7 @@
 
 @property (nonatomic, copy) NSString *baseURL;
 
-+ (MBTAQueryStringBuilder *)sharedMBTAQueryStringBuilder;
++ (MBTAQueryStringBuilder *)sharedInstance;
 
 - (NSString *)buildRouteListQuery;
 - (NSString *)buildRouteConfigQuery:(NSString *)route;

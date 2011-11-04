@@ -44,7 +44,7 @@
     
     UIColor *lightYelloColor = [UIColor colorWithRed:214.0f/255.0f green:212.0f/255.0f blue:206.0f/255.0f alpha:1.0f];
     
-    [self.tableView setBackgroundColor:lightYelloColor];
+    [self.tableView setBackgroundColor:[UIColor whiteColor]];
     [self.tableView setSeparatorColor:[UIColor lightGrayColor]];
     
     model_ = [[BSRoutesModel alloc] init];
@@ -77,13 +77,19 @@
     return [model_ countOfRoutes];
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 64.0f;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    static NSString *CellIdentifier = @"Cell";
+    static NSString *RouteCellIdentifier = @"BSRouteTableViewCell";
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:RouteCellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:RouteCellIdentifier] autorelease];
+        
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     
 	BSRoute *route = (BSRoute *)[model_ objectInRoutesAtIndex:indexPath.row];
@@ -93,8 +99,10 @@
     if (route.endpoints != nil) {
         cell.detailTextLabel.text = route.endpoints;
         cell.detailTextLabel.adjustsFontSizeToFitWidth = YES;
+        cell.detailTextLabel.numberOfLines = 0;
     } else {
         cell.detailTextLabel.text = @"unknown";
+        cell.detailTextLabel.numberOfLines = 1;
     }
     
     return cell;

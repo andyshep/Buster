@@ -33,8 +33,6 @@ static NSString *MBTABaseQueryURL = @"http://webservices.nextbus.com/service/pub
 
 @synthesize baseURL = _baseURL;
 
-SYNTHESIZE_SINGLETON_FOR_CLASS(MBTAQueryStringBuilder);
-
 #pragma mark -
 #pragma mark Memory Manangement
 
@@ -49,6 +47,21 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(MBTAQueryStringBuilder);
 - (void)dealloc {
 	_baseURL = nil;
 	[super dealloc];
+}
+
+#pragma mark - Singleton
+
+// http://cocoasamurai.blogspot.com/2011/04/singletons-your-doing-them-wrong.html
+//
++ (MBTAQueryStringBuilder *)sharedInstance {
+    static dispatch_once_t pred;
+    static MBTAQueryStringBuilder *shared = nil;
+    
+    dispatch_once(&pred, ^{
+        shared = [[MBTAQueryStringBuilder alloc] init];
+    });
+    
+    return shared;
 }
 
 #pragma mark -
