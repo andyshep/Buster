@@ -45,7 +45,7 @@ static NSString *MBTABaseQueryURL = @"http://webservices.nextbus.com/service/pub
 }
 
 - (void)dealloc {
-	_baseURL = nil;
+	[_baseURL release];
 	[super dealloc];
 }
 
