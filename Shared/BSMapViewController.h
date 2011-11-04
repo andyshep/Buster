@@ -1,5 +1,5 @@
 //
-//  MapViewController.h
+//  BSMapViewController.h
 //  Buster
 //
 //  Created by andyshep on 12/15/10.
@@ -29,7 +29,7 @@
 #import "VehicleLocationAnnotation.h"
 
 
-@interface MapViewController : UIViewController <UIPopoverControllerDelegate, UISplitViewControllerDelegate, MKMapViewDelegate> {
+@interface BSMapViewController : UIViewController <UIPopoverControllerDelegate, UISplitViewControllerDelegate, MKMapViewDelegate> {
 	UIPopoverController *popoverController;
     UIToolbar *toolbar;
 	

@@ -73,57 +73,14 @@
 
 - (void)requestPredictionsForRoute:(NSString *)route andStop:(NSString *)stop {
 	// a controller has requested a prediction
-    // NSLog(@"requesting predictions for %@ at %@", route, stop);
+    NSLog(@"requesting predictions for %@ at %@", route, stop);
     
-//#ifdef USE_STUB_SERVICE
-//    predictionsOp_ = [[PredictionsOperation alloc] initWithURLString:@"http://localhost:8081/predictions_route57_stop918.xml" delegate:self];
-//#else
-//    MBTAQueryStringBuilder *_builder = [MBTAQueryStringBuilder sharedMBTAQueryStringBuilder];
-//    NSString *predictionsUrl = [_builder buildPredictionsQueryForRoute:route 
-//                                              withDirection:nil 
-//                                                     atStop:stop];
-//
-//    predictionsOp_ = [[PredictionsOperation alloc] initWithURLString:predictionsUrl delegate:self];
-//#endif
-    
-    // FIXME: you op doesn't really need these properties
-    // leftover refactor
-    
-//    predictionsOp_.stop = stop;
-//    [predictionsOp_ addObserver:self forKeyPath:@"isFinished" options:NSKeyValueObservingOptionNew context:NULL];
-//    [opQueue_ addOperation:predictionsOp_];
-    
-    NSString *urlString = [NSString stringWithFormat:@"http://localhost:4000/route.json/%@/stop/%@", route, stop]; 
+    NSString *urlString = [[MBTAQueryStringBuilder sharedInstance] buildPredictionsQueryForRoute:route withDirection:nil atStop:stop];
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    AFJSONRequestOperation *operation = [AFJSONRequestOperation operationWithRequest:request success:^(id JSON) {
-        
-        // TODO: check for error JSON returned
-        // TODO: parse out predictions meta
-        
-        NSArray *_predictions = (NSArray *)JSON;
-        NSLog(@"%@", [_predictions objectAtIndex:0]);
-        
-        self.predictions = _predictions;
-
-//        NSMutableArray *_routes = [NSMutableArray arrayWithCapacity:20];
-//        
-//        for (NSDictionary *route in [JSON valueForKeyPath:@"routes"]) {
-//            // NSLog(@"%@, %@", [route valueForKeyPath:@"tag"], [route valueForKeyPath:@"title"]);
-//            
-//            BSRoute *aRoute = [[[BSRoute alloc] init] autorelease];
-//            [aRoute setTag:[route valueForKeyPath:@"tag"]];
-//            [aRoute setTitle:[route valueForKeyPath:@"title"]];
-//            
-//            [_routes addObject:aRoute];
-//        }
-//        
-//        self.routes = _routes;
-//        
-//        // TODO: implement
-//        [self saveChanges];
-        
-    } failure:^(NSError *err) {
-        // TODO: handle error
+    
+    AFHTTPRequestOperation *operation = [AFHTTPRequestOperation HTTPRequestOperationWithRequest:request success:^(id object) {
+        NSLog(@"%@", object);
+    } failure:^(NSHTTPURLResponse *response, NSError *err) {
         self.error = err;
     }];
     

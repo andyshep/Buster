@@ -26,7 +26,7 @@
 //
 
 #import "AFJSONRequestOperation.h"
-
+#import "MBTAQueryStringBuilder.h"
 
 @interface BSPredictionsModel : NSObject {
     

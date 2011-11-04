@@ -25,7 +25,7 @@
 //  THE SOFTWARE.
 //
 
-#import "MapViewController.h"
+#import "BSMapViewController.h"
 
 @interface AppDelegate_iPhone : NSObject <UIApplicationDelegate> {
     UIWindow *window;

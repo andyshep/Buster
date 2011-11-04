@@ -1,5 +1,5 @@
 //
-//  MapViewController.m
+//  BSMapViewController.m
 //  Buster
 //
 //  Created by andyshep on 12/15/10.
@@ -25,9 +25,9 @@
 //  THE SOFTWARE.
 //
 
-#import "MapViewController.h"
+#import "BSMapViewController.h"
 
-@implementation MapViewController
+@implementation BSMapViewController
 
 @synthesize toolbar, popoverController;
 @synthesize vehicle, route, time;

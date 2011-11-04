@@ -147,7 +147,7 @@
                     stops = nil;
                 }
                 
-                NSLog(@"directionList: %@", directionsList);
+                NSLog(@"directionList: %@", [(BSDirection *)[directionsList objectAtIndex:0] stops]);
                 
                 NSMutableArray *pathPoints_ = [NSMutableArray arrayWithCapacity:10];
                 
@@ -170,10 +170,8 @@
                 // built a list of stops based on the direction of travel
                 stopsList = nil;
                 
-//                NSArray *stopListMeta = [NSArray arrayWithObjects:self.stopId, 
-//                                         [NSArray arrayWithArray:directionsList],
-//                                         [NSArray arrayWithArray:pathPoints_],
-//                                         nil];
+                self.directions = directionsList;
+                self.stops = [(BSDirection *)[self.directions objectAtIndex:0] stops];
             }
             
             [xml release];
