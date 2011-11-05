@@ -106,9 +106,8 @@
                 dict = nil;
             }
             
-            // NSArray *predictionMeta_ = [NSArray arrayWithObjects:predictionInfo, predictions, nil];
-            
-            self.predictionMeta = predictionInfo;
+            self.predictionMeta = [NSDictionary dictionaryWithDictionary:predictionInfo];
+            self.predictions = [NSArray arrayWithArray:predictions];
         }
     } failure:^(NSHTTPURLResponse *response, NSError *err) {
         self.error = err;

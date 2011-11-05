@@ -47,7 +47,10 @@
     [super viewDidLoad];
 	
 	[[self navigationItem] setTitle:NSLocalizedString(@"Routes", @"routes table view title")];
-    [[self bottomToolbar] setTintColor:[BSAppTheme lightBlueColor]];
+    
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+        [[self bottomToolbar] setTintColor:[BSAppTheme lightBlueColor]];
+    }
     
     UIBarButtonItem *refreshButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(requestRouteList)];
     [[self navigationItem] setRightBarButtonItem:refreshButton animated:YES];

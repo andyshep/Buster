@@ -49,7 +49,9 @@
 	// [[self navigationItem] setTitle:self.title];
     [[self navigationItem] setTitle:@"Stops"];
     
-    [[self bottomToolbar] setTintColor:[BSAppTheme lightBlueColor]];
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+        [[self bottomToolbar] setTintColor:[BSAppTheme lightBlueColor]];
+    }
     
 //    UIBarButtonItem *addToFavoritesButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"28-star.png"] style:UIBarButtonItemStylePlain target:self action:@selector(somthing)];
 //    [[self navigationItem] setRightBarButtonItem:addToFavoritesButton];
