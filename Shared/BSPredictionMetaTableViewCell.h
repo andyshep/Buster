@@ -27,10 +27,6 @@
 
 
 @interface BSPredictionMetaTableViewCell : UITableViewCell {
-
-    UILabel *routeNumberLabel, *routeDirectionLabel, *stopNameLabel;
-    
-@private
 	UIView *containerView;
 }
 

@@ -30,13 +30,7 @@
 
 #import "MBTAQueryStringBuilder.h"
 
-@interface BSPredictionsModel : NSObject {
-    
-	// these are used by table views
-	NSArray *predictions;
-    NSDictionary *predictionMeta;
-    NSError *error;
-}
+@interface BSPredictionsModel : NSObject
 
 @property (copy) NSArray *predictions;
 @property (copy) NSDictionary *predictionMeta;

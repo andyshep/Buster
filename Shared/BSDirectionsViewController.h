@@ -28,25 +28,16 @@
 #import "BSDirectionsModel.h"
 #import "BSPredictionsViewController.h"
 
-@interface BSDirectionsViewController : UITableViewController {
-	NSString *stopTag;
-//	UITableView *tableView;
-//	
-//	UISegmentedControl *directionControl;
-//	UIToolbar *bottomToolbar;
-//	
-//	UIView *activityView;
-    
+@interface BSDirectionsViewController : UIViewController {
     BSDirectionsModel *model_;
 }
 
 @property (nonatomic, retain) NSString *stopTag;
-//@property (nonatomic, retain) UITableView *tableView;
-//@property (nonatomic, retain) UISegmentedControl *directionControl;
-//@property (nonatomic, retain) UIToolbar *bottomToolbar;
+@property (nonatomic, retain) IBOutlet UITableView *tableView;
+@property (nonatomic, retain) IBOutlet UIToolbar *bottomToolbar;
+@property (nonatomic, retain) UISegmentedControl *directionControl;
 
-//- (void)assembleRoutePath;
-//
-//- (IBAction)switchDirection:(id)sender;
+- (void)switchDirection:(id)sender;
+- (void)reloadTable;
 
 @end

@@ -30,13 +30,13 @@
 
 @implementation BSDirectionsViewController
 
-@synthesize stopTag;//, tableView, directionControl, bottomToolbar;
+@synthesize stopTag = _stopTag, tableView = _tableView, directionControl = _directionControl, bottomToolbar = _bottomToolbar;
 
 #pragma mark -
 #pragma mark View Lifecycle
 
 - (id)init {
-    if ((self = [super init])) {
+    if ((self = [super initWithNibName:@"BSDirectionsView" bundle:nil])) {
         //
     }
     
@@ -49,13 +49,14 @@
 	// [[self navigationItem] setTitle:self.title];
     [[self navigationItem] setTitle:@"Stops"];
     
+    [[self bottomToolbar] setTintColor:[BSAppTheme lightBlueColor]];
+    
 //    UIBarButtonItem *addToFavoritesButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"28-star.png"] style:UIBarButtonItemStylePlain target:self action:@selector(somthing)];
 //    [[self navigationItem] setRightBarButtonItem:addToFavoritesButton];
 //    [addToFavoritesButton release];
 	// show a spinner
 //	[self showActivityViewer];
     
-    // self.tableView.frame = CGRectMake(0, 0, 320, 100);
 	
 	model_ = [[BSDirectionsModel alloc] init];
     
@@ -69,11 +70,11 @@
                 options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
                 context:@selector(stopsDidLoad)];    
 	
-//	[model_ addObserver:self 
-//             forKeyPath:@"tags" 
-//                options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
-//                context:@selector(reloadDirectionControl)];
-//    
+	[model_ addObserver:self 
+             forKeyPath:@"tags" 
+                options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
+                context:@selector(reloadDirectionControl)];
+    
 	[model_ addObserver:self 
              forKeyPath:@"title" 
                 options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
@@ -85,6 +86,14 @@
                 context:@selector(operationDidFail)];
 
     [model_ requestDirectionsList:self.stopTag];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    if ([self.tableView indexPathForSelectedRow] != nil) {
+        [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
+    }
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -100,16 +109,13 @@
 }
 
 - (void)directionsDidLoad {
-    NSLog(@"directions loaded!");
-    
     // once the model has all the directions
     // we ask for the zeroth direction
     [model_ loadStopsForDirection:0];
 }
 
 - (void)stopsDidLoad {
-    NSLog(@"stops loaded!");
-    [self.tableView reloadData];
+    [self reloadTable];
 }
 
 - (void)titleDidLoad {
@@ -131,53 +137,51 @@
 	
 //	[self hideActivityViewer];
 	
-//	int stopsToAdd = [model_ countOfStops];
-//	int stopsToDelete = [self.tableView numberOfRowsInSection:0];
-//	
-//	[self.tableView beginUpdates];
-//	
-//	for (int i = 0; i < stopsToDelete; i++) {
-//		NSArray *delete = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:i inSection:0]];
-//		[self.tableView deleteRowsAtIndexPaths:delete withRowAnimation:UITableViewRowAnimationBottom];
-//	}
-//	
-//	for (int i = 0; i < stopsToAdd; i++) {
-//		// for each route title
-//		// and stick it into the model
-//		// then insert it into the table with animations
-//		NSArray *insert = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:i inSection:0]];
-//		[self.tableView insertRowsAtIndexPaths:insert withRowAnimation:UITableViewRowAnimationTop];
-//	}
-//	
-//	// we're all done so do the cleanup
-//	[self.tableView endUpdates];
-
-    [self.tableView reloadData];
+	int stopsToAdd = [model_ countOfStops];
+	int stopsToDelete = [self.tableView numberOfRowsInSection:0];
+	
+	[self.tableView beginUpdates];
+	
+	for (int i = 0; i < stopsToDelete; i++) {
+		NSArray *delete = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:i inSection:0]];
+		[self.tableView deleteRowsAtIndexPaths:delete withRowAnimation:UITableViewRowAnimationBottom];
+	}
+	
+	for (int i = 0; i < stopsToAdd; i++) {
+		// for each route title
+		// and stick it into the model
+		// then insert it into the table with animations
+		NSArray *insert = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:i inSection:0]];
+		[self.tableView insertRowsAtIndexPaths:insert withRowAnimation:UITableViewRowAnimationTop];
+	}
+	
+	// we're all done so do the cleanup
+	[self.tableView endUpdates];
 }
 
-//- (void)reloadDirectionControl {
-//	
-//	NSMutableArray *items = [NSMutableArray arrayWithCapacity:2];
-//	for (int i = 0 ; i < model_.tags.count ; i++) {
-//		[items addObject:[NSString stringWithFormat:@"%d", i]];
-//		//[items addObject:[model.titles objectAtIndex:i]];
-//	}
-//    
-//    // FIXME: alloc/initWithFrame and the add/remove segments to controll
-//    // stop allocing a new one each time.
-//	directionControl = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithArray:items]];
-//	directionControl.segmentedControlStyle = UISegmentedControlStyleBar;
-//	directionControl.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
-//	directionControl.frame = CGRectMake(0, 0, 305, 30);
-//	directionControl.selectedSegmentIndex = 0;
-//	UIBarButtonItem *buttonItem = [[UIBarButtonItem alloc] initWithCustomView:directionControl];
-//	
-//	bottomToolbar.items = [NSArray arrayWithObjects:buttonItem, nil];
-//	
-//	[self.directionControl addTarget:self action:@selector(switchDirection:) forControlEvents:UIControlEventValueChanged];
-//	
-//	[buttonItem release];
-//}
+- (void)reloadDirectionControl {
+	
+	NSMutableArray *items = [NSMutableArray arrayWithCapacity:2];
+	for (int i = 0 ; i < model_.tags.count ; i++) {
+		[items addObject:[NSString stringWithFormat:@"%d", i]];
+		//[items addObject:[model.titles objectAtIndex:i]];
+	}
+    
+    // FIXME: alloc/initWithFrame and the add/remove segments to controll
+    // stop allocing a new one each time.
+	self.directionControl = [[[UISegmentedControl alloc] initWithItems:[NSArray arrayWithArray:items]] autorelease];
+	self.directionControl.segmentedControlStyle = UISegmentedControlStyleBar;
+	self.directionControl.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
+	self.directionControl.frame = CGRectMake(0, 0, 305, 30);
+	self.directionControl.selectedSegmentIndex = 0;
+	UIBarButtonItem *buttonItem = [[UIBarButtonItem alloc] initWithCustomView:self.directionControl];
+	
+	self.bottomToolbar.items = [NSArray arrayWithObjects:buttonItem, nil];
+	
+	[self.directionControl addTarget:self action:@selector(switchDirection:) forControlEvents:UIControlEventValueChanged];
+	
+	[buttonItem release];
+}
 
 - (void)operationDidFail {    
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"error alert view title") 
@@ -187,28 +191,6 @@
                                           otherButtonTitles:nil];
     [alert show];
     [alert release];
-}
-
-#pragma mark -
-#pragma mark Memory Management
-
-- (void)didReceiveMemoryWarning {
-	// Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-	
-	// Release any cached data, images, etc that aren't in use.
-}
-
-- (void)dealloc {
-    
-    [model_ removeObserver:self forKeyPath:@"directions"];
-    [model_ removeObserver:self forKeyPath:@"stops"];
-	// [model_ removeObserver:self forKeyPath:@"tags"];
-	[model_ removeObserver:self forKeyPath:@"title"];
-    [model_ removeObserver:self forKeyPath:@"error"];
-    [model_ release];
-    
-    [super dealloc];
 }
 
 #pragma mark -
@@ -235,8 +217,6 @@
 }
 
 - (void) tableView:(UITableView *)tView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	
-	[self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 	
 	BSDirection *stop = (BSDirection *)[model_ objectInStopsAtIndex:indexPath.row];
 	NSString *routeTitle = stop.title;
@@ -337,10 +317,38 @@
 //	[self assembleRoutePath];
 //}
 //
-//- (IBAction)switchDirection:(id)sender {
-//	// tell the model we're switching directions
-//	[model_ loadStopsForTagIndex:self.directionControl.selectedSegmentIndex];
-//}
+
+- (void)switchDirection:(id)sender {
+    // tell the model we're switching directions
+    [model_ loadStopsForDirection:self.directionControl.selectedSegmentIndex];
+}
+
+#pragma mark -
+#pragma mark Memory Management
+
+- (void)didReceiveMemoryWarning {
+	// Releases the view if it doesn't have a superview.
+    [super didReceiveMemoryWarning];
+	
+	// Release any cached data, images, etc that aren't in use.
+}
+
+- (void)dealloc {
+    
+    [_stopTag release];
+    [_tableView release];
+    [_bottomToolbar release];
+    [_directionControl release];
+    
+    [model_ removeObserver:self forKeyPath:@"directions"];
+    [model_ removeObserver:self forKeyPath:@"stops"];
+	[model_ removeObserver:self forKeyPath:@"tags"];
+	[model_ removeObserver:self forKeyPath:@"title"];
+    [model_ removeObserver:self forKeyPath:@"error"];
+    [model_ release];
+    
+    [super dealloc];
+}
 
 
 @end

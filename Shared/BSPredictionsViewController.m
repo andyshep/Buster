@@ -73,31 +73,17 @@
     [model_ requestPredictionsForRoute:routeNumber andStop:stopTag];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    if ([self.tableView indexPathForSelectedRow] != nil) {
+        [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
+    }
+}
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
 	return interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown;
 }
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-	
-	// first section is the custom cell
-	if ([indexPath section] == 0) {
-		return 88.0f;
-	}
-	
-	// else return standard detail table cell height
-	return 44.0f;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-	
-	// only the second section has a header
-	if (section == 1) {
-		return 40.0f;	
-	}
-	
-	return 0.0f;
-}
-
 
 #pragma mark -
 #pragma mark Table view data source and delegate
@@ -171,6 +157,27 @@
     cell.stopNameLabel.text = [[model_ predictionMeta] objectForKey:@"stopTitle"];
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+	
+	// first section is the custom cell
+	if ([indexPath section] == 0) {
+		return 88.0f;
+	}
+	
+	// else return standard detail table cell height
+	return 44.0f;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+	
+	// only the second section has a header
+	if (section == 1) {
+		return 40.0f;	
+	}
+	
+	return 0.0f;
 }
 
 #pragma mark -

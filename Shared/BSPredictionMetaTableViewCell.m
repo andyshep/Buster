@@ -30,24 +30,25 @@
 
 @implementation BSPredictionMetaTableViewCell
 
-@synthesize routeNumberLabel, routeDirectionLabel, stopNameLabel;
+@synthesize routeNumberLabel = _routeNumberLabel;
+@synthesize routeDirectionLabel = _routeDirectionLabel; 
+@synthesize stopNameLabel = _stopNameLabel;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     
     if ((self = [super initWithStyle:style reuseIdentifier:reuseIdentifier])) {
         containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 88)];
         
-        routeNumberLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 5, 40, 25)];
-        routeDirectionLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 30, 270, 25)];
-        stopNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 55, 270, 25)];
+        self.routeNumberLabel = [[[UILabel alloc] initWithFrame:CGRectMake(20, 5, 40, 25)] autorelease];
+        self.routeDirectionLabel = [[[UILabel alloc] initWithFrame:CGRectMake(20, 30, 270, 25)] autorelease];
+        self.stopNameLabel = [[[UILabel alloc] initWithFrame:CGRectMake(20, 55, 270, 25)] autorelease];
         
-        routeDirectionLabel.adjustsFontSizeToFitWidth = YES;
-        stopNameLabel.adjustsFontSizeToFitWidth = YES;
+        self.routeDirectionLabel.adjustsFontSizeToFitWidth = YES;
+        self.stopNameLabel.adjustsFontSizeToFitWidth = YES;
         
-        
-        [containerView addSubview:routeNumberLabel];
-        [containerView addSubview:routeDirectionLabel];
-        [containerView addSubview:stopNameLabel];
+        [containerView addSubview:self.routeNumberLabel];
+        [containerView addSubview:self.routeDirectionLabel];
+        [containerView addSubview:self.stopNameLabel];
         [self addSubview:containerView];
     }
     
@@ -61,9 +62,9 @@
 }
 
 - (void)dealloc {
-    [routeNumberLabel release];
-    [routeDirectionLabel release];
-    [stopNameLabel release];
+    [_routeNumberLabel release];
+    [_routeDirectionLabel release];
+    [_stopNameLabel release];
     [containerView release];
     [super dealloc];
 }

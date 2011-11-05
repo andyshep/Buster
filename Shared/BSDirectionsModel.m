@@ -113,11 +113,11 @@
                 // a list of route stops will be passed back and stored into the model
                 NSMutableDictionary *stopsList = [NSMutableDictionary dictionaryWithCapacity:20];
                 NSMutableArray *directionsList = [NSMutableArray arrayWithCapacity:20];
+                NSMutableArray *tagsList = [NSMutableArray arrayWithCapacity:3];
+                NSMutableArray *titlesList = [NSMutableArray arrayWithCapacity:3];
                 // NSMutableArray *pathsList = [NSMutableArray arrayWithCapacity:20];
                 
                 SMXMLElement *routeElement = [xml.root childNamed:@"route"];
-                
-                NSLog(@"route: %@", routeElement);
                 
                 for (SMXMLElement *stopElement in [routeElement childrenNamed:@"stop"]) {
                     BSStop *stop = [[BSStop alloc] init];
@@ -130,8 +130,6 @@
                     [stopsList setObject:stop forKey:stop.tag];
                     [stop release];
                 }
-                
-                NSLog(@"stopsList: %@", stopsList);
                 
                 for (SMXMLElement *directionElement in [routeElement childrenNamed:@"direction"]) {
                     BSDirection *direction = [[BSDirection alloc] init];
@@ -152,8 +150,6 @@
                     stops_ = nil;
                 }
                 
-                NSLog(@"directionList: %@", [(BSDirection *)[directionsList objectAtIndex:0] stops]);
-                
                 NSMutableArray *pathPoints_ = [NSMutableArray arrayWithCapacity:10];
                 
                 for (SMXMLElement *pathElement in [routeElement childrenNamed:@"path"]) {
@@ -171,12 +167,19 @@
                     }
                 }
                 
+                // basically a unneeded loop.  refactor and improve this.
+                for (BSDirection *direction in directionsList) {
+                    [tagsList addObject:direction.tag];
+                    [titlesList addObject:direction.title];
+                }
+                
                 // we don't need to stopsList anymore since we have
                 // built a list of stops based on the direction of travel
                 stopsList = nil;
                 
                 self.directions = directionsList;
-                self.stops = [(BSDirection *)[self.directions objectAtIndex:0] stops];
+                self.tags = tagsList;
+                self.titles = titlesList;
             }
             
             [xml release];
@@ -194,19 +197,19 @@
 }
 
 - (void)loadStopsForDirection:(NSUInteger)directionIndex {
-//    NSArray *directionStops = [[directions objectAtIndex:directionIndex] valueForKey:@"stops"];
-//    NSMutableArray *_stops = [NSMutableArray arrayWithCapacity:20];
-//    
-//    for (NSDictionary *stop in directionStops) {
-//        BSDirection *aStop = [[[BSDirection alloc] init] autorelease];
-//        [aStop setTag:[stop valueForKey:@"tag"]];
-//        [aStop setTitle:[stop valueForKey:@"title"]];
-//        
-//        [_stops addObject:aStop];
-//    }
-//    
-//    self.stops = _stops;
-//    self.title = [[directions objectAtIndex:directionIndex] valueForKey:@"title"];
+    NSArray *stops = [(BSDirection *)[self.directions objectAtIndex:directionIndex] stops];
+    NSMutableArray *mStops = [NSMutableArray arrayWithCapacity:20];
+    
+    for (NSDictionary *stop in stops) {
+        BSDirection *aStop = [[[BSDirection alloc] init] autorelease];
+        [aStop setTag:[stop valueForKey:@"tag"]];
+        [aStop setTitle:[stop valueForKey:@"title"]];
+        
+        [mStops addObject:aStop];
+    }
+    
+    self.stops = [NSArray arrayWithArray:mStops];
+    self.title = [(BSDirection *)[self.directions objectAtIndex:directionIndex] title];
 }
 
 #pragma mark - Disk Access
@@ -232,43 +235,5 @@
     return [NSKeyedArchiver archiveRootObject:self.stops
                                        toFile:[self stopsArchivePath]];
 }
-
-// old parsing
-
-//- (void)loadStopsForTagIndex:(NSUInteger)index {
-//	
-//	MBTARouteDirection *_direction = [self.directions objectForKey:[self.tags objectAtIndex:index]];
-//	self.stops = _direction.stops;
-//	self.title = [self.titles objectAtIndex:index];
-//}
-
-//- (void)didConsumeData:(id)consumedData {
-//    
-//    NSArray *stopListMeta = (NSArray *)consumedData;
-//	NSArray *_directions = [stopListMeta objectAtIndex:1];
-//	
-//	NSMutableDictionary *_qualifiedDirections = [NSMutableDictionary dictionaryWithCapacity:3];
-//	NSMutableArray *_tags = [NSMutableArray arrayWithCapacity:3];
-//	NSMutableArray *_titles = [NSMutableArray arrayWithCapacity:3];
-//	
-//	for (MBTARouteDirection *direction in _directions) {
-//		
-//		[_qualifiedDirections setObject:direction forKey:direction.tag];
-//		
-//		[_tags addObject:direction.tag];
-//		[_titles addObject:direction.title];
-//	}
-//	
-//	self.directions = [NSDictionary dictionaryWithDictionary:_qualifiedDirections];
-//	self.tags = [NSArray arrayWithArray:_tags];
-//	self.titles = [NSArray arrayWithArray:_titles];
-//	self.title = [self.titles objectAtIndex:0];
-//    self.pathPoints = [stopListMeta objectAtIndex:2];
-//	
-//	MBTARouteDirection *_direction = [self.directions objectForKey:[self.tags objectAtIndex:0]];
-//	self.stops = _direction.stops;
-//}
-
-
 
 @end

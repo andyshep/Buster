@@ -30,7 +30,7 @@
 
 @implementation BSPredictionsModel
 
-@synthesize predictions, predictionMeta, error;
+@synthesize predictions = _predictions, predictionMeta = _predictionMeta, error = _error;
 
 #pragma mark -
 #pragma mark Lifecycle
@@ -46,9 +46,9 @@
 }
 
 - (void) dealloc {
-    [predictions release];
-    [predictionMeta release];
-    [error release];
+    [_predictions release];
+    [_predictionMeta release];
+    [_error release];
     
     [super dealloc];
 }
@@ -57,15 +57,15 @@
 #pragma mark Model KVC
 
 - (NSUInteger)countOfPredictions {
-	return [predictions count];
+	return [self.predictions count];
 }
 
 - (id)objectInPredictionsAtIndex:(NSUInteger)index {
-	return [predictions objectAtIndex:index];
+	return [self.predictions objectAtIndex:index];
 }
 
 - (void)getPredictions:(id *)objects range:(NSRange)range {
-	[predictions getObjects:objects range:range];
+	[self.predictions getObjects:objects range:range];
 }
 
 #pragma mark -

@@ -37,12 +37,7 @@
 
 - (id) init {
 	if ((self = [super init])) {
-		
-		// init an empty set of routeTitles for the model
 		self.routes = nil, self.error = nil;
-        
-        NSLog(@"%@", [self routesEndpointsArchivePath]);
-        
         [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
     }
 	
@@ -104,23 +99,8 @@
 #pragma mark Route List building
 
 - (void) requestRouteList {
-    
-//    #ifdef USE_STUB_SERVICE
-//        routeListOp_ = [[RouteListOperation alloc] initWithURLString:@"http://localhost:8081/routeList.xml" delegate:self];
-//    #else
-//        MBTAQueryStringBuilder *_builder = [MBTAQueryStringBuilder sharedMBTAQueryStringBuilder];
-//        routeListOp_ = [[RouteListOperation alloc] initWithURLString:[_builder buildRouteListQuery] delegate:self];    
-//    #endif
-//    
-//    [routeListOp_ addObserver:self forKeyPath:@"isFinished" options:NSKeyValueObservingOptionNew context:NULL];
-//    [opQueue_ addOperation:routeListOp_];
-//
-    
     NSDictionary *routeEndpoints = [NSDictionary dictionaryWithContentsOfFile:[self routesEndpointsArchivePath]];
     
-    NSLog(@"routesArchivePath: %@", [self routesArchivePath]);
-    
-    // FIXME: not implement right yet...
     if (self.routes == nil) {
         NSLog(@"loading from disk...");
         self.routes = [NSKeyedUnarchiver unarchiveObjectWithFile:[self routesArchivePath]];
@@ -151,8 +131,6 @@
                     if (endpoints != nil) {
                         route.endpoints = endpoints;
                     }
-                    
-                    NSLog(@"tag: %@", route.tag);
                     
                     [routeList addObject:route];
                     [route release];

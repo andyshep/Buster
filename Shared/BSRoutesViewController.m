@@ -30,19 +30,28 @@
 
 @implementation BSRoutesViewController
 
-#pragma mark -
-#pragma mark View lifecycle
+@synthesize tableView = _tableView;
+@synthesize bottomToolbar = _bottomToolbar;
+
+#pragma mark - Initalization
+
+- (id)init {
+    if (self = [super initWithNibName:@"BSRoutesView" bundle:nil]) {
+        //
+    }
+    
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
 	[[self navigationItem] setTitle:NSLocalizedString(@"Routes", @"routes table view title")];
+    [[self bottomToolbar] setTintColor:[BSAppTheme lightBlueColor]];
     
     UIBarButtonItem *refreshButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(requestRouteList)];
     [[self navigationItem] setRightBarButtonItem:refreshButton animated:YES];
     [refreshButton release];
-    
-    UIColor *lightYelloColor = [UIColor colorWithRed:214.0f/255.0f green:212.0f/255.0f blue:206.0f/255.0f alpha:1.0f];
     
     [self.tableView setBackgroundColor:[UIColor whiteColor]];
     [self.tableView setSeparatorColor:[UIColor lightGrayColor]];
@@ -60,6 +69,14 @@
                 context:@selector(operationDidFail)];
     
     [self requestRouteList];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    if ([self.tableView indexPathForSelectedRow] != nil) {
+        [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
+    }
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -184,6 +201,9 @@
 
 
 - (void)dealloc {
+    [_tableView release];
+    [_bottomToolbar release];
+    
     [model_ removeObserver:self forKeyPath:@"routes"];
     [model_ removeObserver:self forKeyPath:@"error"];
     [model_ release];
