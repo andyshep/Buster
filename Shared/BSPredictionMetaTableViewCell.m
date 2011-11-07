@@ -46,6 +46,10 @@
         self.routeDirectionLabel.adjustsFontSizeToFitWidth = YES;
         self.stopNameLabel.adjustsFontSizeToFitWidth = YES;
         
+        self.routeNumberLabel.backgroundColor = [UIColor clearColor];
+        self.routeDirectionLabel.backgroundColor = [UIColor clearColor];
+        self.stopNameLabel.backgroundColor = [UIColor clearColor];
+        
         [containerView addSubview:self.routeNumberLabel];
         [containerView addSubview:self.routeDirectionLabel];
         [containerView addSubview:self.stopNameLabel];

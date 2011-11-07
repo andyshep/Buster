@@ -84,36 +84,6 @@
 }
 
 #pragma mark -
-#pragma mark Predictions Loading
-
-- (void)loadPredictionsForVehicle:(NSString *)vehicle runningRoute:(NSString *)route atEpochTime:(NSString *)time {
-	NSLog(@"loadPredictionsForVehicle: %@ runningRoute: %@ atEpochTime: %@", vehicle, route, time);
-	
-	BSMapViewController *nextController = [[BSMapViewController alloc] initWithNibName:@"MapView_iPhone" bundle:nil];
-	
-	nextController.title = @"Maps";
-	nextController.vehicle = vehicle;
-	nextController.route = route;
-	nextController.time = time;
-	
-	[self.navigationController pushViewController:nextController animated:YES];
-	
-	[nextController dropPinForLocation];
-	
-	[nextController release];
-
-//  TODO: implement
-//	updateTimer = [NSTimer scheduledTimerWithTimeInterval:60.0f 
-//												   target:self 
-//												 selector:@selector(updateVehicleLocation:) 
-//												 userInfo:nil
-//												  repeats:YES];
-//	
-//	[updateTimer fire];
-}
-
-
-#pragma mark -
 #pragma mark Memory management
 
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {

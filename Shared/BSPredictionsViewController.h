@@ -27,6 +27,7 @@
 
 #import "BSPredictionMetaTableViewCell.h"
 #import "BSPredictionsModel.h"
+#import "BSMapViewController.h"
 
 
 @interface BSPredictionsViewController : UITableViewController {

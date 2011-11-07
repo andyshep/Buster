@@ -25,9 +25,14 @@
 //  THE SOFTWARE.
 //
 
-#import "BSPredictionsModel.h"
-#import "VehicleLocationAnnotation.h"
+#import "BSVehicleLocationModel.h"
+#import "BSVehicleLocationAnnotation.h"
 
+@protocol BSMapViewControllerDelegate <NSObject>
+
+- (void)loadPredictionsForVehicle:(NSString *)vehicle runningRoute:(NSString *)route atEpochTime:(NSString *)time;
+
+@end
 
 @interface BSMapViewController : UIViewController <UIPopoverControllerDelegate, UISplitViewControllerDelegate, MKMapViewDelegate> {
 	UIPopoverController *popoverController;
@@ -39,7 +44,7 @@
 	
 	MKMapView *mapView;
     
-    BSPredictionsModel *model_;
+    BSVehicleLocationModel *model_;
 }
 
 @property (nonatomic, retain) IBOutlet UIToolbar *toolbar;

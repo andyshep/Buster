@@ -28,7 +28,7 @@
 #import "BSRoutesViewController.h"
 #import "BSMapViewController.h"
 
-@interface AppDelegate_iPad : NSObject <UIApplicationDelegate> {
+@interface AppDelegate_iPad : NSObject <UIApplicationDelegate, BSMapViewControllerDelegate> {
 	
     UIWindow *window;
     UISplitViewController *splitViewController;

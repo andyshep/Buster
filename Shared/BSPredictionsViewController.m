@@ -132,7 +132,7 @@
 
 	NSMutableDictionary *dict = (NSMutableDictionary *)[model_ objectInPredictionsAtIndex:[indexPath row]];
 	NSString *title = [dict objectForKey:@"minutes"];
-	title = [title stringByAppendingFormat:@" minutes"];
+	title = [title stringByAppendingFormat:@" %@", NSLocalizedString(@"minutes", @"minutes")];
 	
 	cell.textLabel.text = title;
 	
@@ -141,14 +141,35 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-//    if ([indexPath section] == 0) return;
-//	
-//	NSMutableDictionary *dict = (NSMutableDictionary *)[model_ objectInPredictionsAtIndex:[indexPath row]];
-//	NSString *vehicle = [dict objectForKey:@"vehicle"];
-//	NSString *time = [dict objectForKey:@"time"];
-//	
-//	id delegate = [[UIApplication sharedApplication] delegate];
-//	[delegate loadPredictionsForVehicle:vehicle runningRoute:self.routeNumber atEpochTime:time];
+    if ([indexPath section] == 0) return;
+	
+	NSMutableDictionary *dict = (NSMutableDictionary *)[model_ objectInPredictionsAtIndex:[indexPath row]];
+	NSString *vehicle = [dict objectForKey:@"vehicle"];
+	NSString *time = [dict objectForKey:@"time"];
+	
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+        // push on the map view control if running on the phone/touch
+        
+        // NSLog(@"loadPredictionsForVehicle: %@ runningRoute: %@ atEpochTime: %@", vehicle, route, time);
+        
+        BSMapViewController *nextController = [[BSMapViewController alloc] initWithNibName:@"MapView_iPhone" bundle:nil];
+        
+        nextController.title = NSLocalizedString(@"Maps", @"Maps title");
+        nextController.vehicle = vehicle;
+        nextController.route = routeNumber;
+        nextController.time = time;
+        
+        [self.navigationController pushViewController:nextController animated:YES];
+        
+        [nextController release];
+    }
+    else {
+        // on the pad the map is shown in the detail view of the split view
+        // we ask our delegate to load the predictions
+        
+        id delegate = [[UIApplication sharedApplication] delegate];
+        [delegate loadPredictionsForVehicle:vehicle runningRoute:self.routeNumber atEpochTime:time];
+    }
 }
 
 - (void)configureCell:(BSPredictionMetaTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {

@@ -46,8 +46,7 @@
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	
-	// [[self navigationItem] setTitle:self.title];
-    [[self navigationItem] setTitle:@"Stops"];
+    [[self navigationItem] setTitle:NSLocalizedString(@"Stops", @"Stops title")];
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
         [[self bottomToolbar] setTintColor:[BSAppTheme lightBlueColor]];
@@ -128,6 +127,7 @@
 	routeLabel.text = [model_ title];
 	routeLabel.textAlignment = UITextAlignmentCenter;
 	routeLabel.adjustsFontSizeToFitWidth = YES;
+    routeLabel.font = [UIFont boldSystemFontOfSize:16.0];
 	[containerView addSubview:routeLabel];
 	self.tableView.tableHeaderView = containerView;
 	
@@ -169,6 +169,7 @@
 		//[items addObject:[model.titles objectAtIndex:i]];
 	}
     
+    // FIXME: no really, fix this.
     // FIXME: alloc/initWithFrame and the add/remove segments to controll
     // stop allocing a new one each time.
 	self.directionControl = [[[UISegmentedControl alloc] initWithItems:[NSArray arrayWithArray:items]] autorelease];
@@ -209,11 +210,14 @@
     UITableViewCell *cell = [tView dequeueReusableCellWithIdentifier:BSStopCellIdentifier];
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:BSStopCellIdentifier] autorelease];
+        cell.textLabel.adjustsFontSizeToFitWidth = YES;
+        cell.textLabel.font = [BSAppTheme fourteenPointlabelFont];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.selectionStyle = UITableViewCellSelectionStyleGray;
     }
     
 	BSDirection *stop = (BSDirection *)[model_ objectInStopsAtIndex:indexPath.row];
 	cell.textLabel.text = stop.title;
-	cell.textLabel.adjustsFontSizeToFitWidth = YES;
 	
 	return cell;
 }
@@ -238,87 +242,7 @@
 }
 
 #pragma mark -
-#pragma mark Route Path Assembly
-
-- (void)assembleRoutePath {
-//	StopListModel *model = [StopListModel sharedStopListModel];
-//	NSArray *stops = [model stops];
-//	
-//	NSMutableDictionary *directions = [[NSMutableDictionary alloc] initWithCapacity:3];
-//	for (NSDictionary *stop in stops) {
-//		if ([directions objectForKey:[stop valueForKey:@"dirTag"]] == nil) {
-//			[directions setObject:[stop valueForKey:@"dirTag"] forKey:[stop valueForKey:@"dirTag"]];
-//		}
-//	}
-//	
-//	NSLog(@"assembleRoutePath: %@", directions);
-	
-//	NSLog(@"assembleRoutePath: %@", stops);
-}
-
-- (void)showRoutePath {
-    NSLog(@"showRoutePath");
-    
-//    for (MBTARoutePath *path in model_.paths) {
-//        for (NSDictionary *points in path.points) {
-//            NSLog(@"%@", points);
-//        }
-//    }
-//
-//    RoutePathViewController *pathController = [[RoutePathViewController alloc] initWithNibName:@"MapView_iPhone" 
-//                                                                                        bundle:nil];
-//    
-//    pathController.pathPoints = [model_ pathPoints];
-//    
-//    [self.navigationController pushViewController:pathController animated:YES];
-//    [pathController release];
-}
-
-#pragma mark -
-#pragma mark Spinners
-
-//-(void)showActivityViewer
-//{
-//    [activityView release];
-//    activityView = [[UIView alloc] initWithFrame: CGRectMake(self.tableView.frame.origin.x, 
-//															 self.tableView.frame.origin.y,
-//															 self.tableView.frame.size.width, 
-//															 self.tableView.frame.size.height)];
-//    activityView.backgroundColor = [UIColor blackColor];
-//    activityView.alpha = 0.5;
-//    
-//    UIActivityIndicatorView *activityWheel = 
-//		[[UIActivityIndicatorView alloc] initWithFrame: CGRectMake(self.tableView.frame.size.width / 2 - 18, 
-//																   self.tableView.frame.size.height / 2 - 18, 
-//																   36, 
-//																   36)];
-//    activityWheel.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhite;
-//    activityWheel.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin |
-//                                      UIViewAutoresizingFlexibleRightMargin |
-//                                      UIViewAutoresizingFlexibleTopMargin |
-//                                      UIViewAutoresizingFlexibleBottomMargin);
-//    [activityView addSubview:activityWheel];
-//    [activityWheel release];
-//    [self.view addSubview:activityView];
-//    [activityView release];
-//    
-//    [[[activityView subviews] objectAtIndex:0] startAnimating];
-//}
-
-//-(void)hideActivityViewer
-//{
-//    [[[activityView subviews] objectAtIndex:0] stopAnimating];
-//    [activityView removeFromSuperview];
-//    activityView = nil;
-//}
-
-#pragma mark -
 #pragma mark IBActions
-
-//- (IBAction)showRoute {
-//	[self assembleRoutePath];
-//}
-//
 
 - (void)switchDirection:(id)sender {
     // tell the model we're switching directions

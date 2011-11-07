@@ -32,12 +32,13 @@
 
 @synthesize tableView = _tableView;
 @synthesize bottomToolbar = _bottomToolbar;
+@synthesize routesListControl = _routesListControl;
 
 #pragma mark - Initalization
 
 - (id)init {
     if (self = [super initWithNibName:@"BSRoutesView" bundle:nil]) {
-        //
+        self.routesListControl = [[[UISegmentedControl alloc] init] autorelease];
     }
     
     return self;
@@ -58,6 +59,8 @@
     
     [self.tableView setBackgroundColor:[UIColor whiteColor]];
     [self.tableView setSeparatorColor:[UIColor lightGrayColor]];
+    
+    [self layoutRoutesListControl];
     
     model_ = [[BSRoutesModel alloc] init];
     
@@ -86,6 +89,24 @@
 	return interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown;
 }
 
+- (void)layoutRoutesListControl {
+    NSArray *routeListControlItems = [NSArray arrayWithObjects:NSLocalizedString(@"All Routes", @"All Routes"),
+                                        NSLocalizedString(@"Favorites", @"Favorites"), nil];
+    
+	self.routesListControl = [[[UISegmentedControl alloc] initWithItems:routeListControlItems] autorelease];
+	self.routesListControl.segmentedControlStyle = UISegmentedControlStyleBar;
+	//self.routesListControl.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
+	self.routesListControl.frame = CGRectMake(0, 0, 305, 30);
+	self.routesListControl.selectedSegmentIndex = 0;
+	UIBarButtonItem *buttonItem = [[UIBarButtonItem alloc] initWithCustomView:self.routesListControl];
+	
+	self.bottomToolbar.items = [NSArray arrayWithObjects:buttonItem, nil];
+	
+	[self.routesListControl addTarget:self action:@selector(switchRoutesList:) forControlEvents:UIControlEventValueChanged];
+	
+	[buttonItem release];
+}
+
 #pragma mark -
 #pragma mark Table view data source
 
@@ -105,24 +126,25 @@
     
     static NSString *RouteCellIdentifier = @"BSRouteTableViewCell";
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:RouteCellIdentifier];
+    BSRoutesTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:RouteCellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:RouteCellIdentifier] autorelease];
+        NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"BSRoutesTableViewCell" owner:self options:nil];
+        cell = [topLevelObjects objectAtIndex:0];
         
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        //cell.routeEndpointsLabel.numberOfLines = 4;
     }
     
 	BSRoute *route = (BSRoute *)[model_ objectInRoutesAtIndex:indexPath.row];
 	
-	cell.textLabel.text = route.title;
+	cell.routeNumberLabel.text = route.tag;
     
     if (route.endpoints != nil) {
-        cell.detailTextLabel.text = route.endpoints;
-        cell.detailTextLabel.adjustsFontSizeToFitWidth = YES;
-        cell.detailTextLabel.numberOfLines = 0;
+        cell.routeEndpointsLabel.text = route.endpoints;
+        cell.routeEndpointsLabel.adjustsFontSizeToFitWidth = YES;
+        //cell.routeEndpointsLabel.numberOfLines = 0;
     } else {
-        cell.detailTextLabel.text = @"unknown";
-        cell.detailTextLabel.numberOfLines = 1;
+        cell.routeEndpointsLabel.text = @"unknown";
+        //cell.routeEndpointsLabel.numberOfLines = 1;
     }
     
     return cell;
@@ -187,6 +209,10 @@
     [alert release];
 }
 
+- (void)switchRoutesList:(id)sender {
+    NSLog(@"switchRoutesList");
+}
+
 #pragma mark -
 #pragma mark Memory management
 
@@ -206,6 +232,7 @@
 - (void)dealloc {
     [_tableView release];
     [_bottomToolbar release];
+    [_routesListControl release];
     
     [model_ removeObserver:self forKeyPath:@"routes"];
     [model_ removeObserver:self forKeyPath:@"error"];

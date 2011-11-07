@@ -29,6 +29,8 @@
 #import "BSRoute.h"
 #import "BSRoutesModel.h"
 
+#import "BSRoutesTableViewCell.h"
+
 
 @protocol MapViewControllerDelegate;
 
@@ -38,8 +40,10 @@
 
 @property (nonatomic, retain) IBOutlet UITableView *tableView;
 @property (nonatomic, retain) IBOutlet UIToolbar *bottomToolbar;
+@property (nonatomic, retain) UISegmentedControl *routesListControl;
 
 - (void)requestRouteList;
 - (void)reloadRoutes;
+- (void)layoutRoutesListControl;
 
 @end

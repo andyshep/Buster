@@ -39,26 +39,25 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    model_ = [[BSPredictionsModel alloc] init];
-    
-    // zoom center on boston
-    CLLocationCoordinate2D boston = CLLocationCoordinate2DMake(42.37, -71.03);
-    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(boston, 15 * 1000, 15 * 1000);
-	[mapView setRegion:region animated:YES];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    
-	[model_ addObserver:self 
-			forKeyPath:@"location" 
-			   options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
-			   context:NULL];
+    model_ = [[BSVehicleLocationModel alloc] init];
+    [model_ addObserver:self 
+             forKeyPath:@"location" 
+                options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
+                context:NULL];
     
     [model_ addObserver:self 
              forKeyPath:@"error" 
                 options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
                 context:NULL];
+    
+    // zoom center on boston
+    CLLocationCoordinate2D boston = CLLocationCoordinate2DMake(42.37, -71.03);
+    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(boston, 15 * 1000, 15 * 1000);
+	[mapView setRegion:region animated:YES];
+    
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+        [self dropPinForLocation];
+    }
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -78,7 +77,7 @@
     barButtonItem.title = NSLocalizedString(@"Routes", @"routes popover bar button title");
     NSMutableArray *items = [[toolbar items] mutableCopy];
     [items insertObject:barButtonItem atIndex:0];
-    [toolbar setItems:items animated:YES];
+    [toolbar setItems:items animated:NO];
     [items release];
     self.popoverController = pc;
 }
@@ -87,7 +86,7 @@
     
     NSMutableArray *items = [[toolbar items] mutableCopy];
     [items removeObjectAtIndex:0];
-    [toolbar setItems:items animated:YES];
+    [toolbar setItems:items animated:NO];
     [items release];
     self.popoverController = nil;
 }
@@ -121,7 +120,7 @@
         region.span = span;
         region.center = location;
         
-        VehicleLocationAnnotation *vehicleLocation = [[VehicleLocationAnnotation alloc] initWithCoordinate:location];
+        BSVehicleLocationAnnotation *vehicleLocation = [[BSVehicleLocationAnnotation alloc] initWithCoordinate:location];
         
         [mapView setRegion:region animated:YES];
         [mapView regionThatFits:region];
@@ -142,8 +141,10 @@
 
 #pragma mark - Location Management
 
-- (void)dropPinForLocation {	
-	// [model_ requestLocationOfVehicle:vehicle runningRoute:route atEpochTime:time];
+- (void)dropPinForLocation {
+    NSLog(@"dropPinForLocation:");
+	[model_ requestLocationOfVehicle:vehicle runningRoute:route atEpochTime:time];
+    [popoverController dismissPopoverAnimated:YES];
 }
 
 - (void)updateLocation {

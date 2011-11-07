@@ -1,5 +1,5 @@
 //
-//  VehicleLocationAnnotation.h
+//  BSVehicleLocationAnnotation.h
 //  Buster
 //
 //  Created by andyshep on 9/19/10.
@@ -26,12 +26,7 @@
 //
 
 
-@interface VehicleLocationAnnotation : NSObject <MKAnnotation> {
-	CLLocationCoordinate2D _coordinate;
-	NSString *_title;
-	NSString *_tag;
-	NSString *_stopId;
-}
+@interface BSVehicleLocationAnnotation : NSObject <MKAnnotation>
 
 + (id)annotationWithCoordinate:(CLLocationCoordinate2D)coordinate;
 - (id)initWithCoordinate:(CLLocationCoordinate2D)coordinate;

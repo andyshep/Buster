@@ -1,10 +1,10 @@
 //
-//  VehicleLocationAnnotation.m
+//  BSVehicleLocationModel.h
 //  Buster
 //
-//  Created by andyshep on 9/19/10.
+//  Created by andyshep on 1/9/11.
 //
-//  Copyright (c) 2010 Andrew Shepard
+//  Copyright (c) 2010-2011 Andrew Shepard
 // 
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,26 +25,16 @@
 //  THE SOFTWARE.
 //
 
-#import "VehicleLocationAnnotation.h"
+#import "MBTAQueryStringBuilder.h"
+#import "AFHTTPRequestOperation.h"
+#import "SMXMLDocument.h"
 
 
-@implementation VehicleLocationAnnotation
+@interface BSVehicleLocationModel : NSObject
 
-@synthesize coordinate = _coordinate;
-@synthesize title = _title;
-@synthesize tag = _tag;
-@synthesize stopId = _stopId;
+@property (copy) NSDictionary *location;
+@property (copy) NSError *error;
 
-+ (id)annotationWithCoordinate:(CLLocationCoordinate2D)coordinate {
-	return [[[[self class] alloc] initWithCoordinate:coordinate] autorelease];
-}
-
-- (id)initWithCoordinate:(CLLocationCoordinate2D)coordinate {
-	if ((self = [super init])) {
-		self.coordinate = coordinate;
-	}
-	
-	return self;
-}
+- (void) requestLocationOfVehicle:(NSString *)vehicleId runningRoute:(NSString *)routeNumber atEpochTime:(NSString *)time;
 
 @end
