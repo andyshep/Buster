@@ -31,6 +31,7 @@
 @implementation BSDirectionsViewController
 
 @synthesize stopTag = _stopTag, tableView = _tableView, directionControl = _directionControl, bottomToolbar = _bottomToolbar;
+@synthesize directionTitle = _directionTitle;
 
 #pragma mark -
 #pragma mark View Lifecycle
@@ -38,6 +39,7 @@
 - (id)init {
     if ((self = [super initWithNibName:@"BSDirectionsView" bundle:nil])) {
         //
+        self.directionTitle = @"";
     }
     
     return self;
@@ -121,13 +123,17 @@
 
 - (void)titleDidLoad {
     // FIXME: stop init these views each time!
-	UIView *containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
-	UILabel *routeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
+    
+    CGRect frame = self.view.bounds;
+    
+	UIView *containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, 30)];
+	UILabel *routeLabel = [[UILabel alloc] initWithFrame:CGRectInset(containerView.bounds, 5.0, 0.0)];
 	
 	routeLabel.text = [model_ title];
 	routeLabel.textAlignment = UITextAlignmentCenter;
 	routeLabel.adjustsFontSizeToFitWidth = YES;
     routeLabel.font = [UIFont boldSystemFontOfSize:16.0];
+    routeLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 	[containerView addSubview:routeLabel];
 	self.tableView.tableHeaderView = containerView;
 	
@@ -162,11 +168,12 @@
 }
 
 - (void)reloadDirectionControl {
+    
+    CGRect frame = self.view.bounds;
 	
 	NSMutableArray *items = [NSMutableArray arrayWithCapacity:2];
-	for (int i = 0 ; i < model_.tags.count ; i++) {
-		[items addObject:[NSString stringWithFormat:@"%d", i]];
-		//[items addObject:[model.titles objectAtIndex:i]];
+	for (int i = 1 ; i <= model_.tags.count ; i++) {
+		[items addObject:[NSString stringWithFormat:@"Leg #%d", i]];
 	}
     
     // FIXME: no really, fix this.
@@ -174,8 +181,8 @@
     // stop allocing a new one each time.
 	self.directionControl = [[[UISegmentedControl alloc] initWithItems:[NSArray arrayWithArray:items]] autorelease];
 	self.directionControl.segmentedControlStyle = UISegmentedControlStyleBar;
-	self.directionControl.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
-	self.directionControl.frame = CGRectMake(0, 0, 305, 30);
+	self.directionControl.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+	self.directionControl.frame = CGRectMake(0, 0, frame.size.width - 15.0, 30);
 	self.directionControl.selectedSegmentIndex = 0;
 	UIBarButtonItem *buttonItem = [[UIBarButtonItem alloc] initWithCustomView:self.directionControl];
 	

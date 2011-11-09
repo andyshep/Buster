@@ -82,6 +82,8 @@
         NSError *error_ = nil;
         SMXMLDocument *xml = [SMXMLDocument documentWithData:object error:NULL];
         
+       // NSLog(@"%@", xml);
+        
         if (!error_) {
             NSMutableArray *predictions = [NSMutableArray arrayWithCapacity:5];
             NSDictionary *predictionInfo = [NSMutableDictionary dictionaryWithCapacity:3];

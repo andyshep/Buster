@@ -53,6 +53,13 @@
 	self.navigationItem.rightBarButtonItem = refreshButton;
     [refreshButton release];
     
+    BSGradientView *aBackgroundView = [[BSGradientView alloc] initWithFrame:self.view.bounds];
+    [aBackgroundView setGradient:[BSAppTheme greyGradientColor]];
+    [self.tableView setBackgroundView:aBackgroundView];
+    [aBackgroundView release];
+    
+    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    
     model_ = [[BSPredictionsModel alloc] init];
     
     [model_ addObserver:self 

@@ -32,7 +32,7 @@
     BSDirectionsModel *model_;
 }
 
-@property (nonatomic, retain) NSString *stopTag;
+@property (nonatomic, retain) NSString *stopTag, *directionTitle;
 @property (nonatomic, retain) IBOutlet UITableView *tableView;
 @property (nonatomic, retain) IBOutlet UIToolbar *bottomToolbar;
 @property (nonatomic, retain) UISegmentedControl *directionControl;

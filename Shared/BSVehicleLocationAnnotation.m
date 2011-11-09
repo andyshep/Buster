@@ -39,9 +39,23 @@
 	return [[[[self class] alloc] initWithCoordinate:coordinate] autorelease];
 }
 
++ (id)annotationWithTitle:(NSString *)title andCoordinate:(CLLocationCoordinate2D)coordinate {
+	return [[[[self class] alloc] initWithTitle:title andCoordinate:coordinate] autorelease];
+}
+
+- (id)initWithTitle:(NSString *)title andCoordinate:(CLLocationCoordinate2D)coordinate {
+    if ((self = [super init])) {
+        self.coordinate = coordinate;
+        self.title = title;
+    }
+    
+    return self;
+}
+
 - (id)initWithCoordinate:(CLLocationCoordinate2D)coordinate {
 	if ((self = [super init])) {
 		self.coordinate = coordinate;
+        self.title = @"testing";
 	}
 	
 	return self;

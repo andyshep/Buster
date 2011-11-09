@@ -65,6 +65,8 @@
         NSError *error_ = nil;
         SMXMLDocument *xml = [SMXMLDocument documentWithData:object error:&error_];
         
+        NSLog(@"xml: %@", xml);
+        
         if (!error_) {
             
             NSMutableDictionary *vehicleLocation = [NSMutableDictionary dictionaryWithCapacity:3];
@@ -76,14 +78,17 @@
                     // found a matching vehicle id so 
                     // the vehicle we want is currently vehicleElement
                     
-                    NSString *_vehicleId = [vehicleElement attributeNamed:@"id"];
+                    // NSString *_vehicleId = [vehicleElement attributeNamed:@"id"];
                     NSString *_latitude = [vehicleElement attributeNamed:@"lat"];
                     NSString *_longitude = [vehicleElement attributeNamed:@"lon"];
+                    NSString *_secondsStringReport = [vehicleElement attributeNamed:@"secsSinceReport"];
                     
-                    NSLog(@"found vehicle %@ at %@, %@", _vehicleId, _latitude, _longitude);
+                    //NSLog(@"found vehicle %@ at %@, %@", _vehicleId, _latitude, _longitude);
+                    NSLog(@"%@", [vehicleElement attributeNamed:@"secsSinceReport"]);
                     
                     [vehicleLocation setObject:_longitude forKey:@"longitude"];
                     [vehicleLocation setObject:_latitude forKey:@"latitude"];
+                    [vehicleLocation setObject:_secondsStringReport forKey:@"lastSeen"];
                     
                     NSLog(@"vehicleLocation: %@", vehicleLocation);
                     

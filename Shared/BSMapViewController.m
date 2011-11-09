@@ -120,7 +120,10 @@
         region.span = span;
         region.center = location;
         
-        BSVehicleLocationAnnotation *vehicleLocation = [[BSVehicleLocationAnnotation alloc] initWithCoordinate:location];
+        NSString *lastSeen = [locData objectForKey:@"lastSeen"];
+        NSString *title = [NSString stringWithFormat:@"updated %@ seconds ago", lastSeen];
+        
+        BSVehicleLocationAnnotation *vehicleLocation = [[BSVehicleLocationAnnotation alloc] initWithTitle:title andCoordinate:location];
         
         [mapView setRegion:region animated:YES];
         [mapView regionThatFits:region];
@@ -145,10 +148,6 @@
     NSLog(@"dropPinForLocation:");
 	[model_ requestLocationOfVehicle:vehicle runningRoute:route atEpochTime:time];
     [popoverController dismissPopoverAnimated:YES];
-}
-
-- (void)updateLocation {
-    
 }
 
 #pragma mark - Memory management

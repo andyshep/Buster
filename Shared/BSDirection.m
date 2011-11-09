@@ -58,16 +58,17 @@
 #pragma mark -
 #pragma NSCoding
 
+// http://www.cocoadev.com/index.pl?NSCoder
+// 
 - (id)initWithCoder:(NSCoder *)coder {
-	
-	[super init];
-	
-	self.tag = [coder decodeObjectForKey:@"tag"];
-	self.name = [coder decodeObjectForKey:@"name"];
-	self.title = [coder decodeObjectForKey:@"title"];
-    self.stops = [coder decodeObjectForKey:@"stops"];
-	
-	return self;
+    if (self = [super init]) {
+        self.tag = [coder decodeObjectForKey:@"tag"];
+        self.name = [coder decodeObjectForKey:@"name"];
+        self.title = [coder decodeObjectForKey:@"title"];
+        self.stops = [coder decodeObjectForKey:@"stops"];
+    }
+    
+    return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)coder {

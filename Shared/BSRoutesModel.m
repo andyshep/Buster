@@ -111,6 +111,8 @@
         MBTAQueryStringBuilder *_builder = [MBTAQueryStringBuilder sharedInstance];
         NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[_builder buildRouteListQuery]]];
 
+        NSLog(@"routeList: %@", [_builder buildRouteListQuery]);
+        
         AFHTTPRequestOperation *operation = [AFHTTPRequestOperation HTTPRequestOperationWithRequest:request success:^(id object) {
             NSError *error_ = nil;
             SMXMLDocument *xml = [SMXMLDocument documentWithData:object error:&error_];

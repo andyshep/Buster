@@ -46,4 +46,6 @@
 - (void)reloadRoutes;
 - (void)layoutRoutesListControl;
 
+- (CGRect)sizeForString:(NSString *)string;
+
 @end

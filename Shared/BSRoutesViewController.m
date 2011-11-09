@@ -27,6 +27,8 @@
 
 #import "BSRoutesViewController.h"
 
+#define ROUTE_CELL_DEFAULT_HEIGHT       64.0
+#define ROUTE_ENDPOINTS_DEFAULT_HEIGHT  36.0
 
 @implementation BSRoutesViewController
 
@@ -90,14 +92,21 @@
 }
 
 - (void)layoutRoutesListControl {
+    NSLog(@"layoutRoutesListControl: %f", self.view.bounds.size.width);
+    
     NSArray *routeListControlItems = [NSArray arrayWithObjects:NSLocalizedString(@"All Routes", @"All Routes"),
                                         NSLocalizedString(@"Favorites", @"Favorites"), nil];
     
 	self.routesListControl = [[[UISegmentedControl alloc] initWithItems:routeListControlItems] autorelease];
 	self.routesListControl.segmentedControlStyle = UISegmentedControlStyleBar;
-	//self.routesListControl.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
 	self.routesListControl.frame = CGRectMake(0, 0, 305, 30);
 	self.routesListControl.selectedSegmentIndex = 0;
+    
+    // no idea why tihs causes layout issues on the pad
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+    	self.routesListControl.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    }
+    
 	UIBarButtonItem *buttonItem = [[UIBarButtonItem alloc] initWithCustomView:self.routesListControl];
 	
 	self.bottomToolbar.items = [NSArray arrayWithObjects:buttonItem, nil];
@@ -105,6 +114,8 @@
 	[self.routesListControl addTarget:self action:@selector(switchRoutesList:) forControlEvents:UIControlEventValueChanged];
 	
 	[buttonItem release];
+    
+    [self.bottomToolbar setNeedsLayout];
 }
 
 #pragma mark -
@@ -119,7 +130,20 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 64.0f;
+    
+    BSRoute *route = (BSRoute *)[model_ objectInRoutesAtIndex:indexPath.row];
+    CGRect textFrame = [self sizeForString:route.endpoints];
+    float padding = ROUTE_CELL_DEFAULT_HEIGHT - ROUTE_ENDPOINTS_DEFAULT_HEIGHT;
+    
+    if (textFrame.size.height <= ROUTE_ENDPOINTS_DEFAULT_HEIGHT) {
+        return ROUTE_CELL_DEFAULT_HEIGHT;
+    }
+    else {
+        // needs to be mod 2 for pixel alignment?
+        // here padding represents the additional space
+        // needs for route title label
+        return textFrame.size.height + padding;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -136,14 +160,14 @@
     
 	BSRoute *route = (BSRoute *)[model_ objectInRoutesAtIndex:indexPath.row];
 	
-	cell.routeNumberLabel.text = route.tag;
+	cell.routeNumberLabel.text = route.title;
     
     if (route.endpoints != nil) {
         cell.routeEndpointsLabel.text = route.endpoints;
         cell.routeEndpointsLabel.adjustsFontSizeToFitWidth = YES;
-        //cell.routeEndpointsLabel.numberOfLines = 0;
+        cell.routeEndpointsLabel.numberOfLines = 0;
     } else {
-        cell.routeEndpointsLabel.text = @"unknown";
+        cell.routeEndpointsLabel.text = @"Indeterminate Route Endpoints";
         //cell.routeEndpointsLabel.numberOfLines = 1;
     }
     
@@ -163,6 +187,18 @@
 	[self.navigationController pushViewController:nextController animated:YES];
 	
 	[nextController release];
+}
+
+- (CGRect)sizeForString:(NSString *)string {
+    
+    // where 300 is the width of the label...
+    CGSize constraint = CGSizeMake(269.0f, 20000.0f);        
+    CGSize size = [string sizeWithFont:[BSAppTheme twelvePointlabelFont] constrainedToSize:constraint lineBreakMode:UILineBreakModeWordWrap];
+    CGRect commentTextRect = CGRectMake(11, 
+                                        32, 
+                                        269, 
+                                        size.height);
+    return commentTextRect;
 }
 
 #pragma mark -

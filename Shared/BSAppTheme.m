@@ -78,14 +78,14 @@
 }
 
 + (CGGradientRef)greyGradientColor {
-	UIColor *topColor = [UIColor colorWithRed:152.0f/255.0f 
-                                        green:169.0f/255.0f 
-                                         blue:179.0f/255.0f 
+	UIColor *topColor = [UIColor colorWithRed:213.0f/255.0f 
+                                        green:219.0f/255.0f 
+                                         blue:224.0f/255.0f 
                                         alpha:1.0f];
 	
-	UIColor *bottomColor = [UIColor colorWithRed:(124.0f/255.f) 
-										   green:(133.0f/255.0f) 
-											blue:(138.0f/255.0f) 
+	UIColor *bottomColor = [UIColor colorWithRed:(188.0f/255.f) 
+										   green:(186.0f/255.0f) 
+											blue:(181.0f/255.0f) 
 										   alpha:(1.0f)];
 	
 	return BSGradientWithColors(topColor, bottomColor);

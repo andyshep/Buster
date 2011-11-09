@@ -77,15 +77,6 @@
 	mapViewController.time = time;
 	
 	[mapViewController dropPinForLocation];
-	
-	//  TODO: implement
-	//	updateTimer = [NSTimer scheduledTimerWithTimeInterval:60.0f 
-	//												   target:self 
-	//												 selector:@selector(updateVehicleLocation:) 
-	//												 userInfo:nil
-	//												  repeats:YES];
-	//	
-	//	[updateTimer fire];
 }
 
 

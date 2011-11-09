@@ -7,3 +7,6 @@
 [submodule "Vendor/SMXMLDocument"]
 	path = Vendor/SMXMLDocument
 	url = https://github.com/nfarina/xmldocument
+[submodule "Vendor/JMNoise"]
+	path = Vendor/JMNoise
+	url = https://github.com/jasonmorrissey/JMNoise.git
