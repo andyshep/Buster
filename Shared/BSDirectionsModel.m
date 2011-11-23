@@ -99,6 +99,14 @@
 //    [stopListOp_ addObserver:self forKeyPath:@"isFinished" options:NSKeyValueObservingOptionNew context:NULL];
 //    [opQueue_ addOperation:stopListOp_];
     
+    // NSDictionary *routeEndpoints = [NSDictionary dictionaryWithContentsOfFile:[self routesEndpointsArchivePath]];
+    NSString *cachedFilePath = [self archivePathForStop:stop];
+    
+    if (self.stops == nil) {
+        NSLog(@"loading from disk...");
+        // self.stops = [NSKeyedUnarchiver unarchiveObjectWithFile:cachedFilePath];
+    }
+    
     if (self.stops == nil) {
         NSLog(@"loading stops from the intertubes...");
         
@@ -225,15 +233,16 @@
     return [documentDirectoryPath stringByAppendingPathComponent:aPath];
 }
 
-- (NSString *)stopsArchivePath {
-    return [self pathInDocumentDirectory:@"stops.data"];
+- (NSString *)archivePathForStop:(NSString *)stop {
+    NSString *filename = [NSString stringWithFormat:@"stops_%@.data", stop];
+    return [self pathInDocumentDirectory:filename];
 }
 
-- (BOOL)saveChanges {
+- (BOOL)saveArchiveForStops:(NSString *)stop {
     // TODO: probbaly want to archive directions
     // returns success or failure
     return [NSKeyedArchiver archiveRootObject:self.stops
-                                       toFile:[self stopsArchivePath]];
+                                       toFile:[self stopsArchivePath:stop]];
 }
 
 @end

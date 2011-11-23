@@ -28,9 +28,9 @@
 #import "BSDirectionsViewController.h"
 #import "BSRoute.h"
 #import "BSRoutesModel.h"
-
 #import "BSRoutesTableViewCell.h"
 
+#import "ShadowedTableView.h"
 
 @protocol MapViewControllerDelegate;
 
@@ -38,7 +38,7 @@
     BSRoutesModel *model_;
 }
 
-@property (nonatomic, retain) IBOutlet UITableView *tableView;
+@property (nonatomic, retain) IBOutlet ShadowedTableView *tableView;
 @property (nonatomic, retain) IBOutlet UIToolbar *bottomToolbar;
 @property (nonatomic, retain) UISegmentedControl *routesListControl;
 

@@ -2,15 +2,14 @@
 //  BSRoutesTableViewCell.h
 //  Buster
 //
-//  Created by Andrew Shepard on 11/6/11.
+//  Created by Andrew Shepard on 11/11/11.
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "BSGradientView.h"
 
 @interface BSRoutesTableViewCell : UITableViewCell
 
-@property (nonatomic, retain) IBOutlet UILabel *routeNumberLabel;
-@property (nonatomic, retain) IBOutlet UILabel *routeEndpointsLabel;
+@property (nonatomic, retain) UILabel *routeNumberLabel, *routeEndpointsLabel;
 
 @end

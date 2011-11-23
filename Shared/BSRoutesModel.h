@@ -38,7 +38,7 @@
 @property (copy) NSArray *routes;
 @property (copy) NSError *error;
 
-- (void) requestRouteList;
+- (void)requestRouteList;
 
 - (NSUInteger)countOfRoutes;
 - (id)objectInRoutesAtIndex:(NSUInteger)index;

@@ -43,10 +43,10 @@
 }
 
 + (UIColor *)veryDarkGrey {
-    return [UIColor colorWithRed:1.0f/255.0f 
-                           green:15.0f/255.0f 
-                            blue:42.0f/255.0f 
-                           alpha:0.0f];
+    return [UIColor colorWithRed:74.0f/255.0f 
+                           green:74.0f/255.0f 
+                            blue:74.0f/255.0f 
+                           alpha:1.0f];
 }
 
 + (CGGradientRef)blueishGradientColor {
@@ -63,29 +63,29 @@
 	return BSGradientWithColors(topColor, bottomColor);
 }
 
-+ (CGGradientRef)tanGradientColor {
++ (CGGradientRef)yellowGradientColor {
 	UIColor *topColor = [UIColor colorWithRed:242.0f/255.0f 
-                                         green:242.0f/255.0f 
-                                          blue:239.0f/255.0f 
+                                         green:238.0f/255.0f 
+                                          blue:182.0f/255.0f 
                                          alpha:1.0f];
 	
-	UIColor *bottomColor = [UIColor colorWithRed:(252.0f/255.f) 
-										   green:(252.0f/255.0f) 
-											blue:(251.0f/255.0f) 
+	UIColor *bottomColor = [UIColor colorWithRed:(235.0f/255.f) 
+										   green:(238.0f/255.0f) 
+											blue:(144.0f/255.0f) 
 										   alpha:(1.0f)];
 	
-	return BSGradientWithColors(bottomColor, topColor);
+	return BSGradientWithColors(topColor, bottomColor);
 }
 
 + (CGGradientRef)greyGradientColor {
-	UIColor *topColor = [UIColor colorWithRed:213.0f/255.0f 
-                                        green:219.0f/255.0f 
-                                         blue:224.0f/255.0f 
+	UIColor *topColor = [UIColor colorWithRed:232.0f/255.0f 
+                                        green:232.0f/255.0f 
+                                         blue:232.0f/255.0f 
                                         alpha:1.0f];
 	
-	UIColor *bottomColor = [UIColor colorWithRed:(188.0f/255.f) 
-										   green:(186.0f/255.0f) 
-											blue:(181.0f/255.0f) 
+	UIColor *bottomColor = [UIColor colorWithRed:(215.0f/255.f) 
+										   green:(215.0f/255.0f) 
+											blue:(215.0f/255.0f) 
 										   alpha:(1.0f)];
 	
 	return BSGradientWithColors(topColor, bottomColor);

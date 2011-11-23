@@ -63,6 +63,7 @@
         self.title = [coder decodeObjectForKey:@"title"];
         self.tag = [coder decodeObjectForKey:@"tag"];
         self.stops = [coder decodeObjectForKey:@"stops"];
+        self.endpoints = [coder decodeObjectForKey:@"endpoints"];
     }
     
     return self;
@@ -73,6 +74,7 @@
 	[coder encodeObject:self.title forKey:@"title"];
 	[coder encodeObject:self.tag forKey:@"tag"];
 	[coder encodeObject:self.stops forKey:@"stops"];
+    [coder encodeObject:self.endpoints forKey:@"endpoints"];
 }
 
 @end

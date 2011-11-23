@@ -2,7 +2,7 @@
 //  BSRoutesTableViewCell.m
 //  Buster
 //
-//  Created by Andrew Shepard on 11/6/11.
+//  Created by Andrew Shepard on 11/11/11.
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
 
@@ -10,26 +10,52 @@
 
 @implementation BSRoutesTableViewCell
 
-@synthesize routeNumberLabel = _routeNumberLabel;
-@synthesize routeEndpointsLabel = _routeEndpointsLabel;
+@synthesize routeNumberLabel = _routeNumberLabel, routeEndpointsLabel = _routeEndpointsLabel;
 
-- (void)dealloc {
-    [_routeEndpointsLabel release];
-    [_routeNumberLabel release];
-    [super dealloc];
-}
-
-- (void)awakeFromNib {
-    // self.routeEndpointsLabel.numberOfLines = 4;
-}
-
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+- (id)init
 {
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    self = [super init];
     if (self) {
-        // Initialization code
+        CGRect frame = CGRectMake(0.0f, 0.0f, 320.0f, 64.0f);
+        UIView *containerView = [[[UIView alloc] initWithFrame:frame] autorelease];
+        
+        self.routeNumberLabel = [[[UILabel alloc] initWithFrame:CGRectMake(8.0, 6.0, 272.0, 14.0)] autorelease];
+        self.routeEndpointsLabel = [[[UILabel alloc] initWithFrame:CGRectMake(8.0, 14.0, 272.0, 36.0)] autorelease];
+        
+        self.routeNumberLabel.font = [UIFont boldSystemFontOfSize:20.0];
+        self.routeNumberLabel.backgroundColor = [UIColor clearColor];
+        self.routeEndpointsLabel.font = [BSAppTheme twelvePointlabelFont];
+        self.routeEndpointsLabel.numberOfLines = 4;
+        self.routeEndpointsLabel.textColor = [BSAppTheme veryDarkGrey];
+        self.routeEndpointsLabel.backgroundColor = [UIColor clearColor];
+        self.routeEndpointsLabel.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+        
+        [containerView setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
+        
+        [containerView addSubview:self.routeNumberLabel];
+        [containerView addSubview:self.routeEndpointsLabel];
+        
+        [self addSubview:containerView];
+        
+        BSGradientView *backgroundView = [[BSGradientView alloc] initWithFrame:frame];
+        [self setBackgroundView:backgroundView];
+        [backgroundView release];
+        
+        BSGradientView *selectedView = [[BSGradientView alloc] initWithFrame:frame];
+        selectedView.gradient = [BSAppTheme yellowGradientColor];
+        [self setSelectedBackgroundView:selectedView];
+        [selectedView release];
+        
+        [self setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
     }
     return self;
+}
+
+- (void)dealloc {
+    [_routeNumberLabel release];
+    [_routeEndpointsLabel release];
+    
+    [super dealloc];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

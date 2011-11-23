@@ -62,7 +62,7 @@
     [self.tableView setBackgroundColor:[UIColor whiteColor]];
     [self.tableView setSeparatorColor:[UIColor lightGrayColor]];
     
-    [self layoutRoutesListControl];
+    // [self layoutRoutesListControl];
     
     model_ = [[BSRoutesModel alloc] init];
     
@@ -152,8 +152,10 @@
     
     BSRoutesTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:RouteCellIdentifier];
     if (cell == nil) {
-        NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"BSRoutesTableViewCell" owner:self options:nil];
-        cell = [topLevelObjects objectAtIndex:0];
+//        NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"BSRoutesTableViewCell" owner:self options:nil];
+//        cell = [topLevelObjects objectAtIndex:0];
+
+        cell = [[BSRoutesTableViewCell alloc] init];
         
         //cell.routeEndpointsLabel.numberOfLines = 4;
     }

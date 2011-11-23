@@ -33,9 +33,9 @@
     CGContextRef c = UIGraphicsGetCurrentContext();
 	BSDrawGradientInRect(c, _gradient, rect);
     
-    //if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-    [self applyNoise];
-    //}
+//    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+//        [self applyNoise];
+//    }
 }
 
 @end

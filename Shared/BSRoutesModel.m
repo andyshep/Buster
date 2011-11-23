@@ -100,10 +100,11 @@
 
 - (void) requestRouteList {
     NSDictionary *routeEndpoints = [NSDictionary dictionaryWithContentsOfFile:[self routesEndpointsArchivePath]];
+    NSString *cachedFilePath = [self routesArchivePath];
     
     if (self.routes == nil) {
         NSLog(@"loading from disk...");
-        self.routes = [NSKeyedUnarchiver unarchiveObjectWithFile:[self routesArchivePath]];
+        self.routes = [NSKeyedUnarchiver unarchiveObjectWithFile:cachedFilePath];
     }
     
     if (self.routes == nil) {
@@ -119,7 +120,7 @@
             
             // make sure there was no error parsing the xml
             if (!error_) {
-                NSMutableArray *routeList = [NSMutableArray arrayWithCapacity:20];
+                NSMutableArray *mRouteList = [NSMutableArray arrayWithCapacity:20];
                 
                 for (SMXMLElement *routeElement in [xml.root childrenNamed:@"route"]) {
                     
@@ -134,11 +135,15 @@
                         route.endpoints = endpoints;
                     }
                     
-                    [routeList addObject:route];
+                    [mRouteList addObject:route];
                     [route release];
                 }
                 
-                self.routes = [NSArray arrayWithArray:routeList];
+                NSArray *aRouteList = [NSArray arrayWithArray:mRouteList];
+                self.routes = aRouteList;
+                
+                // save the routes the disk for next time
+                [NSKeyedArchiver archiveRootObject:aRouteList toFile:cachedFilePath];
             }
             
         } failure:^(NSHTTPURLResponse *response, NSError *err) {

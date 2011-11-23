@@ -19,7 +19,7 @@
 + (UIColor *)lightTanColor;
 + (UIColor *)veryDarkGrey;
 
-+ (CGGradientRef)tanGradientColor;
++ (CGGradientRef)yellowGradientColor;
 + (CGGradientRef)blueishGradientColor;
 + (CGGradientRef)greyGradientColor;
 
