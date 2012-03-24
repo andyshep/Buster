@@ -25,11 +25,8 @@
 //  THE SOFTWARE.
 //
 
-#import "AFHTTPRequestOperation.h"
-#import "AFNetworkActivityIndicatorManager.h"
-
 #import "SMXMLDocument.h"
-
+#import "BSMBTARequestOperation.h"
 #import "MBTAQueryStringBuilder.h"
 #import "BSRoute.h"
 

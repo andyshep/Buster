@@ -25,7 +25,7 @@
 //  THE SOFTWARE.
 //
 
-#import "AFHTTPRequestOperation.h"
+#import "BSMBTARequestOperation.h"
 #import "MBTAQueryStringBuilder.h"
 #import "SMXMLDocument.h"
 

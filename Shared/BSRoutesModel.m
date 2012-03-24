@@ -38,7 +38,7 @@
 - (id) init {
 	if ((self = [super init])) {
 		self.routes = nil, self.error = nil;
-        [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
+        // [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
     }
 	
     return self;
@@ -98,7 +98,7 @@
 #pragma mark -
 #pragma mark Route List building
 
-- (void) requestRouteList {
+- (void)requestRouteList {
     NSDictionary *routeEndpoints = [NSDictionary dictionaryWithContentsOfFile:[self routesEndpointsArchivePath]];
     NSString *cachedFilePath = [self routesArchivePath];
     
@@ -114,7 +114,7 @@
 
         NSLog(@"routeList: %@", [_builder buildRouteListQuery]);
         
-        AFHTTPRequestOperation *operation = [AFHTTPRequestOperation HTTPRequestOperationWithRequest:request success:^(id object) {
+        BSMBTARequestOperation *operation = [BSMBTARequestOperation MBTARequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id object) {
             NSError *error_ = nil;
             SMXMLDocument *xml = [SMXMLDocument documentWithData:object error:&error_];
             
@@ -145,8 +145,7 @@
                 // save the routes the disk for next time
                 [NSKeyedArchiver archiveRootObject:aRouteList toFile:cachedFilePath];
             }
-            
-        } failure:^(NSHTTPURLResponse *response, NSError *err) {
+        } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *err) {
             self.error = err;
         }];
         
