@@ -26,7 +26,7 @@
 //
 
 #import "MBTAQueryStringBuilder.h"
-#import "AFHTTPRequestOperation.h"
+#import "BSMBTARequestOperation.h"
 #import "SMXMLDocument.h"
 
 

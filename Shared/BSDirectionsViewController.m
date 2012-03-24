@@ -49,10 +49,7 @@
 	[super viewDidLoad];
 	
     [[self navigationItem] setTitle:NSLocalizedString(@"Stops", @"Stops title")];
-    
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-        [[self bottomToolbar] setTintColor:[BSAppTheme lightBlueColor]];
-    }
+    [[self bottomToolbar] setTintColor:[BSAppTheme lightBlueColor]];
     
 //    UIBarButtonItem *addToFavoritesButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"28-star.png"] style:UIBarButtonItemStylePlain target:self action:@selector(somthing)];
 //    [[self navigationItem] setRightBarButtonItem:addToFavoritesButton];

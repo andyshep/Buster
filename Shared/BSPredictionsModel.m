@@ -78,11 +78,11 @@
     NSString *urlString = [[MBTAQueryStringBuilder sharedInstance] buildPredictionsQueryForRoute:route withDirection:nil atStop:stop];
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     
-    AFHTTPRequestOperation *operation = [AFHTTPRequestOperation HTTPRequestOperationWithRequest:request success:^(id object) {
+    BSMBTARequestOperation *operation = [BSMBTARequestOperation MBTARequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id object) {
         NSError *error_ = nil;
         SMXMLDocument *xml = [SMXMLDocument documentWithData:object error:NULL];
         
-       // NSLog(@"%@", xml);
+        // NSLog(@"%@", xml);
         
         if (!error_) {
             NSMutableArray *predictions = [NSMutableArray arrayWithCapacity:5];
@@ -111,7 +111,7 @@
             self.predictionMeta = [NSDictionary dictionaryWithDictionary:predictionInfo];
             self.predictions = [NSArray arrayWithArray:predictions];
         }
-    } failure:^(NSHTTPURLResponse *response, NSError *err) {
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *err) {
         self.error = err;
     }];
     

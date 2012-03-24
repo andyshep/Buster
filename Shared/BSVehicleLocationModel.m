@@ -61,7 +61,7 @@
     
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:locationURL]];
     
-    AFHTTPRequestOperation *operation = [AFHTTPRequestOperation HTTPRequestOperationWithRequest:request success:^(id object) {
+    BSMBTARequestOperation *operation = [BSMBTARequestOperation MBTARequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id object) {
         NSError *error_ = nil;
         SMXMLDocument *xml = [SMXMLDocument documentWithData:object error:&error_];
         
@@ -96,8 +96,8 @@
                 }
             }
         }
-    } failure:^(NSHTTPURLResponse *response, NSError *error) {
-        //
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+        // TODO: handle failure
     }];
     
     NSOperationQueue *queue = [[[NSOperationQueue alloc] init] autorelease];

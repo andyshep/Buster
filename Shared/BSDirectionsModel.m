@@ -105,7 +105,7 @@
         MBTAQueryStringBuilder *_builder = [MBTAQueryStringBuilder sharedInstance];
         NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[_builder buildRouteConfigQuery:stop]]];
         
-        AFHTTPRequestOperation *operation = [AFHTTPRequestOperation HTTPRequestOperationWithRequest:request success:^(id object) {
+        BSMBTARequestOperation *operation = [BSMBTARequestOperation MBTARequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id object) {
             NSError *error_ = nil;
             SMXMLDocument *xml = [[SMXMLDocument alloc] initWithData:object error:NULL];
             
@@ -183,8 +183,8 @@
             }
             
             [xml release];
-        } failure:^(NSHTTPURLResponse *response, NSError *error) {
-            //
+        } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+            // TODO: handle failure
         }];
         
         NSOperationQueue *queue = [[[NSOperationQueue alloc] init] autorelease];

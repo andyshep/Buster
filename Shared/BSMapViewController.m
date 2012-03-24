@@ -39,6 +39,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [[self toolbar] setTintColor:[BSAppTheme lightBlueColor]];
+    
     model_ = [[BSVehicleLocationModel alloc] init];
     [model_ addObserver:self 
              forKeyPath:@"location" 
@@ -51,7 +53,7 @@
                 context:NULL];
     
     // zoom center on boston
-    CLLocationCoordinate2D boston = CLLocationCoordinate2DMake(42.37, -71.03);
+    CLLocationCoordinate2D boston = CLLocationCoordinate2DMake(42.37f, -71.03f);
     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(boston, 15 * 1000, 15 * 1000);
 	[mapView setRegion:region animated:YES];
     
