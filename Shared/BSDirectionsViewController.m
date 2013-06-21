@@ -127,7 +127,7 @@
 	UILabel *routeLabel = [[UILabel alloc] initWithFrame:CGRectInset(containerView.bounds, 5.0, 0.0)];
 	
 	routeLabel.text = [model_ title];
-	routeLabel.textAlignment = UITextAlignmentCenter;
+	routeLabel.textAlignment = NSTextAlignmentCenter;
 	routeLabel.adjustsFontSizeToFitWidth = YES;
     routeLabel.font = [UIFont boldSystemFontOfSize:16.0];
     routeLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;

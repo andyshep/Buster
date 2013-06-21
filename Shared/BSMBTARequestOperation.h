@@ -16,4 +16,6 @@
                                                         success:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, id object))success
                                                         failure:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error))failure;
 
+- (id)initWithRequest:(NSURLRequest *)urlRequest;
+
 @end

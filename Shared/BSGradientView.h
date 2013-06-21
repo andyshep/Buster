@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "BSArtistTools.h"
 #import "BSAppTheme.h"
-#import "UIView+JMNoise.h"
 
 @interface BSGradientView : UIView
 

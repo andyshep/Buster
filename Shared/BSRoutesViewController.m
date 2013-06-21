@@ -193,7 +193,7 @@
     
     // where 300 is the width of the label...
     CGSize constraint = CGSizeMake(269.0f, 20000.0f);        
-    CGSize size = [string sizeWithFont:[BSAppTheme twelvePointlabelFont] constrainedToSize:constraint lineBreakMode:UILineBreakModeWordWrap];
+    CGSize size = [string sizeWithFont:[BSAppTheme twelvePointlabelFont] constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
     CGRect commentTextRect = CGRectMake(11, 
                                         32, 
                                         269, 

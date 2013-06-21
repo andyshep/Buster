@@ -49,6 +49,5 @@
 - (void)getStops:(id *)objects range:(NSRange)range;
 
 - (NSString *)archivePathForStop:(NSString *)stop;
-- (BOOL)saveArchiveForStops:(NSString *)stop;
 
 @end
