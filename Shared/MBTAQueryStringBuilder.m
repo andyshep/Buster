@@ -31,10 +31,15 @@ static NSString *MBTABaseQueryURL = @"http://webservices.nextbus.com/service/pub
 
 @implementation MBTAQueryStringBuilder
 
-@synthesize baseURL = _baseURL;
-
-#pragma mark -
-#pragma mark Memory Manangement
++ (MBTAQueryStringBuilder *)sharedInstance {
+    static MBTAQueryStringBuilder *_shared = nil;
+    static dispatch_once_t pred;
+    dispatch_once(&pred, ^{
+        _shared = [[MBTAQueryStringBuilder alloc] init];
+    });
+    
+    return _shared;
+}
 
 - (id)init {
 	if ((self = [super init])) {
@@ -44,25 +49,7 @@ static NSString *MBTABaseQueryURL = @"http://webservices.nextbus.com/service/pub
 	return self;
 }
 
-
-#pragma mark - Singleton
-
-// http://cocoasamurai.blogspot.com/2011/04/singletons-your-doing-them-wrong.html
-//
-+ (MBTAQueryStringBuilder *)sharedInstance {
-    static dispatch_once_t pred;
-    static MBTAQueryStringBuilder *shared = nil;
-    
-    dispatch_once(&pred, ^{
-        shared = [[MBTAQueryStringBuilder alloc] init];
-    });
-    
-    return shared;
-}
-
-#pragma mark -
-#pragma mark Query Builders
-
+#pragma mark - Query Builders
 - (NSString *)buildRouteListQuery {
 	return [_baseURL stringByAppendingString:@"?command=routeList&a=mbta"];
 }
@@ -83,16 +70,13 @@ static NSString *MBTABaseQueryURL = @"http://webservices.nextbus.com/service/pub
 					  stringByAppendingString:stop];
 	
 	return predictionsURL;
-	
 }
 
 - (NSString *)buildLocationsQueryForRoute:(NSString *)route withEpochTime:(NSString *)time {
-	
 	// http://webservices.nextbus.com/service/publicXMLFeed?command=vehicleLocations&a=mbta&r=57&t=1289479052149
 	
 	NSString *locationsURL = [[_baseURL stringByAppendingString:@"?command=vehicleLocations&a=mbta&r="] 
 							  stringByAppendingString:route];
-	
 	locationsURL = [[locationsURL stringByAppendingString:@"&t="]
 					stringByAppendingString:time];
 	
