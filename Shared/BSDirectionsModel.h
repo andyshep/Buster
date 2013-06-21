@@ -36,13 +36,10 @@
 @property (nonatomic, copy) NSString *title;
 
 - (void)requestDirectionsList:(NSString *)stop;
-- (void)unloadStopList;
 - (void)loadStopsForDirection:(NSUInteger)directionIndex;
 
 - (NSUInteger)countOfStops;
 - (id)objectInStopsAtIndex:(NSUInteger)index;
 - (void)getStops:(__unsafe_unretained id *)objects range:(NSRange)range;
-
-- (NSString *)archivePathForStop:(NSString *)stop;
 
 @end

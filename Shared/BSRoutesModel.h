@@ -36,6 +36,4 @@
 - (id)objectInRoutesAtIndex:(NSUInteger)index;
 - (void)getRoutes:(__unsafe_unretained id *)objects range:(NSRange)range;
 
-- (NSString *)routesEndpointsArchivePath;
-
 @end

@@ -26,13 +26,18 @@
 //
 
 #import "BSRoutesModel.h"
-
 #import "BSRoute.h"
 
 #import "BSMBTARequestOperation.h"
 #import "MBTAQueryStringBuilder.h"
 
 #import "SMXMLDocument.h"
+
+@interface BSRoutesModel ()
+
+- (NSString *)routesEndpointsArchivePath;
+
+@end
 
 @implementation BSRoutesModel
 

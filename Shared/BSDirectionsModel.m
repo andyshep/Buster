@@ -35,6 +35,13 @@
 
 #import "SMXMLDocument.h"
 
+@interface BSDirectionsModel ()
+
+- (void)unloadStopList;
+- (NSString *)archivePathForStop:(NSString *)stop;
+
+@end
+
 @implementation BSDirectionsModel
 
 - (id)init {
