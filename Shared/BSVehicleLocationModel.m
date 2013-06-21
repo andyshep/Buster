@@ -27,43 +27,30 @@
 
 #import "BSVehicleLocationModel.h"
 
+#import "MBTAQueryStringBuilder.h"
+#import "BSMBTARequestOperation.h"
+#import "SMXMLDocument.h"
 
 @implementation BSVehicleLocationModel
 
-@synthesize location = _location, error = _error;
-
-#pragma mark -
-#pragma mark Lifecycle
-
-- (id) init {
+- (id)init {
 	if ((self = [super init])) {
-		self.location = nil;
-        self.error = nil;
+        //
     }
 	
     return self;
 }
 
-
-#pragma mark -
-#pragma mark Location Request
-
 - (void)requestLocationOfVehicle:(NSString *)vehicleId runningRoute:(NSString *)routeNumber atEpochTime:(NSString *)time {
-        
     MBTAQueryStringBuilder *builder = [MBTAQueryStringBuilder sharedInstance];
-	NSString *locationURL = [builder buildLocationsQueryForRoute:routeNumber
-                                                    withEpochTime:@"0"];
-    
+	NSString *locationURL = [builder buildLocationsQueryForRoute:routeNumber withEpochTime:@"0"];
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:locationURL]];
     
     BSMBTARequestOperation *operation = [BSMBTARequestOperation MBTARequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id object) {
-        NSError *error_ = nil;
-        SMXMLDocument *xml = [SMXMLDocument documentWithData:object error:&error_];
+        NSError *error = nil;
+        SMXMLDocument *xml = [SMXMLDocument documentWithData:object error:&error];
         
-        NSLog(@"xml: %@", xml);
-        
-        if (!error_) {
-            
+        if (!error) {
             NSMutableDictionary *vehicleLocation = [NSMutableDictionary dictionaryWithCapacity:3];
             
             for (SMXMLElement *vehicleElement in [xml.root childrenNamed:@"vehicle"]) {
@@ -72,20 +59,13 @@
                 if ([currentVehicleId compare:vehicleId] == 0) {
                     // found a matching vehicle id so 
                     // the vehicle we want is currently vehicleElement
+                    NSString *latitude = [vehicleElement attributeNamed:@"lat"];
+                    NSString *longitude = [vehicleElement attributeNamed:@"lon"];
+                    NSString *secondsStringReport = [vehicleElement attributeNamed:@"secsSinceReport"];
                     
-                    // NSString *_vehicleId = [vehicleElement attributeNamed:@"id"];
-                    NSString *_latitude = [vehicleElement attributeNamed:@"lat"];
-                    NSString *_longitude = [vehicleElement attributeNamed:@"lon"];
-                    NSString *_secondsStringReport = [vehicleElement attributeNamed:@"secsSinceReport"];
-                    
-                    //NSLog(@"found vehicle %@ at %@, %@", _vehicleId, _latitude, _longitude);
-                    NSLog(@"%@", [vehicleElement attributeNamed:@"secsSinceReport"]);
-                    
-                    [vehicleLocation setObject:_longitude forKey:@"longitude"];
-                    [vehicleLocation setObject:_latitude forKey:@"latitude"];
-                    [vehicleLocation setObject:_secondsStringReport forKey:@"lastSeen"];
-                    
-                    NSLog(@"vehicleLocation: %@", vehicleLocation);
+                    [vehicleLocation setObject:longitude forKey:@"longitude"];
+                    [vehicleLocation setObject:latitude forKey:@"latitude"];
+                    [vehicleLocation setObject:secondsStringReport forKey:@"lastSeen"];
                     
                     self.location = [NSDictionary dictionaryWithDictionary:vehicleLocation];
                 }

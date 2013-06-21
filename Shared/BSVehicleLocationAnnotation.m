@@ -27,13 +27,7 @@
 
 #import "BSVehicleLocationAnnotation.h"
 
-
 @implementation BSVehicleLocationAnnotation
-
-@synthesize coordinate = _coordinate;
-@synthesize title = _title;
-@synthesize tag = _tag;
-@synthesize stopId = _stopId;
 
 + (id)annotationWithCoordinate:(CLLocationCoordinate2D)coordinate {
 	return [[[self class] alloc] initWithCoordinate:coordinate];
@@ -60,6 +54,5 @@
 	
 	return self;
 }
-
 
 @end

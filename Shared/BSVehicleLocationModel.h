@@ -25,16 +25,11 @@
 //  THE SOFTWARE.
 //
 
-#import "MBTAQueryStringBuilder.h"
-#import "BSMBTARequestOperation.h"
-#import "SMXMLDocument.h"
-
-
 @interface BSVehicleLocationModel : NSObject
 
-@property (copy) NSDictionary *location;
-@property (copy) NSError *error;
+@property (nonatomic, copy) NSDictionary *location;
+@property (nonatomic, copy) NSError *error;
 
-- (void) requestLocationOfVehicle:(NSString *)vehicleId runningRoute:(NSString *)routeNumber atEpochTime:(NSString *)time;
+- (void)requestLocationOfVehicle:(NSString *)vehicleId runningRoute:(NSString *)routeNumber atEpochTime:(NSString *)time;
 
 @end
