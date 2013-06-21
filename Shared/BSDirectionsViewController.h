@@ -25,17 +25,14 @@
 //  THE SOFTWARE.
 //
 
-#import "BSDirectionsModel.h"
-#import "BSPredictionsViewController.h"
+@interface BSDirectionsViewController : UIViewController
 
-@interface BSDirectionsViewController : UIViewController {
-    BSDirectionsModel *model_;
-}
-
-@property (nonatomic, strong) NSString *stopTag, *directionTitle;
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) IBOutlet UIToolbar *bottomToolbar;
 @property (nonatomic, strong) UISegmentedControl *directionControl;
+
+@property (nonatomic, strong) NSString *stopTag;
+@property (nonatomic, strong) NSString *directionTitle;
 
 - (void)switchDirection:(id)sender;
 - (void)reloadTable;

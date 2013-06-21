@@ -27,22 +27,31 @@
 
 #import "BSDirectionsViewController.h"
 
+#import "BSDirectionsModel.h"
+#import "BSPredictionsViewController.h"
+
+@interface BSDirectionsViewController ()
+
+@property (nonatomic, strong) BSDirectionsModel *model;
+
+@end
 
 @implementation BSDirectionsViewController
 
-@synthesize stopTag = _stopTag, tableView = _tableView, directionControl = _directionControl, bottomToolbar = _bottomToolbar;
-@synthesize directionTitle = _directionTitle;
-
-#pragma mark -
-#pragma mark View Lifecycle
-
 - (id)init {
     if ((self = [super initWithNibName:@"BSDirectionsView" bundle:nil])) {
-        //
         self.directionTitle = @"";
     }
     
     return self;
+}
+
+- (void)dealloc {
+    [_model removeObserver:self forKeyPath:@"directions"];
+    [_model removeObserver:self forKeyPath:@"stops"];
+	[_model removeObserver:self forKeyPath:@"tags"];
+	[_model removeObserver:self forKeyPath:@"title"];
+    [_model removeObserver:self forKeyPath:@"error"];
 }
 
 - (void)viewDidLoad {
@@ -58,34 +67,34 @@
 //	[self showActivityViewer];
     
 	
-	model_ = [[BSDirectionsModel alloc] init];
+	_model = [[BSDirectionsModel alloc] init];
     
-    [model_ addObserver:self 
+    [_model addObserver:self 
              forKeyPath:@"directions" 
                 options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
                 context:@selector(directionsDidLoad)];
     
-    [model_ addObserver:self 
+    [_model addObserver:self 
              forKeyPath:@"stops" 
                 options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
                 context:@selector(stopsDidLoad)];    
 	
-	[model_ addObserver:self 
+	[_model addObserver:self 
              forKeyPath:@"tags" 
                 options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
                 context:@selector(reloadDirectionControl)];
     
-	[model_ addObserver:self 
+	[_model addObserver:self 
              forKeyPath:@"title" 
                 options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
                 context:@selector(titleDidLoad)];
     
-    [model_ addObserver:self 
+    [_model addObserver:self 
              forKeyPath:@"error" 
                 options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
                 context:@selector(operationDidFail)];
 
-    [model_ requestDirectionsList:self.stopTag];
+    [_model requestDirectionsList:self.stopTag];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -115,7 +124,7 @@
 - (void)directionsDidLoad {
     // once the model has all the directions
     // we ask for the zeroth direction
-    [model_ loadStopsForDirection:0];
+    [_model loadStopsForDirection:0];
 }
 
 - (void)stopsDidLoad {
@@ -130,7 +139,7 @@
 	UIView *containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, 30)];
 	UILabel *routeLabel = [[UILabel alloc] initWithFrame:CGRectInset(containerView.bounds, 5.0, 0.0)];
 	
-	routeLabel.text = [model_ title];
+	routeLabel.text = [_model title];
 	routeLabel.textAlignment = NSTextAlignmentCenter;
 	routeLabel.adjustsFontSizeToFitWidth = YES;
     routeLabel.font = [UIFont boldSystemFontOfSize:16.0];
@@ -144,7 +153,7 @@
 	
 //	[self hideActivityViewer];
 	
-	int stopsToAdd = [model_ countOfStops];
+	int stopsToAdd = [_model countOfStops];
 	int stopsToDelete = [self.tableView numberOfRowsInSection:0];
 	
 	[self.tableView beginUpdates];
@@ -171,7 +180,7 @@
     CGRect frame = self.view.bounds;
 	
 	NSMutableArray *items = [NSMutableArray arrayWithCapacity:2];
-	for (int i = 1 ; i <= model_.tags.count ; i++) {
+	for (int i = 1 ; i <= _model.tags.count ; i++) {
 		[items addObject:[NSString stringWithFormat:@"Leg #%d", i]];
 	}
     
@@ -193,7 +202,7 @@
 
 - (void)operationDidFail {    
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"error alert view title") 
-                                                    message:[[model_ error] localizedDescription] 
+                                                    message:[[_model error] localizedDescription] 
                                                    delegate:nil 
                                           cancelButtonTitle:NSLocalizedString(@"OK", @"ok button title") 
                                           otherButtonTitles:nil];
@@ -204,7 +213,7 @@
 #pragma mark UITableViewDataSource methods
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	return [model_ countOfStops];
+	return [_model countOfStops];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -220,7 +229,7 @@
         cell.selectionStyle = UITableViewCellSelectionStyleGray;
     }
     
-	BSDirection *stop = (BSDirection *)[model_ objectInStopsAtIndex:indexPath.row];
+	BSDirection *stop = (BSDirection *)[_model objectInStopsAtIndex:indexPath.row];
 	cell.textLabel.text = stop.title;
 	
 	return cell;
@@ -228,7 +237,7 @@
 
 - (void) tableView:(UITableView *)tView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	
-	BSDirection *stop = (BSDirection *)[model_ objectInStopsAtIndex:indexPath.row];
+	BSDirection *stop = (BSDirection *)[_model objectInStopsAtIndex:indexPath.row];
 	NSString *routeTitle = stop.title;
 	NSString *_tag = stop.tag;
 	
@@ -249,29 +258,7 @@
 
 - (void)switchDirection:(id)sender {
     // tell the model we're switching directions
-    [model_ loadStopsForDirection:self.directionControl.selectedSegmentIndex];
+    [_model loadStopsForDirection:self.directionControl.selectedSegmentIndex];
 }
-
-#pragma mark -
-#pragma mark Memory Management
-
-- (void)didReceiveMemoryWarning {
-	// Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-	
-	// Release any cached data, images, etc that aren't in use.
-}
-
-- (void)dealloc {
-    
-    
-    [model_ removeObserver:self forKeyPath:@"directions"];
-    [model_ removeObserver:self forKeyPath:@"stops"];
-	[model_ removeObserver:self forKeyPath:@"tags"];
-	[model_ removeObserver:self forKeyPath:@"title"];
-    [model_ removeObserver:self forKeyPath:@"error"];
-    
-}
-
 
 @end
