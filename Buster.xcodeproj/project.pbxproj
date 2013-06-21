@@ -13,7 +13,6 @@
 		2860E328111B887F00E27156 /* BSAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2860E326111B887F00E27156 /* BSAppDelegate.m */; };
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
 		B47D174750C84D3CA16465D4 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D5EA17E3158D44BC9C7D66D4 /* libPods.a */; };
-		F7002C7E14686C450016DEB5 /* BSGradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = F7002C7D14686C450016DEB5 /* BSGradientView.m */; };
 		F7032C7F146447280098AF94 /* routes.endpoints.plist in Resources */ = {isa = PBXBuildFile; fileRef = F7032C7E146447280098AF94 /* routes.endpoints.plist */; };
 		F70BB19D12DA2132000942EF /* BSVehicleLocationAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = F70BB19C12DA2132000942EF /* BSVehicleLocationAnnotation.m */; };
 		F719FF3812BAD3F1008D50AE /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F719FF3712BAD3F1008D50AE /* CFNetwork.framework */; };
@@ -42,7 +41,6 @@
 		F7E2245612B99FA700BFBE0A /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7E2245512B99FA700BFBE0A /* CoreLocation.framework */; };
 		F7E2245812B99FA700BFBE0A /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7E2245712B99FA700BFBE0A /* MapKit.framework */; };
 		F7EAC61412BAF820007CD95F /* MBTAQueryStringBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = F7EAC61112BAF820007CD95F /* MBTAQueryStringBuilder.m */; };
-		F7F83E3E1466ED5400ABF92D /* BSRoutesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7F83E3D1466ED5400ABF92D /* BSRoutesTableViewCell.xib */; };
 		F7F83E421466EDB100ABF92D /* BSRoutesTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F7F83E411466EDB100ABF92D /* BSRoutesTableViewCell.m */; };
 		F7F83E491466F84900ABF92D /* BSVehicleLocationModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7F83E481466F84900ABF92D /* BSVehicleLocationModel.m */; };
 /* End PBXBuildFile section */
@@ -59,8 +57,6 @@
 		71EEE71904C14B8693D134C6 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		8D1107310486CEB800E47090 /* Buster-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Buster-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		D5EA17E3158D44BC9C7D66D4 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		F7002C7C14686C450016DEB5 /* BSGradientView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BSGradientView.h; path = Shared/BSGradientView.h; sourceTree = "<group>"; };
-		F7002C7D14686C450016DEB5 /* BSGradientView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BSGradientView.m; path = Shared/BSGradientView.m; sourceTree = "<group>"; };
 		F7032C7E146447280098AF94 /* routes.endpoints.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = routes.endpoints.plist; sourceTree = "<group>"; };
 		F70BB19B12DA2132000942EF /* BSVehicleLocationAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BSVehicleLocationAnnotation.h; path = Shared/BSVehicleLocationAnnotation.h; sourceTree = "<group>"; };
 		F70BB19C12DA2132000942EF /* BSVehicleLocationAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BSVehicleLocationAnnotation.m; path = Shared/BSVehicleLocationAnnotation.m; sourceTree = "<group>"; };
@@ -105,7 +101,6 @@
 		F7E2245712B99FA700BFBE0A /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		F7EAC61012BAF820007CD95F /* MBTAQueryStringBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MBTAQueryStringBuilder.h; path = Shared/MBTAQueryStringBuilder.h; sourceTree = "<group>"; };
 		F7EAC61112BAF820007CD95F /* MBTAQueryStringBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBTAQueryStringBuilder.m; path = Shared/MBTAQueryStringBuilder.m; sourceTree = "<group>"; };
-		F7F83E3D1466ED5400ABF92D /* BSRoutesTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BSRoutesTableViewCell.xib; path = Shared/Resources/BSRoutesTableViewCell.xib; sourceTree = "<group>"; };
 		F7F83E401466EDB100ABF92D /* BSRoutesTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BSRoutesTableViewCell.h; path = Shared/BSRoutesTableViewCell.h; sourceTree = "<group>"; };
 		F7F83E411466EDB100ABF92D /* BSRoutesTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BSRoutesTableViewCell.m; path = Shared/BSRoutesTableViewCell.m; sourceTree = "<group>"; };
 		F7F83E471466F84900ABF92D /* BSVehicleLocationModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BSVehicleLocationModel.h; path = Shared/BSVehicleLocationModel.h; sourceTree = "<group>"; };
@@ -261,7 +256,6 @@
 			isa = PBXGroup;
 			children = (
 				F795A0FA1464C0EB001B43CD /* BSDirectionsView.xib */,
-				F7F83E3D1466ED5400ABF92D /* BSRoutesTableViewCell.xib */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -273,8 +267,6 @@
 				F795A1001464C43A001B43CD /* BSArtistTools.m */,
 				F795A1011464C43A001B43CD /* BSAppTheme.h */,
 				F795A1021464C43A001B43CD /* BSAppTheme.m */,
-				F7002C7C14686C450016DEB5 /* BSGradientView.h */,
-				F7002C7D14686C450016DEB5 /* BSGradientView.m */,
 			);
 			name = Theme;
 			sourceTree = "<group>";
@@ -398,7 +390,6 @@
 				F76E8DDF12DA8C0200A9BC2D /* MapView_iPhone.xib in Resources */,
 				F7032C7F146447280098AF94 /* routes.endpoints.plist in Resources */,
 				F795A0FB1464C0EB001B43CD /* BSDirectionsView.xib in Resources */,
-				F7F83E3E1466ED5400ABF92D /* BSRoutesTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -459,7 +450,6 @@
 				F795A1041464C43A001B43CD /* BSAppTheme.m in Sources */,
 				F7F83E421466EDB100ABF92D /* BSRoutesTableViewCell.m in Sources */,
 				F7F83E491466F84900ABF92D /* BSVehicleLocationModel.m in Sources */,
-				F7002C7E14686C450016DEB5 /* BSGradientView.m in Sources */,
 				F73C04EE151E5FB700835FC6 /* BSMBTARequestOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
