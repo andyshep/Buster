@@ -27,16 +27,28 @@
 
 #import "BSRoutesViewController.h"
 
-#define ROUTE_CELL_DEFAULT_HEIGHT       64.0
-#define ROUTE_ENDPOINTS_DEFAULT_HEIGHT  36.0
+#import "BSDirectionsViewController.h"
+#import "BSRoutesTableViewCell.h"
+
+#import "BSRoute.h"
+#import "BSRoutesModel.h"
+
+#define ROUTE_CELL_DEFAULT_HEIGHT       64.0f
+#define ROUTE_ENDPOINTS_DEFAULT_HEIGHT  36.0f
+
+@interface BSRoutesViewController ()
+
+@property (nonatomic, strong) BSRoutesModel *model;
+
+- (void)requestRouteList;
+- (void)reloadRoutes;
+- (void)layoutRoutesListControl;
+
+- (CGRect)sizeForString:(NSString *)string;
+
+@end
 
 @implementation BSRoutesViewController
-
-@synthesize tableView = _tableView;
-@synthesize bottomToolbar = _bottomToolbar;
-@synthesize routesListControl = _routesListControl;
-
-#pragma mark - Initalization
 
 - (id)init {
     if (self = [super initWithNibName:@"BSRoutesView" bundle:nil]) {
@@ -46,12 +58,17 @@
     return self;
 }
 
+- (void)dealloc {
+    [_model removeObserver:self forKeyPath:@"routes"];
+    [_model removeObserver:self forKeyPath:@"error"];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 
     [[self navigationItem] setTitle:NSLocalizedString(@"Routes", @"routes table view title")];
     [[[self navigationController] navigationBar] setTintColor:[BSAppTheme lightBlueColor]];
-    [[self bottomToolbar] setTintColor:[BSAppTheme lightBlueColor]];
+    [_toolbar setTintColor:[BSAppTheme lightBlueColor]];
     
     UIBarButtonItem *refreshButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(requestRouteList)];
     [[self navigationItem] setRightBarButtonItem:refreshButton animated:YES];
@@ -61,14 +78,14 @@
     
     // [self layoutRoutesListControl];
     
-    model_ = [[BSRoutesModel alloc] init];
+    self.model = [[BSRoutesModel alloc] init];
     
-    [model_ addObserver:self 
+    [_model addObserver:self
              forKeyPath:@"routes" 
                 options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
                 context:@selector(reloadRoutes)];
     
-    [model_ addObserver:self 
+    [_model addObserver:self 
              forKeyPath:@"error" 
                 options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
                 context:@selector(operationDidFail)];
@@ -89,52 +106,43 @@
 }
 
 - (void)layoutRoutesListControl {
-    NSLog(@"layoutRoutesListControl: %f", self.view.bounds.size.width);
-    
     NSArray *routeListControlItems = [NSArray arrayWithObjects:NSLocalizedString(@"All Routes", @"All Routes"),
                                         NSLocalizedString(@"Favorites", @"Favorites"), nil];
     
 	self.routesListControl = [[UISegmentedControl alloc] initWithItems:routeListControlItems];
-	self.routesListControl.segmentedControlStyle = UISegmentedControlStyleBar;
-	self.routesListControl.frame = CGRectMake(0, 0, 305, 30);
-	self.routesListControl.selectedSegmentIndex = 0;
+    [_routesListControl setFrame:CGRectMake(0.0f, 0.0f, 305.0f, 30.0f)];
+    [_routesListControl setSegmentedControlStyle:UISegmentedControlStyleBar];
+    [_routesListControl setSelectedSegmentIndex:0];
     
-    // no idea why tihs causes layout issues on the pad
+    [_routesListControl addTarget:self action:@selector(switchRoutesList:) forControlEvents:UIControlEventValueChanged];
+    
+    // FIXME: no idea why this causes layout issues on the pad
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-    	self.routesListControl.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        [_routesListControl setAutoresizingMask:(UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight)];
     }
     
 	UIBarButtonItem *buttonItem = [[UIBarButtonItem alloc] initWithCustomView:self.routesListControl];
-	
-	self.bottomToolbar.items = [NSArray arrayWithObjects:buttonItem, nil];
-	
-	[self.routesListControl addTarget:self action:@selector(switchRoutesList:) forControlEvents:UIControlEventValueChanged];
-	
-    
-    [self.bottomToolbar setNeedsLayout];
+    [_toolbar setItems:@[buttonItem]];    
+    [_toolbar setNeedsLayout];
 }
 
-#pragma mark -
-#pragma mark Table view data source
-
+#pragma mark - UITableView
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 	return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [model_ countOfRoutes];
+    return [_model countOfRoutes];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    BSRoute *route = (BSRoute *)[model_ objectInRoutesAtIndex:indexPath.row];
+    BSRoute *route = (BSRoute *)[_model objectInRoutesAtIndex:indexPath.row];
     CGRect textFrame = [self sizeForString:route.endpoints];
     float padding = ROUTE_CELL_DEFAULT_HEIGHT - ROUTE_ENDPOINTS_DEFAULT_HEIGHT;
     
     if (textFrame.size.height <= ROUTE_ENDPOINTS_DEFAULT_HEIGHT) {
         return ROUTE_CELL_DEFAULT_HEIGHT;
-    }
-    else {
+    } else {
         // needs to be mod 2 for pixel alignment?
         // here padding represents the additional space
         // needs for route title label
@@ -143,20 +151,14 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     static NSString *RouteCellIdentifier = @"BSRouteTableViewCell";
     
     BSRoutesTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:RouteCellIdentifier];
     if (cell == nil) {
-//        NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"BSRoutesTableViewCell" owner:self options:nil];
-//        cell = [topLevelObjects objectAtIndex:0];
-
         cell = [[BSRoutesTableViewCell alloc] init];
-        
-        //cell.routeEndpointsLabel.numberOfLines = 4;
     }
     
-	BSRoute *route = (BSRoute *)[model_ objectInRoutesAtIndex:indexPath.row];
+	BSRoute *route = (BSRoute *)[_model objectInRoutesAtIndex:indexPath.row];
 	
 	cell.routeNumberLabel.text = route.title;
     
@@ -166,17 +168,13 @@
         cell.routeEndpointsLabel.numberOfLines = 0;
     } else {
         cell.routeEndpointsLabel.text = @"Indeterminate Route Endpoints";
-        //cell.routeEndpointsLabel.numberOfLines = 1;
     }
     
     return cell;
 }
 
-#pragma mark -
-#pragma mark Table view delegate
-
 - (void) tableView:(UITableView *)tView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	BSRoute *route = (BSRoute *)[model_ objectInRoutesAtIndex:[indexPath row]];
+	BSRoute *route = (BSRoute *)[_model objectInRoutesAtIndex:[indexPath row]];
 	
 	BSDirectionsViewController *nextController = [[BSDirectionsViewController alloc] init];
 	nextController.title = route.title;
@@ -187,38 +185,33 @@
 }
 
 - (CGRect)sizeForString:(NSString *)string {
-    
-    // where 300 is the width of the label...
-    CGSize constraint = CGSizeMake(269.0f, 20000.0f);        
+    // where 300 is the width of the label
+    CGSize constraint = CGSizeMake(269.0f, 20000.0f);
     CGSize size = [string sizeWithFont:[BSAppTheme twelvePointlabelFont] constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
-    CGRect commentTextRect = CGRectMake(11, 
-                                        32, 
-                                        269, 
-                                        size.height);
+    CGRect commentTextRect = CGRectMake(11.0f, 32.0f, 269.0f, size.height);
+    
     return commentTextRect;
 }
 
-#pragma mark -
-#pragma mark Route Loading and Model Observing
-
-- (void)requestRouteList {
-    [model_ requestRouteList];
-}
-
+#pragma mark - KVO
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     SEL selector = (SEL)context;
-
+    
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
     [self performSelector:selector];
 #pragma clang diagnostic pop
 }
 
-- (void)reloadRoutes {
+#pragma mark - Route Loading and Model Observing
+- (void)requestRouteList {
+    [_model requestRouteList];
+}
 
+- (void)reloadRoutes {
     // FIXME: you are needlessly animating in 40 rows
     // only animate in the rows which are visible.
-    int routesToAdd = [model_ countOfRoutes];
+    int routesToAdd = [_model countOfRoutes];
 	int routesToDelete = [self.tableView numberOfRowsInSection:0];
     
     [self.tableView beginUpdates];
@@ -238,7 +231,7 @@
 
 - (void)operationDidFail {    
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"error alert view title") 
-                                                    message:[[model_ error] localizedDescription] 
+                                                    message:[[_model error] localizedDescription] 
                                                    delegate:nil 
                                           cancelButtonTitle:NSLocalizedString(@"OK", @"ok button title") 
                                           otherButtonTitles:nil];
@@ -246,30 +239,7 @@
 }
 
 - (void)switchRoutesList:(id)sender {
-    NSLog(@"switchRoutesList");
+    // TODO implement
 }
-
-#pragma mark -
-#pragma mark Memory management
-
-- (void)didReceiveMemoryWarning {
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Relinquish ownership any cached data, images, etc that aren't in use.
-}
-
-- (void)viewDidUnload {
-    // Relinquish ownership of anything that can be recreated in viewDidLoad or on demand.
-    // For example: self.myOutlet = nil;
-}
-
-
-- (void)dealloc {
-    
-    [model_ removeObserver:self forKeyPath:@"routes"];
-    [model_ removeObserver:self forKeyPath:@"error"];
-}
-
 
 @end

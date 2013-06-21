@@ -25,27 +25,10 @@
 //  THE SOFTWARE.
 //
 
-#import "BSDirectionsViewController.h"
-#import "BSRoute.h"
-#import "BSRoutesModel.h"
-#import "BSRoutesTableViewCell.h"
+@interface BSRoutesViewController : UIViewController
 
-#import "ShadowedTableView.h"
-
-@protocol MapViewControllerDelegate;
-
-@interface BSRoutesViewController : UIViewController {
-    BSRoutesModel *model_;
-}
-
-@property (nonatomic, strong) IBOutlet ShadowedTableView *tableView;
-@property (nonatomic, strong) IBOutlet UIToolbar *bottomToolbar;
+@property (nonatomic, strong) IBOutlet UITableView *tableView;
+@property (nonatomic, strong) IBOutlet UIToolbar *toolbar;
 @property (nonatomic, strong) UISegmentedControl *routesListControl;
-
-- (void)requestRouteList;
-- (void)reloadRoutes;
-- (void)layoutRoutesListControl;
-
-- (CGRect)sizeForString:(NSString *)string;
 
 @end
