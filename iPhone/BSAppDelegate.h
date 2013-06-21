@@ -1,5 +1,5 @@
 //
-//  AppDelegate_iPhone.m
+//  BSAppDelegate.h
 //  Buster
 //
 //  Created by andyshep on 12/15/10.
@@ -25,30 +25,13 @@
 //  THE SOFTWARE.
 //
 
-#import "AppDelegate_iPhone.h"
+#import "BSMapViewController.h"
 
-@implementation AppDelegate_iPhone
+@interface BSAppDelegate : UIResponder <UIApplicationDelegate>
 
-@synthesize window, navigationController;
-
-
-#pragma mark -
-#pragma mark Application lifecycle
-
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-	[window addSubview:navigationController.view];
-    [window makeKeyAndVisible];
-	
-	return YES;
-}
-
-#pragma mark -
-#pragma mark Memory management
-
-- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
-    NSLog(@"applicationDidReceiveMemoryWarning");
-}
-
-
+@property (nonatomic, strong) UIWindow *window;
+@property (nonatomic, strong) UINavigationController *navigationController;
+@property (nonatomic, strong) UISplitViewController *splitViewController;
 
 @end
+

@@ -1,5 +1,5 @@
 //
-//  AppDelegate_iPhone.h
+//  BSAppDelegate.m
 //  Buster
 //
 //  Created by andyshep on 12/15/10.
@@ -25,15 +25,37 @@
 //  THE SOFTWARE.
 //
 
+#import "BSAppDelegate.h"
+
+#import "BSRoutesViewController.h"
 #import "BSMapViewController.h"
 
-@interface AppDelegate_iPhone : NSObject <UIApplicationDelegate> {
-    UIWindow *window;
-	UINavigationController *navigationController;
-}
+@interface BSAppDelegate ()
 
-@property (nonatomic, strong) IBOutlet UIWindow *window;
-@property (nonatomic, strong) IBOutlet UINavigationController *navigationController;
+@property (nonatomic, strong) BSRoutesViewController *routesViewController;
+@property (nonatomic, strong) BSMapViewController *mapViewController;
 
 @end
 
+@implementation BSAppDelegate
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    
+    self.routesViewController = [[BSRoutesViewController alloc] initWithNibName:@"BSRoutesViewController" bundle:nil];
+    self.navigationController = [[UINavigationController alloc] initWithRootViewController:_routesViewController];
+    
+    [_window addSubview:[_navigationController view]];
+    [_window setRootViewController:_navigationController];
+    [_window makeKeyAndVisible];
+	
+	return YES;
+}
+
+- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
+    NSLog(@"applicationDidReceiveMemoryWarning");
+}
+
+
+
+@end
