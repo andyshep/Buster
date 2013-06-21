@@ -27,28 +27,28 @@
 
 #import "BSPredictionsModel.h"
 
+#import "BSMBTARequestOperation.h"
+#import "SMXMLDocument.h"
+
+#import "MBTAQueryStringBuilder.h"
+
+@interface BSPredictionsModel ()
+
+- (void)unloadPredictions;
+
+@end
 
 @implementation BSPredictionsModel
 
-@synthesize predictions = _predictions, predictionMeta = _predictionMeta, error = _error;
-
-#pragma mark -
-#pragma mark Lifecycle
-
 - (id) init {
 	if ((self = [super init])) {
-		
-		// init an empty set of predictions for the model
-		self.predictions = nil, self.error = nil, self.predictionMeta = nil;
+        //
     }
 	
     return self;
 }
 
-
-#pragma mark -
-#pragma mark Model KVC
-
+#pragma mark - KVC
 - (NSUInteger)countOfPredictions {
 	return [self.predictions count];
 }
@@ -61,23 +61,18 @@
 	[self.predictions getObjects:objects range:range];
 }
 
-#pragma mark -
-#pragma mark Predictions building
-
+#pragma mark - Predictions building
 - (void)requestPredictionsForRoute:(NSString *)route andStop:(NSString *)stop {
-	// a controller has requested a prediction
     NSLog(@"requesting predictions for %@ at %@", route, stop);
     
     NSString *urlString = [[MBTAQueryStringBuilder sharedInstance] buildPredictionsQueryForRoute:route withDirection:nil atStop:stop];
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     
     BSMBTARequestOperation *operation = [BSMBTARequestOperation MBTARequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id object) {
-        NSError *error_ = nil;
-        SMXMLDocument *xml = [SMXMLDocument documentWithData:object error:NULL];
+        NSError *error = nil;
+        SMXMLDocument *xml = [SMXMLDocument documentWithData:object error:&error];
         
-        // NSLog(@"%@", xml);
-        
-        if (!error_) {
+        if (!error) {
             NSMutableArray *predictions = [NSMutableArray arrayWithCapacity:5];
             NSDictionary *predictionInfo = [NSMutableDictionary dictionaryWithCapacity:3];
             SMXMLElement *predictionsElement = [xml.root childNamed:@"predictions"];
@@ -115,18 +110,6 @@
 - (void)unloadPredictions {
 	self.predictions = nil;
     self.predictionMeta = nil;
-}
-
-#pragma mark -
-#pragma mark BSNetworkOperationDelegate
-     
-- (void)didConsumeData:(id)consumedData {
-    self.predictionMeta = [(NSArray *)consumedData objectAtIndex:0];
-    self.predictions = [(NSArray *)consumedData objectAtIndex:1];
-}
-
-- (void)didFailWithError:(NSError *)aError {
-    self.error = aError;
 }
 
 @end

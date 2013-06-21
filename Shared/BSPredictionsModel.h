@@ -25,19 +25,13 @@
 //  THE SOFTWARE.
 //
 
-#import "BSMBTARequestOperation.h"
-#import "SMXMLDocument.h"
-
-#import "MBTAQueryStringBuilder.h"
-
 @interface BSPredictionsModel : NSObject
 
-@property (copy) NSArray *predictions;
-@property (copy) NSDictionary *predictionMeta;
-@property (copy) NSError *error;
+@property (nonatomic, copy) NSArray *predictions;
+@property (nonatomic, copy) NSDictionary *predictionMeta;
+@property (nonatomic, copy) NSError *error;
 
 - (void)requestPredictionsForRoute:(NSString *)route andStop:(NSString *)stop;
-- (void)unloadPredictions;
 
 - (NSUInteger)countOfPredictions;
 - (id)objectInPredictionsAtIndex:(NSUInteger)index;
