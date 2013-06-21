@@ -30,17 +30,7 @@
 #import "BSMapViewController.h"
 #import "BSGradientView.h"
 
-@interface BSPredictionsViewController : UITableViewController {
-	
-	NSString *stopTag;
-	NSString *latitude;
-	NSString *longitude;
-	NSString *routeNumber;
-	NSString *routeTitle;
-	NSString *directionTag;
-    
-    BSPredictionsModel *model_;
-}
+@interface BSPredictionsViewController : UITableViewController
 
 @property (nonatomic, strong) NSString *stopTag;
 @property (nonatomic, strong) NSString *latitude;

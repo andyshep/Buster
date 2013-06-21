@@ -4,7 +4,7 @@
 //
 //  Created by andyshep on 8/23/11.
 //
-//  Copyright (c) 2010-2011 Andrew Shepard
+//  Copyright (c) 2010-2013 Andrew Shepard
 // 
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,11 +25,10 @@
 //  THE SOFTWARE.
 //
 
+@interface BSPredictionMetaTableViewCell : UITableViewCell
 
-@interface BSPredictionMetaTableViewCell : UITableViewCell {
-	UIView *containerView;
-}
-
-@property (nonatomic, strong) UILabel *routeNumberLabel, *routeDirectionLabel, *stopNameLabel;
+@property (nonatomic, strong) UILabel *routeNumberLabel;
+@property (nonatomic, strong) UILabel *routeDirectionLabel;
+@property (nonatomic, strong) UILabel *stopNameLabel;
 
 @end

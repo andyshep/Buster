@@ -4,7 +4,7 @@
 //
 //  Created by andyshep on 8/23/11.
 //
-//  Copyright (c) 2010-2011 Andrew Shepard
+//  Copyright (c) 2010-2013 Andrew Shepard
 // 
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -27,43 +27,35 @@
 
 #import "BSPredictionMetaTableViewCell.h"
 
-
 @implementation BSPredictionMetaTableViewCell
 
-@synthesize routeNumberLabel = _routeNumberLabel;
-@synthesize routeDirectionLabel = _routeDirectionLabel; 
-@synthesize stopNameLabel = _stopNameLabel;
-
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
-    
     if ((self = [super initWithStyle:style reuseIdentifier:reuseIdentifier])) {
-        containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 88)];
+        self.routeNumberLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+        [_routeNumberLabel setBackgroundColor:[UIColor clearColor]];
         
-        self.routeNumberLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 5, 40, 25)];
-        self.routeDirectionLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 30, 270, 25)];
-        self.stopNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 55, 270, 25)];
+        self.routeDirectionLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+        [_routeDirectionLabel setBackgroundColor:[UIColor clearColor]];
+        [_routeDirectionLabel setAdjustsFontSizeToFitWidth:YES];
         
-        self.routeDirectionLabel.adjustsFontSizeToFitWidth = YES;
-        self.stopNameLabel.adjustsFontSizeToFitWidth = YES;
+        self.stopNameLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+        [_stopNameLabel setBackgroundColor:[UIColor clearColor]];
+        [_stopNameLabel setAdjustsFontSizeToFitWidth:YES];
         
-        self.routeNumberLabel.backgroundColor = [UIColor clearColor];
-        self.routeDirectionLabel.backgroundColor = [UIColor clearColor];
-        self.stopNameLabel.backgroundColor = [UIColor clearColor];
-        
-        [containerView addSubview:self.routeNumberLabel];
-        [containerView addSubview:self.routeDirectionLabel];
-        [containerView addSubview:self.stopNameLabel];
-        [self addSubview:containerView];
+        [self.contentView addSubview:_routeNumberLabel];
+        [self.contentView addSubview:_routeDirectionLabel];
+        [self.contentView addSubview:_stopNameLabel];
     }
     
     return self;
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    
+    [_routeNumberLabel setFrame:CGRectMake(20.0f, 5.0f, 40.0f, 25.0f)];
+    [_routeDirectionLabel setFrame:CGRectMake(20.0f, 30.0f, 270.0f, 25.0f)];
+    [_stopNameLabel setFrame:CGRectMake(20.0f, 55.0f, 270.0f, 25.0f)];
 }
-
 
 @end
