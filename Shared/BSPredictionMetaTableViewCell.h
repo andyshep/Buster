@@ -30,6 +30,6 @@
 	UIView *containerView;
 }
 
-@property (nonatomic, retain) UILabel *routeNumberLabel, *routeDirectionLabel, *stopNameLabel;
+@property (nonatomic, strong) UILabel *routeNumberLabel, *routeDirectionLabel, *stopNameLabel;
 
 @end

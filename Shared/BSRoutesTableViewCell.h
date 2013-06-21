@@ -10,6 +10,6 @@
 
 @interface BSRoutesTableViewCell : UITableViewCell
 
-@property (nonatomic, retain) UILabel *routeNumberLabel, *routeEndpointsLabel;
+@property (nonatomic, strong) UILabel *routeNumberLabel, *routeEndpointsLabel;
 
 @end

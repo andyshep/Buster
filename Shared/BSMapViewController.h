@@ -47,15 +47,15 @@
     BSVehicleLocationModel *model_;
 }
 
-@property (nonatomic, retain) IBOutlet UIToolbar *toolbar;
+@property (nonatomic, strong) IBOutlet UIToolbar *toolbar;
 
-@property (nonatomic, retain) NSString *vehicle;
-@property (nonatomic, retain) NSString *route;
-@property (nonatomic, retain) NSString *time;
+@property (nonatomic, strong) NSString *vehicle;
+@property (nonatomic, strong) NSString *route;
+@property (nonatomic, strong) NSString *time;
 
-@property (nonatomic, retain) IBOutlet MKMapView *mapView;
+@property (nonatomic, strong) IBOutlet MKMapView *mapView;
 
-@property (nonatomic, retain) UIPopoverController *popoverController;
+@property (nonatomic, strong) UIPopoverController *popoverController;
 
 - (void)dropPinForLocation;
 - (void)configureView;

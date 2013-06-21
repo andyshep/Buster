@@ -28,7 +28,7 @@
 
 @interface MBTAQueryStringBuilder : NSObject
 
-@property (nonatomic, retain) NSString *baseURL;
+@property (nonatomic, strong) NSString *baseURL;
 
 + (MBTAQueryStringBuilder *)sharedInstance;
 

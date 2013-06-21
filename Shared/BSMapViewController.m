@@ -80,7 +80,6 @@
     NSMutableArray *items = [[toolbar items] mutableCopy];
     [items insertObject:barButtonItem atIndex:0];
     [toolbar setItems:items animated:NO];
-    [items release];
     self.popoverController = pc;
 }
 
@@ -89,7 +88,6 @@
     NSMutableArray *items = [[toolbar items] mutableCopy];
     [items removeObjectAtIndex:0];
     [toolbar setItems:items animated:NO];
-    [items release];
     self.popoverController = nil;
 }
 
@@ -131,7 +129,6 @@
         [mapView regionThatFits:region];
         [mapView addAnnotation:vehicleLocation];
         
-        [vehicleLocation release];
     }
     else if ([keyPath compare:@"error"] == 0) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"error alert view title") 
@@ -140,7 +137,6 @@
                                               cancelButtonTitle:NSLocalizedString(@"OK", @"ok button title") 
                                               otherButtonTitles:nil];
         [alert show];
-        [alert release];
     }
 }
 
@@ -155,15 +151,10 @@
 #pragma mark - Memory management
 
 - (void)dealloc {
-    [popoverController release];
-    [toolbar release];
-    [mapView release];
     
     [model_ removeObserver:self forKeyPath:@"location"];
     [model_ removeObserver:self forKeyPath:@"error"];
-    [model_ release];
     
-    [super dealloc];
 }
 
 @end

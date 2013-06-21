@@ -39,9 +39,9 @@
     if ((self = [super initWithStyle:style reuseIdentifier:reuseIdentifier])) {
         containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 88)];
         
-        self.routeNumberLabel = [[[UILabel alloc] initWithFrame:CGRectMake(20, 5, 40, 25)] autorelease];
-        self.routeDirectionLabel = [[[UILabel alloc] initWithFrame:CGRectMake(20, 30, 270, 25)] autorelease];
-        self.stopNameLabel = [[[UILabel alloc] initWithFrame:CGRectMake(20, 55, 270, 25)] autorelease];
+        self.routeNumberLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 5, 40, 25)];
+        self.routeDirectionLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 30, 270, 25)];
+        self.stopNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 55, 270, 25)];
         
         self.routeDirectionLabel.adjustsFontSizeToFitWidth = YES;
         self.stopNameLabel.adjustsFontSizeToFitWidth = YES;
@@ -65,12 +65,5 @@
     // Configure the view for the selected state
 }
 
-- (void)dealloc {
-    [_routeNumberLabel release];
-    [_routeDirectionLabel release];
-    [_stopNameLabel release];
-    [containerView release];
-    [super dealloc];
-}
 
 @end

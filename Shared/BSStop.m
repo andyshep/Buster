@@ -45,19 +45,6 @@
     return self;
 }
 
-- (void) dealloc {
-    [_title release];
-    [_tag release];
-    [_directionTag release];
-    
-    [_routeNumber release];
-    [_stopId release];
-    
-    [_latitude release];
-    [_longitude release];
-    
-    [super dealloc];
-}
 
 #pragma mark -
 #pragma NSCoding

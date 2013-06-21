@@ -105,7 +105,11 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
 	SEL selector = (SEL)context;
+    
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
     [self performSelector:selector];
+#pragma clang diagnostic pop
 }
 
 - (void)directionsDidLoad {
@@ -134,8 +138,6 @@
 	[containerView addSubview:routeLabel];
 	self.tableView.tableHeaderView = containerView;
 	
-	[routeLabel release];
-	[containerView release];
 }
 
 - (void)reloadTable {
@@ -176,7 +178,7 @@
     // FIXME: no really, fix this.
     // FIXME: alloc/initWithFrame and the add/remove segments to controll
     // stop allocing a new one each time.
-	self.directionControl = [[[UISegmentedControl alloc] initWithItems:[NSArray arrayWithArray:items]] autorelease];
+	self.directionControl = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithArray:items]];
 	self.directionControl.segmentedControlStyle = UISegmentedControlStyleBar;
 	self.directionControl.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 	self.directionControl.frame = CGRectMake(0, 0, frame.size.width - 15.0, 30);
@@ -187,7 +189,6 @@
 	
 	[self.directionControl addTarget:self action:@selector(switchDirection:) forControlEvents:UIControlEventValueChanged];
 	
-	[buttonItem release];
 }
 
 - (void)operationDidFail {    
@@ -197,7 +198,6 @@
                                           cancelButtonTitle:NSLocalizedString(@"OK", @"ok button title") 
                                           otherButtonTitles:nil];
     [alert show];
-    [alert release];
 }
 
 #pragma mark -
@@ -213,7 +213,7 @@
     
     UITableViewCell *cell = [tView dequeueReusableCellWithIdentifier:BSStopCellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:BSStopCellIdentifier] autorelease];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:BSStopCellIdentifier];
         cell.textLabel.adjustsFontSizeToFitWidth = YES;
         cell.textLabel.font = [BSAppTheme fourteenPointlabelFont];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -242,7 +242,6 @@
 	
 	[self.navigationController pushViewController:nextController animated:YES];
 	
-	[nextController release];
 }
 
 #pragma mark -
@@ -265,19 +264,13 @@
 
 - (void)dealloc {
     
-    [_stopTag release];
-    [_tableView release];
-    [_bottomToolbar release];
-    [_directionControl release];
     
     [model_ removeObserver:self forKeyPath:@"directions"];
     [model_ removeObserver:self forKeyPath:@"stops"];
 	[model_ removeObserver:self forKeyPath:@"tags"];
 	[model_ removeObserver:self forKeyPath:@"title"];
     [model_ removeObserver:self forKeyPath:@"error"];
-    [model_ release];
     
-    [super dealloc];
 }
 
 

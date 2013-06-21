@@ -44,10 +44,6 @@ static NSString *MBTABaseQueryURL = @"http://webservices.nextbus.com/service/pub
 	return self;
 }
 
-- (void)dealloc {
-	[_baseURL release];
-	[super dealloc];
-}
 
 #pragma mark - Singleton
 

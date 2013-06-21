@@ -42,12 +42,12 @@
     BSPredictionsModel *model_;
 }
 
-@property (nonatomic, retain) NSString *stopTag;
-@property (nonatomic, retain) NSString *latitude;
-@property (nonatomic, retain) NSString *longitude;
-@property (nonatomic, retain) NSString *routeNumber;
-@property (nonatomic, retain) NSString *routeTitle;
-@property (nonatomic, retain) NSString *directionTag;
+@property (nonatomic, strong) NSString *stopTag;
+@property (nonatomic, strong) NSString *latitude;
+@property (nonatomic, strong) NSString *longitude;
+@property (nonatomic, strong) NSString *routeNumber;
+@property (nonatomic, strong) NSString *routeTitle;
+@property (nonatomic, strong) NSString *directionTag;
 
 - (IBAction)refreshList:(id)sender;
 

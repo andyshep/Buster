@@ -46,14 +46,6 @@
     return self;
 }
 
-- (void) dealloc {
-    [_stops release];
-    [_tag release];
-    [_name release];
-    [_title release];
-    
-    [super dealloc];
-}
 
 #pragma mark -
 #pragma NSCoding

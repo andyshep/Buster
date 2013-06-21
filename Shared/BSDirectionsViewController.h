@@ -32,10 +32,10 @@
     BSDirectionsModel *model_;
 }
 
-@property (nonatomic, retain) NSString *stopTag, *directionTitle;
-@property (nonatomic, retain) IBOutlet UITableView *tableView;
-@property (nonatomic, retain) IBOutlet UIToolbar *bottomToolbar;
-@property (nonatomic, retain) UISegmentedControl *directionControl;
+@property (nonatomic, strong) NSString *stopTag, *directionTitle;
+@property (nonatomic, strong) IBOutlet UITableView *tableView;
+@property (nonatomic, strong) IBOutlet UIToolbar *bottomToolbar;
+@property (nonatomic, strong) UISegmentedControl *directionControl;
 
 - (void)switchDirection:(id)sender;
 - (void)reloadTable;

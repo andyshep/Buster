@@ -11,7 +11,7 @@
 @implementation BSMBTARequestOperation
 
 + (BSMBTARequestOperation *)MBTARequestOperationWithRequest:(NSURLRequest *)urlRequest success:(void (^)(NSURLRequest *, NSHTTPURLResponse *, id))success failure:(void (^)(NSURLRequest *, NSHTTPURLResponse *, NSError *))failure {
-    BSMBTARequestOperation *requestOperation = [[[BSMBTARequestOperation alloc] initWithRequest:urlRequest] autorelease];
+    BSMBTARequestOperation *requestOperation = [[BSMBTARequestOperation alloc] initWithRequest:urlRequest];
     [requestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (success) {
             success(operation.request, operation.response, responseObject);

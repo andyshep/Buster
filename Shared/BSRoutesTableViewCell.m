@@ -17,10 +17,10 @@
     self = [super init];
     if (self) {
         CGRect frame = CGRectMake(0.0f, 0.0f, 320.0f, 64.0f);
-        UIView *containerView = [[[UIView alloc] initWithFrame:frame] autorelease];
+        UIView *containerView = [[UIView alloc] initWithFrame:frame];
         
-        self.routeNumberLabel = [[[UILabel alloc] initWithFrame:CGRectMake(8.0, 6.0, 272.0, 14.0)] autorelease];
-        self.routeEndpointsLabel = [[[UILabel alloc] initWithFrame:CGRectMake(8.0, 14.0, 272.0, 36.0)] autorelease];
+        self.routeNumberLabel = [[UILabel alloc] initWithFrame:CGRectMake(8.0, 6.0, 272.0, 14.0)];
+        self.routeEndpointsLabel = [[UILabel alloc] initWithFrame:CGRectMake(8.0, 14.0, 272.0, 36.0)];
         
         self.routeNumberLabel.font = [UIFont boldSystemFontOfSize:20.0];
         self.routeNumberLabel.backgroundColor = [UIColor clearColor];
@@ -39,24 +39,16 @@
         
         BSGradientView *backgroundView = [[BSGradientView alloc] initWithFrame:frame];
         [self setBackgroundView:backgroundView];
-        [backgroundView release];
         
         BSGradientView *selectedView = [[BSGradientView alloc] initWithFrame:frame];
         selectedView.gradient = [BSAppTheme yellowGradientColor];
         [self setSelectedBackgroundView:selectedView];
-        [selectedView release];
         
         [self setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
     }
     return self;
 }
 
-- (void)dealloc {
-    [_routeNumberLabel release];
-    [_routeEndpointsLabel release];
-    
-    [super dealloc];
-}
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {

@@ -28,8 +28,8 @@
 
 @interface BSStop : NSObject <NSCoding>
 
-@property (nonatomic, retain) NSString *title, *tag, *directionTag;
-@property (nonatomic, retain) NSString *routeNumber, *stopId;
-@property (nonatomic, retain) NSString *latitude, *longitude;
+@property (nonatomic, strong) NSString *title, *tag, *directionTag;
+@property (nonatomic, strong) NSString *routeNumber, *stopId;
+@property (nonatomic, strong) NSString *latitude, *longitude;
 
 @end

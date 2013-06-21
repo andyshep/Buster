@@ -45,13 +45,6 @@
     return self;
 }
 
-- (void) dealloc {
-    [_predictions release];
-    [_predictionMeta release];
-    [_error release];
-    
-    [super dealloc];
-}
 
 #pragma mark -
 #pragma mark Model KVC
@@ -64,7 +57,7 @@
 	return [self.predictions objectAtIndex:index];
 }
 
-- (void)getPredictions:(id *)objects range:(NSRange)range {
+- (void)getPredictions:(__unsafe_unretained id *)objects range:(NSRange)range {
 	[self.predictions getObjects:objects range:range];
 }
 
@@ -115,7 +108,7 @@
         self.error = err;
     }];
     
-    NSOperationQueue *queue = [[[NSOperationQueue alloc] init] autorelease];
+    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
     [queue addOperation:operation];
 }
 

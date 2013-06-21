@@ -39,7 +39,7 @@
 
 - (NSUInteger)countOfRoutes;
 - (id)objectInRoutesAtIndex:(NSUInteger)index;
-- (void)getRoutes:(id *)objects range:(NSRange)range;
+- (void)getRoutes:(__unsafe_unretained id *)objects range:(NSRange)range;
 
 - (NSString *)routesEndpointsArchivePath;
 

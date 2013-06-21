@@ -44,11 +44,6 @@
     return self;
 }
 
-- (void) dealloc {
-    [_routes release];
-    [_error release];
-    [super dealloc];
-}
 
 #pragma mark -
 #pragma mark Model KVC
@@ -63,7 +58,7 @@
 	return [self.routes objectAtIndex:index];
 }
 
-- (void)getRoutes:(id *)objects range:(NSRange)range {
+- (void)getRoutes:(__unsafe_unretained id *)objects range:(NSRange)range {
 	[self.routes getObjects:objects range:range];
 }
 
@@ -136,7 +131,6 @@
                     }
                     
                     [mRouteList addObject:route];
-                    [route release];
                 }
                 
                 NSArray *aRouteList = [NSArray arrayWithArray:mRouteList];
@@ -149,7 +143,7 @@
             self.error = err;
         }];
         
-        NSOperationQueue *queue = [[[NSOperationQueue alloc] init] autorelease];
+        NSOperationQueue *queue = [[NSOperationQueue alloc] init];
         [queue addOperation:operation];
     }
 }

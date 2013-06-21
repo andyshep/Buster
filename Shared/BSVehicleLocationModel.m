@@ -44,11 +44,6 @@
     return self;
 }
 
-- (void) dealloc {
-    [_location release];
-    [_error release];
-    [super dealloc];
-}
 
 #pragma mark -
 #pragma mark Location Request
@@ -100,7 +95,7 @@
         // TODO: handle failure
     }];
     
-    NSOperationQueue *queue = [[[NSOperationQueue alloc] init] autorelease];
+    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
     [queue addOperation:operation];
 }
 

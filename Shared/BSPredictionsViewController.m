@@ -51,12 +51,10 @@
 																				   action:@selector(refreshList:)];
 	
 	self.navigationItem.rightBarButtonItem = refreshButton;
-    [refreshButton release];
     
     BSGradientView *aBackgroundView = [[BSGradientView alloc] initWithFrame:self.view.bounds];
     [aBackgroundView setGradient:[BSAppTheme greyGradientColor]];
     [self.tableView setBackgroundView:aBackgroundView];
-    [aBackgroundView release];
     
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     
@@ -115,7 +113,7 @@
 		
 		BSPredictionMetaTableViewCell *cell = (BSPredictionMetaTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"BSPredictionsInfoTableCell"];
 		if (cell == nil) {
-			cell = [[[BSPredictionMetaTableViewCell alloc] init] autorelease];
+			cell = [[BSPredictionMetaTableViewCell alloc] init];
 		}
 		
 		// Configure the cell...
@@ -134,7 +132,7 @@
 	
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:BSPredictionsCellIdentifier];
 	if (cell == nil) {
-		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:BSPredictionsCellIdentifier] autorelease];
+		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:BSPredictionsCellIdentifier];
 	}
 
 	NSMutableDictionary *dict = (NSMutableDictionary *)[model_ objectInPredictionsAtIndex:[indexPath row]];
@@ -168,7 +166,6 @@
         
         [self.navigationController pushViewController:nextController animated:YES];
         
-        [nextController release];
     }
     else {
         // on the pad the map is shown in the detail view of the split view
@@ -213,7 +210,11 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     SEL selector = (SEL)context;
+    
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
     [self performSelector:selector];
+#pragma clang diagnostic pop
 }
 
 - (void)reloadPredictions {
@@ -251,7 +252,6 @@
                                           cancelButtonTitle:NSLocalizedString(@"OK", @"ok button title") 
                                           otherButtonTitles:nil];
     [alert show];
-    [alert release];
 }
 
 #pragma mark -
@@ -278,19 +278,11 @@
 }
 
 - (void)dealloc {
-    [stopTag release];
-    [latitude release];
-    [longitude release];
-    [routeNumber release];
-    [routeTitle release];
-    [directionTag release];
     
     [model_ removeObserver:self forKeyPath:@"predictions"];
     [model_ removeObserver:self forKeyPath:@"predictionMeta"];
     [model_ removeObserver:self forKeyPath:@"error"];
-    [model_ release];
     
-    [super dealloc];
 }
 
 @end

@@ -41,6 +41,6 @@
 
 - (NSUInteger)countOfPredictions;
 - (id)objectInPredictionsAtIndex:(NSUInteger)index;
-- (void)getPredictions:(id *)objects range:(NSRange)range;
+- (void)getPredictions:(__unsafe_unretained id *)objects range:(NSRange)range;
 
 @end

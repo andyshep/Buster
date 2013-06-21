@@ -26,7 +26,6 @@
 
 - (void)dealloc {
     CGGradientRelease(_gradient);
-    [super dealloc];
 }
 
 - (void)drawRect:(CGRect)rect {

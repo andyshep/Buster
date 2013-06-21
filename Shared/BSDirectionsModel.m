@@ -55,18 +55,6 @@
     return self;
 }
 
-- (void) dealloc {
-    [_error release];
-    
-    [_stops release];
-    [_titles release];
-    [_title release];
-    
-    [_directions release];
-    [_tags release];
-    
-    [super dealloc];
-}
 
 #pragma mark -
 #pragma mark Model KVC
@@ -79,10 +67,9 @@
 	return [self.stops objectAtIndex:index];
 }
 
-- (void)getStops:(id *)objects range:(NSRange)range {
+- (void)getStops:(__unsafe_unretained id *)objects range:(NSRange)range {
 	[self.stops getObjects:objects range:range];
 }
-
 
 #pragma mark -
 #pragma mark Directions and Stops building
@@ -136,7 +123,6 @@
                     stop.longitude = [stopElement attributeNamed:@"lon"];
                     
                     [stopsList setObject:stop forKey:stop.tag];
-                    [stop release];
                 }
                 
                 for (SMXMLElement *directionElement in [routeElement childrenNamed:@"direction"]) {
@@ -154,7 +140,6 @@
                     direction.stops = stops_;
                     [directionsList addObject:direction];
                     
-                    [direction release];
                     stops_ = nil;
                 }
                 
@@ -190,12 +175,11 @@
                 self.titles = titlesList;
             }
             
-            [xml release];
         } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
             // TODO: handle failure
         }];
         
-        NSOperationQueue *queue = [[[NSOperationQueue alloc] init] autorelease];
+        NSOperationQueue *queue = [[NSOperationQueue alloc] init];
         [queue addOperation:operation];
     }
 }
@@ -209,7 +193,7 @@
     NSMutableArray *mStops = [NSMutableArray arrayWithCapacity:20];
     
     for (NSDictionary *stop in stops) {
-        BSDirection *aStop = [[[BSDirection alloc] init] autorelease];
+        BSDirection *aStop = [[BSDirection alloc] init];
         [aStop setTag:[stop valueForKey:@"tag"]];
         [aStop setTitle:[stop valueForKey:@"title"]];
         

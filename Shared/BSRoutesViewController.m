@@ -40,7 +40,7 @@
 
 - (id)init {
     if (self = [super initWithNibName:@"BSRoutesView" bundle:nil]) {
-        self.routesListControl = [[[UISegmentedControl alloc] init] autorelease];
+        self.routesListControl = [[UISegmentedControl alloc] init];
     }
     
     return self;
@@ -55,7 +55,6 @@
     
     UIBarButtonItem *refreshButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(requestRouteList)];
     [[self navigationItem] setRightBarButtonItem:refreshButton animated:YES];
-    [refreshButton release];
     
     [self.tableView setBackgroundColor:[UIColor whiteColor]];
     [self.tableView setSeparatorColor:[UIColor lightGrayColor]];
@@ -95,7 +94,7 @@
     NSArray *routeListControlItems = [NSArray arrayWithObjects:NSLocalizedString(@"All Routes", @"All Routes"),
                                         NSLocalizedString(@"Favorites", @"Favorites"), nil];
     
-	self.routesListControl = [[[UISegmentedControl alloc] initWithItems:routeListControlItems] autorelease];
+	self.routesListControl = [[UISegmentedControl alloc] initWithItems:routeListControlItems];
 	self.routesListControl.segmentedControlStyle = UISegmentedControlStyleBar;
 	self.routesListControl.frame = CGRectMake(0, 0, 305, 30);
 	self.routesListControl.selectedSegmentIndex = 0;
@@ -111,7 +110,6 @@
 	
 	[self.routesListControl addTarget:self action:@selector(switchRoutesList:) forControlEvents:UIControlEventValueChanged];
 	
-	[buttonItem release];
     
     [self.bottomToolbar setNeedsLayout];
 }
@@ -186,7 +184,6 @@
 	
 	[self.navigationController pushViewController:nextController animated:YES];
 	
-	[nextController release];
 }
 
 - (CGRect)sizeForString:(NSString *)string {
@@ -210,7 +207,11 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     SEL selector = (SEL)context;
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
     [self performSelector:selector];
+#pragma clang diagnostic pop
 }
 
 - (void)reloadRoutes {
@@ -242,7 +243,6 @@
                                           cancelButtonTitle:NSLocalizedString(@"OK", @"ok button title") 
                                           otherButtonTitles:nil];
     [alert show];
-    [alert release];
 }
 
 - (void)switchRoutesList:(id)sender {
@@ -266,14 +266,9 @@
 
 
 - (void)dealloc {
-    [_tableView release];
-    [_bottomToolbar release];
-    [_routesListControl release];
     
     [model_ removeObserver:self forKeyPath:@"routes"];
     [model_ removeObserver:self forKeyPath:@"error"];
-    [model_ release];
-    [super dealloc];
 }
 
 

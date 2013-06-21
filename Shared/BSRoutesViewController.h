@@ -38,9 +38,9 @@
     BSRoutesModel *model_;
 }
 
-@property (nonatomic, retain) IBOutlet ShadowedTableView *tableView;
-@property (nonatomic, retain) IBOutlet UIToolbar *bottomToolbar;
-@property (nonatomic, retain) UISegmentedControl *routesListControl;
+@property (nonatomic, strong) IBOutlet ShadowedTableView *tableView;
+@property (nonatomic, strong) IBOutlet UIToolbar *bottomToolbar;
+@property (nonatomic, strong) UISegmentedControl *routesListControl;
 
 - (void)requestRouteList;
 - (void)reloadRoutes;

@@ -36,11 +36,11 @@
 @synthesize stopId = _stopId;
 
 + (id)annotationWithCoordinate:(CLLocationCoordinate2D)coordinate {
-	return [[[[self class] alloc] initWithCoordinate:coordinate] autorelease];
+	return [[[self class] alloc] initWithCoordinate:coordinate];
 }
 
 + (id)annotationWithTitle:(NSString *)title andCoordinate:(CLLocationCoordinate2D)coordinate {
-	return [[[[self class] alloc] initWithTitle:title andCoordinate:coordinate] autorelease];
+	return [[[self class] alloc] initWithTitle:title andCoordinate:coordinate];
 }
 
 - (id)initWithTitle:(NSString *)title andCoordinate:(CLLocationCoordinate2D)coordinate {
@@ -61,11 +61,5 @@
 	return self;
 }
 
-- (void)dealloc {
-    [_title release];
-    [_tag release];
-    [_stopId release];
-    [super dealloc];
-}
 
 @end

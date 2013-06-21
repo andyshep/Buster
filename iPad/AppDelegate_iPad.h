@@ -37,11 +37,11 @@
 	BSMapViewController *mapViewController;
 }
 
-@property (nonatomic, retain) IBOutlet UIWindow *window;
-@property (nonatomic, retain) IBOutlet UISplitViewController *splitViewController;
+@property (nonatomic, strong) IBOutlet UIWindow *window;
+@property (nonatomic, strong) IBOutlet UISplitViewController *splitViewController;
 
-@property (nonatomic, retain) IBOutlet BSRoutesViewController *routeListViewController;
-@property (nonatomic, retain) IBOutlet BSMapViewController *mapViewController;
+@property (nonatomic, strong) IBOutlet BSRoutesViewController *routeListViewController;
+@property (nonatomic, strong) IBOutlet BSMapViewController *mapViewController;
 
 - (void)loadPredictionsForVehicle:(NSString *)vehicle runningRoute:(NSString *)route atEpochTime:(NSString *)time;
 

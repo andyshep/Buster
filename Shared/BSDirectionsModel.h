@@ -37,7 +37,7 @@
 @property (copy) NSArray *stops, *tags, *titles;
 @property (copy) NSArray *directions;
 @property (copy) NSError *error;
-@property (nonatomic, retain) NSString *title;
+@property (nonatomic, strong) NSString *title;
 
 - (void)requestDirectionsList:(NSString *)stop;
 - (void)unloadStopList;
@@ -46,7 +46,7 @@
 
 - (NSUInteger)countOfStops;
 - (id)objectInStopsAtIndex:(NSUInteger)index;
-- (void)getStops:(id *)objects range:(NSRange)range;
+- (void)getStops:(__unsafe_unretained id *)objects range:(NSRange)range;
 
 - (NSString *)archivePathForStop:(NSString *)stop;
 
