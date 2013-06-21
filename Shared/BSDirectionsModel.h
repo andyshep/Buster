@@ -25,23 +25,18 @@
 //  THE SOFTWARE.
 //
 
-#import "BSMBTARequestOperation.h"
-#import "MBTAQueryStringBuilder.h"
-#import "SMXMLDocument.h"
-
-#import "BSDirection.h"
-#import "BSStop.h"
-
 @interface BSDirectionsModel : NSObject 
 
-@property (copy) NSArray *stops, *tags, *titles;
-@property (copy) NSArray *directions;
-@property (copy) NSError *error;
-@property (nonatomic, strong) NSString *title;
+@property (nonatomic, copy) NSArray *stops;
+@property (nonatomic, copy) NSArray *tags;
+@property (nonatomic, copy) NSArray *titles;
+
+@property (nonatomic, copy) NSArray *directions;
+@property (nonatomic, copy) NSError *error;
+@property (nonatomic, copy) NSString *title;
 
 - (void)requestDirectionsList:(NSString *)stop;
 - (void)unloadStopList;
-//- (void)loadStopsForTagIndex:(NSUInteger)index;
 - (void)loadStopsForDirection:(NSUInteger)directionIndex;
 
 - (NSUInteger)countOfStops;

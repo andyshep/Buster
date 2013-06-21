@@ -27,37 +27,23 @@
 
 #import "BSDirectionsModel.h"
 
+#import "BSDirection.h"
+#import "BSStop.h"
+
+#import "BSMBTARequestOperation.h"
+#import "MBTAQueryStringBuilder.h"
+
+#import "SMXMLDocument.h"
 
 @implementation BSDirectionsModel
 
-@synthesize stops = _stops;
-@synthesize directions = _directions;
-@synthesize tags = _tags;
-@synthesize titles = _titles;
-@synthesize title = _title;
-@synthesize error = _error;
-
-#pragma mark -
-#pragma mark Lifecycle
-
-- (id) init {
+- (id)init {
 	if ((self = [super init])) {
-		
-		// init an empty set of routeTitles for the model
-		self.stops = nil;
-		self.tags = nil;
-		self.directions = nil;
-		self.titles = nil;
-		self.title = nil;
-        self.error = nil;
+        //
     }
 	
     return self;
 }
-
-
-#pragma mark -
-#pragma mark Model KVC
 
 - (NSUInteger)countOfStops {
 	return [self.stops count];
@@ -71,40 +57,20 @@
 	[self.stops getObjects:objects range:range];
 }
 
-#pragma mark -
-#pragma mark Directions and Stops building
-
 - (void)requestDirectionsList:(NSString *)stop {
-//        
-//#ifdef USE_STUB_SERVICE
-//    stopListOp_ = [[StopListOperation alloc] initWithURLString:@"http://localhost:8081/routeConfig_r57.xml" delegate:self];
-//#else    
-//    MBTAQueryStringBuilder *_builder = [MBTAQueryStringBuilder sharedMBTAQueryStringBuilder];     
-//    stopListOp_ = [[StopListOperation alloc] initWithURLString:[_builder buildRouteConfigQuery:stop] delegate:self];
-//#endif
-//    stopListOp_.stopId = stop;
-//    [stopListOp_ addObserver:self forKeyPath:@"isFinished" options:NSKeyValueObservingOptionNew context:NULL];
-//    [opQueue_ addOperation:stopListOp_];
-    
-    // NSDictionary *routeEndpoints = [NSDictionary dictionaryWithContentsOfFile:[self routesEndpointsArchivePath]];
-//    NSString *cachedFilePath = [self archivePathForStop:stop];
-    
-    if (self.stops == nil) {
-        NSLog(@"loading from disk...");
-        // self.stops = [NSKeyedUnarchiver unarchiveObjectWithFile:cachedFilePath];
-    }
+    // TODO: implement stops caching
     
     if (self.stops == nil) {
         NSLog(@"loading stops from the intertubes...");
         
-        MBTAQueryStringBuilder *_builder = [MBTAQueryStringBuilder sharedInstance];
-        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[_builder buildRouteConfigQuery:stop]]];
+        MBTAQueryStringBuilder *builder = [MBTAQueryStringBuilder sharedInstance];
+        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[builder buildRouteConfigQuery:stop]]];
         
         BSMBTARequestOperation *operation = [BSMBTARequestOperation MBTARequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id object) {
-            NSError *error_ = nil;
-            SMXMLDocument *xml = [[SMXMLDocument alloc] initWithData:object error:NULL];
+            NSError *error = nil;
+            SMXMLDocument *xml = [[SMXMLDocument alloc] initWithData:object error:&error];
             
-            if (!error_) {
+            if (!error) {
                 // a list of route stops will be passed back and stored into the model
                 NSMutableDictionary *stopsList = [NSMutableDictionary dictionaryWithCapacity:20];
                 NSMutableArray *directionsList = [NSMutableArray arrayWithCapacity:20];
@@ -116,7 +82,6 @@
                 
                 for (SMXMLElement *stopElement in [routeElement childrenNamed:@"stop"]) {
                     BSStop *stop = [[BSStop alloc] init];
-                    
                     stop.title = [stopElement attributeNamed:@"title"];
                     stop.tag = [stopElement attributeNamed:@"tag"];
                     stop.latitude = [stopElement attributeNamed:@"lat"];
@@ -127,36 +92,29 @@
                 
                 for (SMXMLElement *directionElement in [routeElement childrenNamed:@"direction"]) {
                     BSDirection *direction = [[BSDirection alloc] init];
-                    
                     direction.title = [directionElement attributeNamed:@"title"];
                     direction.tag = [directionElement attributeNamed:@"tag"];
                     direction.name = [directionElement attributeNamed:@"name"];
                     
-                    NSMutableArray *stops_ = [NSMutableArray arrayWithCapacity:10];
+                    NSMutableArray *stops = [NSMutableArray arrayWithCapacity:10];
                     for (SMXMLElement *directionStopElement in [directionElement childrenNamed:@"stop"]) {
-                        [stops_ addObject:[stopsList objectForKey:[directionStopElement attributeNamed:@"tag"]]];
+                        [stops addObject:[stopsList objectForKey:[directionStopElement attributeNamed:@"tag"]]];
                     }
                     
-                    direction.stops = stops_;
-                    [directionsList addObject:direction];
+                    direction.stops = stops;
                     
-                    stops_ = nil;
+                    [directionsList addObject:direction];
                 }
                 
-                NSMutableArray *pathPoints_ = [NSMutableArray arrayWithCapacity:10];
-                
+                NSMutableArray *pathPoints = [NSMutableArray arrayWithCapacity:10];
                 for (SMXMLElement *pathElement in [routeElement childrenNamed:@"path"]) {
-                    
                     for (SMXMLElement *pointOnPath in [pathElement childrenNamed:@"point"]) {
                         
-                        NSString *lat_ = [pointOnPath attributeNamed:@"lat"];
-                        NSString *lon_ = [pointOnPath attributeNamed:@"lon"];
+                        NSString *lat = [pointOnPath attributeNamed:@"lat"];
+                        NSString *lon = [pointOnPath attributeNamed:@"lon"];
+                        NSDictionary *point = @{@"lat": lat, @"lon": lon};
                         
-                        NSDictionary *point_ = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:lat_, lon_, nil]
-                                                                           forKeys:[NSArray arrayWithObjects:@"lat", @"lon", nil]];
-                        
-                        [pathPoints_ addObject:point_];
-                        point_ = nil;
+                        [pathPoints addObject:point];
                     }
                 }
                 
@@ -205,15 +163,9 @@
 }
 
 #pragma mark - Disk Access
-
 - (NSString *)pathInDocumentDirectory:(NSString *)aPath {
-    NSArray *documentPaths =
-    NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
-                                        NSUserDomainMask,
-                                        YES);
-    
+    NSArray *documentPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentDirectoryPath = [documentPaths objectAtIndex:0];
-    
     return [documentDirectoryPath stringByAppendingPathComponent:aPath];
 }
 

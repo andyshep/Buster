@@ -27,6 +27,8 @@
 
 #import "BSDirectionsViewController.h"
 
+#import "BSDirection.h"
+
 #import "BSDirectionsModel.h"
 #import "BSPredictionsViewController.h"
 
