@@ -10,6 +10,14 @@
 
 @implementation BSMBTARequestOperation
 
+- (id)initWithRequest:(NSURLRequest *)urlRequest {
+    if ((self = [super initWithRequest:urlRequest])) {
+        //
+    }
+    
+    return self;
+}
+
 + (BSMBTARequestOperation *)MBTARequestOperationWithRequest:(NSURLRequest *)urlRequest success:(void (^)(NSURLRequest *, NSHTTPURLResponse *, id))success failure:(void (^)(NSURLRequest *, NSHTTPURLResponse *, NSError *))failure {
     BSMBTARequestOperation *requestOperation = [[BSMBTARequestOperation alloc] initWithRequest:urlRequest];
     [requestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -27,15 +35,6 @@
 
 + (NSSet *)acceptableContentTypes {
     return [NSSet setWithObjects:@"application/xml", @"text/xml", nil];
-}
-
-- (id)initWithRequest:(NSURLRequest *)urlRequest {
-    self = [super initWithRequest:urlRequest];
-    if (!self) {
-        return nil;
-    }
-    
-    return self;
 }
 
 @end

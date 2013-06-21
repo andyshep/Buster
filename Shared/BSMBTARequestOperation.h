@@ -8,14 +8,12 @@
 
 #import "AFHTTPRequestOperation.h"
 
-@interface BSMBTARequestOperation : AFHTTPRequestOperation {
-    
-}
+@interface BSMBTARequestOperation : AFHTTPRequestOperation
+
+- (id)initWithRequest:(NSURLRequest *)urlRequest;
 
 + (BSMBTARequestOperation *)MBTARequestOperationWithRequest:(NSURLRequest *)urlRequest
                                                         success:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, id object))success
                                                         failure:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error))failure;
-
-- (id)initWithRequest:(NSURLRequest *)urlRequest;
 
 @end

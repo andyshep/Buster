@@ -59,17 +59,9 @@
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	
-    [[self navigationItem] setTitle:NSLocalizedString(@"Stops", @"Stops title")];
-    [[self bottomToolbar] setTintColor:[BSAppTheme lightBlueColor]];
-    
-//    UIBarButtonItem *addToFavoritesButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"28-star.png"] style:UIBarButtonItemStylePlain target:self action:@selector(somthing)];
-//    [[self navigationItem] setRightBarButtonItem:addToFavoritesButton];
-//    [addToFavoritesButton release];
-	// show a spinner
-//	[self showActivityViewer];
-    
+    [self.navigationItem setTitle:NSLocalizedString(@"Stops", @"Stops title")];
 	
-	_model = [[BSDirectionsModel alloc] init];
+	self.model = [[BSDirectionsModel alloc] init];
     
     [_model addObserver:self 
              forKeyPath:@"directions" 

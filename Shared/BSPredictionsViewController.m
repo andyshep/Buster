@@ -55,10 +55,6 @@
 	UIBarButtonItem *refreshButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshList:)];
 	self.navigationItem.rightBarButtonItem = refreshButton;
     
-    BSGradientView *backgroundView = [[BSGradientView alloc] initWithFrame:self.view.bounds];
-    [backgroundView setGradient:[BSAppTheme greyGradientColor]];
-    [self.tableView setBackgroundView:backgroundView];
-    
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     
     self.model = [[BSPredictionsModel alloc] init];
