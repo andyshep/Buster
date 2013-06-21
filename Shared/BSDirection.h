@@ -25,10 +25,12 @@
 //  THE SOFTWARE.
 //
 
-
 @interface BSDirection : NSObject <NSCoding>
 
-@property (copy) NSArray *stops;
-@property (nonatomic, strong) NSString *tag, *name, *title;
+@property (nonatomic, copy) NSArray *stops;
+
+@property (nonatomic, copy) NSString *tag;
+@property (nonatomic, copy) NSString *name;
+@property (nonatomic, copy) NSString *title;
 
 @end

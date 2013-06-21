@@ -25,10 +25,12 @@
 //  THE SOFTWARE.
 //
 
-
 @interface BSRoute : NSObject <NSCoding>
 
-@property (nonatomic, strong) NSString *title, *tag, *endpoints;
-@property (copy) NSArray *stops;
+@property (nonatomic, copy) NSString *title;
+@property (nonatomic, copy) NSString *tag;
+@property (nonatomic, copy) NSString *endpoints;
+
+@property (nonatomic, copy) NSArray *stops;
 
 @end

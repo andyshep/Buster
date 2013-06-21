@@ -27,18 +27,9 @@
 
 #import "BSDirection.h"
 
-
 @implementation BSDirection
 
-@synthesize stops = _stops;
-@synthesize tag = _tag;
-@synthesize name = _name;
-@synthesize title = _title;
-
-#pragma mark -
-#pragma mark Lifecycle
-
-- (id) init {
+- (id)init {
     if ((self = [super init])) {
         //
     }
@@ -46,12 +37,6 @@
     return self;
 }
 
-
-#pragma mark -
-#pragma NSCoding
-
-// http://www.cocoadev.com/index.pl?NSCoder
-// 
 - (id)initWithCoder:(NSCoder *)coder {
     if (self = [super init]) {
         self.tag = [coder decodeObjectForKey:@"tag"];
@@ -64,7 +49,6 @@
 }
 
 - (void)encodeWithCoder:(NSCoder *)coder {
-	
 	[coder encodeObject:self.tag forKey:@"tag"];
 	[coder encodeObject:self.name forKey:@"name"];
 	[coder encodeObject:self.title forKey:@"title"];

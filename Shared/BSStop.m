@@ -27,30 +27,16 @@
 
 #import "BSStop.h"
 
-
 @implementation BSStop
 
-@synthesize title = _title, tag = _tag, directionTag = _directionTag;
-@synthesize routeNumber = _routeNumber, stopId = _stopId;
-@synthesize latitude = _latitude, longitude = _longitude;
-
-#pragma mark -
-#pragma mark Lifecycle
-
-- (id) init {
+- (id)init {
 	if ((self = [super init])) {
-		// init
+        //
     }
 	
     return self;
 }
 
-
-#pragma mark -
-#pragma NSCoding
-
-// http://www.cocoadev.com/index.pl?NSCoder
-// 
 - (id)initWithCoder:(NSCoder *)coder {
 	if ((self = [super init])) {
         self.title = [coder decodeObjectForKey:@"title"];
@@ -64,13 +50,11 @@
 }
 
 - (void)encodeWithCoder:(NSCoder *)coder {
-	
 	[coder encodeObject:self.title forKey:@"title"];
 	[coder encodeObject:self.tag forKey:@"tag"];
 	[coder encodeObject:self.directionTag forKey:@"directionTag"];
 	[coder encodeObject:self.routeNumber forKey:@"routeNumber"];
 	[coder encodeObject:self.stopId forKey:@"stopId"];
-	
 }
 
 @end

@@ -29,28 +29,14 @@
 
 @implementation BSRoute
 
-@synthesize title = _title;
-@synthesize tag = _tag;
-@synthesize endpoints = _endpoints;
-@synthesize stops = _stops;
-
-#pragma mark -
-#pragma mark Lifecycle
-
-- (id) init {
+- (id)init {
 	if ((self = [super init])) {
-		// init
+        //
     }
 	
     return self;
 }
 
-
-#pragma mark -
-#pragma NSCoding
-
-// http://www.cocoadev.com/index.pl?NSCoder
-// 
 - (id)initWithCoder:(NSCoder *)coder {
     if ((self = [super init])) {
         self.title = [coder decodeObjectForKey:@"title"];
@@ -63,7 +49,6 @@
 }
 	 
 - (void)encodeWithCoder:(NSCoder *)coder {
- 
 	[coder encodeObject:self.title forKey:@"title"];
 	[coder encodeObject:self.tag forKey:@"tag"];
 	[coder encodeObject:self.stops forKey:@"stops"];

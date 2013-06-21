@@ -25,11 +25,16 @@
 //  THE SOFTWARE.
 //
 
-
 @interface BSStop : NSObject <NSCoding>
 
-@property (nonatomic, strong) NSString *title, *tag, *directionTag;
-@property (nonatomic, strong) NSString *routeNumber, *stopId;
-@property (nonatomic, strong) NSString *latitude, *longitude;
+@property (nonatomic, copy) NSString *title;
+@property (nonatomic, copy) NSString *tag;
+@property (nonatomic, copy) NSString *directionTag;
+
+@property (nonatomic, copy) NSString *routeNumber;
+@property (nonatomic, copy) NSString *stopId;
+
+@property (nonatomic, copy) NSString *latitude;
+@property (nonatomic, copy) NSString *longitude;
 
 @end
