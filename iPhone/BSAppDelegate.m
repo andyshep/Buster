@@ -42,7 +42,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    self.routesViewController = [[BSRoutesViewController alloc] initWithNibName:@"BSRoutesViewController" bundle:nil];
+    self.routesViewController = [[BSRoutesViewController alloc] init];
     self.navigationController = [[UINavigationController alloc] initWithRootViewController:_routesViewController];
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {

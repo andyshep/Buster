@@ -51,8 +51,10 @@
 @implementation BSRoutesViewController
 
 - (id)init {
-    if (self = [super initWithNibName:@"BSRoutesView" bundle:nil]) {
-        self.routesListControl = [[UISegmentedControl alloc] init];
+    if ((self = [super init])) {
+        self.tableView = [[UITableView alloc] initWithFrame:CGRectZero];
+        [_tableView setDelegate:self];
+        [_tableView setDataSource:self];
     }
     
     return self;
@@ -65,16 +67,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [_tableView setFrame:self.view.bounds];
+    [_tableView setAutoresizingMask:(UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight)];
+    
+    [self.view addSubview:_tableView];
 
-    [[self navigationItem] setTitle:NSLocalizedString(@"Routes", @"routes table view title")];
-    [[[self navigationController] navigationBar] setTintColor:[BSAppTheme lightBlueColor]];
-    [_toolbar setTintColor:[BSAppTheme lightBlueColor]];
+    [self.navigationItem setTitle:NSLocalizedString(@"Routes", @"routes table view title")];
     
     UIBarButtonItem *refreshButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(requestRouteList)];
-    [[self navigationItem] setRightBarButtonItem:refreshButton animated:YES];
-    
-    [self.tableView setBackgroundColor:[UIColor whiteColor]];
-    [self.tableView setSeparatorColor:[UIColor lightGrayColor]];
+    [self.navigationItem setRightBarButtonItem:refreshButton animated:YES];
     
     // [self layoutRoutesListControl];
     
@@ -108,22 +110,22 @@
 - (void)layoutRoutesListControl {
     NSArray *routeListControlItems = [NSArray arrayWithObjects:NSLocalizedString(@"All Routes", @"All Routes"),
                                         NSLocalizedString(@"Favorites", @"Favorites"), nil];
-    
-	self.routesListControl = [[UISegmentedControl alloc] initWithItems:routeListControlItems];
-    [_routesListControl setFrame:CGRectMake(0.0f, 0.0f, 305.0f, 30.0f)];
-    [_routesListControl setSegmentedControlStyle:UISegmentedControlStyleBar];
-    [_routesListControl setSelectedSegmentIndex:0];
-    
-    [_routesListControl addTarget:self action:@selector(switchRoutesList:) forControlEvents:UIControlEventValueChanged];
-    
-    // FIXME: no idea why this causes layout issues on the pad
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-        [_routesListControl setAutoresizingMask:(UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight)];
-    }
-    
-	UIBarButtonItem *buttonItem = [[UIBarButtonItem alloc] initWithCustomView:self.routesListControl];
-    [_toolbar setItems:@[buttonItem]];    
-    [_toolbar setNeedsLayout];
+//    
+//	self.routesListControl = [[UISegmentedControl alloc] initWithItems:routeListControlItems];
+//    [_routesListControl setFrame:CGRectMake(0.0f, 0.0f, 305.0f, 30.0f)];
+//    [_routesListControl setSegmentedControlStyle:UISegmentedControlStyleBar];
+//    [_routesListControl setSelectedSegmentIndex:0];
+//    
+//    [_routesListControl addTarget:self action:@selector(switchRoutesList:) forControlEvents:UIControlEventValueChanged];
+//    
+//    // FIXME: no idea why this causes layout issues on the pad
+//    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+//        [_routesListControl setAutoresizingMask:(UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight)];
+//    }
+//    
+//	UIBarButtonItem *buttonItem = [[UIBarButtonItem alloc] initWithCustomView:self.routesListControl];
+//    [_toolbar setItems:@[buttonItem]];    
+//    [_toolbar setNeedsLayout];
 }
 
 #pragma mark - UITableView

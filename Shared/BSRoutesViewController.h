@@ -25,10 +25,10 @@
 //  THE SOFTWARE.
 //
 
-@interface BSRoutesViewController : UIViewController
+@interface BSRoutesViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
-@property (nonatomic, strong) IBOutlet UITableView *tableView;
-@property (nonatomic, strong) IBOutlet UIToolbar *toolbar;
+@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) UIToolbar *toolbar;
 @property (nonatomic, strong) UISegmentedControl *routesListControl;
 
 @end

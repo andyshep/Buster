@@ -33,7 +33,6 @@
 		F79012E81461AFAF00F273F2 /* BSPredictionMetaTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F79012E71461AFAF00F273F2 /* BSPredictionMetaTableViewCell.m */; };
 		F79012EB1461AFD500F273F2 /* BSPredictionsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F79012EA1461AFD500F273F2 /* BSPredictionsModel.m */; };
 		F795A0FB1464C0EB001B43CD /* BSDirectionsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F795A0FA1464C0EB001B43CD /* BSDirectionsView.xib */; };
-		F795A0FD1464C1E5001B43CD /* BSRoutesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F795A0FC1464C1E5001B43CD /* BSRoutesViewController.xib */; };
 		F795A1031464C43A001B43CD /* BSArtistTools.m in Sources */ = {isa = PBXBuildFile; fileRef = F795A1001464C43A001B43CD /* BSArtistTools.m */; };
 		F795A1041464C43A001B43CD /* BSAppTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = F795A1021464C43A001B43CD /* BSAppTheme.m */; };
 		F795A1061464C4AD001B43CD /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F795A1051464C4AD001B43CD /* QuartzCore.framework */; };
@@ -92,7 +91,6 @@
 		F79012E91461AFD500F273F2 /* BSPredictionsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BSPredictionsModel.h; path = Shared/BSPredictionsModel.h; sourceTree = "<group>"; };
 		F79012EA1461AFD500F273F2 /* BSPredictionsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BSPredictionsModel.m; path = Shared/BSPredictionsModel.m; sourceTree = "<group>"; };
 		F795A0FA1464C0EB001B43CD /* BSDirectionsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BSDirectionsView.xib; path = Shared/Resources/BSDirectionsView.xib; sourceTree = "<group>"; };
-		F795A0FC1464C1E5001B43CD /* BSRoutesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BSRoutesViewController.xib; path = Shared/Resources/BSRoutesViewController.xib; sourceTree = "<group>"; };
 		F795A0FF1464C43A001B43CD /* BSArtistTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BSArtistTools.h; path = Shared/BSArtistTools.h; sourceTree = "<group>"; };
 		F795A1001464C43A001B43CD /* BSArtistTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BSArtistTools.m; path = Shared/BSArtistTools.m; sourceTree = "<group>"; };
 		F795A1011464C43A001B43CD /* BSAppTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BSAppTheme.h; path = Shared/BSAppTheme.h; sourceTree = "<group>"; };
@@ -263,7 +261,6 @@
 			isa = PBXGroup;
 			children = (
 				F795A0FA1464C0EB001B43CD /* BSDirectionsView.xib */,
-				F795A0FC1464C1E5001B43CD /* BSRoutesViewController.xib */,
 				F7F83E3D1466ED5400ABF92D /* BSRoutesTableViewCell.xib */,
 			);
 			name = Resources;
@@ -401,7 +398,6 @@
 				F76E8DDF12DA8C0200A9BC2D /* MapView_iPhone.xib in Resources */,
 				F7032C7F146447280098AF94 /* routes.endpoints.plist in Resources */,
 				F795A0FB1464C0EB001B43CD /* BSDirectionsView.xib in Resources */,
-				F795A0FD1464C1E5001B43CD /* BSRoutesViewController.xib in Resources */,
 				F7F83E3E1466ED5400ABF92D /* BSRoutesTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
