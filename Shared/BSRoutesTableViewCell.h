@@ -6,10 +6,9 @@
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import "BSGradientView.h"
-
 @interface BSRoutesTableViewCell : UITableViewCell
 
-@property (nonatomic, strong) UILabel *routeNumberLabel, *routeEndpointsLabel;
+@property (nonatomic, strong) UILabel *routeNumberLabel;
+@property (nonatomic, strong) UILabel *routeEndpointsLabel;
 
 @end
