@@ -108,9 +108,9 @@
 }
 
 - (void)layoutRoutesListControl {
-    NSArray *routeListControlItems = [NSArray arrayWithObjects:NSLocalizedString(@"All Routes", @"All Routes"),
-                                        NSLocalizedString(@"Favorites", @"Favorites"), nil];
-//    
+//    NSArray *routeListControlItems = [NSArray arrayWithObjects:NSLocalizedString(@"All Routes", @"All Routes"),
+//                                        NSLocalizedString(@"Favorites", @"Favorites"), nil];
+//
 //	self.routesListControl = [[UISegmentedControl alloc] initWithItems:routeListControlItems];
 //    [_routesListControl setFrame:CGRectMake(0.0f, 0.0f, 305.0f, 30.0f)];
 //    [_routesListControl setSegmentedControlStyle:UISegmentedControlStyleBar];

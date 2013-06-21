@@ -25,15 +25,10 @@
 //  THE SOFTWARE.
 //
 
-#import "SMXMLDocument.h"
-#import "BSMBTARequestOperation.h"
-#import "MBTAQueryStringBuilder.h"
-#import "BSRoute.h"
-
 @interface BSRoutesModel : NSObject
 
-@property (copy) NSArray *routes;
-@property (copy) NSError *error;
+@property (nonatomic, copy) NSArray *routes;
+@property (nonatomic, copy) NSError *error;
 
 - (void)requestRouteList;
 

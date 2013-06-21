@@ -27,55 +27,43 @@
 
 #import "BSRoutesModel.h"
 
+#import "BSRoute.h"
+
+#import "BSMBTARequestOperation.h"
+#import "MBTAQueryStringBuilder.h"
+
+#import "SMXMLDocument.h"
+
 @implementation BSRoutesModel
 
-@synthesize routes = _routes;
-@synthesize error = _error;
-
-#pragma mark -
-#pragma mark Lifecycle
-
-- (id) init {
+- (id)init {
 	if ((self = [super init])) {
-		self.routes = nil, self.error = nil;
-        // [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
+        //
     }
 	
     return self;
 }
 
-
-#pragma mark -
-#pragma mark Model KVC
-
-// our view controller uses these to display table data
-
 - (NSUInteger)countOfRoutes {
-	return [self.routes count];
+	return self.routes.count;
 }
 
 - (id)objectInRoutesAtIndex:(NSUInteger)index {
-	return [self.routes objectAtIndex:index];
+	return [_routes objectAtIndex:index];
 }
 
 - (void)getRoutes:(__unsafe_unretained id *)objects range:(NSRange)range {
-	[self.routes getObjects:objects range:range];
+	[_routes getObjects:objects range:range];
 }
 
 #pragma mark - Disk Access
-
 - (NSString *)routesEndpointsArchivePath {
     return [[NSBundle mainBundle] pathForResource:@"routes.endpoints" ofType:@"plist"];
 }
 
 - (NSString *)pathInDocumentDirectory:(NSString *)aPath {
-    NSArray *documentPaths =
-    NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
-                                        NSUserDomainMask,
-                                        YES);
-    
+    NSArray *documentPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentDirectoryPath = [documentPaths objectAtIndex:0];
-    
     return [documentDirectoryPath stringByAppendingPathComponent:aPath];
 }
 
@@ -83,61 +71,48 @@
     return [self pathInDocumentDirectory:@"routes.data"];
 }
 
-- (BOOL)saveChanges
-{
-    // returns success or failure
-    return [NSKeyedArchiver archiveRootObject:self.routes
-                                       toFile:[self routesArchivePath]];
+- (BOOL)saveChanges {
+    return [NSKeyedArchiver archiveRootObject:self.routes toFile:[self routesArchivePath]];
 }
 
-#pragma mark -
-#pragma mark Route List building
-
+#pragma mark - Route List building
 - (void)requestRouteList {
     NSDictionary *routeEndpoints = [NSDictionary dictionaryWithContentsOfFile:[self routesEndpointsArchivePath]];
     NSString *cachedFilePath = [self routesArchivePath];
     
     if (self.routes == nil) {
-        NSLog(@"loading from disk...");
         self.routes = [NSKeyedUnarchiver unarchiveObjectWithFile:cachedFilePath];
     }
     
     if (self.routes == nil) {
-        NSLog(@"loading from the intertubes...");
-        MBTAQueryStringBuilder *_builder = [MBTAQueryStringBuilder sharedInstance];
-        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[_builder buildRouteListQuery]]];
-
-        NSLog(@"routeList: %@", [_builder buildRouteListQuery]);
+        MBTAQueryStringBuilder *builder = [MBTAQueryStringBuilder sharedInstance];
+        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[builder buildRouteListQuery]]];
         
         BSMBTARequestOperation *operation = [BSMBTARequestOperation MBTARequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id object) {
-            NSError *error_ = nil;
-            SMXMLDocument *xml = [SMXMLDocument documentWithData:object error:&error_];
+            NSError *error = nil;
+            SMXMLDocument *xml = [SMXMLDocument documentWithData:object error:&error];
             
             // make sure there was no error parsing the xml
-            if (!error_) {
-                NSMutableArray *mRouteList = [NSMutableArray arrayWithCapacity:20];
+            if (!error) {
+                NSMutableArray *routes = [NSMutableArray arrayWithCapacity:20];
                 
                 for (SMXMLElement *routeElement in [xml.root childrenNamed:@"route"]) {
-                    
                     BSRoute *route = [[BSRoute alloc] init];
-                    
                     route.title = [routeElement attributeNamed:@"title"];
                     route.tag = [routeElement attributeNamed:@"tag"];
                     
                     NSString *endpoints = [routeEndpoints objectForKey:route.tag];
-                    
-                    if (endpoints != nil) {
+                    if (endpoints) {
                         route.endpoints = endpoints;
                     }
                     
-                    [mRouteList addObject:route];
+                    [routes addObject:route];
                 }
                 
-                NSArray *aRouteList = [NSArray arrayWithArray:mRouteList];
-                self.routes = aRouteList;
+                self.routes = [NSArray arrayWithArray:routes];
                 
                 // save the routes the disk for next time
-                [NSKeyedArchiver archiveRootObject:aRouteList toFile:cachedFilePath];
+                [NSKeyedArchiver archiveRootObject:routes toFile:cachedFilePath];
             }
         } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *err) {
             self.error = err;
