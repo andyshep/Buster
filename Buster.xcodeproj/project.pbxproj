@@ -11,7 +11,6 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		2860E328111B887F00E27156 /* BSAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2860E326111B887F00E27156 /* BSAppDelegate.m */; };
-		2860E32E111B888700E27156 /* AppDelegate_iPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 2860E32C111B888700E27156 /* AppDelegate_iPad.m */; };
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
 		B47D174750C84D3CA16465D4 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D5EA17E3158D44BC9C7D66D4 /* libPods.a */; };
 		F7002C7E14686C450016DEB5 /* BSGradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = F7002C7D14686C450016DEB5 /* BSGradientView.m */; };
@@ -41,7 +40,6 @@
 		F7C8047B1461A8CF00DDBD73 /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F7C8047A1461A8CF00DDBD73 /* libz.1.2.5.dylib */; };
 		F7C804901461AA7700DDBD73 /* BSRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C8048D1461AA7700DDBD73 /* BSRoute.m */; };
 		F7C804911461AA7700DDBD73 /* BSRoutesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C8048F1461AA7700DDBD73 /* BSRoutesModel.m */; };
-		F7D363D812BB02B1002E06EA /* MainWindow_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7D363D612BB02B1002E06EA /* MainWindow_iPad.xib */; };
 		F7E2245612B99FA700BFBE0A /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7E2245512B99FA700BFBE0A /* CoreLocation.framework */; };
 		F7E2245812B99FA700BFBE0A /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7E2245712B99FA700BFBE0A /* MapKit.framework */; };
 		F7EAC61412BAF820007CD95F /* MBTAQueryStringBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = F7EAC61112BAF820007CD95F /* MBTAQueryStringBuilder.m */; };
@@ -56,8 +54,6 @@
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		2860E325111B887F00E27156 /* BSAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSAppDelegate.h; sourceTree = "<group>"; };
 		2860E326111B887F00E27156 /* BSAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSAppDelegate.m; sourceTree = "<group>"; };
-		2860E32B111B888700E27156 /* AppDelegate_iPad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate_iPad.h; sourceTree = "<group>"; };
-		2860E32C111B888700E27156 /* AppDelegate_iPad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate_iPad.m; sourceTree = "<group>"; };
 		288765FC0DF74451002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Shared/main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* Buster_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Buster_Prefix.pch; sourceTree = "<group>"; };
@@ -107,7 +103,6 @@
 		F7C8048D1461AA7700DDBD73 /* BSRoute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BSRoute.m; path = Shared/BSRoute.m; sourceTree = "<group>"; };
 		F7C8048E1461AA7700DDBD73 /* BSRoutesModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BSRoutesModel.h; path = Shared/BSRoutesModel.h; sourceTree = "<group>"; };
 		F7C8048F1461AA7700DDBD73 /* BSRoutesModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BSRoutesModel.m; path = Shared/BSRoutesModel.m; sourceTree = "<group>"; };
-		F7D363D612BB02B1002E06EA /* MainWindow_iPad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MainWindow_iPad.xib; path = Resources/MainWindow_iPad.xib; sourceTree = "<group>"; };
 		F7E2245512B99FA700BFBE0A /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		F7E2245712B99FA700BFBE0A /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		F7EAC61012BAF820007CD95F /* MBTAQueryStringBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MBTAQueryStringBuilder.h; path = Shared/MBTAQueryStringBuilder.h; sourceTree = "<group>"; };
@@ -163,8 +158,6 @@
 			isa = PBXGroup;
 			children = (
 				F7D363D412BB02A5002E06EA /* Resources */,
-				2860E32B111B888700E27156 /* AppDelegate_iPad.h */,
-				2860E32C111B888700E27156 /* AppDelegate_iPad.m */,
 			);
 			path = iPad;
 			sourceTree = "<group>";
@@ -328,7 +321,6 @@
 			isa = PBXGroup;
 			children = (
 				F76E8DDC12DA8BF900A9BC2D /* MapView_iPad.xib */,
-				F7D363D612BB02B1002E06EA /* MainWindow_iPad.xib */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -405,7 +397,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				F755C94312BAEC0300E02B61 /* icon.png in Resources */,
-				F7D363D812BB02B1002E06EA /* MainWindow_iPad.xib in Resources */,
 				F76E8DDD12DA8BF900A9BC2D /* MapView_iPad.xib in Resources */,
 				F76E8DDF12DA8C0200A9BC2D /* MapView_iPhone.xib in Resources */,
 				F7032C7F146447280098AF94 /* routes.endpoints.plist in Resources */,
@@ -455,7 +446,6 @@
 			files = (
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				2860E328111B887F00E27156 /* BSAppDelegate.m in Sources */,
-				2860E32E111B888700E27156 /* AppDelegate_iPad.m in Sources */,
 				F7EAC61412BAF820007CD95F /* MBTAQueryStringBuilder.m in Sources */,
 				F783161C12D8CB1000D7C302 /* BSMapViewController.m in Sources */,
 				F70BB19D12DA2132000942EF /* BSVehicleLocationAnnotation.m in Sources */,

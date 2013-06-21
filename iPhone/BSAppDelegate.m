@@ -45,8 +45,21 @@
     self.routesViewController = [[BSRoutesViewController alloc] initWithNibName:@"BSRoutesViewController" bundle:nil];
     self.navigationController = [[UINavigationController alloc] initWithRootViewController:_routesViewController];
     
-    [_window addSubview:[_navigationController view]];
-    [_window setRootViewController:_navigationController];
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        // only create a map and split view for the iPad
+        self.mapViewController = [[BSMapViewController alloc] initWithNibName:@"MapView_iPad" bundle:nil];
+        self.splitViewController = [[UISplitViewController alloc] init];
+        
+        [_splitViewController setViewControllers:@[_navigationController, _mapViewController]];
+        [_splitViewController setDelegate:_mapViewController];
+        
+        // split view is root on iPad
+        [_window setRootViewController:_splitViewController];
+    } else {
+        // otherwise nav controller is root on iPhone
+        [_window setRootViewController:_navigationController];
+    }
+    
     [_window makeKeyAndVisible];
 	
 	return YES;
@@ -56,6 +69,14 @@
     NSLog(@"applicationDidReceiveMemoryWarning");
 }
 
-
+//- (void)loadPredictionsForVehicle:(NSString *)vehicle runningRoute:(NSString *)route atEpochTime:(NSString *)time {
+//	NSLog(@"loadPredictionsForVehicle: %@ runningRoute: %@ atEpochTime: %@", vehicle, route, time);
+//	
+//	mapViewController.vehicle = vehicle;
+//	mapViewController.route = route;
+//	mapViewController.time = time;
+//	
+//	[mapViewController dropPinForLocation];
+//}
 
 @end
