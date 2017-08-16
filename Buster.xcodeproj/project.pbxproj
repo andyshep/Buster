@@ -8,22 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
-		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
-		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		2860E328111B887F00E27156 /* BSAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2860E326111B887F00E27156 /* BSAppDelegate.m */; };
-		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
 		F7032C7F146447280098AF94 /* routes.endpoints.plist in Resources */ = {isa = PBXBuildFile; fileRef = F7032C7E146447280098AF94 /* routes.endpoints.plist */; };
 		F70BB19D12DA2132000942EF /* BSVehicleLocationAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = F70BB19C12DA2132000942EF /* BSVehicleLocationAnnotation.m */; };
 		F70BB9F31F4395B2004734B8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F70BB9F21F4395B2004734B8 /* LaunchScreen.storyboard */; };
 		F70BB9F51F4395DC004734B8 /* MapView_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = F70BB9F41F4395DC004734B8 /* MapView_iPhone.xib */; };
-		F719FF3812BAD3F1008D50AE /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F719FF3712BAD3F1008D50AE /* CFNetwork.framework */; };
-		F719FF3E12BAD402008D50AE /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F719FF3D12BAD402008D50AE /* MobileCoreServices.framework */; };
-		F719FF4012BAD402008D50AE /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F719FF3F12BAD402008D50AE /* SystemConfiguration.framework */; };
 		F727BD841F43983200373CD6 /* BSDirectionsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F727BD831F43983200373CD6 /* BSDirectionsView.xib */; };
 		F73C04EE151E5FB700835FC6 /* BSMBTARequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = F73C04ED151E5FB700835FC6 /* BSMBTARequestOperation.m */; };
 		F743615D1461B3B700D25502 /* BSStop.m in Sources */ = {isa = PBXBuildFile; fileRef = F743615B1461B3B700D25502 /* BSStop.m */; };
 		F755C94312BAEC0300E02B61 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = F755C94212BAEC0300E02B61 /* icon.png */; };
-		F76E8DDD12DA8BF900A9BC2D /* MapView_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = F76E8DDC12DA8BF900A9BC2D /* MapView_iPad.xib */; };
 		F783161C12D8CB1000D7C302 /* BSMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F783161512D8CB1000D7C302 /* BSMapViewController.m */; };
 		F79012D41461AC4D00F273F2 /* BSRoutesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F79012D31461AC4D00F273F2 /* BSRoutesViewController.m */; };
 		F79012DE1461ADF300F273F2 /* BSDirection.m in Sources */ = {isa = PBXBuildFile; fileRef = F79012DB1461ADF300F273F2 /* BSDirection.m */; };
@@ -34,15 +27,16 @@
 		F79012EB1461AFD500F273F2 /* BSPredictionsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F79012EA1461AFD500F273F2 /* BSPredictionsModel.m */; };
 		F795A1031464C43A001B43CD /* BSArtistTools.m in Sources */ = {isa = PBXBuildFile; fileRef = F795A1001464C43A001B43CD /* BSArtistTools.m */; };
 		F795A1041464C43A001B43CD /* BSAppTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = F795A1021464C43A001B43CD /* BSAppTheme.m */; };
-		F795A1061464C4AD001B43CD /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F795A1051464C4AD001B43CD /* QuartzCore.framework */; };
-		F7C8047B1461A8CF00DDBD73 /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F7C8047A1461A8CF00DDBD73 /* libz.1.2.5.dylib */; };
 		F7C804901461AA7700DDBD73 /* BSRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C8048D1461AA7700DDBD73 /* BSRoute.m */; };
 		F7C804911461AA7700DDBD73 /* BSRoutesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C8048F1461AA7700DDBD73 /* BSRoutesModel.m */; };
-		F7E2245612B99FA700BFBE0A /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7E2245512B99FA700BFBE0A /* CoreLocation.framework */; };
-		F7E2245812B99FA700BFBE0A /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7E2245712B99FA700BFBE0A /* MapKit.framework */; };
 		F7EAC61412BAF820007CD95F /* MBTAQueryStringBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = F7EAC61112BAF820007CD95F /* MBTAQueryStringBuilder.m */; };
 		F7F83E421466EDB100ABF92D /* BSRoutesTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F7F83E411466EDB100ABF92D /* BSRoutesTableViewCell.m */; };
 		F7F83E491466F84900ABF92D /* BSVehicleLocationModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7F83E481466F84900ABF92D /* BSVehicleLocationModel.m */; };
+		F7FCE9791F43D78D005A132A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		F7FCE97A1F43D799005A132A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		F7FCE97B1F43D7A3005A132A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
+		F7FCE97D1F43D7BA005A132A /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7E2245712B99FA700BFBE0A /* MapKit.framework */; };
+		F7FCE97E1F43D7C3005A132A /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7E2245512B99FA700BFBE0A /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,16 +54,12 @@
 		F70BB19C12DA2132000942EF /* BSVehicleLocationAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BSVehicleLocationAnnotation.m; path = Shared/BSVehicleLocationAnnotation.m; sourceTree = "<group>"; };
 		F70BB9F21F4395B2004734B8 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Shared/Resources/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F70BB9F41F4395DC004734B8 /* MapView_iPhone.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MapView_iPhone.xib; path = Resources/MapView_iPhone.xib; sourceTree = "<group>"; };
-		F719FF3712BAD3F1008D50AE /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
-		F719FF3D12BAD402008D50AE /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
-		F719FF3F12BAD402008D50AE /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		F727BD831F43983200373CD6 /* BSDirectionsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = BSDirectionsView.xib; path = Shared/Resources/BSDirectionsView.xib; sourceTree = "<group>"; };
 		F73C04EC151E5FB700835FC6 /* BSMBTARequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BSMBTARequestOperation.h; path = Shared/BSMBTARequestOperation.h; sourceTree = "<group>"; };
 		F73C04ED151E5FB700835FC6 /* BSMBTARequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BSMBTARequestOperation.m; path = Shared/BSMBTARequestOperation.m; sourceTree = "<group>"; };
 		F743615A1461B3B700D25502 /* BSStop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BSStop.h; path = Shared/BSStop.h; sourceTree = "<group>"; };
 		F743615B1461B3B700D25502 /* BSStop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BSStop.m; path = Shared/BSStop.m; sourceTree = "<group>"; };
 		F755C94212BAEC0300E02B61 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
-		F76E8DDC12DA8BF900A9BC2D /* MapView_iPad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MapView_iPad.xib; path = Resources/MapView_iPad.xib; sourceTree = "<group>"; };
 		F783161412D8CB1000D7C302 /* BSMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BSMapViewController.h; path = Shared/BSMapViewController.h; sourceTree = "<group>"; };
 		F783161512D8CB1000D7C302 /* BSMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BSMapViewController.m; path = Shared/BSMapViewController.m; sourceTree = "<group>"; };
 		F79012D21461AC4D00F273F2 /* BSRoutesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BSRoutesViewController.h; path = Shared/BSRoutesViewController.h; sourceTree = "<group>"; };
@@ -90,8 +80,6 @@
 		F795A1001464C43A001B43CD /* BSArtistTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BSArtistTools.m; path = Shared/BSArtistTools.m; sourceTree = "<group>"; };
 		F795A1011464C43A001B43CD /* BSAppTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BSAppTheme.h; path = Shared/BSAppTheme.h; sourceTree = "<group>"; };
 		F795A1021464C43A001B43CD /* BSAppTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BSAppTheme.m; path = Shared/BSAppTheme.m; sourceTree = "<group>"; };
-		F795A1051464C4AD001B43CD /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		F7C8047A1461A8CF00DDBD73 /* libz.1.2.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.5.dylib; path = usr/lib/libz.1.2.5.dylib; sourceTree = SDKROOT; };
 		F7C8048C1461AA7700DDBD73 /* BSRoute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BSRoute.h; path = Shared/BSRoute.h; sourceTree = "<group>"; };
 		F7C8048D1461AA7700DDBD73 /* BSRoute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BSRoute.m; path = Shared/BSRoute.m; sourceTree = "<group>"; };
 		F7C8048E1461AA7700DDBD73 /* BSRoutesModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BSRoutesModel.h; path = Shared/BSRoutesModel.h; sourceTree = "<group>"; };
@@ -111,16 +99,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F795A1061464C4AD001B43CD /* QuartzCore.framework in Frameworks */,
-				F7C8047B1461A8CF00DDBD73 /* libz.1.2.5.dylib in Frameworks */,
-				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
-				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
-				288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */,
-				F7E2245612B99FA700BFBE0A /* CoreLocation.framework in Frameworks */,
-				F7E2245812B99FA700BFBE0A /* MapKit.framework in Frameworks */,
-				F719FF3812BAD3F1008D50AE /* CFNetwork.framework in Frameworks */,
-				F719FF3E12BAD402008D50AE /* MobileCoreServices.framework in Frameworks */,
-				F719FF4012BAD402008D50AE /* SystemConfiguration.framework in Frameworks */,
+				F7FCE97E1F43D7C3005A132A /* CoreLocation.framework in Frameworks */,
+				F7FCE97D1F43D7BA005A132A /* MapKit.framework in Frameworks */,
+				F7FCE97B1F43D7A3005A132A /* CoreGraphics.framework in Frameworks */,
+				F7FCE97A1F43D799005A132A /* Foundation.framework in Frameworks */,
+				F7FCE9791F43D78D005A132A /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -145,14 +128,6 @@
 			path = iPhone;
 			sourceTree = "<group>";
 		};
-		2860E32A111B888700E27156 /* iPad */ = {
-			isa = PBXGroup;
-			children = (
-				F7D363D412BB02A5002E06EA /* Resources */,
-			);
-			path = iPad;
-			sourceTree = "<group>";
-		};
 		28EEBF621118D79A00187D67 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -166,10 +141,9 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
-		29B97314FDCFA39411CA2CEA = {
+		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				2860E32A111B888700E27156 /* iPad */,
 				2860E324111B887F00E27156 /* iPhone */,
 				F783161312D8CAEA00D7C302 /* Shared */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
@@ -194,16 +168,11 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				F7C8047A1461A8CF00DDBD73 /* libz.1.2.5.dylib */,
-				F795A1051464C4AD001B43CD /* QuartzCore.framework */,
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
 				288765FC0DF74451002DB57D /* CoreGraphics.framework */,
 				F7E2245512B99FA700BFBE0A /* CoreLocation.framework */,
 				F7E2245712B99FA700BFBE0A /* MapKit.framework */,
-				F719FF3712BAD3F1008D50AE /* CFNetwork.framework */,
-				F719FF3D12BAD402008D50AE /* MobileCoreServices.framework */,
-				F719FF3F12BAD402008D50AE /* SystemConfiguration.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -303,14 +272,6 @@
 			name = VehicleLocation;
 			sourceTree = "<group>";
 		};
-		F7D363D412BB02A5002E06EA /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				F76E8DDC12DA8BF900A9BC2D /* MapView_iPad.xib */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-		};
 		F7EEF7A612D2AED600E99FF9 /* Predictions */ = {
 			isa = PBXGroup;
 			children = (
@@ -371,7 +332,7 @@
 				French,
 				German,
 			);
-			mainGroup = 29B97314FDCFA39411CA2CEA;
+			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
 			productRefGroup = 19C28FACFE9D520D11CA2CBB /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -388,7 +349,6 @@
 			files = (
 				F70BB9F31F4395B2004734B8 /* LaunchScreen.storyboard in Resources */,
 				F755C94312BAEC0300E02B61 /* icon.png in Resources */,
-				F76E8DDD12DA8BF900A9BC2D /* MapView_iPad.xib in Resources */,
 				F727BD841F43983200373CD6 /* BSDirectionsView.xib in Resources */,
 				F7032C7F146447280098AF94 /* routes.endpoints.plist in Resources */,
 				F70BB9F51F4395DC004734B8 /* MapView_iPhone.xib in Resources */,
