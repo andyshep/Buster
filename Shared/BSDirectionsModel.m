@@ -33,8 +33,6 @@
 #import "BSMBTARequestOperation.h"
 #import "MBTAQueryStringBuilder.h"
 
-#import "SMXMLDocument.h"
-
 @interface BSDirectionsModel ()
 
 - (void)unloadStopList;
@@ -74,71 +72,7 @@
         NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[builder buildRouteConfigQuery:stop]]];
         
         BSMBTARequestOperation *operation = [BSMBTARequestOperation MBTARequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id object) {
-            NSError *error = nil;
-            SMXMLDocument *xml = [[SMXMLDocument alloc] initWithData:object error:&error];
-            
-            if (!error) {
-                // a list of route stops will be passed back and stored into the model
-                NSMutableDictionary *stopsList = [NSMutableDictionary dictionaryWithCapacity:20];
-                NSMutableArray *directionsList = [NSMutableArray arrayWithCapacity:20];
-                NSMutableArray *tagsList = [NSMutableArray arrayWithCapacity:3];
-                NSMutableArray *titlesList = [NSMutableArray arrayWithCapacity:3];
-                // NSMutableArray *pathsList = [NSMutableArray arrayWithCapacity:20];
-                
-                SMXMLElement *routeElement = [xml.parent childNamed:@"route"];
-                
-                for (SMXMLElement *stopElement in [routeElement childrenNamed:@"stop"]) {
-                    BSStop *stop = [[BSStop alloc] init];
-                    stop.title = [stopElement attributeNamed:@"title"];
-                    stop.tag = [stopElement attributeNamed:@"tag"];
-                    stop.latitude = [stopElement attributeNamed:@"lat"];
-                    stop.longitude = [stopElement attributeNamed:@"lon"];
-                    
-                    [stopsList setObject:stop forKey:stop.tag];
-                }
-                
-                for (SMXMLElement *directionElement in [routeElement childrenNamed:@"direction"]) {
-                    BSDirection *direction = [[BSDirection alloc] init];
-                    direction.title = [directionElement attributeNamed:@"title"];
-                    direction.tag = [directionElement attributeNamed:@"tag"];
-                    direction.name = [directionElement attributeNamed:@"name"];
-                    
-                    NSMutableArray *stops = [NSMutableArray arrayWithCapacity:10];
-                    for (SMXMLElement *directionStopElement in [directionElement childrenNamed:@"stop"]) {
-                        [stops addObject:[stopsList objectForKey:[directionStopElement attributeNamed:@"tag"]]];
-                    }
-                    
-                    direction.stops = stops;
-                    
-                    [directionsList addObject:direction];
-                }
-                
-                NSMutableArray *pathPoints = [NSMutableArray arrayWithCapacity:10];
-                for (SMXMLElement *pathElement in [routeElement childrenNamed:@"path"]) {
-                    for (SMXMLElement *pointOnPath in [pathElement childrenNamed:@"point"]) {
-                        
-                        NSString *lat = [pointOnPath attributeNamed:@"lat"];
-                        NSString *lon = [pointOnPath attributeNamed:@"lon"];
-                        NSDictionary *point = @{@"lat": lat, @"lon": lon};
-                        
-                        [pathPoints addObject:point];
-                    }
-                }
-                
-                // basically a unneeded loop.  refactor and improve this.
-                for (BSDirection *direction in directionsList) {
-                    [tagsList addObject:direction.tag];
-                    [titlesList addObject:direction.title];
-                }
-                
-                // we don't need to stopsList anymore since we have
-                // built a list of stops based on the direction of travel
-                stopsList = nil;
-                
-                self.directions = directionsList;
-                self.tags = tagsList;
-                self.titles = titlesList;
-            }
+                // get directions
             
         } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
             // TODO: handle failure

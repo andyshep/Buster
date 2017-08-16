@@ -31,8 +31,6 @@
 #import "BSMBTARequestOperation.h"
 #import "MBTAQueryStringBuilder.h"
 
-#import "SMXMLDocument.h"
-
 @interface BSRoutesModel ()
 
 - (NSString *)routesEndpointsArchivePath;
@@ -94,31 +92,8 @@
         NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[builder buildRouteListQuery]]];
         
         BSMBTARequestOperation *operation = [BSMBTARequestOperation MBTARequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id object) {
-            NSError *error = nil;
-            SMXMLDocument *xml = [SMXMLDocument documentWithData:object error:&error];
-            
-            // make sure there was no error parsing the xml
-            if (!error) {
-                NSMutableArray *routes = [NSMutableArray arrayWithCapacity:20];
+                // get routes
                 
-                for (SMXMLElement *routeElement in [xml.parent childrenNamed:@"route"]) {
-                    BSRoute *route = [[BSRoute alloc] init];
-                    route.title = [routeElement attributeNamed:@"title"];
-                    route.tag = [routeElement attributeNamed:@"tag"];
-                    
-                    NSString *endpoints = [routeEndpoints objectForKey:route.tag];
-                    if (endpoints) {
-                        route.endpoints = endpoints;
-                    }
-                    
-                    [routes addObject:route];
-                }
-                
-                self.routes = [NSArray arrayWithArray:routes];
-                
-                // save the routes the disk for next time
-                [NSKeyedArchiver archiveRootObject:routes toFile:cachedFilePath];
-            }
         } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *err) {
             self.error = err;
         }];

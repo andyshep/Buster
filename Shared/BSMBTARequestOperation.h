@@ -6,9 +6,9 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "AFHTTPRequestOperation.h"
+//#import "AFHTTPRequestOperation.h"
 
-@interface BSMBTARequestOperation : AFHTTPRequestOperation
+@interface BSMBTARequestOperation : NSOperation
 
 - (id)initWithRequest:(NSURLRequest *)urlRequest;
 

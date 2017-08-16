@@ -29,7 +29,6 @@
 
 #import "MBTAQueryStringBuilder.h"
 #import "BSMBTARequestOperation.h"
-#import "SMXMLDocument.h"
 
 @implementation BSVehicleLocationModel
 
@@ -47,30 +46,7 @@
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:locationURL]];
     
     BSMBTARequestOperation *operation = [BSMBTARequestOperation MBTARequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id object) {
-        NSError *error = nil;
-        SMXMLDocument *xml = [SMXMLDocument documentWithData:object error:&error];
-        
-        if (!error) {
-            NSMutableDictionary *vehicleLocation = [NSMutableDictionary dictionaryWithCapacity:3];
-            
-            for (SMXMLElement *vehicleElement in [xml.parent childrenNamed:@"vehicle"]) {
-                NSString *currentVehicleId = [vehicleElement attributeNamed:@"id"];
-                
-                if ([currentVehicleId compare:vehicleId] == 0) {
-                    // found a matching vehicle id so 
-                    // the vehicle we want is currently vehicleElement
-                    NSString *latitude = [vehicleElement attributeNamed:@"lat"];
-                    NSString *longitude = [vehicleElement attributeNamed:@"lon"];
-                    NSString *secondsStringReport = [vehicleElement attributeNamed:@"secsSinceReport"];
-                    
-                    [vehicleLocation setObject:longitude forKey:@"longitude"];
-                    [vehicleLocation setObject:latitude forKey:@"latitude"];
-                    [vehicleLocation setObject:secondsStringReport forKey:@"lastSeen"];
-                    
-                    self.location = [NSDictionary dictionaryWithDictionary:vehicleLocation];
-                }
-            }
-        }
+        // get vehicle locations
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
         // TODO: handle failure
     }];

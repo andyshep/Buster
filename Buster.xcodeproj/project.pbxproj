@@ -46,20 +46,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		053D6EAD69327531E3A6951B /* Pods-Buster.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Buster.release.xcconfig"; path = "Pods/Target Support Files/Pods-Buster/Pods-Buster.release.xcconfig"; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D6058910D05DD3D006BFB54 /* Buster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Buster.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		256CD1B0CBEAFAA5A69A942D /* Pods-Buster.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Buster.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Buster/Pods-Buster.debug.xcconfig"; sourceTree = "<group>"; };
 		2860E325111B887F00E27156 /* BSAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSAppDelegate.h; sourceTree = "<group>"; };
 		2860E326111B887F00E27156 /* BSAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSAppDelegate.m; sourceTree = "<group>"; };
 		288765FC0DF74451002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Shared/main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* Buster_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Buster_Prefix.pch; sourceTree = "<group>"; };
-		858D444452B3368AE8151F84 /* Pods-Buster.stubservice.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Buster.stubservice.xcconfig"; path = "Pods/Target Support Files/Pods-Buster/Pods-Buster.stubservice.xcconfig"; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Buster-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Buster-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
-		8F609A5536E69DD7E7DD1716 /* libPods-Buster.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Buster.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		D5EA17E3158D44BC9C7D66D4 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7032C7E146447280098AF94 /* routes.endpoints.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = routes.endpoints.plist; sourceTree = "<group>"; };
 		F70BB19B12DA2132000942EF /* BSVehicleLocationAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BSVehicleLocationAnnotation.h; path = Shared/BSVehicleLocationAnnotation.h; sourceTree = "<group>"; };
 		F70BB19C12DA2132000942EF /* BSVehicleLocationAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BSVehicleLocationAnnotation.m; path = Shared/BSVehicleLocationAnnotation.m; sourceTree = "<group>"; };
@@ -171,7 +166,7 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
-		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
+		29B97314FDCFA39411CA2CEA = {
 			isa = PBXGroup;
 			children = (
 				2860E32A111B888700E27156 /* iPad */,
@@ -182,7 +177,6 @@
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 				F719FF7712BAD54F008D50AE /* Vendor */,
-				87A6BB7925844F86ACCE88B7 /* Pods */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -210,20 +204,8 @@
 				F719FF3712BAD3F1008D50AE /* CFNetwork.framework */,
 				F719FF3D12BAD402008D50AE /* MobileCoreServices.framework */,
 				F719FF3F12BAD402008D50AE /* SystemConfiguration.framework */,
-				D5EA17E3158D44BC9C7D66D4 /* libPods.a */,
-				8F609A5536E69DD7E7DD1716 /* libPods-Buster.a */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		87A6BB7925844F86ACCE88B7 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				256CD1B0CBEAFAA5A69A942D /* Pods-Buster.debug.xcconfig */,
-				858D444452B3368AE8151F84 /* Pods-Buster.stubservice.xcconfig */,
-				053D6EAD69327531E3A6951B /* Pods-Buster.release.xcconfig */,
-			);
-			name = Pods;
 			sourceTree = "<group>";
 		};
 		F719FF7712BAD54F008D50AE /* Vendor */ = {
@@ -353,12 +335,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "Buster" */;
 			buildPhases = (
-				AF9FF941C77543DD92000F7E /* [CP] Check Pods Manifest.lock */,
 				1D60588D0D05DD3D006BFB54 /* Resources */,
 				1D60588E0D05DD3D006BFB54 /* Sources */,
 				1D60588F0D05DD3D006BFB54 /* Frameworks */,
-				1F2B3E1E3B354CBDAD649A7A /* [CP] Copy Pods Resources */,
-				F30E7B9A6929A93615BB0A1D /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -392,7 +371,7 @@
 				French,
 				German,
 			);
-			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
+			mainGroup = 29B97314FDCFA39411CA2CEA;
 			productRefGroup = 19C28FACFE9D520D11CA2CBB /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -417,52 +396,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		1F2B3E1E3B354CBDAD649A7A /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Buster/Pods-Buster-resources.sh\"\n";
-		};
-		AF9FF941C77543DD92000F7E /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-		};
-		F30E7B9A6929A93615BB0A1D /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Buster/Pods-Buster-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		1D60588E0D05DD3D006BFB54 /* Sources */ = {
@@ -497,7 +430,6 @@
 /* Begin XCBuildConfiguration section */
 		1D6058940D05DD3E006BFB54 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 256CD1B0CBEAFAA5A69A942D /* Pods-Buster.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -520,7 +452,6 @@
 		};
 		1D6058950D05DD3E006BFB54 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 053D6EAD69327531E3A6951B /* Pods-Buster.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -669,7 +600,6 @@
 		};
 		F7E7194A1402956C000F1821 /* StubService */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 858D444452B3368AE8151F84 /* Pods-Buster.stubservice.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;

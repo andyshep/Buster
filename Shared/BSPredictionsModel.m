@@ -28,7 +28,6 @@
 #import "BSPredictionsModel.h"
 
 #import "BSMBTARequestOperation.h"
-#import "SMXMLDocument.h"
 
 #import "MBTAQueryStringBuilder.h"
 
@@ -69,36 +68,7 @@
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     
     BSMBTARequestOperation *operation = [BSMBTARequestOperation MBTARequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id object) {
-        NSError *error = nil;
-        SMXMLDocument *xml = [SMXMLDocument documentWithData:object error:&error];
-        
-        if (!error) {
-            NSMutableArray *predictions = [NSMutableArray arrayWithCapacity:5];
-            NSDictionary *predictionInfo = [NSMutableDictionary dictionaryWithCapacity:3];
-            SMXMLElement *predictionsElement = [xml.parent childNamed:@"predictions"];
-            SMXMLElement *directionElement = [predictionsElement childNamed:@"direction"];
-            
-            [predictionInfo setValue:[predictionsElement attributeNamed:@"routeTitle"] forKey:@"routeTitle"];
-            [predictionInfo setValue:[predictionsElement attributeNamed:@"stopTitle"] forKey:@"stopTitle"];
-            [predictionInfo setValue:[directionElement attributeNamed:@"title"] forKey:@"directionTitle"]; 
-            
-            // go thru each prediction and get the time and vehicle attributes
-            for (SMXMLElement *predictionElement in [directionElement childrenNamed:@"prediction"]) {
-                NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:5];
-                
-                [dict setObject:[predictionElement attributeNamed:@"minutes"] forKey:@"minutes"];
-                [dict setObject:[predictionElement attributeNamed:@"seconds"] forKey:@"seconds"];
-                [dict setObject:[predictionElement attributeNamed:@"vehicle"] forKey:@"vehicle"];
-                [dict setObject:[predictionElement attributeNamed:@"dirTag"] forKey:@"dirTag"];
-                [dict setObject:[predictionElement attributeNamed:@"epochTime"] forKey:@"epochTime"];
-                
-                [predictions addObject:dict];
-                dict = nil;
-            }
-            
-            self.predictionMeta = [NSDictionary dictionaryWithDictionary:predictionInfo];
-            self.predictions = [NSArray arrayWithArray:predictions];
-        }
+        // get predictions
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *err) {
         self.error = err;
     }];
