@@ -38,7 +38,7 @@
 - (void)requestDirectionsList:(NSString *)stop;
 - (void)loadStopsForDirection:(NSUInteger)directionIndex;
 
-- (NSUInteger)countOfStops;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSUInteger countOfStops;
 - (id)objectInStopsAtIndex:(NSUInteger)index;
 - (void)getStops:(__unsafe_unretained id *)objects range:(NSRange)range;
 

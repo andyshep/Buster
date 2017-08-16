@@ -39,25 +39,25 @@
 
 @implementation BSPredictionsModel
 
-- (id) init {
-	if ((self = [super init])) {
+- (instancetype) init {
+    if ((self = [super init])) {
         //
     }
-	
+    
     return self;
 }
 
 #pragma mark - KVC
 - (NSUInteger)countOfPredictions {
-	return [self.predictions count];
+    return (self.predictions).count;
 }
 
 - (id)objectInPredictionsAtIndex:(NSUInteger)index {
-	return [self.predictions objectAtIndex:index];
+    return (self.predictions)[index];
 }
 
 - (void)getPredictions:(__unsafe_unretained id *)objects range:(NSRange)range {
-	[self.predictions getObjects:objects range:range];
+    [self.predictions getObjects:objects range:range];
 }
 
 #pragma mark - Predictions building
@@ -78,7 +78,7 @@
 }
 
 - (void)unloadPredictions {
-	self.predictions = nil;
+    self.predictions = nil;
     self.predictionMeta = nil;
 }
 

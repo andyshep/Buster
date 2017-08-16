@@ -42,24 +42,24 @@
 
 @implementation BSDirectionsModel
 
-- (id)init {
-	if ((self = [super init])) {
+- (instancetype)init {
+    if ((self = [super init])) {
         //
     }
-	
+    
     return self;
 }
 
 - (NSUInteger)countOfStops {
-	return [self.stops count];
+    return (self.stops).count;
 }
 
 - (id)objectInStopsAtIndex:(NSUInteger)index {
-	return [self.stops objectAtIndex:index];
+    return (self.stops)[index];
 }
 
 - (void)getStops:(__unsafe_unretained id *)objects range:(NSRange)range {
-	[self.stops getObjects:objects range:range];
+    [self.stops getObjects:objects range:range];
 }
 
 - (void)requestDirectionsList:(NSString *)stop {
@@ -84,29 +84,29 @@
 }
 
 - (void)unloadStopList {
-	self.stops = nil;
+    self.stops = nil;
 }
 
 - (void)loadStopsForDirection:(NSUInteger)directionIndex {
-    NSArray *stops = [(BSDirection *)[self.directions objectAtIndex:directionIndex] stops];
+    NSArray *stops = ((BSDirection *)(self.directions)[directionIndex]).stops;
     NSMutableArray *mStops = [NSMutableArray arrayWithCapacity:20];
     
     for (NSDictionary *stop in stops) {
         BSDirection *aStop = [[BSDirection alloc] init];
-        [aStop setTag:[stop valueForKey:@"tag"]];
-        [aStop setTitle:[stop valueForKey:@"title"]];
+        aStop.tag = [stop valueForKey:@"tag"];
+        aStop.title = [stop valueForKey:@"title"];
         
         [mStops addObject:aStop];
     }
     
     self.stops = [NSArray arrayWithArray:mStops];
-    self.title = [(BSDirection *)[self.directions objectAtIndex:directionIndex] title];
+    self.title = ((BSDirection *)(self.directions)[directionIndex]).title;
 }
 
 #pragma mark - Disk Access
 - (NSString *)pathInDocumentDirectory:(NSString *)aPath {
     NSArray *documentPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentDirectoryPath = [documentPaths objectAtIndex:0];
+    NSString *documentDirectoryPath = documentPaths[0];
     return [documentDirectoryPath stringByAppendingPathComponent:aPath];
 }
 

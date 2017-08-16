@@ -10,7 +10,7 @@
 
 @interface BSMBTARequestOperation : NSOperation
 
-- (id)initWithRequest:(NSURLRequest *)urlRequest;
+- (instancetype)initWithRequest:(NSURLRequest *)urlRequest NS_DESIGNATED_INITIALIZER;
 
 + (BSMBTARequestOperation *)MBTARequestOperationWithRequest:(NSURLRequest *)urlRequest
                                                         success:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, id object))success

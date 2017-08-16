@@ -32,7 +32,7 @@
 
 - (void)requestRouteList;
 
-- (NSUInteger)countOfRoutes;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSUInteger countOfRoutes;
 - (id)objectInRoutesAtIndex:(NSUInteger)index;
 - (void)getRoutes:(__unsafe_unretained id *)objects range:(NSRange)range;
 

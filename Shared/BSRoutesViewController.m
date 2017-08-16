@@ -50,11 +50,11 @@
 
 @implementation BSRoutesViewController
 
-- (id)init {
+- (instancetype)init {
     if ((self = [super init])) {
         self.tableView = [[UITableView alloc] initWithFrame:CGRectZero];
-        [_tableView setDelegate:self];
-        [_tableView setDataSource:self];
+        _tableView.delegate = self;
+        _tableView.dataSource = self;
     }
     
     return self;
@@ -68,8 +68,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [_tableView setFrame:self.view.bounds];
-    [_tableView setAutoresizingMask:(UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight)];
+    _tableView.frame = self.view.bounds;
+    _tableView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     
     [self.view addSubview:_tableView];
 
@@ -98,20 +98,20 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    if ([self.tableView indexPathForSelectedRow] != nil) {
-        [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
+    if ((self.tableView).indexPathForSelectedRow != nil) {
+        [self.tableView deselectRowAtIndexPath:(self.tableView).indexPathForSelectedRow animated:YES];
     }
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-	return interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown;
+    return interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown;
 }
 
 - (void)layoutRoutesListControl {
 //    NSArray *routeListControlItems = [NSArray arrayWithObjects:NSLocalizedString(@"All Routes", @"All Routes"),
 //                                        NSLocalizedString(@"Favorites", @"Favorites"), nil];
 //
-//	self.routesListControl = [[UISegmentedControl alloc] initWithItems:routeListControlItems];
+//    self.routesListControl = [[UISegmentedControl alloc] initWithItems:routeListControlItems];
 //    [_routesListControl setFrame:CGRectMake(0.0f, 0.0f, 305.0f, 30.0f)];
 //    [_routesListControl setSegmentedControlStyle:UISegmentedControlStyleBar];
 //    [_routesListControl setSelectedSegmentIndex:0];
@@ -123,14 +123,14 @@
 //        [_routesListControl setAutoresizingMask:(UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight)];
 //    }
 //    
-//	UIBarButtonItem *buttonItem = [[UIBarButtonItem alloc] initWithCustomView:self.routesListControl];
+//    UIBarButtonItem *buttonItem = [[UIBarButtonItem alloc] initWithCustomView:self.routesListControl];
 //    [_toolbar setItems:@[buttonItem]];    
 //    [_toolbar setNeedsLayout];
 }
 
 #pragma mark - UITableView
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-	return 1;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -160,9 +160,9 @@
         cell = [[BSRoutesTableViewCell alloc] init];
     }
     
-	BSRoute *route = (BSRoute *)[_model objectInRoutesAtIndex:indexPath.row];
-	
-	cell.routeNumberLabel.text = route.title;
+    BSRoute *route = (BSRoute *)[_model objectInRoutesAtIndex:indexPath.row];
+    
+    cell.routeNumberLabel.text = route.title;
     
     if (route.endpoints != nil) {
         cell.routeEndpointsLabel.text = route.endpoints;
@@ -176,14 +176,14 @@
 }
 
 - (void) tableView:(UITableView *)tView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	BSRoute *route = (BSRoute *)[_model objectInRoutesAtIndex:[indexPath row]];
-	
-	BSDirectionsViewController *nextController = [[BSDirectionsViewController alloc] init];
-	nextController.title = route.title;
-	nextController.stopTag = route.tag;
-	
-	[self.navigationController pushViewController:nextController animated:YES];
-	
+    BSRoute *route = (BSRoute *)[_model objectInRoutesAtIndex:indexPath.row];
+    
+    BSDirectionsViewController *nextController = [[BSDirectionsViewController alloc] init];
+    nextController.title = route.title;
+    nextController.stopTag = route.tag;
+    
+    [self.navigationController pushViewController:nextController animated:YES];
+    
 }
 
 - (CGRect)sizeForString:(NSString *)string {
@@ -214,26 +214,26 @@
     // FIXME: you are needlessly animating in 40 rows
     // only animate in the rows which are visible.
     int routesToAdd = [_model countOfRoutes];
-	int routesToDelete = [self.tableView numberOfRowsInSection:0];
+    int routesToDelete = [self.tableView numberOfRowsInSection:0];
     
     [self.tableView beginUpdates];
-	
-	for (int i = 0; i < routesToDelete; i++) {
-		NSArray *delete = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:i inSection:0]];
-		[self.tableView deleteRowsAtIndexPaths:delete withRowAnimation:UITableViewRowAnimationBottom];
-	}
+    
+    for (int i = 0; i < routesToDelete; i++) {
+        NSArray *delete = @[[NSIndexPath indexPathForRow:i inSection:0]];
+        [self.tableView deleteRowsAtIndexPaths:delete withRowAnimation:UITableViewRowAnimationBottom];
+    }
     
     for (int i = 0; i < routesToAdd; i++) {
-		NSArray *insert = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:i inSection:0]];
-		[self.tableView insertRowsAtIndexPaths:insert withRowAnimation:UITableViewRowAnimationTop];
-	}
+        NSArray *insert = @[[NSIndexPath indexPathForRow:i inSection:0]];
+        [self.tableView insertRowsAtIndexPaths:insert withRowAnimation:UITableViewRowAnimationTop];
+    }
     
     [self.tableView endUpdates];
 }
 
 - (void)operationDidFail {    
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"error alert view title") 
-                                                    message:[[_model error] localizedDescription] 
+                                                    message:_model.error.localizedDescription 
                                                    delegate:nil 
                                           cancelButtonTitle:NSLocalizedString(@"OK", @"ok button title") 
                                           otherButtonTitles:nil];

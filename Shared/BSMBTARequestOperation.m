@@ -10,7 +10,7 @@
 
 @implementation BSMBTARequestOperation
 
-- (id)initWithRequest:(NSURLRequest *)urlRequest {
+- (instancetype)initWithRequest:(NSURLRequest *)urlRequest {
     if ((self = [super init])) {
         //
     }

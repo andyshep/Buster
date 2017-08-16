@@ -29,15 +29,15 @@
 
 @implementation BSRoute
 
-- (id)init {
-	if ((self = [super init])) {
+- (instancetype)init {
+    if ((self = [super init])) {
         //
     }
-	
+    
     return self;
 }
 
-- (id)initWithCoder:(NSCoder *)coder {
+- (instancetype)initWithCoder:(NSCoder *)coder {
     if ((self = [super init])) {
         self.title = [coder decodeObjectForKey:@"title"];
         self.tag = [coder decodeObjectForKey:@"tag"];
@@ -47,11 +47,11 @@
     
     return self;
 }
-	 
+     
 - (void)encodeWithCoder:(NSCoder *)coder {
-	[coder encodeObject:self.title forKey:@"title"];
-	[coder encodeObject:self.tag forKey:@"tag"];
-	[coder encodeObject:self.stops forKey:@"stops"];
+    [coder encodeObject:self.title forKey:@"title"];
+    [coder encodeObject:self.tag forKey:@"tag"];
+    [coder encodeObject:self.stops forKey:@"stops"];
     [coder encodeObject:self.endpoints forKey:@"endpoints"];
 }
 

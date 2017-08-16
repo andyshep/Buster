@@ -11,19 +11,19 @@
 @implementation BSArtistTools
 
 void BSDrawGradientInRect(CGContextRef context, CGGradientRef gradient, CGRect rect) {
-	CGContextSaveGState(context);
-	CGContextClipToRect(context, rect);
-	CGPoint start = CGPointMake(rect.origin.x, rect.origin.y);
-	CGPoint end = CGPointMake(rect.origin.x, rect.origin.y + rect.size.height);
-	CGContextDrawLinearGradient(context, gradient, start, end, 0);
-	CGContextRestoreGState(context);
+    CGContextSaveGState(context);
+    CGContextClipToRect(context, rect);
+    CGPoint start = CGPointMake(rect.origin.x, rect.origin.y);
+    CGPoint end = CGPointMake(rect.origin.x, rect.origin.y + rect.size.height);
+    CGContextDrawLinearGradient(context, gradient, start, end, 0);
+    CGContextRestoreGState(context);
 }
 
 void BSDrawLinearGradientInRect(CGContextRef context, CGRect rect, CGColorRef startColor, CGColorRef  endColor) {
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
     CGFloat locations[] = { 0.0, 1.0 };
     
-    NSArray *colors = [NSArray arrayWithObjects:(__bridge id)startColor, (__bridge id)endColor, nil];
+    NSArray *colors = @[(__bridge id)startColor, (__bridge id)endColor];
     
     CGGradientRef gradient = CGGradientCreateWithColors(colorSpace, 
                                                         (__bridge CFArrayRef) colors, locations);
@@ -58,21 +58,21 @@ void BSStrokeRect(CGContextRef context, CGPoint startPoint, CGPoint endPoint, CG
 }
 
 CGGradientRef BSGradientWithColors(UIColor *topColor, UIColor *bottomColor) {
-	return BSGradientWithColorsAndLocations(topColor, bottomColor, 0.0f, 1.0f);
+    return BSGradientWithColorsAndLocations(topColor, bottomColor, 0.0f, 1.0f);
 }
 
 CGGradientRef BSGradientWithColorsAndLocations(UIColor *topColor, UIColor *bottomColor, CGFloat topLocation, CGFloat bottomLocation) {
-	CGFloat locations[] = {
-		topLocation,
-		bottomLocation
-	};
-	
-	CGColorRef topCGColor = topColor.CGColor;
-	CGColorSpaceRef colorSpace = CGColorGetColorSpace(topCGColor);
-	NSArray *colors = [[NSArray alloc] initWithObjects:(__bridge id)topCGColor, (id)bottomColor.CGColor, nil];
-	CGGradientRef gradient = CGGradientCreateWithColors(colorSpace, (__bridge CFArrayRef)colors, locations);
-	
-	return gradient;
+    CGFloat locations[] = {
+        topLocation,
+        bottomLocation
+    };
+    
+    CGColorRef topCGColor = topColor.CGColor;
+    CGColorSpaceRef colorSpace = CGColorGetColorSpace(topCGColor);
+    NSArray *colors = @[(__bridge id)topCGColor, (id)bottomColor.CGColor];
+    CGGradientRef gradient = CGGradientCreateWithColors(colorSpace, (__bridge CFArrayRef)colors, locations);
+    
+    return gradient;
 }
 
 @end

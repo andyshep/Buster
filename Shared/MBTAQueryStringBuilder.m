@@ -41,47 +41,47 @@ static NSString *MBTABaseQueryURL = @"http://webservices.nextbus.com/service/pub
     return _shared;
 }
 
-- (id)init {
-	if ((self = [super init])) {
-		self.baseURL = MBTABaseQueryURL;
-	}
-	
-	return self;
+- (instancetype)init {
+    if ((self = [super init])) {
+        self.baseURL = MBTABaseQueryURL;
+    }
+    
+    return self;
 }
 
 #pragma mark - Query Builders
 - (NSString *)buildRouteListQuery {
-	return [_baseURL stringByAppendingString:@"?command=routeList&a=mbta"];
+    return [_baseURL stringByAppendingString:@"?command=routeList&a=mbta"];
 }
 
 - (NSString *)buildRouteConfigQuery:(NSString *)route {
-	return [[_baseURL stringByAppendingString:@"?command=routeConfig&a=mbta&r="] 
-			stringByAppendingString:route];
+    return [[_baseURL stringByAppendingString:@"?command=routeConfig&a=mbta&r="] 
+            stringByAppendingString:route];
 }
 
 - (NSString *)buildPredictionsQueryForRoute:(NSString *)route withDirection:(NSString *)direction atStop:(NSString *)stop {
-	NSString *predictionsURL = [[_baseURL stringByAppendingString:@"?command=predictions&a=mbta&r="] 
-								stringByAppendingString:route];
-	//	
-	//	predictionsURL = [[predictionsURL stringByAppendingString:@"&d="] 
-	//					  stringByAppendingString:(NSString *)direction];
-	
-	predictionsURL = [[predictionsURL stringByAppendingString:@"&s="]
-					  stringByAppendingString:stop];
-	
-	return predictionsURL;
+    NSString *predictionsURL = [[_baseURL stringByAppendingString:@"?command=predictions&a=mbta&r="] 
+                                stringByAppendingString:route];
+    //    
+    //    predictionsURL = [[predictionsURL stringByAppendingString:@"&d="] 
+    //                      stringByAppendingString:(NSString *)direction];
+    
+    predictionsURL = [[predictionsURL stringByAppendingString:@"&s="]
+                      stringByAppendingString:stop];
+    
+    return predictionsURL;
 }
 
 - (NSString *)buildLocationsQueryForRoute:(NSString *)route withEpochTime:(NSString *)time {
-	// http://webservices.nextbus.com/service/publicXMLFeed?command=vehicleLocations&a=mbta&r=57&t=1289479052149
-	
-	NSString *locationsURL = [[_baseURL stringByAppendingString:@"?command=vehicleLocations&a=mbta&r="] 
-							  stringByAppendingString:route];
-	locationsURL = [[locationsURL stringByAppendingString:@"&t="]
-					stringByAppendingString:time];
-	
-	return locationsURL;
-	
+    // http://webservices.nextbus.com/service/publicXMLFeed?command=vehicleLocations&a=mbta&r=57&t=1289479052149
+    
+    NSString *locationsURL = [[_baseURL stringByAppendingString:@"?command=vehicleLocations&a=mbta&r="] 
+                              stringByAppendingString:route];
+    locationsURL = [[locationsURL stringByAppendingString:@"&t="]
+                    stringByAppendingString:time];
+    
+    return locationsURL;
+    
 }
 
 @end

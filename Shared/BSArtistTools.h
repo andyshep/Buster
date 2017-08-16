@@ -21,8 +21,8 @@ void BSDrawLinearGradientInRect(CGContextRef context, CGRect rect, CGColorRef st
 void BSStrokeRect(CGContextRef context, CGPoint startPoint, CGPoint endPoint, CGColorRef color);
 
 CGRect BSRectForStroke(CGRect rect);
-CGGradientRef BSGradientWithColors(UIColor *topColor, UIColor *bottomColor);
-CGGradientRef BSGradientWithColorsAndLocations(UIColor *topColor, UIColor *bottomColor, CGFloat topLocation, CGFloat bottomLocation);
+CGGradientRef BSGradientWithColors(UIColor *topColor, UIColor *bottomColor) CF_RETURNS_NOT_RETAINED;
+CGGradientRef BSGradientWithColorsAndLocations(UIColor *topColor, UIColor *bottomColor, CGFloat topLocation, CGFloat bottomLocation) CF_RETURNS_NOT_RETAINED;
 
 @end
 

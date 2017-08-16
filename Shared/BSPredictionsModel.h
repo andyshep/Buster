@@ -33,7 +33,7 @@
 
 - (void)requestPredictionsForRoute:(NSString *)route andStop:(NSString *)stop;
 
-- (NSUInteger)countOfPredictions;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSUInteger countOfPredictions;
 - (id)objectInPredictionsAtIndex:(NSUInteger)index;
 - (void)getPredictions:(__unsafe_unretained id *)objects range:(NSRange)range;
 

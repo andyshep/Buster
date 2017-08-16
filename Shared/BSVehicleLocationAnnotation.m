@@ -29,15 +29,15 @@
 
 @implementation BSVehicleLocationAnnotation
 
-+ (id)annotationWithCoordinate:(CLLocationCoordinate2D)coordinate {
-	return [[[self class] alloc] initWithCoordinate:coordinate];
++ (instancetype)annotationWithCoordinate:(CLLocationCoordinate2D)coordinate {
+    return [[[self class] alloc] initWithCoordinate:coordinate];
 }
 
-+ (id)annotationWithTitle:(NSString *)title andCoordinate:(CLLocationCoordinate2D)coordinate {
-	return [[[self class] alloc] initWithTitle:title andCoordinate:coordinate];
++ (instancetype)annotationWithTitle:(NSString *)title andCoordinate:(CLLocationCoordinate2D)coordinate {
+    return [[[self class] alloc] initWithTitle:title andCoordinate:coordinate];
 }
 
-- (id)initWithTitle:(NSString *)title andCoordinate:(CLLocationCoordinate2D)coordinate {
+- (instancetype)initWithTitle:(NSString *)title andCoordinate:(CLLocationCoordinate2D)coordinate {
     if ((self = [super init])) {
         self.coordinate = coordinate;
         self.title = title;
@@ -46,13 +46,13 @@
     return self;
 }
 
-- (id)initWithCoordinate:(CLLocationCoordinate2D)coordinate {
-	if ((self = [super init])) {
-		self.coordinate = coordinate;
+- (instancetype)initWithCoordinate:(CLLocationCoordinate2D)coordinate {
+    if ((self = [super init])) {
+        self.coordinate = coordinate;
         self.title = @"testing";
-	}
-	
-	return self;
+    }
+    
+    return self;
 }
 
 @end

@@ -29,16 +29,16 @@
 
 @implementation BSStop
 
-- (id)init {
-	if ((self = [super init])) {
+- (instancetype)init {
+    if ((self = [super init])) {
         //
     }
-	
+    
     return self;
 }
 
-- (id)initWithCoder:(NSCoder *)coder {
-	if ((self = [super init])) {
+- (instancetype)initWithCoder:(NSCoder *)coder {
+    if ((self = [super init])) {
         self.title = [coder decodeObjectForKey:@"title"];
         self.tag = [coder decodeObjectForKey:@"tag"];
         self.directionTag = [coder decodeObjectForKey:@"directionTag"];
@@ -50,11 +50,11 @@
 }
 
 - (void)encodeWithCoder:(NSCoder *)coder {
-	[coder encodeObject:self.title forKey:@"title"];
-	[coder encodeObject:self.tag forKey:@"tag"];
-	[coder encodeObject:self.directionTag forKey:@"directionTag"];
-	[coder encodeObject:self.routeNumber forKey:@"routeNumber"];
-	[coder encodeObject:self.stopId forKey:@"stopId"];
+    [coder encodeObject:self.title forKey:@"title"];
+    [coder encodeObject:self.tag forKey:@"tag"];
+    [coder encodeObject:self.directionTag forKey:@"directionTag"];
+    [coder encodeObject:self.routeNumber forKey:@"routeNumber"];
+    [coder encodeObject:self.stopId forKey:@"stopId"];
 }
 
 @end

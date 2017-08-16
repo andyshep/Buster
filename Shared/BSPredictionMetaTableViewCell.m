@@ -29,17 +29,17 @@
 
 @implementation BSPredictionMetaTableViewCell
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     if ((self = [super initWithStyle:style reuseIdentifier:reuseIdentifier])) {
         self.routeNumberLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-        [_routeNumberLabel setBackgroundColor:[UIColor clearColor]];
+        _routeNumberLabel.backgroundColor = [UIColor clearColor];
         
         self.routeDirectionLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-        [_routeDirectionLabel setBackgroundColor:[UIColor clearColor]];
+        _routeDirectionLabel.backgroundColor = [UIColor clearColor];
         [_routeDirectionLabel setAdjustsFontSizeToFitWidth:YES];
         
         self.stopNameLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-        [_stopNameLabel setBackgroundColor:[UIColor clearColor]];
+        _stopNameLabel.backgroundColor = [UIColor clearColor];
         [_stopNameLabel setAdjustsFontSizeToFitWidth:YES];
         
         [self.contentView addSubview:_routeNumberLabel];
@@ -53,9 +53,9 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    [_routeNumberLabel setFrame:CGRectMake(20.0f, 5.0f, 40.0f, 25.0f)];
-    [_routeDirectionLabel setFrame:CGRectMake(20.0f, 30.0f, 270.0f, 25.0f)];
-    [_stopNameLabel setFrame:CGRectMake(20.0f, 55.0f, 270.0f, 25.0f)];
+    _routeNumberLabel.frame = CGRectMake(20.0f, 5.0f, 40.0f, 25.0f);
+    _routeDirectionLabel.frame = CGRectMake(20.0f, 30.0f, 270.0f, 25.0f);
+    _stopNameLabel.frame = CGRectMake(20.0f, 55.0f, 270.0f, 25.0f);
 }
 
 @end

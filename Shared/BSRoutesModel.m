@@ -33,30 +33,30 @@
 
 @interface BSRoutesModel ()
 
-- (NSString *)routesEndpointsArchivePath;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *routesEndpointsArchivePath;
 
 @end
 
 @implementation BSRoutesModel
 
-- (id)init {
-	if ((self = [super init])) {
+- (instancetype)init {
+    if ((self = [super init])) {
         //
     }
-	
+    
     return self;
 }
 
 - (NSUInteger)countOfRoutes {
-	return self.routes.count;
+    return self.routes.count;
 }
 
 - (id)objectInRoutesAtIndex:(NSUInteger)index {
-	return [_routes objectAtIndex:index];
+    return _routes[index];
 }
 
 - (void)getRoutes:(__unsafe_unretained id *)objects range:(NSRange)range {
-	[_routes getObjects:objects range:range];
+    [_routes getObjects:objects range:range];
 }
 
 #pragma mark - Disk Access
@@ -66,7 +66,7 @@
 
 - (NSString *)pathInDocumentDirectory:(NSString *)aPath {
     NSArray *documentPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentDirectoryPath = [documentPaths objectAtIndex:0];
+    NSString *documentDirectoryPath = documentPaths[0];
     return [documentDirectoryPath stringByAppendingPathComponent:aPath];
 }
 

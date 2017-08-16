@@ -19,8 +19,8 @@
 + (UIColor *)lightTanColor;
 + (UIColor *)veryDarkGrey;
 
-+ (CGGradientRef)yellowGradientColor;
-+ (CGGradientRef)blueishGradientColor;
-+ (CGGradientRef)greyGradientColor;
++ (CGGradientRef)yellowGradientColor CF_RETURNS_NOT_RETAINED;
++ (CGGradientRef)blueishGradientColor CF_RETURNS_NOT_RETAINED;
++ (CGGradientRef)greyGradientColor CF_RETURNS_NOT_RETAINED;
 
 @end

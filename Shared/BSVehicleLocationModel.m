@@ -32,17 +32,17 @@
 
 @implementation BSVehicleLocationModel
 
-- (id)init {
-	if ((self = [super init])) {
+- (instancetype)init {
+    if ((self = [super init])) {
         //
     }
-	
+    
     return self;
 }
 
 - (void)requestLocationOfVehicle:(NSString *)vehicleId runningRoute:(NSString *)routeNumber atEpochTime:(NSString *)time {
     MBTAQueryStringBuilder *builder = [MBTAQueryStringBuilder sharedInstance];
-	NSString *locationURL = [builder buildLocationsQueryForRoute:routeNumber withEpochTime:@"0"];
+    NSString *locationURL = [builder buildLocationsQueryForRoute:routeNumber withEpochTime:@"0"];
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:locationURL]];
     
     BSMBTARequestOperation *operation = [BSMBTARequestOperation MBTARequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id object) {

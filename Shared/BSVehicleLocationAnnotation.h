@@ -28,10 +28,10 @@
 
 @interface BSVehicleLocationAnnotation : NSObject <MKAnnotation>
 
-+ (id)annotationWithCoordinate:(CLLocationCoordinate2D)coordinate;
-+ (id)annotationWithTitle:(NSString *)title andCoordinate:(CLLocationCoordinate2D)coordinate;
-- (id)initWithCoordinate:(CLLocationCoordinate2D)coordinate;
-- (id)initWithTitle:(NSString *)title andCoordinate:(CLLocationCoordinate2D)coordinate;
++ (instancetype)annotationWithCoordinate:(CLLocationCoordinate2D)coordinate;
++ (instancetype)annotationWithTitle:(NSString *)title andCoordinate:(CLLocationCoordinate2D)coordinate;
+- (instancetype)initWithCoordinate:(CLLocationCoordinate2D)coordinate NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithTitle:(NSString *)title andCoordinate:(CLLocationCoordinate2D)coordinate NS_DESIGNATED_INITIALIZER;
 
 @property (nonatomic, assign) CLLocationCoordinate2D coordinate;
 @property (nonatomic, copy) NSString *title;

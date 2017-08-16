@@ -39,7 +39,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [[self toolbar] setTintColor:[BSAppTheme lightBlueColor]];
+    self.toolbar.tintColor = [BSAppTheme lightBlueColor];
     
     model_ = [[BSVehicleLocationModel alloc] init];
     [model_ addObserver:self 
@@ -55,7 +55,7 @@
     // zoom center on boston
     CLLocationCoordinate2D boston = CLLocationCoordinate2DMake(42.37f, -71.03f);
     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(boston, 15 * 1000, 15 * 1000);
-	[mapView setRegion:region animated:YES];
+    [mapView setRegion:region animated:YES];
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
         [self dropPinForLocation];
@@ -66,10 +66,10 @@
     return interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown;
 }
 
-- (void)configureView {	
-	self.vehicle = nil;
-	self.route = nil;
-	self.time = nil;
+- (void)configureView {    
+    self.vehicle = nil;
+    self.route = nil;
+    self.time = nil;
 }
 
 #pragma mark - Split view support
@@ -77,7 +77,7 @@
 - (void)splitViewController: (UISplitViewController*)svc willHideViewController:(UIViewController *)aViewController withBarButtonItem:(UIBarButtonItem*)barButtonItem forPopoverController: (UIPopoverController*)pc {
     
     barButtonItem.title = NSLocalizedString(@"Routes", @"routes popover bar button title");
-    NSMutableArray *items = [[toolbar items] mutableCopy];
+    NSMutableArray *items = [toolbar.items mutableCopy];
     [items insertObject:barButtonItem atIndex:0];
     [toolbar setItems:items animated:NO];
     self.popoverController = pc;
@@ -85,7 +85,7 @@
 
 - (void)splitViewController: (UISplitViewController*)svc willShowViewController:(UIViewController *)aViewController invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem {
     
-    NSMutableArray *items = [[toolbar items] mutableCopy];
+    NSMutableArray *items = [toolbar.items mutableCopy];
     [items removeObjectAtIndex:0];
     [toolbar setItems:items animated:NO];
     self.popoverController = nil;
@@ -94,11 +94,11 @@
 #pragma mark - MKMapViewDelegate methods
 
 - (void)mapView:(MKMapView *)mView didAddAnnotationViews:(NSArray *)views {
-	// zoom and center to where the annotation is placed.
-	MKAnnotationView *annotationView = [views objectAtIndex:0];
-	id <MKAnnotation> mp = [annotationView annotation];
-	MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance([mp coordinate], 250, 250);
-	[mView setRegion:region animated:YES];
+    // zoom and center to where the annotation is placed.
+    MKAnnotationView *annotationView = views[0];
+    id <MKAnnotation> mp = annotationView.annotation;
+    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(mp.coordinate, 250, 250);
+    [mView setRegion:region animated:YES];
 }
 
 #pragma mark - Model Observing
@@ -106,11 +106,11 @@
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     
     if ([keyPath compare:@"location"] == 0) {
-        NSDictionary *locData = [change objectForKey:NSKeyValueChangeNewKey];
+        NSDictionary *locData = change[NSKeyValueChangeNewKey];
         
         CLLocationCoordinate2D location;
-        location.latitude = [[locData objectForKey:@"latitude"] floatValue];
-        location.longitude = [[locData objectForKey:@"longitude"] floatValue];
+        location.latitude = [locData[@"latitude"] floatValue];
+        location.longitude = [locData[@"longitude"] floatValue];
         
         MKCoordinateSpan span;
         span.latitudeDelta = 0.00015f;
@@ -120,7 +120,7 @@
         region.span = span;
         region.center = location;
         
-        NSString *lastSeen = [locData objectForKey:@"lastSeen"];
+        NSString *lastSeen = locData[@"lastSeen"];
         NSString *title = [NSString stringWithFormat:@"updated %@ seconds ago", lastSeen];
         
         BSVehicleLocationAnnotation *vehicleLocation = [[BSVehicleLocationAnnotation alloc] initWithTitle:title andCoordinate:location];
@@ -132,7 +132,7 @@
     }
     else if ([keyPath compare:@"error"] == 0) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"error alert view title") 
-                                                        message:[[model_ error] localizedDescription] 
+                                                        message:model_.error.localizedDescription 
                                                        delegate:nil 
                                               cancelButtonTitle:NSLocalizedString(@"OK", @"ok button title") 
                                               otherButtonTitles:nil];
@@ -144,7 +144,7 @@
 
 - (void)dropPinForLocation {
     NSLog(@"dropPinForLocation:");
-	[model_ requestLocationOfVehicle:vehicle runningRoute:route atEpochTime:time];
+    [model_ requestLocationOfVehicle:vehicle runningRoute:route atEpochTime:time];
     [popoverController dismissPopoverAnimated:YES];
 }
 

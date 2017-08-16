@@ -29,7 +29,7 @@
 
 @implementation BSDirection
 
-- (id)init {
+- (instancetype)init {
     if ((self = [super init])) {
         //
     }
@@ -37,7 +37,7 @@
     return self;
 }
 
-- (id)initWithCoder:(NSCoder *)coder {
+- (instancetype)initWithCoder:(NSCoder *)coder {
     if (self = [super init]) {
         self.tag = [coder decodeObjectForKey:@"tag"];
         self.name = [coder decodeObjectForKey:@"name"];
@@ -49,9 +49,9 @@
 }
 
 - (void)encodeWithCoder:(NSCoder *)coder {
-	[coder encodeObject:self.tag forKey:@"tag"];
-	[coder encodeObject:self.name forKey:@"name"];
-	[coder encodeObject:self.title forKey:@"title"];
+    [coder encodeObject:self.tag forKey:@"tag"];
+    [coder encodeObject:self.name forKey:@"name"];
+    [coder encodeObject:self.title forKey:@"title"];
     [coder encodeObject:self.stops forKey:@"stops"];
 }
 

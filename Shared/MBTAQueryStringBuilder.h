@@ -31,13 +31,13 @@
 
 + (MBTAQueryStringBuilder *)sharedInstance;
 
-- (NSString *)buildRouteListQuery;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *buildRouteListQuery;
 - (NSString *)buildRouteConfigQuery:(NSString *)route;
 - (NSString *)buildPredictionsQueryForRoute:(NSString *)route 
-							  withDirection:(NSString *)direction
-									 atStop:(NSString *)stop;
+                              withDirection:(NSString *)direction
+                                     atStop:(NSString *)stop;
 
 - (NSString *)buildLocationsQueryForRoute:(NSString *)route
-							withEpochTime:(NSString *)time;
+                            withEpochTime:(NSString *)time;
 
 @end
