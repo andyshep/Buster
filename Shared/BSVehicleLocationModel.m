@@ -53,7 +53,7 @@
         if (!error) {
             NSMutableDictionary *vehicleLocation = [NSMutableDictionary dictionaryWithCapacity:3];
             
-            for (SMXMLElement *vehicleElement in [xml.root childrenNamed:@"vehicle"]) {
+            for (SMXMLElement *vehicleElement in [xml.parent childrenNamed:@"vehicle"]) {
                 NSString *currentVehicleId = [vehicleElement attributeNamed:@"id"];
                 
                 if ([currentVehicleId compare:vehicleId] == 0) {

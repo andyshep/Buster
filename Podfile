@@ -1,4 +1,6 @@
-platform :ios, '6.0'
+platform :ios, '11.0'
 
-pod 'AFNetworking', '~> 1.3.0'
-pod 'SMXMLDocument'
+target "Buster" do
+	pod 'AFNetworking', '~> 1.3.0'
+	pod 'SMXMLDocument'
+end

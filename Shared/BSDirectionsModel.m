@@ -85,7 +85,7 @@
                 NSMutableArray *titlesList = [NSMutableArray arrayWithCapacity:3];
                 // NSMutableArray *pathsList = [NSMutableArray arrayWithCapacity:20];
                 
-                SMXMLElement *routeElement = [xml.root childNamed:@"route"];
+                SMXMLElement *routeElement = [xml.parent childNamed:@"route"];
                 
                 for (SMXMLElement *stopElement in [routeElement childrenNamed:@"stop"]) {
                     BSStop *stop = [[BSStop alloc] init];

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 48;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -12,17 +12,18 @@
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		2860E328111B887F00E27156 /* BSAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2860E326111B887F00E27156 /* BSAppDelegate.m */; };
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
-		B47D174750C84D3CA16465D4 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D5EA17E3158D44BC9C7D66D4 /* libPods.a */; };
 		F7032C7F146447280098AF94 /* routes.endpoints.plist in Resources */ = {isa = PBXBuildFile; fileRef = F7032C7E146447280098AF94 /* routes.endpoints.plist */; };
 		F70BB19D12DA2132000942EF /* BSVehicleLocationAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = F70BB19C12DA2132000942EF /* BSVehicleLocationAnnotation.m */; };
+		F70BB9F31F4395B2004734B8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F70BB9F21F4395B2004734B8 /* LaunchScreen.storyboard */; };
+		F70BB9F51F4395DC004734B8 /* MapView_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = F70BB9F41F4395DC004734B8 /* MapView_iPhone.xib */; };
 		F719FF3812BAD3F1008D50AE /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F719FF3712BAD3F1008D50AE /* CFNetwork.framework */; };
 		F719FF3E12BAD402008D50AE /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F719FF3D12BAD402008D50AE /* MobileCoreServices.framework */; };
 		F719FF4012BAD402008D50AE /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F719FF3F12BAD402008D50AE /* SystemConfiguration.framework */; };
+		F727BD841F43983200373CD6 /* BSDirectionsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F727BD831F43983200373CD6 /* BSDirectionsView.xib */; };
 		F73C04EE151E5FB700835FC6 /* BSMBTARequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = F73C04ED151E5FB700835FC6 /* BSMBTARequestOperation.m */; };
 		F743615D1461B3B700D25502 /* BSStop.m in Sources */ = {isa = PBXBuildFile; fileRef = F743615B1461B3B700D25502 /* BSStop.m */; };
 		F755C94312BAEC0300E02B61 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = F755C94212BAEC0300E02B61 /* icon.png */; };
 		F76E8DDD12DA8BF900A9BC2D /* MapView_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = F76E8DDC12DA8BF900A9BC2D /* MapView_iPad.xib */; };
-		F76E8DDF12DA8C0200A9BC2D /* MapView_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = F76E8DDE12DA8C0200A9BC2D /* MapView_iPhone.xib */; };
 		F783161C12D8CB1000D7C302 /* BSMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F783161512D8CB1000D7C302 /* BSMapViewController.m */; };
 		F79012D41461AC4D00F273F2 /* BSRoutesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F79012D31461AC4D00F273F2 /* BSRoutesViewController.m */; };
 		F79012DE1461ADF300F273F2 /* BSDirection.m in Sources */ = {isa = PBXBuildFile; fileRef = F79012DB1461ADF300F273F2 /* BSDirection.m */; };
@@ -31,7 +32,6 @@
 		F79012E51461AF8700F273F2 /* BSPredictionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F79012E41461AF8700F273F2 /* BSPredictionsViewController.m */; };
 		F79012E81461AFAF00F273F2 /* BSPredictionMetaTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F79012E71461AFAF00F273F2 /* BSPredictionMetaTableViewCell.m */; };
 		F79012EB1461AFD500F273F2 /* BSPredictionsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F79012EA1461AFD500F273F2 /* BSPredictionsModel.m */; };
-		F795A0FB1464C0EB001B43CD /* BSDirectionsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F795A0FA1464C0EB001B43CD /* BSDirectionsView.xib */; };
 		F795A1031464C43A001B43CD /* BSArtistTools.m in Sources */ = {isa = PBXBuildFile; fileRef = F795A1001464C43A001B43CD /* BSArtistTools.m */; };
 		F795A1041464C43A001B43CD /* BSAppTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = F795A1021464C43A001B43CD /* BSAppTheme.m */; };
 		F795A1061464C4AD001B43CD /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F795A1051464C4AD001B43CD /* QuartzCore.framework */; };
@@ -46,30 +46,35 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		053D6EAD69327531E3A6951B /* Pods-Buster.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Buster.release.xcconfig"; path = "Pods/Target Support Files/Pods-Buster/Pods-Buster.release.xcconfig"; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D6058910D05DD3D006BFB54 /* Buster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Buster.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		256CD1B0CBEAFAA5A69A942D /* Pods-Buster.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Buster.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Buster/Pods-Buster.debug.xcconfig"; sourceTree = "<group>"; };
 		2860E325111B887F00E27156 /* BSAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSAppDelegate.h; sourceTree = "<group>"; };
 		2860E326111B887F00E27156 /* BSAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSAppDelegate.m; sourceTree = "<group>"; };
 		288765FC0DF74451002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Shared/main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* Buster_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Buster_Prefix.pch; sourceTree = "<group>"; };
-		71EEE71904C14B8693D134C6 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
+		858D444452B3368AE8151F84 /* Pods-Buster.stubservice.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Buster.stubservice.xcconfig"; path = "Pods/Target Support Files/Pods-Buster/Pods-Buster.stubservice.xcconfig"; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Buster-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Buster-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
+		8F609A5536E69DD7E7DD1716 /* libPods-Buster.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Buster.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5EA17E3158D44BC9C7D66D4 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7032C7E146447280098AF94 /* routes.endpoints.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = routes.endpoints.plist; sourceTree = "<group>"; };
 		F70BB19B12DA2132000942EF /* BSVehicleLocationAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BSVehicleLocationAnnotation.h; path = Shared/BSVehicleLocationAnnotation.h; sourceTree = "<group>"; };
 		F70BB19C12DA2132000942EF /* BSVehicleLocationAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BSVehicleLocationAnnotation.m; path = Shared/BSVehicleLocationAnnotation.m; sourceTree = "<group>"; };
+		F70BB9F21F4395B2004734B8 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Shared/Resources/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		F70BB9F41F4395DC004734B8 /* MapView_iPhone.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MapView_iPhone.xib; path = Resources/MapView_iPhone.xib; sourceTree = "<group>"; };
 		F719FF3712BAD3F1008D50AE /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		F719FF3D12BAD402008D50AE /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		F719FF3F12BAD402008D50AE /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		F727BD831F43983200373CD6 /* BSDirectionsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = BSDirectionsView.xib; path = Shared/Resources/BSDirectionsView.xib; sourceTree = "<group>"; };
 		F73C04EC151E5FB700835FC6 /* BSMBTARequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BSMBTARequestOperation.h; path = Shared/BSMBTARequestOperation.h; sourceTree = "<group>"; };
 		F73C04ED151E5FB700835FC6 /* BSMBTARequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BSMBTARequestOperation.m; path = Shared/BSMBTARequestOperation.m; sourceTree = "<group>"; };
 		F743615A1461B3B700D25502 /* BSStop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BSStop.h; path = Shared/BSStop.h; sourceTree = "<group>"; };
 		F743615B1461B3B700D25502 /* BSStop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BSStop.m; path = Shared/BSStop.m; sourceTree = "<group>"; };
 		F755C94212BAEC0300E02B61 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		F76E8DDC12DA8BF900A9BC2D /* MapView_iPad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MapView_iPad.xib; path = Resources/MapView_iPad.xib; sourceTree = "<group>"; };
-		F76E8DDE12DA8C0200A9BC2D /* MapView_iPhone.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MapView_iPhone.xib; path = Resources/MapView_iPhone.xib; sourceTree = "<group>"; };
 		F783161412D8CB1000D7C302 /* BSMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BSMapViewController.h; path = Shared/BSMapViewController.h; sourceTree = "<group>"; };
 		F783161512D8CB1000D7C302 /* BSMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BSMapViewController.m; path = Shared/BSMapViewController.m; sourceTree = "<group>"; };
 		F79012D21461AC4D00F273F2 /* BSRoutesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BSRoutesViewController.h; path = Shared/BSRoutesViewController.h; sourceTree = "<group>"; };
@@ -86,7 +91,6 @@
 		F79012E71461AFAF00F273F2 /* BSPredictionMetaTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BSPredictionMetaTableViewCell.m; path = Shared/BSPredictionMetaTableViewCell.m; sourceTree = "<group>"; };
 		F79012E91461AFD500F273F2 /* BSPredictionsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BSPredictionsModel.h; path = Shared/BSPredictionsModel.h; sourceTree = "<group>"; };
 		F79012EA1461AFD500F273F2 /* BSPredictionsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BSPredictionsModel.m; path = Shared/BSPredictionsModel.m; sourceTree = "<group>"; };
-		F795A0FA1464C0EB001B43CD /* BSDirectionsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BSDirectionsView.xib; path = Shared/Resources/BSDirectionsView.xib; sourceTree = "<group>"; };
 		F795A0FF1464C43A001B43CD /* BSArtistTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BSArtistTools.h; path = Shared/BSArtistTools.h; sourceTree = "<group>"; };
 		F795A1001464C43A001B43CD /* BSArtistTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BSArtistTools.m; path = Shared/BSArtistTools.m; sourceTree = "<group>"; };
 		F795A1011464C43A001B43CD /* BSAppTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BSAppTheme.h; path = Shared/BSAppTheme.h; sourceTree = "<group>"; };
@@ -122,7 +126,6 @@
 				F719FF3812BAD3F1008D50AE /* CFNetwork.framework in Frameworks */,
 				F719FF3E12BAD402008D50AE /* MobileCoreServices.framework in Frameworks */,
 				F719FF4012BAD402008D50AE /* SystemConfiguration.framework in Frameworks */,
-				B47D174750C84D3CA16465D4 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -179,7 +182,7 @@
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 				F719FF7712BAD54F008D50AE /* Vendor */,
-				71EEE71904C14B8693D134C6 /* Pods.xcconfig */,
+				87A6BB7925844F86ACCE88B7 /* Pods */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -208,8 +211,19 @@
 				F719FF3D12BAD402008D50AE /* MobileCoreServices.framework */,
 				F719FF3F12BAD402008D50AE /* SystemConfiguration.framework */,
 				D5EA17E3158D44BC9C7D66D4 /* libPods.a */,
+				8F609A5536E69DD7E7DD1716 /* libPods-Buster.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		87A6BB7925844F86ACCE88B7 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				256CD1B0CBEAFAA5A69A942D /* Pods-Buster.debug.xcconfig */,
+				858D444452B3368AE8151F84 /* Pods-Buster.stubservice.xcconfig */,
+				053D6EAD69327531E3A6951B /* Pods-Buster.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		F719FF7712BAD54F008D50AE /* Vendor */ = {
@@ -224,6 +238,7 @@
 			children = (
 				F755C94212BAEC0300E02B61 /* icon.png */,
 				F7032C7E146447280098AF94 /* routes.endpoints.plist */,
+				F70BB9F21F4395B2004734B8 /* LaunchScreen.storyboard */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -255,7 +270,7 @@
 		F795A0F81464C0C2001B43CD /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				F795A0FA1464C0EB001B43CD /* BSDirectionsView.xib */,
+				F727BD831F43983200373CD6 /* BSDirectionsView.xib */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -326,7 +341,7 @@
 		F7F693C112BAF67200FA051C /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				F76E8DDE12DA8C0200A9BC2D /* MapView_iPhone.xib */,
+				F70BB9F41F4395DC004734B8 /* MapView_iPhone.xib */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -338,11 +353,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "Buster" */;
 			buildPhases = (
-				AF9FF941C77543DD92000F7E /* Check Pods Manifest.lock */,
+				AF9FF941C77543DD92000F7E /* [CP] Check Pods Manifest.lock */,
 				1D60588D0D05DD3D006BFB54 /* Resources */,
 				1D60588E0D05DD3D006BFB54 /* Sources */,
 				1D60588F0D05DD3D006BFB54 /* Frameworks */,
-				1F2B3E1E3B354CBDAD649A7A /* Copy Pods Resources */,
+				1F2B3E1E3B354CBDAD649A7A /* [CP] Copy Pods Resources */,
+				F30E7B9A6929A93615BB0A1D /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -359,10 +375,15 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0430;
+				LastUpgradeCheck = 0900;
+				TargetAttributes = {
+					1D6058900D05DD3D006BFB54 = {
+						ProvisioningStyle = Manual;
+					};
+				};
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Buster" */;
-			compatibilityVersion = "Xcode 3.2";
+			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
@@ -372,6 +393,7 @@
 				German,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
+			productRefGroup = 19C28FACFE9D520D11CA2CBB /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -385,44 +407,60 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F70BB9F31F4395B2004734B8 /* LaunchScreen.storyboard in Resources */,
 				F755C94312BAEC0300E02B61 /* icon.png in Resources */,
 				F76E8DDD12DA8BF900A9BC2D /* MapView_iPad.xib in Resources */,
-				F76E8DDF12DA8C0200A9BC2D /* MapView_iPhone.xib in Resources */,
+				F727BD841F43983200373CD6 /* BSDirectionsView.xib in Resources */,
 				F7032C7F146447280098AF94 /* routes.endpoints.plist in Resources */,
-				F795A0FB1464C0EB001B43CD /* BSDirectionsView.xib in Resources */,
+				F70BB9F51F4395DC004734B8 /* MapView_iPhone.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		1F2B3E1E3B354CBDAD649A7A /* Copy Pods Resources */ = {
+		1F2B3E1E3B354CBDAD649A7A /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Buster/Pods-Buster-resources.sh\"\n";
 		};
-		AF9FF941C77543DD92000F7E /* Check Pods Manifest.lock */ = {
+		AF9FF941C77543DD92000F7E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+		};
+		F30E7B9A6929A93615BB0A1D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Buster/Pods-Buster-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -459,35 +497,45 @@
 /* Begin XCBuildConfiguration section */
 		1D6058940D05DD3E006BFB54 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 71EEE71904C14B8693D134C6 /* Pods.xcconfig */;
+			baseConfigurationReference = 256CD1B0CBEAFAA5A69A942D /* Pods-Buster.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = "";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Buster_Prefix.pch;
 				INFOPLIST_FILE = "Buster-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				PRODUCT_BUNDLE_IDENTIFIER = org.andyshep.Buster;
 				PRODUCT_NAME = Buster;
 				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
 		1D6058950D05DD3E006BFB54 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 71EEE71904C14B8693D134C6 /* Pods.xcconfig */;
+			baseConfigurationReference = 053D6EAD69327531E3A6951B /* Pods-Buster.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = YES;
+				DEVELOPMENT_TEAM = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Buster_Prefix.pch;
 				INFOPLIST_FILE = "Buster-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				PRODUCT_BUNDLE_IDENTIFIER = org.andyshep.Buster;
 				PRODUCT_NAME = Buster;
 				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -495,16 +543,38 @@
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = "";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
-				ONLY_ACTIVE_ARCH = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-lxml2";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -516,15 +586,36 @@
 		C01FCF5008A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = "USE_STUB_SERVICE=1";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				OTHER_LDFLAGS = "-lxml2";
@@ -537,15 +628,36 @@
 		F7E719491402956C000F1821 /* StubService */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = "USE_STUB_SERVICE=1";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-lxml2";
 				PROVISIONING_PROFILE = "";
@@ -557,19 +669,24 @@
 		};
 		F7E7194A1402956C000F1821 /* StubService */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 71EEE71904C14B8693D134C6 /* Pods.xcconfig */;
+			baseConfigurationReference = 858D444452B3368AE8151F84 /* Pods-Buster.stubservice.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = "";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Buster_Prefix.pch;
 				INFOPLIST_FILE = "Buster-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				PRODUCT_BUNDLE_IDENTIFIER = org.andyshep.Buster;
 				PRODUCT_NAME = Buster;
 				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = StubService;
 		};

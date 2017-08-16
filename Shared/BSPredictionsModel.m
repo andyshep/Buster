@@ -75,7 +75,7 @@
         if (!error) {
             NSMutableArray *predictions = [NSMutableArray arrayWithCapacity:5];
             NSDictionary *predictionInfo = [NSMutableDictionary dictionaryWithCapacity:3];
-            SMXMLElement *predictionsElement = [xml.root childNamed:@"predictions"];
+            SMXMLElement *predictionsElement = [xml.parent childNamed:@"predictions"];
             SMXMLElement *directionElement = [predictionsElement childNamed:@"direction"];
             
             [predictionInfo setValue:[predictionsElement attributeNamed:@"routeTitle"] forKey:@"routeTitle"];

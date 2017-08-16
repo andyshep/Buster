@@ -101,7 +101,7 @@
             if (!error) {
                 NSMutableArray *routes = [NSMutableArray arrayWithCapacity:20];
                 
-                for (SMXMLElement *routeElement in [xml.root childrenNamed:@"route"]) {
+                for (SMXMLElement *routeElement in [xml.parent childrenNamed:@"route"]) {
                     BSRoute *route = [[BSRoute alloc] init];
                     route.title = [routeElement attributeNamed:@"title"];
                     route.tag = [routeElement attributeNamed:@"tag"];
