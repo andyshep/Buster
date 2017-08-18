@@ -32,12 +32,16 @@
         
         NSURL *url = [NSURL URLWithString:@"http://realtime.mbta.com/developer/api/v2/routes?api_key=wX9NwuHnZU2ToO7GmGR9uw&format=json"];
         [[[NSURLSession sharedSession] dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-            if (data) {
-                // parse data
-                NSLog(@"data: %@", data);
-            }
             
-            self.error = error;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (data) {
+                    NSArray *routes = [BSRoute routesFromData:data];
+                    self.routes = routes;
+                }
+                
+                self.error = error;
+            });
+            
         }] resume];
     } 
 }

@@ -7,9 +7,7 @@
 //
 
 #import "BSRoutesViewController.h"
-
 #import "BSDirectionsViewController.h"
-#import "BSRoutesTableViewCell.h"
 
 #import "BSRoute.h"
 #import "BSRoutesModel.h"
@@ -19,9 +17,6 @@ static void *myContext = &myContext;
 @interface BSRoutesViewController ()
 
 @property (nonatomic, strong) BSRoutesModel *model;
-
-- (void)requestRouteList;
-- (void)reloadRoutes;
 
 @end
 
@@ -51,6 +46,8 @@ static void *myContext = &myContext;
 
     [self.view addSubview:_tableView];
     [self setupTableViewConstraints];
+    
+    [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"BSRouteTableViewCellIdentifier"];
     
     UIBarButtonItem *refreshButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(requestRouteList)];
     [self.navigationItem setRightBarButtonItem:refreshButton animated:YES];
@@ -85,20 +82,10 @@ static void *myContext = &myContext;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *identifier = @"BSRouteTableViewCellIdentifier";
-    
-    BSRoutesTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
     
     BSRoute *route = self.model.routes[indexPath.row];
-    
-    cell.routeNumberLabel.text = route.title;
-    
-    if (route.endpoints != nil) {
-        cell.routeEndpointsLabel.text = route.endpoints;
-        cell.routeEndpointsLabel.adjustsFontSizeToFitWidth = YES;
-        cell.routeEndpointsLabel.numberOfLines = 0;
-    } else {
-        cell.routeEndpointsLabel.text = @"Indeterminate Route Endpoints";
-    }
+    cell.textLabel.text = route.name;
     
     return cell;
 }
@@ -107,8 +94,9 @@ static void *myContext = &myContext;
     BSRoute *route = self.model.routes[indexPath.row];
     
     BSDirectionsViewController *nextController = [[BSDirectionsViewController alloc] init];
-    nextController.title = route.title;
-    nextController.stopTag = route.tag;
+    // FIXME
+    nextController.title = route.name;
+    nextController.stopTag = route.routeId;
     
     [self.navigationController pushViewController:nextController animated:YES];
 }
@@ -117,7 +105,12 @@ static void *myContext = &myContext;
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     
     if (context == myContext) {
-        // TODO: implement
+        if ([keyPath isEqualToString:@"routes"]) {
+            [self reloadRoutes];
+        }
+        else if ([keyPath isEqualToString:@"error"]) {
+            [self refreshError];
+        }
     }
     else {
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
@@ -144,12 +137,14 @@ static void *myContext = &myContext;
     [_tableView reloadData];
 }
 
-- (void)operationDidFail {
-    NSString *title = NSLocalizedString(@"Error", @"error alert view title");
-    NSString *message = self.model.error.localizedDescription;
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
-    
-    [self presentViewController:alertController animated:YES completion:nil];
+- (void)refreshError {
+    if (self.model.error != nil) {
+        NSString *title = NSLocalizedString(@"Error", @"error alert view title");
+        NSString *message = self.model.error.localizedDescription;
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+        
+        [self presentViewController:alertController animated:YES completion:nil];
+    }
 }
 
 @end

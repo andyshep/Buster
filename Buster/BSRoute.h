@@ -10,10 +10,12 @@
 
 @interface BSRoute : NSObject <NSCoding>
 
-@property (nonatomic, copy) NSString *title;
-@property (nonatomic, copy) NSString *tag;
-@property (nonatomic, copy) NSString *endpoints;
+@property (nonatomic, copy) NSString *name;
+@property (nonatomic, copy) NSString *routeId;
 
-@property (nonatomic, copy) NSArray *stops;
+//@property (nonatomic, copy) NSString *endpoints;
+//@property (nonatomic, copy) NSArray *stops;
+
++ (NSArray<BSRoute *> *)routesFromData:(NSData *)data;
 
 @end
