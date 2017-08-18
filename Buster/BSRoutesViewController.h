@@ -8,7 +8,7 @@
 
 @import UIKit;
 
-@interface BSRoutesViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface BSRoutesViewController : UIViewController
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UIToolbar *toolbar;

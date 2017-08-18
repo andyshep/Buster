@@ -11,7 +11,7 @@
 @implementation BSRoute
 
 - (instancetype)initWithCoder:(NSCoder *)coder {
-    if ((self = [super init])) {
+    if (self = [super init]) {
         self.name = [coder decodeObjectForKey:@"name"];
         self.routeId = [coder decodeObjectForKey:@"routeId"];
 //        self.stops = [coder decodeObjectForKey:@"stops"];

@@ -14,7 +14,7 @@
 
 static void *myContext = &myContext;
 
-@interface BSRoutesViewController ()
+@interface BSRoutesViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) BSRoutesModel *model;
 
