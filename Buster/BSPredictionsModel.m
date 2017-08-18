@@ -27,10 +27,6 @@
 
 #import "BSPredictionsModel.h"
 
-#import "BSMBTARequestOperation.h"
-
-#import "MBTAQueryStringBuilder.h"
-
 @interface BSPredictionsModel ()
 
 - (void)unloadPredictions;
@@ -64,17 +60,7 @@
 - (void)requestPredictionsForRoute:(NSString *)route andStop:(NSString *)stop {
     NSLog(@"requesting predictions for %@ at %@", route, stop);
     
-    NSString *urlString = [[MBTAQueryStringBuilder sharedInstance] buildPredictionsQueryForRoute:route withDirection:nil atStop:stop];
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    
-    BSMBTARequestOperation *operation = [BSMBTARequestOperation MBTARequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id object) {
-        // get predictions
-    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *err) {
-        self.error = err;
-    }];
-    
-    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
-    [queue addOperation:operation];
+    // TODO: implement
 }
 
 - (void)unloadPredictions {

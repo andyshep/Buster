@@ -31,7 +31,6 @@
 
 #import "BSDirectionsModel.h"
 #import "BSPredictionsViewController.h"
-#import "BSAppTheme.h"
 
 @interface BSDirectionsViewController ()
 
@@ -219,7 +218,7 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:BSStopCellIdentifier];
         cell.textLabel.adjustsFontSizeToFitWidth = YES;
-        cell.textLabel.font = [BSAppTheme fourteenPointlabelFont];
+        cell.textLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.selectionStyle = UITableViewCellSelectionStyleGray;
     }

@@ -30,9 +30,6 @@
 #import "BSDirection.h"
 #import "BSStop.h"
 
-#import "BSMBTARequestOperation.h"
-#import "MBTAQueryStringBuilder.h"
-
 @interface BSDirectionsModel ()
 
 - (void)unloadStopList;
@@ -63,24 +60,7 @@
 }
 
 - (void)requestDirectionsList:(NSString *)stop {
-    // TODO: implement stops caching
-    
-    if (self.stops == nil) {
-        NSLog(@"loading stops from the intertubes...");
-        
-        MBTAQueryStringBuilder *builder = [MBTAQueryStringBuilder sharedInstance];
-        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[builder buildRouteConfigQuery:stop]]];
-        
-        BSMBTARequestOperation *operation = [BSMBTARequestOperation MBTARequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id object) {
-                // get directions
-            
-        } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-            // TODO: handle failure
-        }];
-        
-        NSOperationQueue *queue = [[NSOperationQueue alloc] init];
-        [queue addOperation:operation];
-    }
+    // TODO: implement
 }
 
 - (void)unloadStopList {

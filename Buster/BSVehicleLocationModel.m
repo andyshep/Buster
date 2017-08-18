@@ -27,9 +27,6 @@
 
 #import "BSVehicleLocationModel.h"
 
-#import "MBTAQueryStringBuilder.h"
-#import "BSMBTARequestOperation.h"
-
 @implementation BSVehicleLocationModel
 
 - (instancetype)init {
@@ -41,18 +38,7 @@
 }
 
 - (void)requestLocationOfVehicle:(NSString *)vehicleId runningRoute:(NSString *)routeNumber atEpochTime:(NSString *)time {
-    MBTAQueryStringBuilder *builder = [MBTAQueryStringBuilder sharedInstance];
-    NSString *locationURL = [builder buildLocationsQueryForRoute:routeNumber withEpochTime:@"0"];
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:locationURL]];
-    
-    BSMBTARequestOperation *operation = [BSMBTARequestOperation MBTARequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id object) {
-        // get vehicle locations
-    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-        // TODO: handle failure
-    }];
-    
-    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
-    [queue addOperation:operation];
+    // TODO: implement
 }
 
 @end

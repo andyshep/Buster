@@ -26,7 +26,6 @@
 //
 
 #import "BSMapViewController.h"
-#import "BSAppTheme.h"
 
 @implementation BSMapViewController
 
@@ -39,8 +38,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.toolbar.tintColor = [BSAppTheme lightBlueColor];
     
     model_ = [[BSVehicleLocationModel alloc] init];
     [model_ addObserver:self 

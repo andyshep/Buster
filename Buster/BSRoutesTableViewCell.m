@@ -7,7 +7,6 @@
 //
 
 #import "BSRoutesTableViewCell.h"
-#import "BSAppTheme.h"
 
 @implementation BSRoutesTableViewCell
 
@@ -15,11 +14,11 @@
     if ((self = [super init])) {
         self.routeNumberLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         _routeNumberLabel.backgroundColor = [UIColor clearColor];
-        _routeNumberLabel.font = [UIFont boldSystemFontOfSize:20.0f];
+        _routeNumberLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleTitle1];
         
         self.routeEndpointsLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         _routeEndpointsLabel.backgroundColor = [UIColor clearColor];
-        _routeEndpointsLabel.font = [BSAppTheme twelvePointlabelFont];
+        _routeEndpointsLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption1];
         _routeEndpointsLabel.numberOfLines = 4;
         _routeEndpointsLabel.autoresizingMask = UIViewAutoresizingFlexibleHeight;
         
