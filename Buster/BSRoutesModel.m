@@ -29,6 +29,16 @@
         // fetch routes
         // if error, set self.error
         // otherwise, set self.routes
+        
+        NSURL *url = [NSURL URLWithString:@"http://realtime.mbta.com/developer/api/v2/routes?api_key=wX9NwuHnZU2ToO7GmGR9uw&format=json"];
+        [[[NSURLSession sharedSession] dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+            if (data) {
+                // parse data
+                NSLog(@"data: %@", data);
+            }
+            
+            self.error = error;
+        }] resume];
     } 
 }
 
