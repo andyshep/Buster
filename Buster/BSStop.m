@@ -10,16 +10,8 @@
 
 @implementation BSStop
 
-- (instancetype)init {
-    if ((self = [super init])) {
-        //
-    }
-    
-    return self;
-}
-
 - (instancetype)initWithCoder:(NSCoder *)coder {
-    if ((self = [super init])) {
+    if (self = [super init]) {
         self.title = [coder decodeObjectForKey:@"title"];
         self.tag = [coder decodeObjectForKey:@"tag"];
         self.directionTag = [coder decodeObjectForKey:@"directionTag"];

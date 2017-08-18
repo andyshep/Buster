@@ -8,12 +8,15 @@
 
 @import Foundation;
 
+@class BSStop;
+
 @interface BSDirection : NSObject <NSCoding>
 
-@property (nonatomic, copy) NSArray *stops;
-
+@property (nonatomic, copy) NSArray<BSStop *> *stops;
 @property (nonatomic, copy) NSString *tag;
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, copy) NSString *title;
+
++ (NSDictionary<NSString *, BSDirection *> *)directionsFromData:(NSData *)data;
 
 @end

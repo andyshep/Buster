@@ -13,67 +13,49 @@
 
 @interface BSDirectionsModel ()
 
-- (void)unloadStopList;
-- (NSString *)archivePathForStop:(NSString *)stop;
+@property (nonatomic, copy, readwrite) NSArray<BSStop *> *stops;
+@property (nonatomic, copy, readwrite) NSArray *tags;
+@property (nonatomic, copy, readwrite) NSArray *titles;
+
+@property (nonatomic, copy, readwrite) NSDictionary<NSString *, BSDirection *> *directions;
+@property (nonatomic, copy, readwrite) NSError *error;
+@property (nonatomic, copy, readwrite) NSString *title;
 
 @end
 
 @implementation BSDirectionsModel
 
-- (instancetype)init {
-    if ((self = [super init])) {
-        //
-    }
+- (void)requestDirectionsForStop:(NSString *)stop {
+    // TODO: check cache first
     
-    return self;
-}
-
-- (NSUInteger)countOfStops {
-    return (self.stops).count;
-}
-
-- (id)objectInStopsAtIndex:(NSUInteger)index {
-    return (self.stops)[index];
-}
-
-- (void)getStops:(__unsafe_unretained id *)objects range:(NSRange)range {
-    [self.stops getObjects:objects range:range];
-}
-
-- (void)requestDirectionsList:(NSString *)stop {
-    // TODO: implement
-}
-
-- (void)unloadStopList {
-    self.stops = nil;
-}
-
-- (void)loadStopsForDirection:(NSUInteger)directionIndex {
-    NSArray *stops = ((BSDirection *)(self.directions)[directionIndex]).stops;
-    NSMutableArray *mStops = [NSMutableArray arrayWithCapacity:20];
+    NSString *urlString = [NSString stringWithFormat:@"http://realtime.mbta.com/developer/api/v2/stopsbyroute?api_key=wX9NwuHnZU2ToO7GmGR9uw&route=%@&format=json", stop];
+    NSURL *url = [NSURL URLWithString:urlString];
     
-    for (NSDictionary *stop in stops) {
-        BSDirection *aStop = [[BSDirection alloc] init];
-        aStop.tag = [stop valueForKey:@"tag"];
-        aStop.title = [stop valueForKey:@"title"];
+    [[[NSURLSession sharedSession] dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         
-        [mStops addObject:aStop];
-    }
-    
-    self.stops = [NSArray arrayWithArray:mStops];
-    self.title = ((BSDirection *)(self.directions)[directionIndex]).title;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (data) {
+                NSDictionary *directions = [BSDirection directionsFromData:data];
+                self.directions = directions;
+            }
+            
+            self.error = error;
+        });
+        
+    }] resume];
 }
 
-#pragma mark - Disk Access
-- (NSString *)pathInDocumentDirectory:(NSString *)aPath {
-    NSArray *documentPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentDirectoryPath = documentPaths[0];
-    return [documentDirectoryPath stringByAppendingPathComponent:aPath];
+- (void)loadStopsForDirection:(BSDirection *)direction {
+    NSArray<BSStop *> *stops = direction.stops;
+    self.stops = stops;
 }
 
 - (NSString *)archivePathForStop:(NSString *)stop {
-    NSString *filename = [NSString stringWithFormat:@"stops_%@.data", stop];
-    return [self pathInDocumentDirectory:filename];
+    NSURL *documentsURL = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+    NSString *filename = [NSString stringWithFormat:@"stops_%@.plist", stop];
+    NSURL *pathURL = [documentsURL URLByAppendingPathComponent:filename];
+    
+    return [pathURL absoluteString];
 }
 
 @end
