@@ -208,17 +208,17 @@
 }
 
 - (void)reloadPredictions {
-    int predictionsToAdd = [_model countOfPredictions];
-    int predictionsToDelete = [self.tableView numberOfRowsInSection:1];
+    NSUInteger predictionsToAdd = [_model countOfPredictions];
+    NSUInteger predictionsToDelete = [self.tableView numberOfRowsInSection:1];
     
     [self.tableView beginUpdates];
     
-    for (int i = 0; i < predictionsToDelete; i++) {
+    for (NSUInteger i = 0; i < predictionsToDelete; i++) {
         NSArray *delete = @[[NSIndexPath indexPathForRow:i inSection:1]];
         [self.tableView deleteRowsAtIndexPaths:delete withRowAnimation:UITableViewRowAnimationBottom];
     }
     
-    for (int i = 0; i < predictionsToAdd; i++) {
+    for (NSUInteger i = 0; i < predictionsToAdd; i++) {
         NSArray *insert = @[[NSIndexPath indexPathForRow:i inSection:1]];
         [self.tableView insertRowsAtIndexPaths:insert withRowAnimation:UITableViewRowAnimationTop];
     }
