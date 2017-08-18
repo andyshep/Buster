@@ -25,6 +25,8 @@
 //  THE SOFTWARE.
 //
 
+@import Foundation;
+
 @interface BSDirectionsModel : NSObject 
 
 @property (nonatomic, copy) NSArray *stops;

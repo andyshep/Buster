@@ -31,6 +31,7 @@
 
 #import "BSDirectionsModel.h"
 #import "BSPredictionsViewController.h"
+#import "BSAppTheme.h"
 
 @interface BSDirectionsViewController ()
 

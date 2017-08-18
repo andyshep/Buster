@@ -10,7 +10,8 @@
 // http://www.raywenderlich.com/2033/core-graphics-101-lines-rectangles-and-gradients
 // https://github.com/samsoffes/sstoolkit/blob/master/SSToolkit/SSDrawingUtilities.m
 
-#import <Foundation/Foundation.h>
+@import Foundation;
+@import UIKit;
 
 @interface BSArtistTools : NSObject
 

@@ -25,6 +25,8 @@
 //  THE SOFTWARE.
 //
 
+@import UIKit;
+
 @interface BSPredictionMetaTableViewCell : UITableViewCell
 
 @property (nonatomic, strong) UILabel *routeNumberLabel;

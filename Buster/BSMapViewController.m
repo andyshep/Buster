@@ -26,6 +26,7 @@
 //
 
 #import "BSMapViewController.h"
+#import "BSAppTheme.h"
 
 @implementation BSMapViewController
 

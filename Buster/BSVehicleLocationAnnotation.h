@@ -25,6 +25,7 @@
 //  THE SOFTWARE.
 //
 
+@import MapKit;
 
 @interface BSVehicleLocationAnnotation : NSObject <MKAnnotation>
 

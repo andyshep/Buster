@@ -6,6 +6,29 @@
 	objectVersion = 48;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		F7A5F35A1F44CE7500E70240 /* BSAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F7E24CFB1F44C7D1009EC40C /* BSAppDelegate.m */; };
+		F7A5F35B1F44CE7500E70240 /* BSAppTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = F7E24CFD1F44C7D1009EC40C /* BSAppTheme.m */; };
+		F7A5F35C1F44CE7F00E70240 /* BSArtistTools.m in Sources */ = {isa = PBXBuildFile; fileRef = F7E24CFF1F44C7D1009EC40C /* BSArtistTools.m */; };
+		F7A5F35D1F44CE7F00E70240 /* BSDirection.m in Sources */ = {isa = PBXBuildFile; fileRef = F7E24D011F44C7D1009EC40C /* BSDirection.m */; };
+		F7A5F35E1F44CE7F00E70240 /* BSDirectionsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7E24D031F44C7D1009EC40C /* BSDirectionsModel.m */; };
+		F7A5F35F1F44CE7F00E70240 /* BSDirectionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7E24D051F44C7D1009EC40C /* BSDirectionsViewController.m */; };
+		F7A5F3601F44CE7F00E70240 /* BSMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7E24D071F44C7D1009EC40C /* BSMapViewController.m */; };
+		F7A5F3611F44CE7F00E70240 /* BSMBTARequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = F7E24D091F44C7D1009EC40C /* BSMBTARequestOperation.m */; };
+		F7A5F3621F44CE7F00E70240 /* BSPredictionMetaTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F7E24D0B1F44C7D1009EC40C /* BSPredictionMetaTableViewCell.m */; };
+		F7A5F3631F44CE7F00E70240 /* BSPredictionsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7E24D0D1F44C7D1009EC40C /* BSPredictionsModel.m */; };
+		F7A5F3641F44CE7F00E70240 /* BSPredictionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7E24D0F1F44C7D1009EC40C /* BSPredictionsViewController.m */; };
+		F7A5F3651F44CE7F00E70240 /* BSRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = F7E24D111F44C7D1009EC40C /* BSRoute.m */; };
+		F7A5F3661F44CE7F00E70240 /* BSRoutesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7E24D131F44C7D1009EC40C /* BSRoutesModel.m */; };
+		F7A5F3671F44CE7F00E70240 /* BSRoutesTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F7E24D151F44C7D1009EC40C /* BSRoutesTableViewCell.m */; };
+		F7A5F3681F44CE7F00E70240 /* BSRoutesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7E24D171F44C7D1009EC40C /* BSRoutesViewController.m */; };
+		F7A5F3691F44CE7F00E70240 /* BSStop.m in Sources */ = {isa = PBXBuildFile; fileRef = F7E24D191F44C7D1009EC40C /* BSStop.m */; };
+		F7A5F36B1F44CE7F00E70240 /* BSVehicleLocationAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = F7E24D1D1F44C7D1009EC40C /* BSVehicleLocationAnnotation.m */; };
+		F7A5F36C1F44CE7F00E70240 /* BSVehicleLocationModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7E24D1F1F44C7D1009EC40C /* BSVehicleLocationModel.m */; };
+		F7A5F36E1F44CE7F00E70240 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F7E24D251F44C7D1009EC40C /* main.m */; };
+		F7A5F36F1F44CE7F00E70240 /* MBTAQueryStringBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = F7E24D271F44C7D1009EC40C /* MBTAQueryStringBuilder.m */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		1D6058910D05DD3D006BFB54 /* Buster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Buster.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7E24CF81F44C7D1009EC40C /* 28-star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "28-star.png"; sourceTree = "<group>"; };
@@ -42,16 +65,11 @@
 		F7E24D171F44C7D1009EC40C /* BSRoutesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BSRoutesViewController.m; sourceTree = "<group>"; };
 		F7E24D181F44C7D1009EC40C /* BSStop.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BSStop.h; sourceTree = "<group>"; };
 		F7E24D191F44C7D1009EC40C /* BSStop.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BSStop.m; sourceTree = "<group>"; };
-		F7E24D1A1F44C7D1009EC40C /* BSTableCellSelectedView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BSTableCellSelectedView.h; sourceTree = "<group>"; };
-		F7E24D1B1F44C7D1009EC40C /* BSTableCellSelectedView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BSTableCellSelectedView.m; sourceTree = "<group>"; };
 		F7E24D1C1F44C7D1009EC40C /* BSVehicleLocationAnnotation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BSVehicleLocationAnnotation.h; sourceTree = "<group>"; };
 		F7E24D1D1F44C7D1009EC40C /* BSVehicleLocationAnnotation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BSVehicleLocationAnnotation.m; sourceTree = "<group>"; };
 		F7E24D1E1F44C7D1009EC40C /* BSVehicleLocationModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BSVehicleLocationModel.h; sourceTree = "<group>"; };
 		F7E24D1F1F44C7D1009EC40C /* BSVehicleLocationModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BSVehicleLocationModel.m; sourceTree = "<group>"; };
 		F7E24D201F44C7D1009EC40C /* Buster-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Buster-Info.plist"; sourceTree = "<group>"; };
-		F7E24D211F44C7D1009EC40C /* Buster_Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Buster_Prefix.pch; sourceTree = "<group>"; };
-		F7E24D221F44C7D1009EC40C /* GradientView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GradientView.h; sourceTree = "<group>"; };
-		F7E24D231F44C7D1009EC40C /* GradientView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GradientView.m; sourceTree = "<group>"; };
 		F7E24D241F44C7D1009EC40C /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		F7E24D251F44C7D1009EC40C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		F7E24D261F44C7D1009EC40C /* MBTAQueryStringBuilder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MBTAQueryStringBuilder.h; sourceTree = "<group>"; };
@@ -60,8 +78,6 @@
 		F7E24D2A1F44C7D1009EC40C /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F7E24D2B1F44C7D1009EC40C /* MapView_iPhone.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapView_iPhone.xib; sourceTree = "<group>"; };
 		F7E24D2C1F44C7D1009EC40C /* routes.endpoints.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = routes.endpoints.plist; sourceTree = "<group>"; };
-		F7E24D2D1F44C7D1009EC40C /* ShadowedTableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShadowedTableView.h; sourceTree = "<group>"; };
-		F7E24D2E1F44C7D1009EC40C /* ShadowedTableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShadowedTableView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,24 +145,17 @@
 				F7E24D171F44C7D1009EC40C /* BSRoutesViewController.m */,
 				F7E24D181F44C7D1009EC40C /* BSStop.h */,
 				F7E24D191F44C7D1009EC40C /* BSStop.m */,
-				F7E24D1A1F44C7D1009EC40C /* BSTableCellSelectedView.h */,
-				F7E24D1B1F44C7D1009EC40C /* BSTableCellSelectedView.m */,
 				F7E24D1C1F44C7D1009EC40C /* BSVehicleLocationAnnotation.h */,
 				F7E24D1D1F44C7D1009EC40C /* BSVehicleLocationAnnotation.m */,
 				F7E24D1E1F44C7D1009EC40C /* BSVehicleLocationModel.h */,
 				F7E24D1F1F44C7D1009EC40C /* BSVehicleLocationModel.m */,
 				F7E24D201F44C7D1009EC40C /* Buster-Info.plist */,
-				F7E24D211F44C7D1009EC40C /* Buster_Prefix.pch */,
-				F7E24D221F44C7D1009EC40C /* GradientView.h */,
-				F7E24D231F44C7D1009EC40C /* GradientView.m */,
 				F7E24D241F44C7D1009EC40C /* icon.png */,
 				F7E24D251F44C7D1009EC40C /* main.m */,
 				F7E24D261F44C7D1009EC40C /* MBTAQueryStringBuilder.h */,
 				F7E24D271F44C7D1009EC40C /* MBTAQueryStringBuilder.m */,
 				F7E24D281F44C7D1009EC40C /* Resources */,
 				F7E24D2C1F44C7D1009EC40C /* routes.endpoints.plist */,
-				F7E24D2D1F44C7D1009EC40C /* ShadowedTableView.h */,
-				F7E24D2E1F44C7D1009EC40C /* ShadowedTableView.m */,
 			);
 			path = Buster;
 			sourceTree = "<group>";
@@ -229,6 +238,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7A5F35B1F44CE7500E70240 /* BSAppTheme.m in Sources */,
+				F7A5F35E1F44CE7F00E70240 /* BSDirectionsModel.m in Sources */,
+				F7A5F36C1F44CE7F00E70240 /* BSVehicleLocationModel.m in Sources */,
+				F7A5F35C1F44CE7F00E70240 /* BSArtistTools.m in Sources */,
+				F7A5F3641F44CE7F00E70240 /* BSPredictionsViewController.m in Sources */,
+				F7A5F3661F44CE7F00E70240 /* BSRoutesModel.m in Sources */,
+				F7A5F3651F44CE7F00E70240 /* BSRoute.m in Sources */,
+				F7A5F3601F44CE7F00E70240 /* BSMapViewController.m in Sources */,
+				F7A5F35D1F44CE7F00E70240 /* BSDirection.m in Sources */,
+				F7A5F3671F44CE7F00E70240 /* BSRoutesTableViewCell.m in Sources */,
+				F7A5F35A1F44CE7500E70240 /* BSAppDelegate.m in Sources */,
+				F7A5F3681F44CE7F00E70240 /* BSRoutesViewController.m in Sources */,
+				F7A5F36B1F44CE7F00E70240 /* BSVehicleLocationAnnotation.m in Sources */,
+				F7A5F3611F44CE7F00E70240 /* BSMBTARequestOperation.m in Sources */,
+				F7A5F3631F44CE7F00E70240 /* BSPredictionsModel.m in Sources */,
+				F7A5F3621F44CE7F00E70240 /* BSPredictionMetaTableViewCell.m in Sources */,
+				F7A5F3691F44CE7F00E70240 /* BSStop.m in Sources */,
+				F7A5F36E1F44CE7F00E70240 /* main.m in Sources */,
+				F7A5F35F1F44CE7F00E70240 /* BSDirectionsViewController.m in Sources */,
+				F7A5F36F1F44CE7F00E70240 /* MBTAQueryStringBuilder.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -246,8 +275,8 @@
 				DEVELOPMENT_TEAM = "";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = Buster_Prefix.pch;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = "$(SRCROOT)/Buster/Buster-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				PRODUCT_BUNDLE_IDENTIFIER = org.andyshep.Buster;
@@ -266,8 +295,8 @@
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = YES;
 				DEVELOPMENT_TEAM = "";
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = Buster_Prefix.pch;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = "$(SRCROOT)/Buster/Buster-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				PRODUCT_BUNDLE_IDENTIFIER = org.andyshep.Buster;
@@ -282,6 +311,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
@@ -303,6 +333,8 @@
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -325,6 +357,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
@@ -345,6 +378,8 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = "USE_STUB_SERVICE=1";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -367,6 +402,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
@@ -387,6 +423,8 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = "USE_STUB_SERVICE=1";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -416,8 +454,8 @@
 				DEVELOPMENT_TEAM = "";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = Buster_Prefix.pch;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = "$(SRCROOT)/Buster/Buster-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				PRODUCT_BUNDLE_IDENTIFIER = org.andyshep.Buster;

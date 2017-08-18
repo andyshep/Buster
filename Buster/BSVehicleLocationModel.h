@@ -25,6 +25,8 @@
 //  THE SOFTWARE.
 //
 
+@import Foundation;
+
 @interface BSVehicleLocationModel : NSObject
 
 @property (nonatomic, copy) NSDictionary *location;

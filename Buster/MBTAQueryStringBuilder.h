@@ -25,6 +25,8 @@
 //  THE SOFTWARE.
 //
 
+@import Foundation;
+
 @interface MBTAQueryStringBuilder : NSObject
 
 @property (nonatomic, strong) NSString *baseURL;

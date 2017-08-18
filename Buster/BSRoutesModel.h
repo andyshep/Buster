@@ -25,6 +25,10 @@
 //  THE SOFTWARE.
 //
 
+@import Foundation;
+
+@class BSRoute;
+
 @interface BSRoutesModel : NSObject
 
 @property (nonatomic, copy) NSArray *routes;

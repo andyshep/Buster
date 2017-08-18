@@ -25,6 +25,8 @@
 //  THE SOFTWARE.
 //
 
+@import UIKit;
+
 @interface BSRoutesViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;

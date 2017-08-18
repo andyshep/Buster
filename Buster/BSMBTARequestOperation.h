@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-//#import "AFHTTPRequestOperation.h"
+@import Foundation;
 
 @interface BSMBTARequestOperation : NSOperation
 

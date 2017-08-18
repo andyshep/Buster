@@ -25,6 +25,8 @@
 //  THE SOFTWARE.
 //
 
+@import Foundation;
+
 @interface BSPredictionsModel : NSObject
 
 @property (nonatomic, copy) NSArray *predictions;

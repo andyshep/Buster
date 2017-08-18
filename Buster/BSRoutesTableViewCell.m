@@ -7,6 +7,7 @@
 //
 
 #import "BSRoutesTableViewCell.h"
+#import "BSAppTheme.h"
 
 @implementation BSRoutesTableViewCell
 

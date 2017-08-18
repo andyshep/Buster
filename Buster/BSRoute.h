@@ -25,6 +25,8 @@
 //  THE SOFTWARE.
 //
 
+@import Foundation;
+
 @interface BSRoute : NSObject <NSCoding>
 
 @property (nonatomic, copy) NSString *title;

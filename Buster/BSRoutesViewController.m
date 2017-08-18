@@ -33,6 +33,8 @@
 #import "BSRoute.h"
 #import "BSRoutesModel.h"
 
+#import "BSAppTheme.h"
+
 #define ROUTE_CELL_DEFAULT_HEIGHT       64.0f
 #define ROUTE_ENDPOINTS_DEFAULT_HEIGHT  36.0f
 
@@ -134,11 +136,12 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [_model countOfRoutes];
+    return self.model.routes.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    BSRoute *route = (BSRoute *)[_model objectInRoutesAtIndex:indexPath.row];
+    
+    BSRoute *route = self.model.routes[indexPath.row];
     CGRect textFrame = [self sizeForString:route.endpoints];
     float padding = ROUTE_CELL_DEFAULT_HEIGHT - ROUTE_ENDPOINTS_DEFAULT_HEIGHT;
     
@@ -160,7 +163,7 @@
         cell = [[BSRoutesTableViewCell alloc] init];
     }
     
-    BSRoute *route = (BSRoute *)[_model objectInRoutesAtIndex:indexPath.row];
+    BSRoute *route = self.model.routes[indexPath.row];
     
     cell.routeNumberLabel.text = route.title;
     
@@ -176,7 +179,7 @@
 }
 
 - (void) tableView:(UITableView *)tView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    BSRoute *route = (BSRoute *)[_model objectInRoutesAtIndex:indexPath.row];
+    BSRoute *route = self.model.routes[indexPath.row];
     
     BSDirectionsViewController *nextController = [[BSDirectionsViewController alloc] init];
     nextController.title = route.title;
@@ -213,17 +216,17 @@
 - (void)reloadRoutes {
     // FIXME: you are needlessly animating in 40 rows
     // only animate in the rows which are visible.
-    int routesToAdd = [_model countOfRoutes];
-    int routesToDelete = [self.tableView numberOfRowsInSection:0];
+    NSUInteger routesToAdd = self.model.routes.count;
+    NSUInteger routesToDelete = [self.tableView numberOfRowsInSection:0];
     
     [self.tableView beginUpdates];
     
-    for (int i = 0; i < routesToDelete; i++) {
+    for (NSUInteger i = 0; i < routesToDelete; i++) {
         NSArray *delete = @[[NSIndexPath indexPathForRow:i inSection:0]];
         [self.tableView deleteRowsAtIndexPaths:delete withRowAnimation:UITableViewRowAnimationBottom];
     }
     
-    for (int i = 0; i < routesToAdd; i++) {
+    for (NSUInteger i = 0; i < routesToAdd; i++) {
         NSArray *insert = @[[NSIndexPath indexPathForRow:i inSection:0]];
         [self.tableView insertRowsAtIndexPaths:insert withRowAnimation:UITableViewRowAnimationTop];
     }

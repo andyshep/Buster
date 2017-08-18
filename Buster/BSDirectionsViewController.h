@@ -25,6 +25,8 @@
 //  THE SOFTWARE.
 //
 
+@import UIKit;
+
 @interface BSDirectionsViewController : UIViewController
 
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
