@@ -23,7 +23,7 @@ static void *myContext = &myContext;
 @implementation BSRoutesViewController
 
 - (instancetype)init {
-    if ((self = [super init])) {
+    if (self = [super init]) {
         self.tableView = [[UITableView alloc] initWithFrame:CGRectZero];
         _tableView.delegate = self;
         _tableView.dataSource = self;
