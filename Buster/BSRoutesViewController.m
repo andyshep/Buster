@@ -3,7 +3,7 @@
 //  Buster
 //
 //  Created by Andrew Shepard on 12/15/10.
-//  Copyright © 2010-2011 Andrew Shepard. All rights reserved.
+//  Copyright © 2010-2017 Andrew Shepard. All rights reserved.
 //
 
 #import "BSRoutesViewController.h"
