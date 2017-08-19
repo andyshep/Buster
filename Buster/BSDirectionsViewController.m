@@ -156,17 +156,11 @@ static void *myContext = &myContext;
 
 - (void) tableView:(UITableView *)tView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     BSStop *stop = self.model.stops[indexPath.row];
-    NSString *routeTitle = stop.title;
-    NSString *tag = stop.tag;
+    BSPredictionsViewController *controller = [[BSPredictionsViewController alloc] init];
     
-    BSPredictionsViewController *nextController = [[BSPredictionsViewController alloc] init];
-    nextController.title = NSLocalizedString(@"Predictions", @"predictions table view title");
+    controller.stop = stop;
     
-    nextController.routeNumber = self.title;
-    nextController.stopTag = tag;
-    nextController.routeTitle = routeTitle;
-    
-    [self.navigationController pushViewController:nextController animated:YES];
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (void)setupTableViewConstraints {

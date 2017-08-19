@@ -6,19 +6,13 @@
 //  Copyright © 2011-2017 Andrew Shepard. All rights reserved.
 //
 
-#import "BSPredictionMetaTableViewCell.h"
-#import "BSPredictionsModel.h"
-#import "BSMapViewController.h"
+@import UIKit;
 
-@interface BSPredictionsViewController : UITableViewController
+@class BSStop;
 
-@property (nonatomic, strong) NSString *stopTag;
-@property (nonatomic, strong) NSString *latitude;
-@property (nonatomic, strong) NSString *longitude;
-@property (nonatomic, strong) NSString *routeNumber;
-@property (nonatomic, strong) NSString *routeTitle;
-@property (nonatomic, strong) NSString *directionTag;
+@interface BSPredictionsViewController : UIViewController
 
-- (IBAction)refreshList:(id)sender;
+@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) BSStop *stop;
 
 @end

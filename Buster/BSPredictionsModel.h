@@ -8,16 +8,14 @@
 
 @import Foundation;
 
+@class BSStop;
+
 @interface BSPredictionsModel : NSObject
 
-@property (nonatomic, copy) NSArray *predictions;
-@property (nonatomic, copy) NSDictionary *predictionMeta;
-@property (nonatomic, copy) NSError *error;
+@property (nonatomic, copy, readonly) NSArray *predictions;
+@property (nonatomic, copy, readonly) NSDictionary *predictionMeta;
+@property (nonatomic, copy, readonly) NSError *error;
 
-- (void)requestPredictionsForRoute:(NSString *)route andStop:(NSString *)stop;
-
-@property (NS_NONATOMIC_IOSONLY, readonly) NSUInteger countOfPredictions;
-- (id)objectInPredictionsAtIndex:(NSUInteger)index;
-- (void)getPredictions:(__unsafe_unretained id *)objects range:(NSRange)range;
+- (void)requestPredictionsForStop:(BSStop *)stop;
 
 @end

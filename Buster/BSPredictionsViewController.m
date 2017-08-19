@@ -8,7 +8,14 @@
 
 #import "BSPredictionsViewController.h"
 
-@interface BSPredictionsViewController ()
+#import "BSPredictionsModel.h"
+#import "BSStop.h"
+
+#import "BSPredictionMetaTableViewCell.h"
+
+static void *myContext = &myContext;
+
+@interface BSPredictionsViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) BSPredictionsModel *model;
 
@@ -17,8 +24,12 @@
 @implementation BSPredictionsViewController
 
 - (instancetype)init {
-    if ((self = [super initWithStyle:UITableViewStyleGrouped])) {
-        //
+    if (self = [super init]) {
+        self.tableView = [[UITableView alloc] initWithFrame:CGRectZero];
+        [_tableView setDelegate:self];
+        [_tableView setDataSource:self];
+        
+        self.model = [[BSPredictionsModel alloc] init];
     }
                  
     return self;
@@ -33,54 +44,35 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self.view addSubview:_tableView];
+    [self setupTableViewConstraints];
+    
     UIBarButtonItem *refreshButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshList:)];
     self.navigationItem.rightBarButtonItem = refreshButton;
     
-    (self.tableView).separatorStyle = UITableViewCellSeparatorStyleNone;
+    NSKeyValueObservingOptions options = NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld;
     
-    self.model = [[BSPredictionsModel alloc] init];
+    [_model addObserver:self forKeyPath:@"predictions" options:options context:myContext];
+    [_model addObserver:self forKeyPath:@"predictionMeta" options:options context:myContext];
+    [_model addObserver:self forKeyPath:@"error" options:options context:myContext];
     
-    [_model addObserver:self
-             forKeyPath:@"predictions" 
-                options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
-                context:@selector(reloadPredictions)];
+    assert(_stop != nil);
     
-    [_model addObserver:self
-             forKeyPath:@"predictionMeta" 
-                options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
-                context:@selector(reloadPredictionMeta)];
-    
-    [_model addObserver:self 
-             forKeyPath:@"error" 
-                options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
-                context:@selector(operationDidFail)];
-    
-    [_model requestPredictionsForRoute:_routeNumber andStop:_stopTag];
+    [_model requestPredictionsForStop:self.stop];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    if ((self.tableView).indexPathForSelectedRow != nil) {
-        [self.tableView deselectRowAtIndexPath:(self.tableView).indexPathForSelectedRow animated:YES];
-    }
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    return interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown;
+    [_tableView deselectRowAtIndexPath:[_tableView indexPathForSelectedRow] animated:YES];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    // Return the number of sections.
     return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (section == 0) {
-        return 1;
-    }
-
-    return [_model countOfPredictions];
+    return (section == 0) ? 1 : self.model.predictions.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -109,46 +101,13 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:BSPredictionsCellIdentifier];
     }
 
-    NSMutableDictionary *dict = (NSMutableDictionary *)[_model objectInPredictionsAtIndex:indexPath.row];
+    NSDictionary *dict = (NSDictionary *)self.model.predictions[indexPath.row];
     NSString *title = dict[@"minutes"];
     title = [title stringByAppendingFormat:@" %@", NSLocalizedString(@"minutes", @"minutes")];
     
     cell.textLabel.text = title;
     
     return cell;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 0) {
-        return;
-    }
-    
-    NSMutableDictionary *dict = (NSMutableDictionary *)[_model objectInPredictionsAtIndex:indexPath.row];
-    NSString *vehicle = dict[@"vehicle"];
-    NSString *time = dict[@"time"];
-    
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-        // push on the map view control if running on the phone/touch
-        
-        // NSLog(@"loadPredictionsForVehicle: %@ runningRoute: %@ atEpochTime: %@", vehicle, route, time);
-        
-        BSMapViewController *nextController = [[BSMapViewController alloc] initWithNibName:@"MapView_iPhone" bundle:nil];
-        
-        nextController.title = NSLocalizedString(@"Maps", @"Maps title");
-        nextController.vehicle = vehicle;
-        nextController.route = self.routeNumber;
-        nextController.time = time;
-        
-        [self.navigationController pushViewController:nextController animated:YES];
-        
-    }
-    else {
-        // on the pad the map is shown in the detail view of the split view
-        // we ask our delegate to load the predictions
-        
-        id delegate = [UIApplication sharedApplication].delegate;
-        [delegate loadPredictionsForVehicle:vehicle runningRoute:self.routeNumber atEpochTime:time];
-    }
 }
 
 - (void)configureCell:(BSPredictionMetaTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
@@ -159,72 +118,52 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    // first section is the custom cell
-    if (indexPath.section == 0) {
-        return 88.0f;
-    }
-    
-    // else return standard detail table cell height
-    return 44.0f;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    // only the second section has a header
-    if (section == 1) {
-        return 40.0f;    
-    }
-    
-    return 0.0f;
-}
-
-#pragma mark - KVO
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    SEL selector = (SEL)context;
-    
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-    [self performSelector:selector];
-#pragma clang diagnostic pop
+    if (context == myContext) {
+        if ([keyPath isEqualToString:@"predictions"]) {
+            [self reloadPredictions];
+        }
+        else if ([keyPath isEqualToString:@"error"]) {
+            [self refreshError];
+        }
+    }
+    else {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
 }
 
 - (void)reloadPredictions {
-    NSUInteger predictionsToAdd = [_model countOfPredictions];
-    NSUInteger predictionsToDelete = [self.tableView numberOfRowsInSection:1];
-    
-    [self.tableView beginUpdates];
-    
-    for (NSUInteger i = 0; i < predictionsToDelete; i++) {
-        NSArray *delete = @[[NSIndexPath indexPathForRow:i inSection:1]];
-        [self.tableView deleteRowsAtIndexPaths:delete withRowAnimation:UITableViewRowAnimationBottom];
-    }
-    
-    for (NSUInteger i = 0; i < predictionsToAdd; i++) {
-        NSArray *insert = @[[NSIndexPath indexPathForRow:i inSection:1]];
-        [self.tableView insertRowsAtIndexPaths:insert withRowAnimation:UITableViewRowAnimationTop];
-    }
-    
-    [self.tableView endUpdates];
+    [_tableView reloadData];
 }
 
 - (void)reloadPredictionMeta {
-    // reconfigure the predictions meta data cell
     NSIndexPath *path = [NSIndexPath indexPathForRow:0 inSection:0];
-    BSPredictionMetaTableViewCell *cell = (BSPredictionMetaTableViewCell *)[self.tableView cellForRowAtIndexPath:path];
-    [self configureCell:cell atIndexPath:path];
+    [_tableView reloadRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationNone];
 }
 
-- (void)operationDidFail {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"error alert view title") 
-                                                    message:_model.error.localizedDescription
-                                                   delegate:nil 
-                                          cancelButtonTitle:NSLocalizedString(@"OK", @"ok button title") 
-                                          otherButtonTitles:nil];
-    [alert show];
+- (void)refreshError {
+    if (self.model.error != nil) {
+        NSString *title = NSLocalizedString(@"Error", @"error alert view title");
+        NSString *message = self.model.error.localizedDescription;
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+        
+        [self presentViewController:alertController animated:YES completion:nil];
+    }
 }
 
-- (IBAction)refreshList:(id)sender {
-    [_model requestPredictionsForRoute:_routeNumber andStop:_stopTag];
+- (void)refreshList:(id)sender {
+    [_model requestPredictionsForStop:_stop];
+}
+
+- (void)setupTableViewConstraints {
+    [_tableView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    
+    NSDictionary *views = @{@"tableView": _tableView};
+    NSArray *verticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[tableView]|" options:0 metrics:nil views:views];
+    NSArray *horizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[tableView]|" options:0 metrics:nil views:views];
+    
+    [NSLayoutConstraint activateConstraints:verticalConstraints];
+    [NSLayoutConstraint activateConstraints:horizontalConstraints];
 }
 
 @end
