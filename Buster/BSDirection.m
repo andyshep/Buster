@@ -36,13 +36,10 @@
     NSArray<NSDictionary *> *directionsJSON = [json objectForKey:@"direction"];
     
     [directionsJSON enumerateObjectsUsingBlock:^(NSDictionary * _Nonnull obj1, NSUInteger idx, BOOL * _Nonnull s) {
-        //
-        
-        BSDirection *direction = [[BSDirection alloc] init];
-        
         NSString *directionId = [obj1 objectForKey:@"direction_id"];
         NSString *directionName = [obj1 objectForKey:@"direction_name"];
         
+        BSDirection *direction = [[BSDirection alloc] init];
         direction.name = directionName;
         direction.tag = directionId;
         
@@ -50,11 +47,10 @@
         NSMutableArray<BSStop *> *stops = [NSMutableArray array];
         
         [stopsJSON enumerateObjectsUsingBlock:^(NSDictionary * _Nonnull obj2, NSUInteger idx, BOOL * _Nonnull s) {
-            BSStop *stop = [[BSStop alloc] init];
-            
             NSString *stopName = [obj2 objectForKey:@"stop_name"];
             NSString *stopId = [obj2 objectForKey:@"stop_id"];
             
+            BSStop *stop = [[BSStop alloc] init];
             stop.stopId = stopId;
             stop.title = stopName;
             
