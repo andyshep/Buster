@@ -12,17 +12,13 @@
 		F7A5F35D1F44CE7F00E70240 /* BSDirection.m in Sources */ = {isa = PBXBuildFile; fileRef = F7E24D011F44C7D1009EC40C /* BSDirection.m */; };
 		F7A5F35E1F44CE7F00E70240 /* BSDirectionsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7E24D031F44C7D1009EC40C /* BSDirectionsModel.m */; };
 		F7A5F35F1F44CE7F00E70240 /* BSDirectionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7E24D051F44C7D1009EC40C /* BSDirectionsViewController.m */; };
-		F7A5F3601F44CE7F00E70240 /* BSMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7E24D071F44C7D1009EC40C /* BSMapViewController.m */; };
 		F7A5F3621F44CE7F00E70240 /* BSPredictionMetaTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F7E24D0B1F44C7D1009EC40C /* BSPredictionMetaTableViewCell.m */; };
 		F7A5F3631F44CE7F00E70240 /* BSPredictionsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7E24D0D1F44C7D1009EC40C /* BSPredictionsModel.m */; };
 		F7A5F3641F44CE7F00E70240 /* BSPredictionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7E24D0F1F44C7D1009EC40C /* BSPredictionsViewController.m */; };
 		F7A5F3651F44CE7F00E70240 /* BSRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = F7E24D111F44C7D1009EC40C /* BSRoute.m */; };
 		F7A5F3661F44CE7F00E70240 /* BSRoutesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7E24D131F44C7D1009EC40C /* BSRoutesModel.m */; };
-		F7A5F3671F44CE7F00E70240 /* BSRoutesTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F7E24D151F44C7D1009EC40C /* BSRoutesTableViewCell.m */; };
 		F7A5F3681F44CE7F00E70240 /* BSRoutesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7E24D171F44C7D1009EC40C /* BSRoutesViewController.m */; };
 		F7A5F3691F44CE7F00E70240 /* BSStop.m in Sources */ = {isa = PBXBuildFile; fileRef = F7E24D191F44C7D1009EC40C /* BSStop.m */; };
-		F7A5F36B1F44CE7F00E70240 /* BSVehicleLocationAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = F7E24D1D1F44C7D1009EC40C /* BSVehicleLocationAnnotation.m */; };
-		F7A5F36C1F44CE7F00E70240 /* BSVehicleLocationModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7E24D1F1F44C7D1009EC40C /* BSVehicleLocationModel.m */; };
 		F7A5F36E1F44CE7F00E70240 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F7E24D251F44C7D1009EC40C /* main.m */; };
 /* End PBXBuildFile section */
 
@@ -217,16 +213,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				F7A5F35E1F44CE7F00E70240 /* BSDirectionsModel.m in Sources */,
-				F7A5F36C1F44CE7F00E70240 /* BSVehicleLocationModel.m in Sources */,
 				F7A5F3641F44CE7F00E70240 /* BSPredictionsViewController.m in Sources */,
 				F7A5F3661F44CE7F00E70240 /* BSRoutesModel.m in Sources */,
 				F7A5F3651F44CE7F00E70240 /* BSRoute.m in Sources */,
-				F7A5F3601F44CE7F00E70240 /* BSMapViewController.m in Sources */,
 				F7A5F35D1F44CE7F00E70240 /* BSDirection.m in Sources */,
-				F7A5F3671F44CE7F00E70240 /* BSRoutesTableViewCell.m in Sources */,
 				F7A5F35A1F44CE7500E70240 /* BSAppDelegate.m in Sources */,
 				F7A5F3681F44CE7F00E70240 /* BSRoutesViewController.m in Sources */,
-				F7A5F36B1F44CE7F00E70240 /* BSVehicleLocationAnnotation.m in Sources */,
 				F7A5F3631F44CE7F00E70240 /* BSPredictionsModel.m in Sources */,
 				F7A5F3621F44CE7F00E70240 /* BSPredictionMetaTableViewCell.m in Sources */,
 				F7A5F3691F44CE7F00E70240 /* BSStop.m in Sources */,

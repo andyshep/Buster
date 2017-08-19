@@ -6,7 +6,7 @@
 //  Copyright © 2010-2017 Andrew Shepard. All rights reserved.
 //
 
-#import "BSMapViewController.h"
+@import UIKit;
 
 @interface BSAppDelegate : UIResponder <UIApplicationDelegate>
 
