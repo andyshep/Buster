@@ -52,15 +52,10 @@ static void *myContext = &myContext;
     UIBarButtonItem *refreshButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(requestRouteList)];
     [self.navigationItem setRightBarButtonItem:refreshButton animated:YES];
 
-    [_model addObserver:self
-             forKeyPath:@"routes" 
-                options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
-                context:myContext];
+    NSKeyValueObservingOptions options = NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld;
     
-    [_model addObserver:self 
-             forKeyPath:@"error" 
-                options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) 
-                context:myContext];
+    [_model addObserver:self forKeyPath:@"routes" options:options context:myContext];
+    [_model addObserver:self forKeyPath:@"error" options:options context:myContext];
     
     [self requestRouteList];
 }
