@@ -7,11 +7,14 @@
 //
 
 #import "BSPredictionsModel.h"
+
 #import "BSStop.h"
+#import "BSDirection.h"
+#import "BSPrediction.h"
 
 @interface BSPredictionsModel ()
 
-@property (nonatomic, copy, readwrite) NSArray *predictions;
+@property (nonatomic, copy, readwrite) NSArray<BSPrediction *> *predictions;
 @property (nonatomic, copy, readwrite) NSDictionary *predictionMeta;
 @property (nonatomic, copy, readwrite) NSError *error;
 
@@ -19,14 +22,19 @@
 
 @implementation BSPredictionsModel
 
-- (void)requestPredictionsForStop:(BSStop *)stop {
+- (void)requestPredictionsForStop:(BSStop *)stop direction:(BSDirection *)direction {
     NSString *urlString = [NSString stringWithFormat:@"http://realtime.mbta.com/developer/api/v2/predictionsbystop?api_key=wX9NwuHnZU2ToO7GmGR9uw&stop=%@&format=json", stop.stopId];
     NSURL *url = [NSURL URLWithString:urlString];
     
     [[[NSURLSession sharedSession] dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         dispatch_async(dispatch_get_main_queue(), ^{
             if (data) {
-                NSLog(@"%@", data);
+                NSArray *predictions = [BSPrediction predictionsFromData:data];
+                
+                NSPredicate *predicate = [NSPredicate predicateWithFormat:@"direction LIKE %@ AND routeId LIKE %@", direction.name, stop.routeId];
+                NSArray *filtered = [predictions filteredArrayUsingPredicate:predicate];
+                
+                self.predictions = filtered;
             }
             
             self.error = error;

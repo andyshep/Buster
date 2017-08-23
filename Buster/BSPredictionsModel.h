@@ -9,13 +9,15 @@
 @import Foundation;
 
 @class BSStop;
+@class BSDirection;
+@class BSPrediction;
 
 @interface BSPredictionsModel : NSObject
 
-@property (nonatomic, copy, readonly) NSArray *predictions;
-@property (nonatomic, copy, readonly) NSDictionary *predictionMeta;
-@property (nonatomic, copy, readonly) NSError *error;
+@property (nonnull, nonatomic, copy, readonly) NSArray<BSPrediction *> *predictions;
+@property (nonnull, nonatomic, copy, readonly) NSDictionary *predictionMeta;
+@property (nullable, nonatomic, copy, readonly) NSError *error;
 
-- (void)requestPredictionsForStop:(BSStop *)stop;
+- (void)requestPredictionsForStop:(BSStop * _Nonnull)stop direction:(BSDirection * _Nonnull)direction;
 
 @end

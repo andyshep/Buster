@@ -9,11 +9,11 @@
 #import "BSPredictionsViewController.h"
 
 #import "BSPredictionsModel.h"
+#import "BSPrediction.h"
 #import "BSStop.h"
 
-#import "BSPredictionMetaTableViewCell.h"
-
 static void *myContext = &myContext;
+static NSString *identifier = @"BSPredictionsTableCellIdentifier";
 
 @interface BSPredictionsViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -47,6 +47,8 @@ static void *myContext = &myContext;
     [self.view addSubview:_tableView];
     [self setupTableViewConstraints];
     
+    [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:identifier];
+    
     UIBarButtonItem *refreshButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshList:)];
     self.navigationItem.rightBarButtonItem = refreshButton;
     
@@ -57,8 +59,9 @@ static void *myContext = &myContext;
     [_model addObserver:self forKeyPath:@"error" options:options context:myContext];
     
     assert(_stop != nil);
+    assert(_direction != nil);
     
-    [_model requestPredictionsForStop:self.stop];
+    [_model requestPredictionsForStop:_stop direction:_direction];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -67,55 +70,22 @@ static void *myContext = &myContext;
     [_tableView deselectRowAtIndexPath:[_tableView indexPathForSelectedRow] animated:YES];
 }
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return (section == 0) ? 1 : self.model.predictions.count;
+    return self.model.predictions.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    // return the prediction meta data cell with route/stop info
-    if (indexPath.section == 0) {
-        
-        BSPredictionMetaTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"BSPredictionsInfoTableCell"];
-        if (cell == nil) {
-            cell = [[BSPredictionMetaTableViewCell alloc] init];
-        }
-        
-        cell.routeNumberLabel.text = _model.predictionMeta[@"routeTitle"];
-        cell.routeDirectionLabel.text = _model.predictionMeta[@"directionTitle"];
-        cell.stopNameLabel.text = _model.predictionMeta[@"stopTitle"];
-        
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
-        return cell;
-    }
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
+    BSPrediction *prediction = self.model.predictions[indexPath.row];
     
-    // return a prediction cell with a time
-    NSString *BSPredictionsCellIdentifier = @"BSPredictionsTimeTableCell";
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:BSPredictionsCellIdentifier];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:BSPredictionsCellIdentifier];
-    }
-
-    NSDictionary *dict = (NSDictionary *)self.model.predictions[indexPath.row];
-    NSString *title = dict[@"minutes"];
-    title = [title stringByAppendingFormat:@" %@", NSLocalizedString(@"minutes", @"minutes")];
-    
-    cell.textLabel.text = title;
+    cell.textLabel.text = prediction.name;
     
     return cell;
 }
 
-- (void)configureCell:(BSPredictionMetaTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-    cell.routeNumberLabel.text = _model.predictionMeta[@"routeTitle"];
-    cell.routeDirectionLabel.text = _model.predictionMeta[@"directionTitle"];
-    cell.stopNameLabel.text = _model.predictionMeta[@"stopTitle"];
-    
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    BSPrediction *prediction = self.model.predictions[indexPath.row];
+    NSLog(@"prediction: %@", prediction);
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
@@ -152,7 +122,7 @@ static void *myContext = &myContext;
 }
 
 - (void)refreshList:(id)sender {
-    [_model requestPredictionsForStop:_stop];
+    [_model requestPredictionsForStop:_stop direction:_direction];
 }
 
 - (void)setupTableViewConstraints {

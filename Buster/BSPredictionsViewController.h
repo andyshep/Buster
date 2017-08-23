@@ -9,10 +9,13 @@
 @import UIKit;
 
 @class BSStop;
+@class BSDirection;
 
 @interface BSPredictionsViewController : UIViewController
 
 @property (nonatomic, strong) UITableView *tableView;
+
+@property (nonatomic, strong) BSDirection *direction;
 @property (nonatomic, strong) BSStop *stop;
 
 @end
