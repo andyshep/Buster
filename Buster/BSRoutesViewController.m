@@ -25,8 +25,8 @@ static void *myContext = &myContext;
 - (instancetype)init {
     if (self = [super init]) {
         self.tableView = [[UITableView alloc] initWithFrame:CGRectZero];
-        _tableView.delegate = self;
-        _tableView.dataSource = self;
+        [_tableView setDelegate:self];
+        [_tableView setDataSource:self];
         
         self.model = [[BSRoutesModel alloc] init];
     }
@@ -87,13 +87,10 @@ static void *myContext = &myContext;
 
 - (void) tableView:(UITableView *)tView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     BSRoute *route = self.model.routes[indexPath.row];
+    BSDirectionsViewController *controller = [[BSDirectionsViewController alloc] init];
+    controller.route = route;
     
-    BSDirectionsViewController *nextController = [[BSDirectionsViewController alloc] init];
-    // FIXME
-    nextController.title = route.name;
-    nextController.stopTag = route.routeId;
-    
-    [self.navigationController pushViewController:nextController animated:YES];
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 #pragma mark - KVO

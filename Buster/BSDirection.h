@@ -8,15 +8,16 @@
 
 @import Foundation;
 
+@class BSRoute;
 @class BSStop;
 
 @interface BSDirection : NSObject <NSCoding>
 
-@property (nonatomic, copy) NSArray<BSStop *> *stops;
-@property (nonatomic, copy) NSString *tag;
-@property (nonatomic, copy) NSString *name;
-@property (nonatomic, copy) NSString *title;
+@property (nonnull, nonatomic, copy) NSArray<BSStop *> *stops;
+@property (nonnull, nonatomic, copy) NSString *tag;
+@property (nonnull, nonatomic, copy) NSString *name;
+@property (nonnull, nonatomic, copy) NSString *title;
 
-+ (NSDictionary<NSString *, BSDirection *> *)directionsFromData:(NSData *)data;
++ (NSDictionary<NSString *, BSDirection *> * _Nonnull)directionsFromData:(NSData * _Nonnull)data forRoute:(BSRoute * _Nonnull)route;
 
 @end

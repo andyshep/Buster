@@ -8,13 +8,14 @@
 
 @import UIKit;
 
+@class BSRoute;
+
 @interface BSDirectionsViewController : UIViewController
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UIToolbar *bottomToolbar;
 @property (nonatomic, strong) UISegmentedControl *directionControl;
 
-@property (nonatomic, strong) NSString *stopTag;
-@property (nonatomic, strong) NSString *directionTitle;
+@property (nonatomic, strong) BSRoute *route;
 
 @end

@@ -7,6 +7,8 @@
 //
 
 #import "BSDirection.h"
+
+#import "BSRoute.h"
 #import "BSStop.h"
 
 @implementation BSDirection
@@ -29,7 +31,7 @@
     [coder encodeObject:self.stops forKey:@"stops"];
 }
 
-+ (NSDictionary<NSString *, BSDirection *> *)directionsFromData:(NSData *)data {
++ (NSDictionary<NSString *, BSDirection *> *)directionsFromData:(NSData *)data forRoute:(BSRoute *)route {
     NSMutableDictionary<NSString *, BSDirection *> *directions = [NSMutableDictionary dictionary];
     
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
@@ -53,6 +55,7 @@
             BSStop *stop = [[BSStop alloc] init];
             stop.stopId = stopId;
             stop.title = stopName;
+            stop.routeId = route.routeId;
             
             [stops addObject:stop];
         }];

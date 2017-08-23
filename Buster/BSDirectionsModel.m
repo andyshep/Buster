@@ -8,6 +8,7 @@
 
 #import "BSDirectionsModel.h"
 
+#import "BSRoute.h"
 #import "BSDirection.h"
 #import "BSStop.h"
 
@@ -25,17 +26,17 @@
 
 @implementation BSDirectionsModel
 
-- (void)requestDirectionsForStop:(NSString *)stop {
+- (void)requestStopsByRoute:(BSRoute *)route {
     // TODO: check cache first
     
-    NSString *urlString = [NSString stringWithFormat:@"http://realtime.mbta.com/developer/api/v2/stopsbyroute?api_key=wX9NwuHnZU2ToO7GmGR9uw&route=%@&format=json", stop];
+    NSString *urlString = [NSString stringWithFormat:@"http://realtime.mbta.com/developer/api/v2/stopsbyroute?api_key=wX9NwuHnZU2ToO7GmGR9uw&route=%@&format=json", route.routeId];
     NSURL *url = [NSURL URLWithString:urlString];
     
     [[[NSURLSession sharedSession] dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         
         dispatch_async(dispatch_get_main_queue(), ^{
             if (data) {
-                NSDictionary *directions = [BSDirection directionsFromData:data];
+                NSDictionary *directions = [BSDirection directionsFromData:data forRoute:route];
                 self.directions = directions;
             }
             

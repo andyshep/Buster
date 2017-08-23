@@ -8,6 +8,7 @@
 
 @import Foundation;
 
+@class BSRoute;
 @class BSStop;
 @class BSDirection;
 
@@ -21,7 +22,7 @@
 @property (nonatomic, copy, readonly) NSError *error;
 @property (nonatomic, copy, readonly) NSString *title;
 
-- (void)requestDirectionsForStop:(NSString *)stop;
+- (void)requestStopsByRoute:(BSRoute *)route;
 - (void)loadStopsForDirection:(BSDirection *)direction;
 
 @end

@@ -9,6 +9,7 @@
 #import "BSDirectionsViewController.h"
 #import "BSPredictionsViewController.h"
 
+#import "BSRoute.h"
 #import "BSStop.h"
 #import "BSDirection.h"
 #import "BSDirectionsModel.h"
@@ -25,8 +26,6 @@ static void *myContext = &myContext;
 
 - (instancetype)init {
     if (self = [super init]) {
-        self.directionTitle = @"";
-        
         self.tableView = [[UITableView alloc] initWithFrame:CGRectZero];
         [_tableView setDelegate:self];
         [_tableView setDataSource:self];
@@ -68,7 +67,7 @@ static void *myContext = &myContext;
     [_model addObserver:self forKeyPath:@"title" options:options context:myContext];
     [_model addObserver:self forKeyPath:@"error" options:options context:myContext];
 
-    [_model requestDirectionsForStop:self.stopTag];
+    [_model requestStopsByRoute:_route];
     
     [_directionControl addObserver:self forKeyPath:@"selectedSegmentIndex" options:options context:myContext];
 }
@@ -158,7 +157,13 @@ static void *myContext = &myContext;
     BSStop *stop = self.model.stops[indexPath.row];
     BSPredictionsViewController *controller = [[BSPredictionsViewController alloc] init];
     
+    NSUInteger index = [_directionControl selectedSegmentIndex];
+    NSString *key = [_directionControl titleForSegmentAtIndex:index];
+    
+    BSDirection *direction = [[_model directions] objectForKey:key];
+    
     controller.stop = stop;
+    controller.direction = direction;
     
     [self.navigationController pushViewController:controller animated:YES];
 }
