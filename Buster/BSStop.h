@@ -14,7 +14,7 @@
 @property (nonatomic, copy) NSString *tag;
 @property (nonatomic, copy) NSString *directionTag;
 
-@property (nonatomic, copy) NSString *routeNumber;
+@property (nonatomic, copy) NSString *routeId;
 @property (nonatomic, copy) NSString *stopId;
 
 @property (nonatomic, copy) NSString *latitude;

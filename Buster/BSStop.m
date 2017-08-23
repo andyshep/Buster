@@ -15,7 +15,7 @@
         self.title = [coder decodeObjectForKey:@"title"];
         self.tag = [coder decodeObjectForKey:@"tag"];
         self.directionTag = [coder decodeObjectForKey:@"directionTag"];
-        self.routeNumber = [coder decodeObjectForKey:@"routeNumber"];
+        self.routeId = [coder decodeObjectForKey:@"routeId"];
         self.stopId = [coder decodeObjectForKey:@"stopId"];
     }
     
@@ -26,7 +26,7 @@
     [coder encodeObject:self.title forKey:@"title"];
     [coder encodeObject:self.tag forKey:@"tag"];
     [coder encodeObject:self.directionTag forKey:@"directionTag"];
-    [coder encodeObject:self.routeNumber forKey:@"routeNumber"];
+    [coder encodeObject:self.routeId forKey:@"routeId"];
     [coder encodeObject:self.stopId forKey:@"stopId"];
 }
 
