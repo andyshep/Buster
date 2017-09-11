@@ -47,8 +47,6 @@
 		F7E24D111F44C7D1009EC40C /* BSRoute.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BSRoute.m; sourceTree = "<group>"; };
 		F7E24D121F44C7D1009EC40C /* BSRoutesModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BSRoutesModel.h; sourceTree = "<group>"; };
 		F7E24D131F44C7D1009EC40C /* BSRoutesModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BSRoutesModel.m; sourceTree = "<group>"; };
-		F7E24D141F44C7D1009EC40C /* BSRoutesTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BSRoutesTableViewCell.h; sourceTree = "<group>"; };
-		F7E24D151F44C7D1009EC40C /* BSRoutesTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BSRoutesTableViewCell.m; sourceTree = "<group>"; };
 		F7E24D161F44C7D1009EC40C /* BSRoutesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BSRoutesViewController.h; sourceTree = "<group>"; };
 		F7E24D171F44C7D1009EC40C /* BSRoutesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BSRoutesViewController.m; sourceTree = "<group>"; };
 		F7E24D181F44C7D1009EC40C /* BSStop.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BSStop.h; sourceTree = "<group>"; };
@@ -113,8 +111,6 @@
 				F7E24D111F44C7D1009EC40C /* BSRoute.m */,
 				F7E24D121F44C7D1009EC40C /* BSRoutesModel.h */,
 				F7E24D131F44C7D1009EC40C /* BSRoutesModel.m */,
-				F7E24D141F44C7D1009EC40C /* BSRoutesTableViewCell.h */,
-				F7E24D151F44C7D1009EC40C /* BSRoutesTableViewCell.m */,
 				F7E24D161F44C7D1009EC40C /* BSRoutesViewController.h */,
 				F7E24D171F44C7D1009EC40C /* BSRoutesViewController.m */,
 				F7E24D181F44C7D1009EC40C /* BSStop.h */,
