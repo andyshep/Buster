@@ -29,7 +29,7 @@
     NSArray<NSDictionary *> *modesJSON = [json objectForKey:@"mode"];
     
     NSString *stopId = [json objectForKey:@"stop_id"];
-    NSString *stopName = [json objectForKey:@"stop_name"];
+//    NSString *stopName = [json objectForKey:@"stop_name"];
     
     [modesJSON enumerateObjectsUsingBlock:^(NSDictionary * _Nonnull obj1, NSUInteger idx1, BOOL * _Nonnull stop1) {
         NSArray<NSDictionary *> *routeJSON = [obj1 objectForKey:@"route"];
@@ -44,9 +44,9 @@
                 
                 [tripJSON enumerateObjectsUsingBlock:^(NSDictionary * _Nonnull obj4, NSUInteger idx4, BOOL * _Nonnull stop4) {
                     
-                    NSString *tripId = [obj4 objectForKey:@"trip_id"];
+//                    NSString *tripId = [obj4 objectForKey:@"trip_id"];
                     NSString *tripName = [obj4 objectForKey:@"trip_name"];
-                    NSString *scheduledArrival = [obj4 objectForKey:@"sch_arr_dt"];
+//                    NSString *scheduledArrival = [obj4 objectForKey:@"sch_arr_dt"];
                     
                     BSPrediction *prediction = [[BSPrediction alloc] init];
                     prediction.routeId = routeId;
